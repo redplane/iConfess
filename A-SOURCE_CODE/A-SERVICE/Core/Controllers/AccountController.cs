@@ -20,6 +20,8 @@ namespace Core.Controllers
     [Authorize(ActiveAuthenticationSchemes = "Bearer")]
     public class AccountController : Controller
     {
+        #region Properties
+
         /// <summary>
         /// Collection of jwt setting.
         /// </summary>
@@ -45,6 +47,18 @@ namespace Core.Controllers
         /// </summary>
         private readonly ILogger<AccountController> _logger;
 
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initialize controller with dependency injections.
+        /// </summary>
+        /// <param name="repositoryAccount"></param>
+        /// <param name="timeService"></param>
+        /// <param name="httpService"></param>
+        /// <param name="logger"></param>
+        /// <param name="jwtTokenSetting"></param>
         public AccountController(IRepositoryAccount repositoryAccount,
             ITimeService timeService,
             IHttpService httpService,
@@ -58,6 +72,13 @@ namespace Core.Controllers
             _logger = logger;
         }
 
+        #endregion
+
+        /// <summary>
+        /// Exchange email & password for an access token.
+        /// </summary>
+        /// <param name="loginViewModel"></param>
+        /// <returns></returns>
         [HttpPost("authorize")]
         [Produces("application/json")]
         [AllowAnonymous]
