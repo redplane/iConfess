@@ -1,45 +1,45 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace Core.Models.Tables
 {
-    public class ThoughtSharingDbContext : DbContext
+    public class MainDbContext : DbContext
     {
         #region Properties
 
         /// <summary>
-        /// List of registered accounts.
+        ///     List of registered accounts.
         /// </summary>
         public DbSet<Account> Accounts { get; set; }
 
         /// <summary>
-        /// List of categories and their followers.
+        ///     List of categories and their followers.
         /// </summary>
         public DbSet<FollowCategory> FollowCategories { get; set; }
 
         /// <summary>
-        /// List of categories.
+        ///     List of categories.
         /// </summary>
         public DbSet<Category> Categories { get; set; }
 
         /// <summary>
-        /// List of posts and their followers
+        ///     List of posts and their followers
         /// </summary>
         public DbSet<FollowPost> FollowPosts { get; set; }
 
         /// <summary>
-        /// List of posts.
+        ///     List of posts.
         /// </summary>
         public DbSet<Post> Posts { get; set; }
 
         /// <summary>
-        /// List of comments related to a post.
+        ///     List of comments related to a post.
         /// </summary>
         public DbSet<Comment> Comments { get; set; }
 
         /// <summary>
-        /// List of realtime connection from service -> clients.
+        ///     List of realtime connection from service -> clients.
         /// </summary>
         public DbSet<Connection> Connections { get; set; }
 
@@ -58,38 +58,29 @@ namespace Core.Models.Tables
         #region Constructor
 
         /// <summary>
-        /// Context intialization without settings.
-        /// </summary>
-        public ThoughtSharingDbContext()
-        {
-            
-        }
-
-        /// <summary>
-        /// Context initialization with specific settings.
+        ///     Context initialization with specific settings.
         /// </summary>
         /// <param name="dbContextOptions"></param>
-        public ThoughtSharingDbContext(DbContextOptions dbContextOptions) : base (dbContextOptions)
+        public MainDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-            
         }
 
         /// <summary>
-        /// Override this function to initialize tables with custom settings.
+        ///     Override this function to initialize tables with custom settings.
         /// </summary>
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region Relationships
-            
+
             // Accounts -> Following -> Categories.
             modelBuilder.Entity<FollowCategory>()
-                .HasKey(x => new {x.Category, x.Owner});
+                .HasKey(x => new { x.Category, x.Owner });
 
             // Accounts -> Following -> Posts.
             modelBuilder.Entity<FollowPost>()
-                .HasKey(x => new {x.Post, x.Follower});
-            
+                .HasKey(x => new { x.Post, x.Follower });
+
             #endregion
 
             #region Account table
@@ -114,7 +105,7 @@ namespace Core.Models.Tables
             #endregion
 
             #region Category
-            
+
             modelBuilder.Entity<Category>()
                 .HasKey(x => x.Id);
 
@@ -184,7 +175,7 @@ namespace Core.Models.Tables
 
             // Composite primary key.
             modelBuilder.Entity<Connection>()
-                .HasKey(x => new {x.Index, x.Owner});
+                .HasKey(x => new { x.Index, x.Owner });
 
             modelBuilder.Entity<Connection>()
                 .HasOne(x => x.OwnerDetail)
@@ -267,11 +258,11 @@ namespace Core.Models.Tables
                 .HasForeignKey(x => x.Owner)
                 .HasForeignKey(x => x.Owner);
 
-
             #endregion
 
             base.OnModelCreating(modelBuilder);
         }
+        
 
         #endregion
     }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Models.Tables
@@ -44,20 +43,20 @@ namespace Core.Models.Tables
         #region Foreign keys
 
         /// <summary>
-        /// Detail information of comment owner.
+        ///     Detail information of comment owner.
         /// </summary>
         public virtual Account OwnerDetail { get; set; }
 
         /// <summary>
-        /// Detail information of post which comment belongs to.
+        ///     Detail information of post which comment belongs to.
         /// </summary>
         public virtual Post PostDetail { get; set; }
 
         /// <summary>
-        /// List of notifications broadcasted by comments.s
+        ///     List of notifications broadcasted by comments.s
         /// </summary>
         public virtual ICollection<CommentNotification> CommentNotifications { get; set; }
-        
+
         #endregion
     }
 }

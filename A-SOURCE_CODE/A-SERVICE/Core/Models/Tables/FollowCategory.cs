@@ -8,17 +8,17 @@ namespace Core.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Who is following category.
+        ///     Who is following category.
         /// </summary>
         public int Owner { get; set; }
 
         /// <summary>
-        /// Id of category which account is following.
+        ///     Id of category which account is following.
         /// </summary>
         public int Category { get; set; }
 
         /// <summary>
-        /// When the follow started.
+        ///     When the follow started.
         /// </summary>
         public double Created { get; set; }
 
@@ -27,12 +27,12 @@ namespace Core.Models.Tables
         #region Foreign keys
 
         /// <summary>
-        /// Information of owner.
+        ///     Information of owner.
         /// </summary>
         public virtual Account OwnerDetail { get; set; }
-        
+
         /// <summary>
-        /// Information of category.
+        ///     Information of category.
         /// </summary>
         public virtual Category CategoryDetail { get; set; }
 

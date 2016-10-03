@@ -7,7 +7,7 @@ using Core.Models.Tables;
 
 namespace Core.Migrations
 {
-    [DbContext(typeof(ThoughtSharingDbContext))]
+    [DbContext(typeof(MainDbContext))]
     [Migration("20160921185157_x006")]
     partial class x006
     {

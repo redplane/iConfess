@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models.Tables
 {
@@ -9,22 +7,22 @@ namespace Core.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Id of category.
+        ///     Id of category.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Category name.
+        ///     Category name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// When the category was created on service.
+        ///     When the category was created on service.
         /// </summary>
         public double Created { get; set; }
 
         /// <summary>
-        /// When the category was lastly modified.
+        ///     When the category was lastly modified.
         /// </summary>
         public double? LastModified { get; set; }
 
@@ -33,12 +31,12 @@ namespace Core.Models.Tables
         #region Relationships
 
         /// <summary>
-        /// List of following relationships.
+        ///     List of following relationships.
         /// </summary>
         public virtual ICollection<FollowCategory> BeingFollowed { get; set; }
 
         /// <summary>
-        /// List of posts which category contains.
+        ///     List of posts which category contains.
         /// </summary>
         public virtual ICollection<Post> ContainPosts { get; set; }
 

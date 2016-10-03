@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Core.Enumerations;
 
 namespace Core.Models.Tables
@@ -10,42 +9,42 @@ namespace Core.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Index of notification comment.
+        ///     Index of notification comment.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Index of comment.
+        ///     Index of comment.
         /// </summary>
         public int Comment { get; set; }
 
         /// <summary>
-        /// Index of post.
+        ///     Index of post.
         /// </summary>
         public int Post { get; set; }
 
         /// <summary>
-        /// Index of notification owner.
+        ///     Index of notification owner.
         /// </summary>
         public int Owner { get; set; }
 
         /// <summary>
-        /// Index of notification invoker.
+        ///     Index of notification invoker.
         /// </summary>
         public int Invoker { get; set; }
 
         /// <summary>
-        /// Notification type.
+        ///     Notification type.
         /// </summary>
         public NotificationType Type { get; set; }
 
         /// <summary>
-        /// Whether notification should be seen or not.
+        ///     Whether notification should be seen or not.
         /// </summary>
         public bool IsSeen { get; set; }
 
         /// <summary>
-        /// When the notification was broadcasted.
+        ///     When the notification was broadcasted.
         /// </summary>
         public double Created { get; set; }
 
@@ -54,25 +53,25 @@ namespace Core.Models.Tables
         #region Foreign keys
 
         /// <summary>
-        /// Detailed information of comment.
+        ///     Detailed information of comment.
         /// </summary>
         public virtual Comment CommentDetail { get; set; }
 
         /// <summary>
-        /// Detailed information of post.
+        ///     Detailed information of post.
         /// </summary>
         public virtual Post PostInfo { get; set; }
 
         /// <summary>
-        /// Detailed information of owner.
+        ///     Detailed information of owner.
         /// </summary>
         public virtual Account OwnerInfo { get; set; }
 
         /// <summary>
-        /// Detailed information of invoker.
+        ///     Detailed information of invoker.
         /// </summary>
         public virtual Account InvokerInfo { get; set; }
-        
+
         #endregion
     }
 }

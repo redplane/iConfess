@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Core.Migrations
 {
@@ -10,8 +8,8 @@ namespace Core.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Account",
-                columns: table => new
+                "Account",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -22,14 +20,11 @@ namespace Core.Migrations
                     Password = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Account", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Account", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
+                "Categories",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -37,14 +32,11 @@ namespace Core.Migrations
                     LastModified = table.Column<double>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Categories", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Connections",
-                columns: table => new
+                "Connections",
+                table => new
                 {
                     Index = table.Column<int>(nullable: false),
                     Owner = table.Column<int>(nullable: false),
@@ -52,18 +44,18 @@ namespace Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Connections", x => new { x.Index, x.Owner });
+                    table.PrimaryKey("PK_Connections", x => new {x.Index, x.Owner});
                     table.ForeignKey(
-                        name: "FK_Connections_Account_Owner",
-                        column: x => x.Owner,
-                        principalTable: "Account",
-                        principalColumn: "Id",
+                        "FK_Connections_Account_Owner",
+                        x => x.Owner,
+                        "Account",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FollowCategory",
-                columns: table => new
+                "FollowCategory",
+                table => new
                 {
                     Category = table.Column<int>(nullable: false),
                     Owner = table.Column<int>(nullable: false),
@@ -71,24 +63,24 @@ namespace Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FollowCategory", x => new { x.Category, x.Owner });
+                    table.PrimaryKey("PK_FollowCategory", x => new {x.Category, x.Owner});
                     table.ForeignKey(
-                        name: "FK_FollowCategory_Categories_Category",
-                        column: x => x.Category,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
+                        "FK_FollowCategory_Categories_Category",
+                        x => x.Category,
+                        "Categories",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FollowCategory_Account_Owner",
-                        column: x => x.Owner,
-                        principalTable: "Account",
-                        principalColumn: "Id",
+                        "FK_FollowCategory_Account_Owner",
+                        x => x.Owner,
+                        "Account",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Post",
-                columns: table => new
+                "Post",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -103,22 +95,22 @@ namespace Core.Migrations
                 {
                     table.PrimaryKey("PK_Post", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Post_Categories_Category",
-                        column: x => x.Category,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
+                        "FK_Post_Categories_Category",
+                        x => x.Category,
+                        "Categories",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Post_Account_Owner",
-                        column: x => x.Owner,
-                        principalTable: "Account",
-                        principalColumn: "Id",
+                        "FK_Post_Account_Owner",
+                        x => x.Owner,
+                        "Account",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
-                columns: table => new
+                "Comment",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -132,22 +124,22 @@ namespace Core.Migrations
                 {
                     table.PrimaryKey("PK_Comment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Account_Owner",
-                        column: x => x.Owner,
-                        principalTable: "Account",
-                        principalColumn: "Id",
+                        "FK_Comment_Account_Owner",
+                        x => x.Owner,
+                        "Account",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Comment_Post_Post",
-                        column: x => x.Post,
-                        principalTable: "Post",
-                        principalColumn: "Id",
+                        "FK_Comment_Post_Post",
+                        x => x.Post,
+                        "Post",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FollowPost",
-                columns: table => new
+                "FollowPost",
+                table => new
                 {
                     Post = table.Column<int>(nullable: false),
                     Follower = table.Column<int>(nullable: false),
@@ -155,89 +147,89 @@ namespace Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FollowPost", x => new { x.Post, x.Follower });
+                    table.PrimaryKey("PK_FollowPost", x => new {x.Post, x.Follower});
                     table.ForeignKey(
-                        name: "FK_FollowPost_Account_Follower",
-                        column: x => x.Follower,
-                        principalTable: "Account",
-                        principalColumn: "Id",
+                        "FK_FollowPost_Account_Follower",
+                        x => x.Follower,
+                        "Account",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FollowPost_Post_Post",
-                        column: x => x.Post,
-                        principalTable: "Post",
-                        principalColumn: "Id",
+                        "FK_FollowPost_Post_Post",
+                        x => x.Post,
+                        "Post",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_Owner",
-                table: "Comment",
-                column: "Owner");
+                "IX_Comment_Owner",
+                "Comment",
+                "Owner");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_Post",
-                table: "Comment",
-                column: "Post");
+                "IX_Comment_Post",
+                "Comment",
+                "Post");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Connections_Owner",
-                table: "Connections",
-                column: "Owner");
+                "IX_Connections_Owner",
+                "Connections",
+                "Owner");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FollowCategory_Category",
-                table: "FollowCategory",
-                column: "Category");
+                "IX_FollowCategory_Category",
+                "FollowCategory",
+                "Category");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FollowCategory_Owner",
-                table: "FollowCategory",
-                column: "Owner");
+                "IX_FollowCategory_Owner",
+                "FollowCategory",
+                "Owner");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FollowPost_Follower",
-                table: "FollowPost",
-                column: "Follower");
+                "IX_FollowPost_Follower",
+                "FollowPost",
+                "Follower");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FollowPost_Post",
-                table: "FollowPost",
-                column: "Post");
+                "IX_FollowPost_Post",
+                "FollowPost",
+                "Post");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_Category",
-                table: "Post",
-                column: "Category");
+                "IX_Post_Category",
+                "Post",
+                "Category");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_Owner",
-                table: "Post",
-                column: "Owner");
+                "IX_Post_Owner",
+                "Post",
+                "Owner");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comment");
+                "Comment");
 
             migrationBuilder.DropTable(
-                name: "Connections");
+                "Connections");
 
             migrationBuilder.DropTable(
-                name: "FollowCategory");
+                "FollowCategory");
 
             migrationBuilder.DropTable(
-                name: "FollowPost");
+                "FollowPost");
 
             migrationBuilder.DropTable(
-                name: "Post");
+                "Post");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                "Categories");
 
             migrationBuilder.DropTable(
-                name: "Account");
+                "Account");
         }
     }
 }
