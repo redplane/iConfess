@@ -49,10 +49,10 @@ namespace Core.Repositories
             }
             catch (Exception exception)
             {
-                
+
                 throw;
             }
-            
+
         }
 
         /// <summary>
@@ -78,8 +78,28 @@ namespace Core.Repositories
 
                 return stringBuilder.ToString();
             }
-            
         }
+
+        /// <summary>
+        /// Check whether account is matched with the filter condition.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="filterAccountViewModel"></param>
+        /// <returns></returns>
+        public async Task<bool> IsAccountConditionMatched(Account account, FilterAccountViewModel filterAccountViewModel)
+        {
+            // Firstly, account should be in an array.
+            IEnumerable<Account> accounts = new[] { account };
+
+            // Do the filter.
+            var filteredAccounts = FilterAccounts(accounts.AsQueryable(), filterAccountViewModel);
+
+            // Find the first one.
+            var filteredAccount = filteredAccounts.FirstOrDefault();
+
+            return (filteredAccount != null);
+        }
+
         /// <summary>
         /// Filter accounts by using specific conditions.
         /// </summary>
@@ -167,6 +187,13 @@ namespace Core.Repositories
                     accounts = accounts.Where(x => statuses.Contains(x.Status));
                 }
 
+                // Roles are defined.
+                if (filterAccountViewModel.Roles != null)
+                {
+                    // Roles must be built in list to use IN command.
+                    var roles = new List<AccountRole>(filterAccountViewModel.Roles);
+                    accounts = accounts.Where(x => roles.Contains(x.Role));
+                }
                 // Created range is defined.
                 if (filterAccountViewModel.MinCreated != null)
                     accounts = accounts.Where(x => x.Created >= filterAccountViewModel.MinCreated.Value);
@@ -186,7 +213,7 @@ namespace Core.Repositories
                 var a = 1;
                 throw;
             }
-            
+
         }
     }
 }

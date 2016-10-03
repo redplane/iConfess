@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -14,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace Core.Controllers
 {
@@ -38,17 +36,24 @@ namespace Core.Controllers
         private readonly ITimeService _timeService;
 
         /// <summary>
+        /// Service which is used for accessing to HttpContext.
+        /// </summary>
+        private readonly IHttpService _httpService;
+
+        /// <summary>
         /// Instance which is used for tracking controller activities.
         /// </summary>
         private readonly ILogger<AccountController> _logger;
 
         public AccountController(IRepositoryAccount repositoryAccount,
             ITimeService timeService,
+            IHttpService httpService,
             ILogger<AccountController> logger,
             IOptions<JwtSetting> jwtTokenSetting)
         {
             _repositoryAccount = repositoryAccount;
             _timeService = timeService;
+            _httpService = httpService;
             _jwtSetting = jwtTokenSetting.Value;
             _logger = logger;
         }
@@ -67,22 +72,20 @@ namespace Core.Controllers
                 filterAccountViewModel.Password = _repositoryAccount.FindHashedPassword(loginViewModel.Password);
                 filterAccountViewModel.PasswordComparision = TextComparision.EqualIgnoreCase;
                 filterAccountViewModel.Statuses = new[] {AccountStatus.Active};
-
-                // Initialize HttpResponseViewModel.
-                var httpResponseViewModel = new HttpResponseViewModel();
-
+                
                 // Find the account.
                 var account = await _repositoryAccount.FindAccountAsync(filterAccountViewModel);
 
                 // Account is not found.
                 if (account == null)
                 {
-                    using (var streamWriter = new StreamWriter(Response.Body))
-                    {
-                        httpResponseViewModel.Message = "ACCOUNT_INVALID";
-                        await streamWriter.WriteLineAsync(JsonConvert.SerializeObject(httpResponseViewModel));
-                    }
-
+                    await
+                        _httpService.RespondHttpMessageAsync(Response, HttpStatusCode.Unauthorized,
+                            new HttpResponseViewModel
+                            {
+                                Message = "ACCOUNT_INVALID"
+                            });
+                   
                     return new UnauthorizedResult();
                 }
 
@@ -118,7 +121,6 @@ namespace Core.Controllers
                     ExpireIn = _jwtSetting.Expiration
                 };
                 
-                _logger.LogInformation("Token has been generated successfully");
                 return Ok(tokenDetailViewModel);
             }
             catch (Exception exception)
@@ -128,13 +130,12 @@ namespace Core.Controllers
                 throw;
             }
         }
-
-
+        
         [HttpPost("filter")]
-        [Authorize(Policy = "AccountIsActiveRequirement")]
+        [Authorize(Policy = "AccountIsActive")]
+        [Authorize(Policy = "AccountIsAdmin")]
         public IEnumerable<string> FindAllAccounts()
         {
-            Response.StatusCode = (int) HttpStatusCode.Accepted;
             return new[] {"1", "2", "3", "4"};
         }
     }

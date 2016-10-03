@@ -7,6 +7,7 @@ using Core.Models.Tables;
 using Core.Repositories;
 using Core.Requirements;
 using Core.Services;
+using Core.ViewModels.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -59,7 +60,10 @@ namespace Core
 
             // Implement time service.
             services.AddSingleton<ITimeService, TimeService>();
-            
+
+            // Implement http service.
+            services.AddSingleton<IHttpService, HttpService>();
+
             services.AddSingleton<IRepositoryAccount, RepositoryAccount>();
 
             #endregion
@@ -70,15 +74,26 @@ namespace Core
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Authorization handler dependency injection.
-            services.AddSingleton<IAuthorizationHandler, AccountStatusRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, AccountRequirementHandler>();
+
+            services.AddSingleton<IAuthorizationHandler, AccountRequirementHandler>();
 
             // First of all, only accounts in database can access functions/controllers.
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AccountIsValidRequirement",
-                                  policy => policy.Requirements.Add(new AccountStatusRequirement(new[] { AccountStatus.Disabled })));
+                // Only active accounts can access specific functions/controllers.
+                options.AddPolicy("AccountIsActive", policy => policy.AddRequirements(new AccountRequirement(new FilterAccountViewModel
+                {
+                    Statuses = new[] { AccountStatus.Active }
+                }, "ACCOUNT_NOT_EXIST")));
+
+                // Only adminitrators can access specific functions/controllers.
+                options.AddPolicy("AccountIsAdmin", policy => policy.AddRequirements(new AccountRequirement(new FilterAccountViewModel
+                {
+                    Roles = new[] { AccountRole.Admin }
+                }, "ACCOUNT_ROLE_FORBIDDEN")));
             });
-            
+
             #endregion
 
             // Add framework services.

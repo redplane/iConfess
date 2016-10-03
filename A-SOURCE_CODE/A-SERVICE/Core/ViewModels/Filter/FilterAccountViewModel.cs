@@ -47,6 +47,11 @@ namespace Core.ViewModels.Filter
         public AccountStatus[] Statuses { get; set; }
 
         /// <summary>
+        /// List of roles which are used for being filtered.
+        /// </summary>
+        public AccountRole [] Roles { get; set; }
+
+        /// <summary>
         /// Time when the created must be after.
         /// </summary>
         public double? MinCreated { get; set; }

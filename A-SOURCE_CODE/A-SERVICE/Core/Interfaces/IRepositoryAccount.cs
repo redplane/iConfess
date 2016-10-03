@@ -19,5 +19,14 @@ namespace Core.Interfaces
         /// <param name="originalPassword"></param>
         /// <returns></returns>
         string FindHashedPassword(string originalPassword);
+
+        /// <summary>
+        /// Check whether account meets the filter conditions or not.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="filterAccountViewModel"></param>
+        /// <returns></returns>
+        Task<bool> IsAccountConditionMatched(Account account, FilterAccountViewModel filterAccountViewModel);
+
     }
 }

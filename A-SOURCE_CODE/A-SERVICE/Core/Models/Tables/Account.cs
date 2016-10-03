@@ -33,6 +33,11 @@ namespace Core.Models.Tables
         public AccountStatus Status { get; set; }
 
         /// <summary>
+        /// Role of account in system.
+        /// </summary>
+        public AccountRole Role { get; set; }
+
+        /// <summary>
         ///     When the account was created on server.
         /// </summary>
         public double Created { get; set; }
