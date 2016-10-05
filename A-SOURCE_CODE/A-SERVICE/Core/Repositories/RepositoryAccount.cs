@@ -36,23 +36,26 @@ namespace Core.Repositories
         /// <returns></returns>
         public async Task<Account> FindAccountAsync(FilterAccountViewModel filterAccountViewModel)
         {
-            try
-            {
-                // Take all accounts from database first.
-                IQueryable<Account> accounts = _mainDbContext.Accounts;
+            // Take all accounts from database first.
+            IQueryable<Account> accounts = _mainDbContext.Accounts;
 
-                // Do account filtering.
-                accounts = FilterAccounts(accounts, filterAccountViewModel);
+            // Do account filtering.
+            accounts = FilterAccounts(accounts, filterAccountViewModel);
 
-                // Take the first found account in the list.
-                return await accounts.FirstOrDefaultAsync();
-            }
-            catch (Exception exception)
-            {
+            // Take the first found account in the list.
+            return await accounts.FirstOrDefaultAsync();
+        }
 
-                throw;
-            }
-
+        /// <summary>
+        /// Create an account and save into database asychronously.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public async Task<Account> CreateAccountAsync(Account account)
+        {
+            account = _mainDbContext.Add(account).Entity;
+            await _mainDbContext.SaveChangesAsync();
+            return account;
         }
 
         /// <summary>

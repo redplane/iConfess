@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Core.Enumerations;
 using Core.Interfaces;
 using Core.Models;
+using Core.Models.Tables;
+using Core.Resources;
 using Core.ViewModels;
 using Core.ViewModels.Filter;
 using Microsoft.AspNetCore.Authorization;
@@ -151,13 +153,52 @@ namespace Core.Controllers
                 throw;
             }
         }
-        
-        [HttpPost("filter")]
-        [Authorize(Policy = "AccountIsActive")]
-        [Authorize(Policy = "AccountIsAdmin")]
-        public IEnumerable<string> FindAllAccounts()
+
+        [HttpPost("register")]
+        [Produces("application/json")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] AccountRegisterViewModel accountRegisterViewModel)
         {
-            return new[] {"1", "2", "3", "4"};
+            try
+            {
+                // Request parameters are invalid.
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                // Account filter initialization.
+                var filterAccountViewModel = new FilterAccountViewModel
+                {
+                    Email = accountRegisterViewModel.Email,
+                    EmailComparison = TextComparision.EqualIgnoreCase
+                };
+
+                // Find if the account exists in database.
+                var account = await _repositoryAccount.FindAccountAsync(filterAccountViewModel);
+                if (account != null)
+                {
+                    Response.StatusCode = (int) HttpStatusCode.Conflict;
+                    return new JsonResult(new HttpResponseViewModel
+                    {
+                        Message = ApiMessages.AccountIsDuplicated
+                    });
+                }
+
+                // Create and save account into database.
+                account = new Account();
+                account.Email = accountRegisterViewModel.Email;
+                account.Password = _repositoryAccount.FindHashedPassword(accountRegisterViewModel.Password);
+                account.Created = _timeService.UtcToUnix(DateTime.UtcNow);
+                
+                // Save the account into database.
+                account = await _repositoryAccount.CreateAccountAsync(account);
+                return Ok(account);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.Message);
+                throw;
+            }
+
         }
     }
 }

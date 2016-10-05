@@ -14,6 +14,13 @@ namespace Core.Interfaces
         Task<Account> FindAccountAsync(FilterAccountViewModel filterAccountViewModel);
 
         /// <summary>
+        /// Create an account and save it into database asynchronously.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        Task<Account> CreateAccountAsync(Account account);
+
+        /// <summary>
         /// Find the hashed password from the original one.
         /// </summary>
         /// <param name="originalPassword"></param>
