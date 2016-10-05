@@ -14,6 +14,13 @@ namespace Core.Interfaces
         Task<Account> FindAccountAsync(FilterAccountViewModel filterAccountViewModel);
 
         /// <summary>
+        /// Create an account and save it into database asynchronously.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        Task<Account> InitializeAccountAsync(Account account);
+
+        /// <summary>
         /// Find the hashed password from the original one.
         /// </summary>
         /// <param name="originalPassword"></param>
@@ -26,7 +33,6 @@ namespace Core.Interfaces
         /// <param name="account"></param>
         /// <param name="filterAccountViewModel"></param>
         /// <returns></returns>
-        Task<bool> IsAccountConditionMatched(Account account, FilterAccountViewModel filterAccountViewModel);
-
+        bool IsAccountConditionMatched(Account account, FilterAccountViewModel filterAccountViewModel);
     }
 }

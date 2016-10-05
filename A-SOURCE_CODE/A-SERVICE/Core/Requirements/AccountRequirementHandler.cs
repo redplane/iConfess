@@ -84,7 +84,7 @@ namespace Core.Requirements
             {
                 account = (Account)httpItems["Account"];
                 var isAccountMatched =
-                    await _repositoryAccount.IsAccountConditionMatched(account, filterAccountViewModel);
+                    _repositoryAccount.IsAccountConditionMatched(account, filterAccountViewModel);
 
                 if (!isAccountMatched)
                     account = null;

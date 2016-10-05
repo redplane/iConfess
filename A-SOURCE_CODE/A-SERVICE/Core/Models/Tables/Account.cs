@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Enumerations;
+using Newtonsoft.Json;
 
 namespace Core.Models.Tables
 {
@@ -54,42 +55,55 @@ namespace Core.Models.Tables
         /// <summary>
         ///     Categories which user is following.
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<FollowCategory> FollowingCategories { get; set; }
 
         /// <summary>
         ///     Posts which have been initialized by account.
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<Post> InitializedPosts { get; set; }
 
         /// <summary>
         ///     List of comments which have been initialized by account.
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<Comment> InitializedComments { get; set; }
 
         /// <summary>
         ///     List of real time connections which broadcasted by this account.
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<Connection> BroadcastedConnections { get; set; }
 
         /// <summary>
         ///     List of comments which are invoked by this account.
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<CommentNotification> InvokedCommentNotifications { get; set; }
 
         /// <summary>
         ///     List of comments which are received by this account.
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<CommentNotification> ReceivedCommentNotifications { get; set; }
 
         /// <summary>
         ///     List of posts which are invoked by this account.
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<PostNotification> InvokedPostNotifications { get; set; }
 
         /// <summary>
         ///     List of posts which are received by this account.
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<PostNotification> ReceivedPostNotifications { get; set; }
+
+        /// <summary>
+        /// List of token owned by this account.
+        /// </summary>
+        public virtual ICollection<Token> Tokens { get; set; }
 
         #endregion
     }

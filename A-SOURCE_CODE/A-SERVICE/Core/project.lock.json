@@ -2188,6 +2188,20 @@
           }
         }
       },
+      "SendGridClient/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0",
+          "Newtonsoft.Json": "9.0.1",
+          "System.Net.Http": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.5/SendGridClient.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.5/SendGridClient.dll": {}
+        }
+      },
       "Serilog/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -6780,6 +6794,20 @@
           "runtimes/win/lib/netstandard1.0/System.Private.Uri.dll": {}
         }
       },
+      "SendGridClient/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0",
+          "Newtonsoft.Json": "9.0.1",
+          "System.Net.Http": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.5/SendGridClient.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.5/SendGridClient.dll": {}
+        }
+      },
       "Serilog/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -11161,6 +11189,31 @@
         "runtime.win7.System.Private.Uri.nuspec",
         "runtimes/aot/lib/netcore50/System.Private.Uri.dll",
         "runtimes/win/lib/netstandard1.0/System.Private.Uri.dll"
+      ]
+    },
+    "SendGridClient/1.1.0": {
+      "sha512": "0B8EbVNKdGsQiebxubcfOn+XyoJY+37KTPWkG39VkthN6X2+cJ6V6iuOwo7XcfcUOzH2mPedjh/+gTqzweQa9g==",
+      "type": "package",
+      "path": "SendGridClient/1.1.0",
+      "files": [
+        "SendGridClient.1.1.0.nupkg.sha512",
+        "SendGridClient.nuspec",
+        "lib/netstandard1.5/SendGridClient.dll",
+        "lib/netstandard1.5/SendGridClient.pdb",
+        "src/SendGridClient/Abstracts/ApiClient.cs",
+        "src/SendGridClient/Clients/MailClient.cs",
+        "src/SendGridClient/Connections/ApiKeyConnection.cs",
+        "src/SendGridClient/Converters/SuccessBooleanConverter.cs",
+        "src/SendGridClient/Exceptions/SendGridApiException.cs",
+        "src/SendGridClient/Extentions/DictionaryExtentions.cs",
+        "src/SendGridClient/Extentions/HttpClientExtentions.cs",
+        "src/SendGridClient/Http/HttpConnection.cs",
+        "src/SendGridClient/ISendGridClient.cs",
+        "src/SendGridClient/Interfaces/IMailClient.cs",
+        "src/SendGridClient/Models/ErrorResponse.cs",
+        "src/SendGridClient/Models/GenericResponse.cs",
+        "src/SendGridClient/Properties/AssemblyInfo.cs",
+        "src/SendGridClient/SendGridClient.cs"
       ]
     },
     "Serilog/2.2.0": {
@@ -15912,6 +15965,7 @@
       "Microsoft.Extensions.Options.ConfigurationExtensions >= 1.0.0",
       "Microsoft.NETCore.App >= 1.0.1",
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0",
+      "SendGridClient >= 1.1.0",
       "Serilog.Extensions.Logging >= 1.2.0",
       "Serilog.Sinks.RollingFile >= 3.0.1",
       "System.Security.Cryptography.Algorithms >= 4.2.0"

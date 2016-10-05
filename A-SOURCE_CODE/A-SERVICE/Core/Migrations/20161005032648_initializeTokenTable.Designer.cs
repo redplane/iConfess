@@ -8,9 +8,10 @@ using Core.Models.Tables;
 namespace Core.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class ThoughtSharingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161005032648_initializeTokenTable")]
+    partial class initializeTokenTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

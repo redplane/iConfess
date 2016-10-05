@@ -11,6 +11,7 @@ using Core.ViewModels.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -55,24 +56,32 @@ namespace Core
 
             #region Dependency injections
 
+            // Singleton of IHttpContextAccessor.
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
             // Load JWT setting into service.
             services.Configure<JwtSetting>(Configuration.GetSection(nameof(JwtSetting)));
-
+            
+            // Load application setting into service.
+            services.Configure<ApplicationSetting>(Configuration.GetSection(nameof(ApplicationSetting)));
+            
             // Implement time service.
             services.AddSingleton<ITimeService, TimeService>();
+            
+            // SendGrid service.
+            services.AddSingleton<IEmailBroadcastService, SendGridService>();
 
             // Implement http service.
             services.AddSingleton<IHttpService, HttpService>();
 
             services.AddSingleton<IRepositoryAccount, RepositoryAccount>();
+            services.AddSingleton<IRepositoryToken, RepositoryToken>();
 
             #endregion
 
             #region Authorization requirements
 
-            // Singleton of IHttpContextAccessor.
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            
             // Authorization handler dependency injection.
             services.AddSingleton<IAuthorizationHandler, AccountRequirementHandler>();
 
@@ -106,7 +115,21 @@ namespace Core
             // Implement serilog, instead of the built in.
             loggerFactory.AddSerilog();
 
-            //var applicationSetting = app.ApplicationServices.GetService<IOptions<ApplicationSetting>>().Value;
+            // Find application setting.
+            var applicationSetting = applicationBuilder.ApplicationServices.GetService<IOptions<ApplicationSetting>>().Value;
+
+            #region Service configuration
+
+            // Find the email service.
+            var emailBroadcastService = applicationBuilder.ApplicationServices.GetService<IEmailBroadcastService>();
+            emailBroadcastService.HostingEnvironment = env;
+            emailBroadcastService.SendGridConfiguration = applicationSetting.SendGridConfiguration;
+
+            // Load all email.
+            foreach (var key in applicationSetting.SendGridEmailTemplates.Keys)
+                emailBroadcastService.LoadEmailFromFileAsync(key, applicationSetting.SendGridEmailTemplates[key]);
+            
+            #endregion
 
             // Find the jwt setting from dependency injection first.
             var jwtSetting = applicationBuilder.ApplicationServices.GetService<IOptions<JwtSetting>>().Value;

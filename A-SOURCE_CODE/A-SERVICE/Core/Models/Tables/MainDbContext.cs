@@ -43,6 +43,11 @@ namespace Core.Models.Tables
         /// </summary>
         public DbSet<Connection> Connections { get; set; }
 
+        /// <summary>
+        /// List of tokens which are used for activating account | finding lost password.
+        /// </summary>
+        public DbSet<Token> Tokens { get; set; }
+
         ///// <summary>
         ///// List of notifications about comments.
         ///// </summary>
@@ -259,10 +264,10 @@ namespace Core.Models.Tables
                 .HasForeignKey(x => x.Owner);
 
             #endregion
-
+            
             base.OnModelCreating(modelBuilder);
         }
-        
+
 
         #endregion
     }
