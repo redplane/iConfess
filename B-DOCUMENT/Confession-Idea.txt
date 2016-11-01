@@ -31,6 +31,7 @@
 		- Hủy theo dõi mục tâm sự / bài viết
 		- Đánh giá bài viết (mức độ từ 1 - 5)
 		- Lọc thông tin bài viết
+		- Báo cáo bình luận vi phạm đến admin
 	
 	Người quản trị:
 		- Hủy / kích hoạt tài khoản nếu như có vi phạm
