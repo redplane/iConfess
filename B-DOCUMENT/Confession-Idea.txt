@@ -36,6 +36,7 @@
 	Người quản trị:
 		- Hủy / kích hoạt tài khoản nếu như có vi phạm
 		- Xem thông tin thống kê các tài khoản: Email, tên
+		- Thêm/xóa mục tâm sự.
 		- Sửa thông tin tài khoản (mật khẩu, ...)
 		- Lọc tài khoản theo thông tin định sẵn
 		- Nhận thông báo khi có 1 tài khoản đăng ký vào trong hệ thống.
