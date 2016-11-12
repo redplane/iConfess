@@ -54,9 +54,15 @@ namespace iConfess.Database.Models.Tables
         public Account Owner { get; set; }
 
         /// <summary>
+        /// Category which post belongs to.
+        /// </summary>
+        [ForeignKey(nameof(CategoryIndex))]
+        public Category Category { get; set; }
+
+        /// <summary>
         /// One post can be monitored by follow post.
         /// </summary>
-        public FollowPost BeFollowed { get; set; }
+        public ICollection<FollowPost> FollowPosts { get; set; }
 
         /// <summary>
         /// Which notification comment post belongs to.
@@ -64,10 +70,14 @@ namespace iConfess.Database.Models.Tables
         public ICollection<NotificationComment> NotificationComments { get; set; }
 
         /// <summary>
+        /// Which notification comment's comment the post contains.
+        /// </summary>
+        public ICollection<NotificationComment> NotificationCommentContainers { get; set; }
+
+        /// <summary>
         /// Which notification post the post belongs to.
         /// </summary>
-        public ICollection<NotificationPost> NotificationPosts { get; set; }
-
+        public ICollection<NotificationPost> NotificationPostContainers { get; set; }
         #endregion
 
     }

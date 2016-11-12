@@ -49,16 +49,19 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         /// Who broadcasted the notification.
         /// </summary>
+        [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
         /// Who should receive the notification.
         /// </summary>
+        [ForeignKey(nameof(InvokerIndex))]
         public Account Invoker { get; set; }
 
         /// <summary>
         /// Post which is notified.
         /// </summary>
+        [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
 
         #endregion

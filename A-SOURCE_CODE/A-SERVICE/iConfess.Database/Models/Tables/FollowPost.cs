@@ -1,4 +1,6 @@
-﻿namespace iConfess.Database.Models.Tables
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace iConfess.Database.Models.Tables
 {
     public class FollowPost
     {
@@ -26,11 +28,13 @@
         /// <summary>
         /// Who is following the post.
         /// </summary>
+        [ForeignKey(nameof(FollowerIndex))]
         public Account Follower { get; set; }
 
         /// <summary>
         /// Post which is being monitored by this relationship.
         /// </summary>
+        [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using iConfess.Database.Enumerations;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using iConfess.Database.Enumerations;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -53,21 +54,25 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         /// Who should receive the notification.
         /// </summary>
+        [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
         /// Who broadcasted the notification.
         /// </summary>
+        [ForeignKey(nameof(InvokerIndex))]
         public Account Invoker { get; set; }
 
         /// <summary>
         /// Comment which is notified.
         /// </summary>
+        [ForeignKey(nameof(CommentIndex))]
         public Comment Comment { get; set; }
 
         /// <summary>
         /// Which post comment belongs to.
         /// </summary>
+        [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
 
         #endregion

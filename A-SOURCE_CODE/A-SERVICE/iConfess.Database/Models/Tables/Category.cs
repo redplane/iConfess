@@ -1,4 +1,7 @@
-﻿namespace iConfess.Database.Models.Tables
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace iConfess.Database.Models.Tables
 {
     public class Category
     {
@@ -7,6 +10,7 @@
         /// <summary>
         /// Id of category.
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
@@ -36,13 +40,18 @@
         /// <summary>
         /// One category can only be created by one account.
         /// </summary>
+        [ForeignKey(nameof(CreatorIndex))]
         public Account Creator { get; set; }
         
         /// <summary>
         /// Relationship between the account following this category with this one.
         /// </summary>
-        public FollowCategory BeFollowed { get; set; }
+        public ICollection<FollowCategory> FollowCategories { get; set; }
 
+        /// <summary>
+        /// One category can contains many posts.
+        /// </summary>
+        public ICollection<Post> Posts { get; set; }
         #endregion
 
     }

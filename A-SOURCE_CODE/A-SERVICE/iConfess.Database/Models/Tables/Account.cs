@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using iConfess.Database.Enumerations;
 
@@ -52,7 +51,7 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         /// One account can create many categories.
         /// </summary>
-        public ICollection<Category> CreatedCategories { get; set; }
+        public ICollection<Category> Categories { get; set; }
 
         /// <summary>
         /// One account can send many comments.

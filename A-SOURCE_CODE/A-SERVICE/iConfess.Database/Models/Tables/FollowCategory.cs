@@ -1,4 +1,6 @@
-﻿namespace iConfess.Database.Models.Tables
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace iConfess.Database.Models.Tables
 {
     public class FollowCategory
     {
@@ -26,11 +28,13 @@
         /// <summary>
         /// Who starts watching.
         /// </summary>
+        [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
         /// Which is being watched.
         /// </summary>
+        [ForeignKey(nameof(CategoryIndex))]
         public Category Category { get; set; }
 
         #endregion
