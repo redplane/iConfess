@@ -1,4 +1,7 @@
-﻿namespace Shared.Repositories
+﻿
+using Shared.Interfaces.Repositories;
+
+namespace Shared.Repositories
 {
     public class RepositoryAccount : IRepositoryAccount
     {

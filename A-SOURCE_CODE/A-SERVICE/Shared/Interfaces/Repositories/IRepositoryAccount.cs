@@ -1,6 +1,6 @@
 ﻿namespace Shared.Interfaces.Repositories
 {
-    public interface IRepositoryAccountExtended
+    public interface IRepositoryAccount
     {
     }
 }
