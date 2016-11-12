@@ -1,4 +1,6 @@
-﻿namespace iConfess.Database.Models.Tables
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace iConfess.Database.Models.Tables
 {
     public class NotificationPost
     {
@@ -7,6 +9,7 @@
         /// <summary>
         /// Id of notification.
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>

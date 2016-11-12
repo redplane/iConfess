@@ -1,4 +1,7 @@
-﻿namespace iConfess.Database.Models.Tables
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace iConfess.Database.Models.Tables
 {
     public class Post
     {
@@ -7,6 +10,7 @@
         /// <summary>
         /// Id of post.
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
@@ -42,10 +46,11 @@
         #endregion
 
         #region Relationships
-        
+
         /// <summary>
         /// Who create the post.
         /// </summary>
+        [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
@@ -56,12 +61,12 @@
         /// <summary>
         /// Which notification comment post belongs to.
         /// </summary>
-        public NotificationComment NotificationComment { get; set; }
+        public ICollection<NotificationComment> NotificationComments { get; set; }
 
         /// <summary>
         /// Which notification post the post belongs to.
         /// </summary>
-        public NotificationPost NotificationPost { get; set; }
+        public ICollection<NotificationPost> NotificationPosts { get; set; }
 
         #endregion
 
