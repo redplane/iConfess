@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -9,6 +10,7 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Id of report.
         /// </summary>
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 

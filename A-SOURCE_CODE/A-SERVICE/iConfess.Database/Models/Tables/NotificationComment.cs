@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using iConfess.Database.Enumerations;
 
 namespace iConfess.Database.Models.Tables
@@ -10,6 +11,7 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Id of notification.
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>

@@ -1,10 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iConfess.Database.Models.Tables
 {
     public class FollowCategory
     {
         #region Properties
+
+        /// <summary>
+        /// Id of following relationship
+        /// </summary>
+        public int Id { get; set; }
 
         /// <summary>
         ///     Owner of following relationship.

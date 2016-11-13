@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iConfess.Database.Models.Tables
@@ -10,6 +11,7 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Id of post.
         /// </summary>
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
