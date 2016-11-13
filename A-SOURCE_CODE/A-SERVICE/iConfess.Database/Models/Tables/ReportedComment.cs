@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -7,37 +7,43 @@ namespace iConfess.Database.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Id of report (Auto incremented)
+        ///     Id of report (Auto incremented)
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
-        /// Comment which is reported.
+        ///     Comment which is reported.
         /// </summary>
         public int CommentIndex { get; set; }
 
         /// <summary>
-        /// Owner of comment.
+        ///     The post comment belongs to.
         /// </summary>
-        public int OwnerIndex { get; set; }
+        public int PostIndex { get; set; }
 
         /// <summary>
-        /// Who created the report.
+        ///     Owner of comment.
         /// </summary>
-        public int ReporterIndex { get; set; }
+        public int CommentOwnerIndex { get; set; }
 
         /// <summary>
-        /// Content of report.
+        ///     Who created the report.
+        /// </summary>
+        public int CommentReporterIndex { get; set; }
+
+        /// <summary>
+        ///     Content of report.
         /// </summary>
         public string Body { get; set; }
 
         /// <summary>
-        /// Reason the comment is reported.
+        ///     Reason the comment is reported.
         /// </summary>
         public string Reason { get; set; }
 
         /// <summary>
-        /// When the report was created.
+        ///     When the report was created.
         /// </summary>
         public double Created { get; set; }
 
@@ -46,19 +52,24 @@ namespace iConfess.Database.Models.Tables
         #region Relationships
 
         /// <summary>
-        /// One report is done by one account.
+        ///     One report can only belongs to one comment.
         /// </summary>
-        public Account Reporter { get; set; }
+        public Comment Comment { get; set; }
 
         /// <summary>
-        /// One report belongs to one specific account.
+        ///     One report can only belongs to one post.
         /// </summary>
-        public Account Owner { get; set; }
+        public Post Post { get; set; }
 
         /// <summary>
-        /// One report can only belongs to one comment.
+        ///     Account which owns the comment
         /// </summary>
-        public ICollection<Comment> Comments { get; set; }
+        public Account CommentOwner { get; set; }
+
+        /// <summary>
+        ///     One report belongs to one specific account.
+        /// </summary>
+        public Account CommentReporter { get; set; }
 
         #endregion
     }

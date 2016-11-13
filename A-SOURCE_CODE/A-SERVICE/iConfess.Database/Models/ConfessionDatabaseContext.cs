@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using iConfess.Database.Models.Tables;
 
 namespace iConfess.Database.Models
@@ -96,46 +95,6 @@ namespace iConfess.Database.Models
             // This table has 2 keys : Id & email
             account.HasKey(x => x.Id);
             account.HasKey(x => x.Email);
-            
-            // Relationships initialiation.
-            // One account can create many categories.
-            account.HasMany(x => x.Categories).WithOptional(x => x.Creator);
-
-            // One account can create many comments.
-            account.HasMany(x => x.OutgoingComments).WithOptional(x => x.Owner);
-
-            // One account can follow many categories.
-            account.HasMany(x => x.FollowCategories).WithOptional(x => x.Owner);
-
-            // One account can follow many posts.
-            account.HasMany(x => x.FollowPosts).WithOptional(x => x.Follower);
-
-            // One account can receive many notification comments.
-            account.HasMany(x => x.IncomingNotificationComments).WithOptional(x => x.Owner);
-
-            // One account can broadcast many notification comments.
-            account.HasMany(x => x.OutgoingNotificationComments).WithOptional(x => x.Invoker);
-
-            // One account can receive many notification comments.
-            account.HasMany(x => x.IncomingNotificationPosts).WithOptional(x => x.Owner);
-
-            // One account can broadcast many notification comments.
-            account.HasMany(x => x.OutgoingNotificationPosts).WithOptional(x => x.Invoker);
-
-            // One account can have many post, but one post only belongs to one account.
-            account.HasMany(x => x.OutgoingPosts).WithOptional(x => x.Owner);
-
-            // One account can report many comments.
-            account.HasMany(x => x.OutgoingReportedComments).WithOptional(x => x.Reporter);
-
-            // One account can have many reports about the comment.
-            account.HasMany(x => x.IncomingReportedComments).WithOptional(x => x.Owner);
-
-            // One account can report many posts.
-            account.HasMany(x => x.OutgoingReportedPosts).WithOptional(x => x.Reporter);
-
-            // One account can have many reports about the posts.
-            account.HasMany(x => x.IncomingReportedPosts).WithOptional(x => x.Owner);
 
             // One account can have many SignalR connections.
             account.HasMany(x => x.OutgoingSignalrConnections).WithOptional(x => x.Owner);
@@ -156,6 +115,10 @@ namespace iConfess.Database.Models
                 x.Id,
                 x.CreatorIndex
             });
+
+            // One category can only be created by one account.
+            // One account can create many categories.
+            category.HasRequired(x => x.Creator).WithMany(x => x.Categories);
         }
 
         /// <summary>
@@ -174,10 +137,18 @@ namespace iConfess.Database.Models
                 x.OwnerIndex,
                 x.PostIndex
             });
+
+            // One account can create many comments.
+            // One comment only belongs to one account.
+            comment.HasRequired(x => x.Owner).WithMany(x => x.OutgoingComments);
+
+            // One post can contain many comments.
+            // One comment only belongs to one post.
+            comment.HasRequired(x => x.Post).WithMany(x => x.Comments);
         }
 
         /// <summary>
-        /// Initiate table with keys, constraints and relationships.
+        ///     Initiate table with keys, constraints and relationships.
         /// </summary>
         /// <param name="dbModelBuilder"></param>
         private void InitiateFollowCategoryTable(DbModelBuilder dbModelBuilder)
@@ -191,13 +162,15 @@ namespace iConfess.Database.Models
                 x.OwnerIndex,
                 x.CategoryIndex
             });
-            
-            // One category can be monitored by follow category.
+
+            // One account can follow many categories.
+            // One category can follow by many account.
+            followCategory.HasRequired(x => x.Owner).WithMany(x => x.FollowCategories);
             followCategory.HasRequired(x => x.Category).WithMany(x => x.FollowCategories);
         }
 
         /// <summary>
-        /// Initiate table with keys, constraints and relationships.
+        ///     Initiate table with keys, constraints and relationships.
         /// </summary>
         /// <param name="dbModelBuilder"></param>
         private void InitiateFollowPostTable(DbModelBuilder dbModelBuilder)
@@ -212,12 +185,14 @@ namespace iConfess.Database.Models
                 x.PostIndex
             });
 
-            // One post can be monitored by follow post.
+            // One account can follow many posts.
+            // One post can be followed by many accounts.
+            followPost.HasRequired(x => x.Follower).WithMany(x => x.FollowPosts);
             followPost.HasRequired(x => x.Post).WithMany(x => x.FollowPosts);
         }
 
         /// <summary>
-        /// Initiate table with keys, constraints and relationships.
+        ///     Initiate table with keys, constraints and relationships.
         /// </summary>
         /// <param name="dbModelBuilder"></param>
         private void InitiateNotificationComment(DbModelBuilder dbModelBuilder)
@@ -231,19 +206,26 @@ namespace iConfess.Database.Models
                 x.Id,
                 x.CommentIndex,
                 x.PostIndex,
-                x.OwnerIndex,
-                x.InvokerIndex
+                x.RecipientIndex,
+                x.BroadcasterIndex
             });
 
-            // Many comment notifications can be about one comment.
+            // One account can broadcast many comment notifications.
+            // One comment notification can only broadcasted by one account.
+            notificationComment.HasRequired(x => x.Recipient).WithMany(x => x.IncomingNotificationComments);
+            notificationComment.HasRequired(x => x.Broadcaster).WithMany(x => x.OutgoingNotificationComments);
+
+            // One comment can have many notifications.
+            // One notification must be about one comment.
             notificationComment.HasRequired(x => x.Comment).WithMany(x => x.NotificationComments);
 
-            // Many comment notifications can be about one post.
-            notificationComment.HasRequired(x => x.Post).WithMany(x => x.NotificationCommentContainers);
+            // One post can have many notifications about its comment.
+            // One notification must be about one post.
+            notificationComment.HasRequired(x => x.Post).WithMany(x => x.NotificationComments);
         }
 
         /// <summary>
-        /// Initiate table with keys, constraints and relationships.
+        ///     Initiate table with keys, constraints and relationships.
         /// </summary>
         /// <param name="dbModelBuilder"></param>
         private void InitiateNotificationPostTable(DbModelBuilder dbModelBuilder)
@@ -256,18 +238,22 @@ namespace iConfess.Database.Models
             {
                 x.Id,
                 x.PostIndex,
-                x.OwnerIndex,
-                x.InvokerIndex
+                x.RecipientIndex,
+                x.BroadcasterIndex
             });
 
-            // One post can have many notification.
-            notificationPost.HasRequired(x => x.Post).WithMany(x => x.NotificationPostContainers);
+            // One post can have many notifications about it.
+            // One notification can only be about one post.
+            notificationPost.HasRequired(x => x.Post).WithMany(x => x.NotificationPosts);
 
-            // One post notification 
+            // One account can receive many notifications.
+            // One notification only belongs to one account.
+            notificationPost.HasRequired(x => x.Recipient).WithMany(x => x.IncomingNotificationPosts);
+            notificationPost.HasRequired(x => x.Broadcaster).WithMany(x => x.OutgoingNotificationPosts);
         }
 
         /// <summary>
-        /// Initiate table with keys, constraints and relationships.
+        ///     Initiate table with keys, constraints and relationships.
         /// </summary>
         /// <param name="dbModelBuilder"></param>
         private void InitiatePostTable(DbModelBuilder dbModelBuilder)
@@ -283,10 +269,102 @@ namespace iConfess.Database.Models
                 x.CategoryIndex
             });
 
-            // Many post can belong to one category.
-            post.HasRequired(x => x.Category).WithMany(x => x.Posts);
+            // One post belongs to a specific account.
+            // One account can create many posts.
+            post.HasRequired(x => x.Owner).WithMany(x => x.OutgoingPosts);
 
+            // One post belongs to a specific category.
+            // One category can contain many posts.
+            post.HasRequired(x => x.Category).WithMany(x => x.Posts);
         }
+
+        /// <summary>
+        ///     Initiate table with keys, constraints and relationships.
+        /// </summary>
+        /// <param name="dbModelBuilder"></param>
+        private void InitiateReportedCommentTable(DbModelBuilder dbModelBuilder)
+        {
+            // Find post entity configuration.
+            var reportedComment = dbModelBuilder.Entity<ReportedComment>();
+
+            // The notification comment has 5 fields combined as a primary key.
+            reportedComment.HasKey(x => new
+            {
+                x.Id,
+                x.CommentIndex,
+                x.PostIndex,
+                x.CommentOwnerIndex,
+                x.CommentReporterIndex
+            });
+
+            // One report belongs to one comment.
+            // One comment can have many reports.
+            reportedComment.HasRequired(x => x.Comment).WithMany(x => x.ReportedComments);
+
+            // One report belongs to one post.
+            // One post can have many reports about its comments.
+            reportedComment.HasRequired(x => x.Post).WithMany(x => x.ReportedComments);
+
+            // One report belongs to one comment owner.
+            // One owner can have many reports about his/her comments.
+            reportedComment.HasRequired(x => x.CommentOwner).WithMany(x => x.IncomingReportedComments);
+
+            // One report can be reported by one account.
+            // One account can report many comments.
+            reportedComment.HasRequired(x => x.CommentReporter).WithMany(x => x.OutgoingReportedComments);
+        }
+
+        /// <summary>
+        ///     Initiate table with keys, constraints and relationships.
+        /// </summary>
+        /// <param name="dbModelBuilder"></param>
+        private void InitiateReportedPostTable(DbModelBuilder dbModelBuilder)
+        {
+            // Find post entity configuration.
+            var reportedPost = dbModelBuilder.Entity<ReportedPost>();
+
+            // The notification comment has 5 fields combined as a primary key.
+            reportedPost.HasKey(x => new
+            {
+                x.Id,
+                x.PostIndex,
+                x.PostOwnerIndex,
+                x.PostReporterIndex
+            });
+
+            // One report is about a specific post.
+            // One post can have many comments.
+            reportedPost.HasRequired(x => x.Post).WithMany(x => x.ReportedPosts);
+
+            // One account can have many post reports.
+            // One report is about one account.
+            reportedPost.HasRequired(x => x.PostOwner).WithMany(x => x.IncomingReportedPosts);
+
+            // One account can report many posts.
+            // One post can be reported by many accounts.
+            reportedPost.HasRequired(x => x.PostReporter).WithMany(x => x.OutgoingReportedPosts);
+        }
+
+        /// <summary>
+        ///     Initiate table with keys, constraints and relationships.
+        /// </summary>
+        /// <param name="dbModelBuilder"></param>
+        private void InitiateSignalrConnectionTable(DbModelBuilder dbModelBuilder)
+        {
+            // Find post entity configuration.
+            var signalrConnection = dbModelBuilder.Entity<SignalrConnection>();
+
+            // The notification comment has 5 fields combined as a primary key.
+            signalrConnection.HasKey(x => new
+            {
+                x.Index,
+                x.OwnerIndex
+            });
+
+            // One account can broadcast many signalr connections.
+            signalrConnection.HasRequired(x => x.Owner).WithMany(x => x.OutgoingSignalrConnections);
+        }
+
         #endregion
     }
 }

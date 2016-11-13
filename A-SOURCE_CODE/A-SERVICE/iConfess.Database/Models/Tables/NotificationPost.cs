@@ -7,38 +7,38 @@ namespace iConfess.Database.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Id of notification.
+        ///     Id of notification.
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
-        /// Post which is notified.
+        ///     Post which is notified.
         /// </summary>
         public int PostIndex { get; set; }
 
         /// <summary>
-        /// Owner of notification.
+        ///     Who should receive the notification.
         /// </summary>
-        public int OwnerIndex { get; set; }
+        public int RecipientIndex { get; set; }
 
         /// <summary>
-        /// Who caused the notification broadcasted.
+        ///     Who caused the notification broadcasted.
         /// </summary>
-        public int InvokerIndex { get; set; }
+        public int BroadcasterIndex { get; set; }
 
         /// <summary>
-        /// Type of notification (CRUD)
+        ///     Type of notification (CRUD)
         /// </summary>
         public int Type { get; set; }
 
         /// <summary>
-        /// Whether the owner seen the post or not.
+        ///     Whether the owner seen the post or not.
         /// </summary>
         public bool IsSeen { get; set; }
 
         /// <summary>
-        /// When the notification was created.
+        ///     When the notification was created.
         /// </summary>
         public double Created { get; set; }
 
@@ -47,22 +47,22 @@ namespace iConfess.Database.Models.Tables
         #region Relationships
 
         /// <summary>
-        /// Who broadcasted the notification.
-        /// </summary>
-        [ForeignKey(nameof(OwnerIndex))]
-        public Account Owner { get; set; }
-
-        /// <summary>
-        /// Who should receive the notification.
-        /// </summary>
-        [ForeignKey(nameof(InvokerIndex))]
-        public Account Invoker { get; set; }
-
-        /// <summary>
-        /// Post which is notified.
+        ///     Post which is notified.
         /// </summary>
         [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
+
+        /// <summary>
+        ///     Who broadcasted the notification.
+        /// </summary>
+        [ForeignKey(nameof(RecipientIndex))]
+        public Account Recipient { get; set; }
+
+        /// <summary>
+        ///     Who should receive the notification.
+        /// </summary>
+        [ForeignKey(nameof(BroadcasterIndex))]
+        public Account Broadcaster { get; set; }
 
         #endregion
     }

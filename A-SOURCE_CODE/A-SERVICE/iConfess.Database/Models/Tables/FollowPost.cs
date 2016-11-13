@@ -7,17 +7,17 @@ namespace iConfess.Database.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Who is the follower of post.
+        ///     Who is the follower of post.
         /// </summary>
         public int FollowerIndex { get; set; }
 
         /// <summary>
-        /// Which post is being followed by the follower.
+        ///     Which post is being followed by the follower.
         /// </summary>
         public int PostIndex { get; set; }
 
         /// <summary>
-        /// When the following action was created.
+        ///     When the following action was created.
         /// </summary>
         public double Created { get; set; }
 
@@ -26,13 +26,13 @@ namespace iConfess.Database.Models.Tables
         #region Relationships
 
         /// <summary>
-        /// Who is following the post.
+        ///     Who is following the post.
         /// </summary>
         [ForeignKey(nameof(FollowerIndex))]
         public Account Follower { get; set; }
 
         /// <summary>
-        /// Post which is being monitored by this relationship.
+        ///     Post which is being monitored by this relationship.
         /// </summary>
         [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }

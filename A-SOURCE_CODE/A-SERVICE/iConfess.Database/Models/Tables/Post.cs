@@ -8,38 +8,38 @@ namespace iConfess.Database.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Id of post.
+        ///     Id of post.
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
-        /// Who owns the post.
+        ///     Who owns the post.
         /// </summary>
         public int OwnerIndex { get; set; }
 
         /// <summary>
-        /// Which category the post belongs to.
+        ///     Which category the post belongs to.
         /// </summary>
         public int CategoryIndex { get; set; }
 
         /// <summary>
-        /// Title of post.
+        ///     Title of post.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Post body.
+        ///     Post body.
         /// </summary>
         public string Body { get; set; }
-        
+
         /// <summary>
-        /// When the post was created.
+        ///     When the post was created.
         /// </summary>
         public double Created { get; set; }
 
         /// <summary>
-        /// When the post was lastly modified.
+        ///     When the post was lastly modified.
         /// </summary>
         public double? LastModified { get; set; }
 
@@ -48,37 +48,47 @@ namespace iConfess.Database.Models.Tables
         #region Relationships
 
         /// <summary>
-        /// Who create the post.
+        ///     Who create the post.
         /// </summary>
         [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
-        /// Category which post belongs to.
+        ///     Category which post belongs to.
         /// </summary>
         [ForeignKey(nameof(CategoryIndex))]
         public Category Category { get; set; }
 
         /// <summary>
-        /// One post can be monitored by follow post.
+        ///     List of comment belongs to the post.
+        /// </summary>
+        public ICollection<Comment> Comments { get; set; }
+
+        /// <summary>
+        ///     One post can be monitored by follow post.
         /// </summary>
         public ICollection<FollowPost> FollowPosts { get; set; }
 
         /// <summary>
-        /// Which notification comment post belongs to.
+        ///     Which notification comment post belongs to.
         /// </summary>
         public ICollection<NotificationComment> NotificationComments { get; set; }
 
         /// <summary>
-        /// Which notification comment's comment the post contains.
+        ///     Which notification post the post belongs to.
         /// </summary>
-        public ICollection<NotificationComment> NotificationCommentContainers { get; set; }
+        public ICollection<NotificationPost> NotificationPosts { get; set; }
 
         /// <summary>
-        /// Which notification post the post belongs to.
+        ///     One post can have many reports about its comments.
         /// </summary>
-        public ICollection<NotificationPost> NotificationPostContainers { get; set; }
-        #endregion
+        public ICollection<ReportedComment> ReportedComments { get; set; }
 
+        /// <summary>
+        ///     One post can have many reports about it.
+        /// </summary>
+        public ICollection<ReportedPost> ReportedPosts { get; set; }
+
+        #endregion
     }
 }

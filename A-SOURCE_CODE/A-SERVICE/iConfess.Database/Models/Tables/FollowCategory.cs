@@ -7,17 +7,17 @@ namespace iConfess.Database.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Owner of following relationship.
+        ///     Owner of following relationship.
         /// </summary>
         public int OwnerIndex { get; set; }
 
         /// <summary>
-        /// Category index.
+        ///     Category index.
         /// </summary>
         public int CategoryIndex { get; set; }
 
         /// <summary>
-        /// When the relationship was lastly created.
+        ///     When the relationship was lastly created.
         /// </summary>
         public double Created { get; set; }
 
@@ -26,13 +26,13 @@ namespace iConfess.Database.Models.Tables
         #region Relationships
 
         /// <summary>
-        /// Who starts watching.
+        ///     Who starts watching.
         /// </summary>
         [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
-        /// Which is being watched.
+        ///     Which is being watched.
         /// </summary>
         [ForeignKey(nameof(CategoryIndex))]
         public Category Category { get; set; }

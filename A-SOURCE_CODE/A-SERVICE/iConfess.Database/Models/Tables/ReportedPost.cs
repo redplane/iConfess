@@ -1,41 +1,69 @@
-﻿namespace iConfess.Database.Models.Tables
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace iConfess.Database.Models.Tables
 {
     public class ReportedPost
     {
+        #region Properties
+
         /// <summary>
-        /// Id of report.
+        ///     Id of report.
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
-        /// Which post is reported.
+        ///     Which post is reported.
         /// </summary>
-        public int Post { get; set; }
+        public int PostIndex { get; set; }
 
         /// <summary>
-        /// Who owns the post.
+        ///     Who owns the post.
         /// </summary>
-        public int Owner { get; set; }
+        public int PostOwnerIndex { get; set; }
 
         /// <summary>
-        /// Who report the post.
+        ///     Who report the post.
         /// </summary>
-        public int Reporter { get; set; }
+        public int PostReporterIndex { get; set; }
 
         /// <summary>
-        /// Original content of post.
+        ///     Original content of post.
         /// </summary>
         public string Body { get; set; }
 
         /// <summary>
-        /// Reason the post was reported.
+        ///     Reason the post was reported.
         /// </summary>
         public string Reason { get; set; }
-        
+
         /// <summary>
-        /// When the report was created.
+        ///     When the report was created.
         /// </summary>
         public double Created { get; set; }
 
+        #endregion
+
+        #region Relationships
+
+        /// <summary>
+        ///     One report is about one post, just one.
+        /// </summary>
+        [ForeignKey(nameof(PostIndex))]
+        public Post Post { get; set; }
+
+        /// <summary>
+        ///     Report can only be about one account.
+        /// </summary>
+        [ForeignKey(nameof(PostOwnerIndex))]
+        public Account PostOwner { get; set; }
+
+        /// <summary>
+        ///     Report can only belong to one account.
+        /// </summary>
+        [ForeignKey(nameof(PostReporterIndex))]
+        public Account PostReporter { get; set; }
+
+        #endregion
     }
 }
