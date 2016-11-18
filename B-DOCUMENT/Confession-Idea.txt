@@ -42,6 +42,8 @@
 		- Nhận thông báo khi có 1 tài khoản đăng ký vào trong hệ thống.
 		- Nhận thông báo về một báo cáo bài viết vi phạm từ các thành viên khác
 		- Xóa bài viết khi có ít nhất 10 báo cáo vi phạm.
+		- Xem thống kê số lượng bài viết, tài khoản đăng ký mới, báo cáo trong dashboard.
+		
 		
 	
 
