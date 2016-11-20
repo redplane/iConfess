@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 @Component({
     selector: 'main-application',
-    template: '<h1>Share what you think of</h1>'
+    templateUrl: './app/html/main-application.html'
 })
-export class MainApplicationComponent { }
+
+export class MainApplicationComponent {
+
+}

@@ -11,13 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var main_application_component_1 = require('../components/main-application.component');
+var navigation_bar_component_1 = require("../components/navigation-bar.component");
+var sidebar_component_1 = require("../components/sidebar.component");
+var account_management_component_1 = require("../components/account-management.component");
+var category_management_component_1 = require("../components/category-management.component");
 var MainApplicationModule = (function () {
     function MainApplicationModule() {
     }
     MainApplicationModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule],
-            declarations: [main_application_component_1.MainApplicationComponent],
+            declarations: [
+                main_application_component_1.MainApplicationComponent,
+                navigation_bar_component_1.NavigationBarComponent,
+                sidebar_component_1.SidebarComponent,
+                account_management_component_1.AccountManagementComponent,
+                category_management_component_1.CategoryManagementComponent
+            ],
             bootstrap: [main_application_component_1.MainApplicationComponent]
         }), 
         __metadata('design:paramtypes', [])

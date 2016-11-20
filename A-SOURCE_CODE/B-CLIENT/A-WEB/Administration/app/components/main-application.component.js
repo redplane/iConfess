@@ -15,7 +15,7 @@ var MainApplicationComponent = (function () {
     MainApplicationComponent = __decorate([
         core_1.Component({
             selector: 'main-application',
-            template: '<h1>Share what you think of</h1>'
+            templateUrl: './app/html/main-application.html'
         }), 
         __metadata('design:paramtypes', [])
     ], MainApplicationComponent);
