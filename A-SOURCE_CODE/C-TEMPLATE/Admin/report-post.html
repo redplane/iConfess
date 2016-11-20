@@ -346,7 +346,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Categories
+                Reported posts
             </h1>
         </section>
 
@@ -373,23 +373,12 @@
 
                             <div class="col-lg-6">
 
-                                <!-- Creators -->
+                                <!-- Owner -->
                                 <div class="form-group">
                                     <label>Creators</label>
                                     <input class="form-control"
-                                           placeholder="Creators"
-                                           value="Person A, Person B"/>
-                                </div>
-
-                                <!-- Name -->
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <select class="form-control"
-                                            placeholder="Name">
-                                        <option value="0">Disabled</option>
-                                        <option value="1">Pending</option>
-                                        <option value="2">Active</option>
-                                    </select>
+                                           placeholder="Owner"
+                                           value="Person A"/>
                                 </div>
 
                             </div>
@@ -397,22 +386,13 @@
 
                             <div class="col-lg-6">
 
-                                <!-- Created -->
+                                <!-- Reporter -->
                                 <div class="form-group">
-                                    <label>Created</label>
+                                    <label>Reporter</label>
                                     <input class="form-control"
-                                           type="date"/>
+                                           placeholder="Reporter"/>
                                 </div>
 
-                                <!-- Last modified -->
-                                <div class="form-group">
-
-                                    <label>Last modified</label>
-
-                                    <input class="form-control"
-                                           type="date"/>
-
-                                </div>
                             </div>
                         </div>
 
@@ -425,96 +405,107 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-12">
                     <div class="box box-info">
                         <div class="box-header">
-                            <span class="glyphicon glyphicon-folder-open"></span>
+                            <span class="glyphicon glyphicon-list-alt"></span>
                             <span>
-                                <a href="javascript:void(0)">Category name</a>
+                                Reported posts
                             </span>
                         </div>
 
                         <div class="box-body">
-                            <table class="table table-responsive">
+                            <table class="table table-responsive table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Owner</th>
+                                    <th class="text-center">Reporter</th>
+                                    <th class="text-center">Body</th>
+                                    <th class="text-center">Reason</th>
+                                    <th class="text-center">Created</th>
+                                    <th class="text-center"></th>
+                                </tr>
+                                </thead>
                                 <tbody>
                                 <tr>
-                                    <th>Creator</th>
                                     <td>
-                                        <a href="javascript:void(0);">Nguyen Duy Linh</a>
+                                        <a href="javascript:void(0);"
+                                           data-toggle="modal"
+                                           data-target="#modalAccountDetail">Nguyen Van A</a>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <th>Created</th>
-                                    <td>1/1/1970</td>
-                                </tr>
-                                <tr>
-                                    <th>Last modified</th>
-                                    <td>1/1/1980</td>
+                                    <td>
+                                        <a href="javascript:void(0);">Nguyen Van B</a>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);"
+                                           data-toggle="modal"
+                                           data-target="#modalPostDetail">This is the f*cking world</a>
+                                    </td>
+                                    <td>
+                                        This is not the f*cking world
+                                    </td>
+                                    <td>
+                                        <span>1/1/1970</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-flat btn-danger"
+                                                data-toggle="modal"
+                                                data-target="#modalRemovePost">
+                                            <span class="glyphicon glyphicon-trash"
+                                                  data-toggle="tooltip"
+                                                  title="Remove post"></span>
+                                        </button>
+
+                                        <button class="btn btn-flat btn-primary"
+                                                data-toggle="tooltip"
+                                                title="Make post valid">
+                                            <span class="glyphicon glyphicon-check"></span>
+                                        </button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
-                        </div>
-
-                        <div class="box-footer">
-                            <button class="btn btn-danger btn-flat col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                            <button class="btn btn-info btn-flat col-lg-6 col-md-6 col-sm-6 col-xs-12"
-                                    data-toggle="modal"
-                                    data-target="#modalEditCategory">
-                                <span class="glyphicon glyphicon-edit"></span>
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="text-center">
-                    <ul class="pagination">
-                        <li><a href="javascript:void(0);"><<</a></li>
-                        <li><a href="javascript:void(0);"><</a></li>
-                        <li class="active"><a href="javascript:void(0);">1</a></li>
-                        <li><a href="javascript:void(0);">></a></li>
-                        <li><a href="javascript:void(0);">>></a></li>
-                    </ul>
-                </div>
+
             </div>
 
-            <div id="modalEditCategory"
+            <!-- Modal which shows detail of the reported post -->
+            <div id="modalPostDetail"
                  class="modal fade"
                  role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <span class="glyphicon glyphicon-edit"></span>
-                            <span>Edit a category</span>
+                            {{Post title}}
                         </div>
                         <div class="modal-body">
+
                             <div class="form-group">
-                                <label>Name</label>
-                                <input class="form-control"
-                                       value="Category name"
-                                       placeholder="Original category name"/>
-                            </div>
-                            <div class="form-group">
-                                <label>Creator</label>
                                 <div class="form-control"
                                      value="Category name">
-                                    <span>Original creator name</span>
+                                    <span>{{Post body}}</span>
+                                </div>
+                                <hr/>
+
+                                <div class="form-group">
+                                    <span class="glyphicon glyphicon-send"></span>
+                                    <span> {{Created time}}</span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    <span> {{Last edit time}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
 
                             <div class="text-center">
-                                <button type="button"
-                                        class="btn btn-primary btn-flat"
-                                        data-dismiss="modal">
-                                    <span class="glyphicon glyphicon-check"></span>
-                                </button>
-
                                 <button type="button"
                                         class="btn btn-default btn-flat"
                                         data-dismiss="modal">
@@ -527,6 +518,85 @@
                 </div>
             </div>
 
+            <!-- Modal which will be shown when admin wants to confirm to remove a post -->
+            <div id="modalRemovePost"
+                 class="modal fade"
+                 role="dialog">
+                <div class="modal-dialog modal-danger">
+                    <div class="modal-header">
+                        Remove post
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="required">Reason to remove the post</label>
+                            <textarea placeholder="Reason to remove post"
+                                      class="form-control"
+                                      style="resize:none;"
+                                      rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="text-center">
+                            <button type="button"
+                                    class="btn btn-default btn-flat"
+                                    data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal which will be shown when admin sees a profile of an account -->
+            <div id="modalAccountDetail"
+                 class="modal fade"
+                 role="dialog">
+                <div class="modal-dialog modal-content">
+                    <div class="modal-header">
+                        {{Account email}}
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <img class="img-thumbnail img-responsive"
+                                     src="img/avatar-512x512.png"/>
+                            </div>
+
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <table class="table table-responsive">
+                                    <tbody>
+                                    <tr>
+                                        <th>Nickname</th>
+                                        <td>This is email</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td>Disabled/Pending/Active</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Joined</th>
+                                        <td>1/1/1970</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="text-center">
+                            <button type="button"
+                                    class="btn btn-default btn-flat"
+                                    data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </div>
