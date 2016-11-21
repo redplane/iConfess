@@ -51,9 +51,9 @@
   <ItemGroup>
     <Compile Include="Enumerations\AccountStatus.cs" />
     <Compile Include="Enumerations\NotificationType.cs" />
-    <Compile Include="Migrations\201611131416066_initial-database.cs" />
-    <Compile Include="Migrations\201611131416066_initial-database.Designer.cs">
-      <DependentUpon>201611131416066_initial-database.cs</DependentUpon>
+    <Compile Include="Migrations\201611210907275_11212016001.cs" />
+    <Compile Include="Migrations\201611210907275_11212016001.Designer.cs">
+      <DependentUpon>201611210907275_11212016001.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Tables\Account.cs" />
@@ -71,12 +71,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611131416066_initial-database.resx">
-      <DependentUpon>201611131416066_initial-database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611210907275_11212016001.resx">
+      <DependentUpon>201611210907275_11212016001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
