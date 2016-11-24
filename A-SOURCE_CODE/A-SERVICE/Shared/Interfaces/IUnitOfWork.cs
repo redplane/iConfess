@@ -1,4 +1,5 @@
-﻿using Shared.Interfaces.Repositories;
+﻿using System.Threading.Tasks;
+using Shared.Interfaces.Repositories;
 
 namespace Shared.Interfaces
 {
@@ -10,7 +11,7 @@ namespace Shared.Interfaces
         ///     Save changes into database asynchronously.
         /// </summary>
         /// <returns></returns>
-        int CommitAsync();
+        Task<int> CommitAsync();
 
         #endregion
 

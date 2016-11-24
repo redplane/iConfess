@@ -231,7 +231,6 @@
     <None Include="Properties\PublishProfiles\Olive - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\Olive - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\Olive - Web Deploy.pubxml" />
-    <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -252,11 +251,9 @@
     <Compile Include="Controllers\ApiAccountController.cs" />
     <Compile Include="Controllers\ApiCommentReportController.cs" />
     <Compile Include="Controllers\ApiCategoryController.cs" />
+    <Compile Include="Controllers\ApiParentController.cs" />
     <Compile Include="Controllers\ApiPostReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Interfaces\Services\INotificationService.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Module\Log4NetModule.cs" />

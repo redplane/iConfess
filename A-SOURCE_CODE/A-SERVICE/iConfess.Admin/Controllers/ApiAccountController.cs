@@ -1,12 +1,28 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
+using Shared.Interfaces;
 
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/account")]
-    public class ApiAccountController : ApiController
+    public class ApiAccountController : ApiParentController
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initiate controller with dependency injections.
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        public ApiAccountController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+               
+        }
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Check account information and sign user into system as the information is valid.
         /// </summary>
@@ -61,6 +77,7 @@ namespace iConfess.Admin.Controllers
         {
             throw new NotImplementedException();
         }
-        
+
+        #endregion
     }
 }

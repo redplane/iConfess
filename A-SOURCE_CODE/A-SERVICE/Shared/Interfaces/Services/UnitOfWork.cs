@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using iConfess.Database.Models;
 using Shared.Interfaces.Repositories;
 using Shared.Repositories;
@@ -7,19 +8,38 @@ namespace Shared.Interfaces.Services
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
+        #region Properties
+
+        /// <summary>
+        /// Provide methods to access confession database.
+        /// </summary>
         private readonly ConfessionDatabaseContext _iConfessDbContext;
 
+        /// <summary>
+        /// Provide access to accounts database.
+        /// </summary>
         private IRepositoryAccount _repositoryAccounts;
 
+        /// <summary>
+        /// Provide access to categories database.
+        /// </summary>
         private IRepositoryCategory _repositoryCategories;
 
+        /// <summary>
+        /// Provide access to comments database.
+        /// </summary>
         private IRepositoryComment _repositoryComment;
+
+        /// <summary>
+        /// Provide access to post report database.
+        /// </summary>
+        private IRepositoryPostReport _repositoryPostReport;
 
         /// <summary>
         /// Whether the instance has been disposed or not.
         /// </summary>
-        private bool _disposed = false;
-        
+        private bool _disposed;
+
         /// <summary>
         ///     Provides functions to access account database.
         /// </summary>
@@ -47,12 +67,8 @@ namespace Shared.Interfaces.Services
             get { return _repositoryComment ?? (_repositoryComment = new RepositoryComment(_iConfessDbContext)); }
         }
 
-        public IRepositoryPostReport RepositoryPostReports
-        {
-            get { throw new NotImplementedException(); }
 
-            set { throw new NotImplementedException(); }
-        }
+        public IRepositoryPostReport RepositoryPostReports { get; set; }
 
         public IRepositoryPost RepositoryPosts
         {
@@ -75,15 +91,30 @@ namespace Shared.Interfaces.Services
             set { throw new NotImplementedException(); }
         }
 
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initiate unit of work with database context provided by Entity Framework.
+        /// </summary>
+        /// <param name="iConfessDbContext"></param>
+        public UnitOfWork(ConfessionDatabaseContext iConfessDbContext)
+        {
+            _iConfessDbContext = iConfessDbContext;
+        }
+
+        #endregion
+        
         #region Methods
 
         /// <summary>
         /// Save changes into database.
         /// </summary>
         /// <returns></returns>
-        public int CommitAsync()
+        public async Task<int> CommitAsync()
         {
-            throw new NotImplementedException();
+            return await _iConfessDbContext.SaveChangesAsync();
         }
 
         /// <summary>
