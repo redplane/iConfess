@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
@@ -31,9 +32,10 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("login")]
         [HttpPost]
+        [AllowAnonymous]
         public HttpResponseMessage Login()
         {
-            throw new NotImplementedException();
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace iConfess.Admin.Controllers
         [HttpGet]
         public HttpResponseMessage RequestFindLostPassword()
         {
-            throw new NotImplementedException();    
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         /// <summary>

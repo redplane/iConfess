@@ -1,9 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
 using Shared.Interfaces;
 
 namespace iConfess.Admin.Controllers
 {
-    public class ApiParentController : Controller
+    public class ApiParentController : ApiController
     {
         #region Properties
 

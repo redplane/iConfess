@@ -118,12 +118,7 @@ namespace iConfess.Admin
                     id = UrlParameter.Optional
                 }
             );
-
-            routes.MapRoute(
-                "Olives",
-                "{controller}/{action}/{id}",
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional}
-            );
+            
         }
     }
 }
