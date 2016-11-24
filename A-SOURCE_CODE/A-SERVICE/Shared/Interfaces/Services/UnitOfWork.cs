@@ -13,7 +13,7 @@ namespace Shared.Interfaces.Services
         /// <summary>
         /// Provide methods to access confession database.
         /// </summary>
-        private readonly ConfessionDatabaseContext _iConfessDbContext;
+        private readonly ConfessionDbContext _iConfessDbContext;
 
         /// <summary>
         /// Provide access to accounts database.
@@ -99,11 +99,11 @@ namespace Shared.Interfaces.Services
         /// Initiate unit of work with database context provided by Entity Framework.
         /// </summary>
         /// <param name="iConfessDbContext"></param>
-        public UnitOfWork(ConfessionDatabaseContext iConfessDbContext)
+        public UnitOfWork(ConfessionDbContext iConfessDbContext)
         {
             _iConfessDbContext = iConfessDbContext;
         }
-
+        
         #endregion
         
         #region Methods
@@ -123,13 +123,17 @@ namespace Shared.Interfaces.Services
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            // Object has been disposed.
+            if (_disposed)
+                return;
+            
+            // Object is being disposed.
+            if (disposing)
             {
-                if (disposing)
-                {
-                    _iConfessDbContext.Dispose();
-                }
+                // Free the database context.
+                _iConfessDbContext.Dispose();
             }
+            
             _disposed = true;
         }
 

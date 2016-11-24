@@ -12,7 +12,7 @@ namespace Shared.Repositories
         /// <summary>
         /// Provides functions to access to real database.
         /// </summary>
-        private readonly ConfessionDatabaseContext _iConfessDbContext;
+        private readonly ConfessionDbContext _iConfessDbContext;
 
         #endregion
 
@@ -22,7 +22,7 @@ namespace Shared.Repositories
         /// Initiate repository with database context.
         /// </summary>
         /// <param name="iConfessDbContext"></param>
-        public RepositoryCategory(ConfessionDatabaseContext iConfessDbContext)
+        public RepositoryCategory(ConfessionDbContext iConfessDbContext)
         {
             _iConfessDbContext = iConfessDbContext;
         }

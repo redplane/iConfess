@@ -59,7 +59,7 @@
     <Compile Include="Models\Tables\Account.cs" />
     <Compile Include="Models\Tables\Category.cs" />
     <Compile Include="Models\Tables\Comment.cs" />
-    <Compile Include="Models\ConfessionDatabaseContext.cs" />
+    <Compile Include="Models\ConfessionDbContext.cs" />
     <Compile Include="Models\Tables\FollowCategory.cs" />
     <Compile Include="Models\Tables\FollowPost.cs" />
     <Compile Include="Models\Tables\NotificationComment.cs" />

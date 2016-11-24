@@ -5,14 +5,14 @@ using iConfess.Database.Models.Tables;
 
 namespace iConfess.Database.Models
 {
-    public class ConfessionDatabaseContext : DbContext
+    public class ConfessionDbContext : DbContext
     {
         #region Constructor
 
         /// <summary>
         /// Initiate database context with connection string.
         /// </summary>
-        public ConfessionDatabaseContext() : base("iConfess")
+        public ConfessionDbContext() : base("iConfess")
         {
         }
 
