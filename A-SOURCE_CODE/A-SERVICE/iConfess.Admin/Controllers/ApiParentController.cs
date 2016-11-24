@@ -23,6 +23,7 @@ namespace iConfess.Admin.Controllers
         public ApiParentController(IUnitOfWork unitOfWork)
         {
             UniOfWork = unitOfWork;
+            
         }
         
         #endregion

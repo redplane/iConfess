@@ -8,13 +8,22 @@ namespace Shared.Interfaces.Services
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        #region Properties
+        #region Variables
+
+        /// <summary>
+        /// Whether the instance has been disposed or not.
+        /// </summary>
+        private bool _disposed;
 
         /// <summary>
         /// Provide methods to access confession database.
         /// </summary>
         private readonly ConfessionDbContext _iConfessDbContext;
 
+        #endregion
+
+        #region Properties
+        
         /// <summary>
         /// Provide access to accounts database.
         /// </summary>
@@ -36,9 +45,12 @@ namespace Shared.Interfaces.Services
         private IRepositoryPostReport _repositoryPostReport;
 
         /// <summary>
-        /// Whether the instance has been disposed or not.
+        /// Provide methods to access confession database.
         /// </summary>
-        private bool _disposed;
+        public ConfessionDbContext Context
+        {
+            get { return _iConfessDbContext; }
+        }
 
         /// <summary>
         ///     Provides functions to access account database.

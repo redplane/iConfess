@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using iConfess.Database.Models;
 using Shared.Interfaces.Repositories;
 
 namespace Shared.Interfaces
@@ -51,6 +52,11 @@ namespace Shared.Interfaces
         ///     Provides functions to access signalr connections database.
         /// </summary>
         IRepositorySignalrConnection RepositorySignalrConnections { get; }
+
+        /// <summary>
+        /// iConfess database context.
+        /// </summary>
+        ConfessionDbContext Context { get; }
 
         #endregion
     }

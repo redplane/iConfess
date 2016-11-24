@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
+using iConfess.Admin.Attributes;
 using Shared.Interfaces;
 
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/account")]
+    [ApiAuthorize]
     public class ApiAccountController : ApiParentController
     {
         #region Constructors
@@ -16,7 +18,7 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         public ApiAccountController(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-               
+            
         }
 
         #endregion
