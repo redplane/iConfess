@@ -10,7 +10,7 @@ namespace iConfess.Admin.Controllers
         /// <summary>
         /// Contains repositories and methods to access to database.
         /// </summary>
-        protected readonly IUnitOfWork UniOfWork;
+        protected readonly IUnitOfWork UnitOfWork;
 
         #endregion
 
@@ -22,8 +22,7 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         public ApiParentController(IUnitOfWork unitOfWork)
         {
-            UniOfWork = unitOfWork;
-            
+            UnitOfWork = unitOfWork;
         }
         
         #endregion
