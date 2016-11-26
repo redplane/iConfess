@@ -1,5 +1,8 @@
-﻿using System.Web.Http;
-using Shared.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+using Shared.Interfaces.Services;
 
 namespace iConfess.Admin.Controllers
 {
@@ -24,7 +27,22 @@ namespace iConfess.Admin.Controllers
         {
             UnitOfWork = unitOfWork;
         }
-        
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Find validation messages from modelstate dictionary.
+        /// </summary>
+        /// <param name="modelStateDictionary"></param>
+        /// <returns></returns>
+        protected Dictionary<string, string[]> FindValidationMessage(ModelStateDictionary modelStateDictionary)
+        {
+            return modelStateDictionary.ToDictionary(x => x.Key,
+                x => x.Value.Errors.Select(y => y.ErrorMessage).ToArray());
+        }
+
         #endregion
     }
 }

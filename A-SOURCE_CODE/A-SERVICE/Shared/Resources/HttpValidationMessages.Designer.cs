@@ -22,14 +22,14 @@ namespace Shared.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class HttpMessages {
+    public class HttpValidationMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal HttpMessages() {
+        internal HttpValidationMessages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Shared.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Shared.Resources.HttpMessages", typeof(HttpMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Shared.Resources.HttpValidationMessages", typeof(HttpValidationMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,11 @@ namespace Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ACCOUNT_FORBIDDEN.
+        ///   Looks up a localized string similar to INFORMATION_REQUIRED.
         /// </summary>
-        public static string AccountIsForbidden {
+        public static string InformationRequired {
             get {
-                return ResourceManager.GetString("AccountIsForbidden", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ACCOUNT_PENDING.
-        /// </summary>
-        public static string AccountIsPending {
-            get {
-                return ResourceManager.GetString("AccountIsPending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ACCOUNT_NOT_FOUND.
-        /// </summary>
-        public static string AccountNotFound {
-            get {
-                return ResourceManager.GetString("AccountNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to AUTHENTICATION_INFO_INVALID.
-        /// </summary>
-        public static string InvalidAuthenticationInfo {
-            get {
-                return ResourceManager.GetString("InvalidAuthenticationInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to TOKEN_INVALID.
-        /// </summary>
-        public static string InvalidAuthenticationToken {
-            get {
-                return ResourceManager.GetString("InvalidAuthenticationToken", resourceCulture);
+                return ResourceManager.GetString("InformationRequired", resourceCulture);
             }
         }
     }

@@ -10,6 +10,7 @@ using iConfess.Database.Models;
 using Microsoft.AspNet.SignalR;
 using Shared.Interfaces;
 using Shared.Interfaces.Services;
+using Shared.Services;
 using RegistrationExtensions = Autofac.Integration.SignalR.RegistrationExtensions;
 
 namespace iConfess.Admin
@@ -42,6 +43,9 @@ namespace iConfess.Admin
             containerBuilder.RegisterType<BearerAuthenticationProvider>()
                 .As<IBearerAuthenticationProvider>()
                 .OnActivating(x => x.ReplaceInstance(bearerAuthenticationProvider));
+
+            // Services.
+            containerBuilder.RegisterType<EncryptionService>().As<IEncryptionService>().SingleInstance();
 
             // Container build.
             var container = containerBuilder.Build();

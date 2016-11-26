@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountIsForbidden" xml:space="preserve">
-    <value>ACCOUNT_FORBIDDEN</value>
-  </data>
-  <data name="AccountIsPending" xml:space="preserve">
-    <value>ACCOUNT_PENDING</value>
-  </data>
-  <data name="AccountNotFound" xml:space="preserve">
-    <value>ACCOUNT_NOT_FOUND</value>
-  </data>
-  <data name="InvalidAuthenticationInfo" xml:space="preserve">
-    <value>AUTHENTICATION_INFO_INVALID</value>
-  </data>
-  <data name="InvalidAuthenticationToken" xml:space="preserve">
-    <value>TOKEN_INVALID</value>
+  <data name="InformationRequired" xml:space="preserve">
+    <value>INFORMATION_REQUIRED</value>
   </data>
 </root>

@@ -2,7 +2,7 @@
 using iConfess.Database.Models;
 using Shared.Interfaces.Repositories;
 
-namespace Shared.Interfaces
+namespace Shared.Interfaces.Services
 {
     public interface IUnitOfWork
     {

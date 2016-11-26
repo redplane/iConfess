@@ -35,9 +35,19 @@ namespace iConfess.Database.Models.Tables
         public AccountStatus Status { get; set; }
 
         /// <summary>
+        /// Relative url (http url) of user photo.
+        /// </summary>
+        public string PhotoRelativeUrl { get; set; }
+
+        /// <summary>
+        /// Physical path of photo on the server.
+        /// </summary>
+        public string PhotoAbsoluteUrl { get; set; }
+
+        /// <summary>
         ///     When was the account created.
         /// </summary>
-        public double Created { get; set; }
+        public double Joined { get; set; }
 
         /// <summary>
         ///     When the account was lastly modified.

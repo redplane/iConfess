@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using iConfess.Database.Models;
+using Shared.Interfaces;
 using Shared.Interfaces.Repositories;
+using Shared.Interfaces.Services;
 using Shared.Repositories;
 
-namespace Shared.Interfaces.Services
+namespace Shared.Services
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {

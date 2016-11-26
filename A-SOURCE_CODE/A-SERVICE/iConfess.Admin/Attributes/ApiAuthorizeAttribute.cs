@@ -14,6 +14,7 @@ using iConfess.Database.Models;
 using Shared.Interfaces;
 using Shared.Interfaces.Services;
 using Shared.Resources;
+using Shared.Services;
 
 namespace iConfess.Admin.Attributes
 {
@@ -145,6 +146,12 @@ namespace iConfess.Admin.Attributes
                     return;
                 }
                 
+                // Insert account information into HttpItem for later use.
+                if (httpActionContext.ActionArguments.ContainsKey(ClaimTypes.Actor))
+                    httpActionContext.ActionArguments[ClaimTypes.Actor] = account;
+                else
+                    httpActionContext.ActionArguments.Add(ClaimTypes.Actor, account);
+
                 #endregion
             }
             catch
