@@ -13,7 +13,6 @@ export class SidebarComponent {
     onAreaSelected: EventEmitter<Sections>;
 
     public constructor(){
-        this.sections = Sections;
         this.onAreaSelected = new EventEmitter();
     }
 

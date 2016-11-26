@@ -9,10 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var Sections_1 = require("../enumerations/Sections");
 var SidebarComponent = (function () {
     function SidebarComponent() {
-        this.sections = Sections_1.Sections;
         this.onAreaSelected = new core_1.EventEmitter();
     }
     // Select an area to be displayed.
