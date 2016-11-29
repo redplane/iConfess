@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -56,21 +57,25 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     One report can only belongs to one comment.
         /// </summary>
+        [JsonIgnore]
         public Comment Comment { get; set; }
 
         /// <summary>
         ///     One report can only belongs to one post.
         /// </summary>
+        [JsonIgnore]
         public Post Post { get; set; }
 
         /// <summary>
         ///     Account which owns the comment
         /// </summary>
+        [JsonIgnore]
         public Account CommentOwner { get; set; }
 
         /// <summary>
         ///     One report belongs to one specific account.
         /// </summary>
+        [JsonIgnore]
         public Account CommentReporter { get; set; }
 
         #endregion

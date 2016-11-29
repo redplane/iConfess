@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -28,12 +29,14 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Who is following the post.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(FollowerIndex))]
         public Account Follower { get; set; }
 
         /// <summary>
         ///     Post which is being monitored by this relationship.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
 

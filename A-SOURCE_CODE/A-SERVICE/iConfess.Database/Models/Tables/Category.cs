@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -42,17 +43,20 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     One category can only be created by one account.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(CreatorIndex))]
         public Account Creator { get; set; }
 
         /// <summary>
         ///     Relationship between the account following this category with this one.
         /// </summary>
+        [JsonIgnore]
         public ICollection<FollowCategory> FollowCategories { get; set; }
 
         /// <summary>
         ///     One category can contains many posts.
         /// </summary>
+        [JsonIgnore]
         public ICollection<Post> Posts { get; set; }
 
         #endregion

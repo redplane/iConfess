@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using iConfess.Database.Models.Tables;
 
@@ -10,7 +9,7 @@ namespace iConfess.Database.Models
         #region Constructor
 
         /// <summary>
-        /// Initiate database context with connection string.
+        ///     Initiate database context with connection string.
         /// </summary>
         public ConfessionDbContext() : base("iConfess")
         {
@@ -122,7 +121,7 @@ namespace iConfess.Database.Models
 
             // Initiate signalr connection table.
             InitiateSignalrConnectionTable(dbModelBuilder);
-            
+
             // Initiate follow 
             base.OnModelCreating(dbModelBuilder);
         }
@@ -148,14 +147,13 @@ namespace iConfess.Database.Models
         {
             // Find the category entity configuration.
             var category = dbModelBuilder.Entity<Category>();
-            
+
             // One category can only be created by one account.
             // One account can create many categories.
             category
                 .HasRequired(x => x.Creator)
                 .WithMany(x => x.Categories)
                 .HasForeignKey(x => x.CreatorIndex);
-
         }
 
         /// <summary>
@@ -166,7 +164,7 @@ namespace iConfess.Database.Models
         {
             // Find comment entity configuration.
             var comment = dbModelBuilder.Entity<Comment>();
-            
+
             // One account can create many comments.
             // One comment only belongs to one account.
             comment.HasRequired(x => x.Owner).WithMany(x => x.OutgoingComments).HasForeignKey(x => x.OwnerIndex);
@@ -195,7 +193,9 @@ namespace iConfess.Database.Models
             // One account can follow many categories.
             // One category can follow by many account.
             followCategory.HasRequired(x => x.Owner).WithMany(x => x.FollowCategories).HasForeignKey(x => x.OwnerIndex);
-            followCategory.HasRequired(x => x.Category).WithMany(x => x.FollowCategories).HasForeignKey(x => x.CategoryIndex);
+            followCategory.HasRequired(x => x.Category)
+                .WithMany(x => x.FollowCategories)
+                .HasForeignKey(x => x.CategoryIndex);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace iConfess.Database.Models
         {
             // Find notification comment configuration.
             var notificationComment = dbModelBuilder.Entity<NotificationComment>();
-            
+
             // One comment can have many notifications.
             // One notification must be about one comment.
             notificationComment.HasRequired(x => x.Comment)
@@ -256,7 +256,6 @@ namespace iConfess.Database.Models
                 .WithMany(x => x.OutgoingNotificationComments)
                 .HasForeignKey(x => x.BroadcasterIndex)
                 .WillCascadeOnDelete(false);
-            
         }
 
         /// <summary>
@@ -267,7 +266,7 @@ namespace iConfess.Database.Models
         {
             // Find notification comment configuration.
             var notificationPost = dbModelBuilder.Entity<NotificationPost>();
-            
+
             // One post can have many notifications about it.
             // One notification can only be about one post.
             notificationPost.HasRequired(x => x.Post)
@@ -297,7 +296,7 @@ namespace iConfess.Database.Models
         {
             // Find post entity configuration.
             var post = dbModelBuilder.Entity<Post>();
-            
+
             // One post belongs to a specific account.
             // One account can create many posts.
             post.HasRequired(x => x.Owner)
@@ -321,7 +320,7 @@ namespace iConfess.Database.Models
         {
             // Find post entity configuration.
             var reportedComment = dbModelBuilder.Entity<ReportedComment>();
-            
+
             // One report belongs to one comment.
             // One comment can have many reports.
             reportedComment.HasRequired(x => x.Comment)
@@ -362,18 +361,22 @@ namespace iConfess.Database.Models
         {
             // Find post entity configuration.
             var reportedPost = dbModelBuilder.Entity<ReportedPost>();
-            
+
             // One report is about a specific post.
             // One post can have many comments.
             reportedPost.HasRequired(x => x.Post).WithMany(x => x.ReportedPosts).HasForeignKey(x => x.PostIndex);
 
             // One account can have many post reports.
             // One report is about one account.
-            reportedPost.HasRequired(x => x.PostOwner).WithMany(x => x.IncomingReportedPosts).HasForeignKey(x => x.PostOwnerIndex);
+            reportedPost.HasRequired(x => x.PostOwner)
+                .WithMany(x => x.IncomingReportedPosts)
+                .HasForeignKey(x => x.PostOwnerIndex);
 
             // One account can report many posts.
             // One post can be reported by many accounts.
-            reportedPost.HasRequired(x => x.PostReporter).WithMany(x => x.OutgoingReportedPosts).HasForeignKey(x => x.PostReporterIndex);
+            reportedPost.HasRequired(x => x.PostReporter)
+                .WithMany(x => x.OutgoingReportedPosts)
+                .HasForeignKey(x => x.PostReporterIndex);
         }
 
         /// <summary>
@@ -393,7 +396,9 @@ namespace iConfess.Database.Models
             });
 
             // One account can broadcast many signalr connections.
-            signalrConnection.HasRequired(x => x.Owner).WithMany(x => x.OutgoingSignalrConnections).HasForeignKey(x => x.OwnerIndex);
+            signalrConnection.HasRequired(x => x.Owner)
+                .WithMany(x => x.OutgoingSignalrConnections)
+                .HasForeignKey(x => x.OwnerIndex);
         }
 
         #endregion

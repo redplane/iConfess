@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -10,6 +11,7 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Owner of connection.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 

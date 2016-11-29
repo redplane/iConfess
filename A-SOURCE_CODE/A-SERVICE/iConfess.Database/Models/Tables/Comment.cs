@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -47,23 +48,27 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     One comment can only be initiated by one account.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
         ///     One comment can only belong to one post.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
 
         /// <summary>
         ///     The notification comment belongs to.
         /// </summary>
+        [JsonIgnore]
         public ICollection<NotificationComment> NotificationComments { get; set; }
 
         /// <summary>
         ///     One comment can have many reports.
         /// </summary>
+        [JsonIgnore]
         public ICollection<ReportedComment> ReportedComments { get; set; }
 
         #endregion

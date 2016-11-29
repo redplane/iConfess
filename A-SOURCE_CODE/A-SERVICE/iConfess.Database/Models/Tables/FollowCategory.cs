@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -8,7 +8,7 @@ namespace iConfess.Database.Models.Tables
         #region Properties
 
         /// <summary>
-        /// Id of following relationship
+        ///     Id of following relationship
         /// </summary>
         public int Id { get; set; }
 
@@ -34,12 +34,14 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Who starts watching.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
         ///     Which is being watched.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(CategoryIndex))]
         public Category Category { get; set; }
 

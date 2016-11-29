@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -52,43 +53,51 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Who create the post.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         /// <summary>
         ///     Category which post belongs to.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(CategoryIndex))]
         public Category Category { get; set; }
 
         /// <summary>
         ///     List of comment belongs to the post.
         /// </summary>
+        [JsonIgnore]
         public ICollection<Comment> Comments { get; set; }
 
         /// <summary>
         ///     One post can be monitored by follow post.
         /// </summary>
+        [JsonIgnore]
         public ICollection<FollowPost> FollowPosts { get; set; }
 
         /// <summary>
         ///     Which notification comment post belongs to.
         /// </summary>
+        [JsonIgnore]
         public ICollection<NotificationComment> NotificationComments { get; set; }
 
         /// <summary>
         ///     Which notification post the post belongs to.
         /// </summary>
+        [JsonIgnore]
         public ICollection<NotificationPost> NotificationPosts { get; set; }
 
         /// <summary>
         ///     One post can have many reports about its comments.
         /// </summary>
+        [JsonIgnore]
         public ICollection<ReportedComment> ReportedComments { get; set; }
 
         /// <summary>
         ///     One post can have many reports about it.
         /// </summary>
+        [JsonIgnore]
         public ICollection<ReportedPost> ReportedPosts { get; set; }
 
         #endregion

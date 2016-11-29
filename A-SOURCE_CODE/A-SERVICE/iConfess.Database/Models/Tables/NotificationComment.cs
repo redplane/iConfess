@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using iConfess.Database.Enumerations;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -56,24 +57,28 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Who should receive the notification.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(RecipientIndex))]
         public Account Recipient { get; set; }
 
         /// <summary>
         ///     Who broadcasted the notification.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(BroadcasterIndex))]
         public Account Broadcaster { get; set; }
 
         /// <summary>
         ///     Comment which is notified.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(CommentIndex))]
         public Comment Comment { get; set; }
 
         /// <summary>
         ///     Which post comment belongs to.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
@@ -51,18 +52,21 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     One report is about one post, just one.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
 
         /// <summary>
         ///     Report can only be about one account.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(PostOwnerIndex))]
         public Account PostOwner { get; set; }
 
         /// <summary>
         ///     Report can only belong to one account.
         /// </summary>
+        [JsonIgnore]
         [ForeignKey(nameof(PostReporterIndex))]
         public Account PostReporter { get; set; }
 
