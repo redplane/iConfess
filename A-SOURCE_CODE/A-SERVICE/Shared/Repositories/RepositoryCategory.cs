@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Linq;
 using System.Threading.Tasks;
 using iConfess.Database.Models;
+using iConfess.Database.Models.Tables;
 using Shared.Interfaces.Repositories;
 
 namespace Shared.Repositories
@@ -31,14 +36,15 @@ namespace Shared.Repositories
 
         #region Methods
 
-        public Task DeleteCategoriesAsync()
+        public async Task DeleteCategoriesAsync(Category category)
         {
-            throw new NotImplementedException();
+            _iConfessDbContext.Categories.Remove(category);
+            await _iConfessDbContext.SaveChangesAsync();
         }
 
-        public Task FindCategoriesAsync()
+        public async Task<IEnumerable<Category>> FindCategoriesAsync()
         {
-            throw new NotImplementedException();
+            return  _iConfessDbContext.Categories.ToList();
         }
 
         public Task InitiateCategoryAsync()
@@ -46,9 +52,10 @@ namespace Shared.Repositories
             throw new NotImplementedException();
         }
 
-        public Task UpdateCategoryAsync()
+        public async Task UpdateCategoryAsync(Category category)
         {
             throw new NotImplementedException();
+
         }
 
         #endregion

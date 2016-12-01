@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using iConfess.Database.Models.Tables;
 
 namespace Shared.Interfaces.Repositories
 {
@@ -14,18 +17,18 @@ namespace Shared.Interfaces.Repositories
         /// Find categories asynchronously with specific information.
         /// </summary>
         /// <returns></returns>
-        Task FindCategoriesAsync();
+        Task<IEnumerable<Category>> FindCategoriesAsync();
 
         /// <summary>
         /// Update category with specific information.
         /// </summary>
         /// <returns></returns>
-        Task UpdateCategoryAsync();
+        Task UpdateCategoryAsync(Category category);
 
         /// <summary>
         /// Delete category by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task DeleteCategoriesAsync();
+        Task DeleteCategoriesAsync(Category category);
     }
 }
