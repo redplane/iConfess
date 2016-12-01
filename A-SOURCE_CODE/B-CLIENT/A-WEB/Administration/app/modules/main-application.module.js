@@ -15,20 +15,30 @@ var navigation_bar_component_1 = require("../components/navigation-bar.component
 var sidebar_component_1 = require("../components/sidebar.component");
 var account_management_component_1 = require("../components/account-management.component");
 var category_management_component_1 = require("../components/category-management.component");
+var category_detail_box_component_1 = require('../components/content/category/category-detail-box.component');
+var category_edit_box_component_1 = require("../components/content/category/category-edit-box.component");
+var forms_1 = require('@angular/forms');
 var MainApplicationModule = (function () {
     function MainApplicationModule() {
     }
     MainApplicationModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule],
+            imports: [
+                platform_browser_1.BrowserModule,
+                forms_1.FormsModule
+            ],
             declarations: [
                 main_application_component_1.MainApplicationComponent,
                 navigation_bar_component_1.NavigationBarComponent,
                 sidebar_component_1.SidebarComponent,
                 account_management_component_1.AccountManagementComponent,
-                category_management_component_1.CategoryManagementComponent
+                category_management_component_1.CategoryManagementComponent,
+                category_detail_box_component_1.CategoryDetailBoxComponent,
+                category_edit_box_component_1.CategoryEditBoxComponent
             ],
-            bootstrap: [main_application_component_1.MainApplicationComponent]
+            bootstrap: [
+                main_application_component_1.MainApplicationComponent
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], MainApplicationModule);

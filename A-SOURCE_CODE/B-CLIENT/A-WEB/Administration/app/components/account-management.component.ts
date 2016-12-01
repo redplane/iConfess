@@ -3,4 +3,6 @@ import { Component } from '@angular/core';
     selector: 'account-management',
     templateUrl: './app/html/pages/account-management.component.html'
 })
-export class AccountManagementComponent { }
+export class AccountManagementComponent {
+
+}
