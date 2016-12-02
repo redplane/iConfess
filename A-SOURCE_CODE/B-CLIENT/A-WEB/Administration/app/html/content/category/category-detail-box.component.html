@@ -30,9 +30,9 @@
                 (click)="deleteCategory(category)">
             <span class="glyphicon glyphicon-trash"></span>
         </button>
+
         <button class="btn btn-info btn-flat col-lg-6 col-md-6 col-sm-6 col-xs-12"
-                data-toggle="modal"
-                data-target="#modalEditCategory">
+                (click)="changeCategoryInfo(category)">
             <span class="glyphicon glyphicon-edit"></span>
         </button>
     </div>

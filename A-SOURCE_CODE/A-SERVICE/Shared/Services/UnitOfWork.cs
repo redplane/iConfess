@@ -121,16 +121,7 @@ namespace Shared.Services
         #endregion
         
         #region Methods
-
-        /// <summary>
-        /// Save changes into database.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<int> CommitAsync()
-        {
-            return await _iConfessDbContext.SaveChangesAsync();
-        }
-
+        
         /// <summary>
         /// Dispose the instance and free it from memory.
         /// </summary>

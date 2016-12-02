@@ -16,10 +16,14 @@ var CategoryManagementComponent = (function () {
         this._categoryService = categoryService;
         this._timeService = timeService;
         this._categorySearchResult = this._categoryService.findCategories();
-        this.clickCategoryRemove = new core_1.EventEmitter();
     }
+    // Callback is fired when a category is created to be removed.
     CategoryManagementComponent.prototype.clickRemoveCategory = function (category) {
-        alert(category.name);
+        console.log(category);
+    };
+    CategoryManagementComponent.prototype.clickChangeCategoryInfo = function (category, boxCategoryChangeInfo) {
+        console.log(category);
+        console.log(boxCategoryChangeInfo);
     };
     CategoryManagementComponent = __decorate([
         core_1.Component({
@@ -28,7 +32,7 @@ var CategoryManagementComponent = (function () {
             providers: [
                 CategoryService_1.CategoryService,
                 TimeService_1.TimeService
-            ]
+            ],
         }), 
         __metadata('design:paramtypes', [CategoryService_1.CategoryService, TimeService_1.TimeService])
     ], CategoryManagementComponent);

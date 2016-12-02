@@ -10,19 +10,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var CategoryDetailViewModel_1 = require("../../../viewmodels/category/CategoryDetailViewModel");
+var Account_1 = require("../../../models/Account");
 var CategoryEditBoxComponent = (function () {
     // Initiate category edit box component.
-    function CategoryEditBoxComponent(category) {
-        this._category = category;
+    function CategoryEditBoxComponent() {
+        // Category hasn't been initialized.
+        if (this._category == null)
+            this._category = new CategoryDetailViewModel_1.CategoryDetailViewModel();
+        // Creator hasn't been initialized.
+        if (this._category.creator == null)
+            this._category.creator = new Account_1.Account();
+        this._category.name = 'Category 01';
     }
+    // Update category which should be shown on screen.
+    CategoryEditBoxComponent.prototype.setCategory = function (category) {
+        this._category = category;
+    };
+    CategoryEditBoxComponent.prototype.getCategory = function () {
+        return this._category;
+    };
+    // Open the dialog.
+    CategoryEditBoxComponent.prototype.open = function () {
+        console.log(this);
+    };
     CategoryEditBoxComponent = __decorate([
         core_1.Component({
             selector: 'category-edit-box',
             templateUrl: './app/html/content/category/category-edit-box.component.html',
-            inputs: ['category'],
-            output: ['clickConfirm', 'clickDeny']
+            providers: [
+                CategoryDetailViewModel_1.CategoryDetailViewModel,
+                Account_1.Account
+            ]
         }), 
-        __metadata('design:paramtypes', [CategoryDetailViewModel_1.CategoryDetailViewModel])
+        __metadata('design:paramtypes', [])
     ], CategoryEditBoxComponent);
     return CategoryEditBoxComponent;
 }());

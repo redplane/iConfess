@@ -15,16 +15,21 @@ var CategoryDetailBoxComponent = (function () {
     function CategoryDetailBoxComponent(timeService) {
         this._timeService = timeService;
         this.clickRemoveCategory = new core_1.EventEmitter();
+        this.clickChangeCategoryInfo = new core_1.EventEmitter();
     }
     // Fired when a category is clicked to be removed.
     CategoryDetailBoxComponent.prototype.deleteCategory = function (category) {
         this.clickRemoveCategory.emit(category);
     };
+    // Fired when a category is clicked to be changed.
+    CategoryDetailBoxComponent.prototype.changeCategoryInfo = function (category) {
+        this.clickChangeCategoryInfo.emit(category);
+    };
     CategoryDetailBoxComponent = __decorate([
         core_1.Component({
             selector: 'category-detail',
             inputs: ['category'],
-            outputs: ['clickRemoveCategory'],
+            outputs: ['clickRemoveCategory', 'clickChangeCategoryInfo'],
             templateUrl: './app/html/content/category/category-detail-box.component.html',
             providers: [
                 TimeService_1.TimeService

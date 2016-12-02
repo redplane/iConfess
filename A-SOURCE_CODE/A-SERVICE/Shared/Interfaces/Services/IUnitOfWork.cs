@@ -6,16 +6,7 @@ namespace Shared.Interfaces.Services
 {
     public interface IUnitOfWork
     {
-        #region Methods
-
-        /// <summary>
-        ///     Save changes into database asynchronously.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> CommitAsync();
-
-        #endregion
-
+        
         #region Properties
 
         /// <summary>

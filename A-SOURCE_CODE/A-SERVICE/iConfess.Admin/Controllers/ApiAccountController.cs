@@ -157,6 +157,7 @@ namespace iConfess.Admin.Controllers
         [HttpGet]
         public HttpResponseMessage RequestFindLostPassword()
         {
+            
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
