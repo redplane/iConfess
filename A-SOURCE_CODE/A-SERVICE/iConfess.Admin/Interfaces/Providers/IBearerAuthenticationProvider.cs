@@ -10,16 +10,15 @@
         string Key { get; set; }
 
         /// <summary>
-        /// Life-time of token (second)
+        ///     Life-time of token (second)
         /// </summary>
         int Duration { get; set; }
 
         /// <summary>
-        /// Name of claim identity.
+        ///     Name of claim identity.
         /// </summary>
         string IdentityName { get; set; }
 
         #endregion
-        
     }
 }

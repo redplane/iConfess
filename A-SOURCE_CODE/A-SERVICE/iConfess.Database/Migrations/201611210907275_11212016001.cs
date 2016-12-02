@@ -1,102 +1,101 @@
+using System.Data.Entity.Migrations;
+
 namespace iConfess.Database.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class _11212016001 : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Account",
-                c => new
+                    "dbo.Account",
+                    c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(false, true),
                         Email = c.String(),
                         Nickname = c.String(),
                         Password = c.String(),
-                        Status = c.Int(nullable: false),
-                        Created = c.Double(nullable: false),
-                        LastModified = c.Double(),
+                        Status = c.Int(false),
+                        Created = c.Double(false),
+                        LastModified = c.Double()
                     })
                 .PrimaryKey(t => t.Id);
-            
+
             CreateTable(
-                "dbo.Category",
-                c => new
+                    "dbo.Category",
+                    c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        CreatorIndex = c.Int(nullable: false),
+                        Id = c.Int(false, true),
+                        CreatorIndex = c.Int(false),
                         Name = c.String(),
-                        Created = c.Double(nullable: false),
-                        LastModified = c.Double(),
+                        Created = c.Double(false),
+                        LastModified = c.Double()
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Account", t => t.CreatorIndex)
                 .Index(t => t.CreatorIndex);
-            
+
             CreateTable(
-                "dbo.FollowCategory",
-                c => new
+                    "dbo.FollowCategory",
+                    c => new
                     {
-                        OwnerIndex = c.Int(nullable: false),
-                        CategoryIndex = c.Int(nullable: false),
-                        Id = c.Int(nullable: false),
-                        Created = c.Double(nullable: false),
+                        OwnerIndex = c.Int(false),
+                        CategoryIndex = c.Int(false),
+                        Id = c.Int(false),
+                        Created = c.Double(false)
                     })
-                .PrimaryKey(t => new { t.OwnerIndex, t.CategoryIndex })
+                .PrimaryKey(t => new {t.OwnerIndex, t.CategoryIndex})
                 .ForeignKey("dbo.Category", t => t.CategoryIndex)
                 .ForeignKey("dbo.Account", t => t.OwnerIndex)
                 .Index(t => t.OwnerIndex)
                 .Index(t => t.CategoryIndex);
-            
+
             CreateTable(
-                "dbo.Post",
-                c => new
+                    "dbo.Post",
+                    c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        OwnerIndex = c.Int(nullable: false),
-                        CategoryIndex = c.Int(nullable: false),
+                        Id = c.Int(false, true),
+                        OwnerIndex = c.Int(false),
+                        CategoryIndex = c.Int(false),
                         Title = c.String(),
                         Body = c.String(),
-                        Created = c.Double(nullable: false),
-                        LastModified = c.Double(),
+                        Created = c.Double(false),
+                        LastModified = c.Double()
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Category", t => t.CategoryIndex)
                 .ForeignKey("dbo.Account", t => t.OwnerIndex)
                 .Index(t => t.OwnerIndex)
                 .Index(t => t.CategoryIndex);
-            
+
             CreateTable(
-                "dbo.Comment",
-                c => new
+                    "dbo.Comment",
+                    c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        OwnerIndex = c.Int(nullable: false),
-                        PostIndex = c.Int(nullable: false),
+                        Id = c.Int(false, true),
+                        OwnerIndex = c.Int(false),
+                        PostIndex = c.Int(false),
                         Content = c.String(),
-                        Created = c.Double(nullable: false),
-                        LastModified = c.Double(),
+                        Created = c.Double(false),
+                        LastModified = c.Double()
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Account", t => t.OwnerIndex)
                 .ForeignKey("dbo.Post", t => t.PostIndex)
                 .Index(t => t.OwnerIndex)
                 .Index(t => t.PostIndex);
-            
+
             CreateTable(
-                "dbo.NotificationComment",
-                c => new
+                    "dbo.NotificationComment",
+                    c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        CommentIndex = c.Int(nullable: false),
-                        PostIndex = c.Int(nullable: false),
-                        RecipientIndex = c.Int(nullable: false),
-                        BroadcasterIndex = c.Int(nullable: false),
-                        Type = c.Int(nullable: false),
-                        IsSeen = c.Boolean(nullable: false),
-                        Created = c.Double(nullable: false),
+                        Id = c.Int(false, true),
+                        CommentIndex = c.Int(false),
+                        PostIndex = c.Int(false),
+                        RecipientIndex = c.Int(false),
+                        BroadcasterIndex = c.Int(false),
+                        Type = c.Int(false),
+                        IsSeen = c.Boolean(false),
+                        Created = c.Double(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Account", t => t.BroadcasterIndex)
@@ -107,19 +106,19 @@ namespace iConfess.Database.Migrations
                 .Index(t => t.PostIndex)
                 .Index(t => t.RecipientIndex)
                 .Index(t => t.BroadcasterIndex);
-            
+
             CreateTable(
-                "dbo.ReportedComment",
-                c => new
+                    "dbo.ReportedComment",
+                    c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        CommentIndex = c.Int(nullable: false),
-                        PostIndex = c.Int(nullable: false),
-                        CommentOwnerIndex = c.Int(nullable: false),
-                        CommentReporterIndex = c.Int(nullable: false),
+                        Id = c.Int(false, true),
+                        CommentIndex = c.Int(false),
+                        PostIndex = c.Int(false),
+                        CommentOwnerIndex = c.Int(false),
+                        CommentReporterIndex = c.Int(false),
                         Body = c.String(),
                         Reason = c.String(),
-                        Created = c.Double(nullable: false),
+                        Created = c.Double(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Comment", t => t.CommentIndex)
@@ -130,32 +129,32 @@ namespace iConfess.Database.Migrations
                 .Index(t => t.PostIndex)
                 .Index(t => t.CommentOwnerIndex)
                 .Index(t => t.CommentReporterIndex);
-            
+
             CreateTable(
-                "dbo.FollowPost",
-                c => new
+                    "dbo.FollowPost",
+                    c => new
                     {
-                        FollowerIndex = c.Int(nullable: false),
-                        PostIndex = c.Int(nullable: false),
-                        Created = c.Double(nullable: false),
+                        FollowerIndex = c.Int(false),
+                        PostIndex = c.Int(false),
+                        Created = c.Double(false)
                     })
-                .PrimaryKey(t => new { t.FollowerIndex, t.PostIndex })
+                .PrimaryKey(t => new {t.FollowerIndex, t.PostIndex})
                 .ForeignKey("dbo.Account", t => t.FollowerIndex)
                 .ForeignKey("dbo.Post", t => t.PostIndex)
                 .Index(t => t.FollowerIndex)
                 .Index(t => t.PostIndex);
-            
+
             CreateTable(
-                "dbo.NotificationPost",
-                c => new
+                    "dbo.NotificationPost",
+                    c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        PostIndex = c.Int(nullable: false),
-                        RecipientIndex = c.Int(nullable: false),
-                        BroadcasterIndex = c.Int(nullable: false),
-                        Type = c.Int(nullable: false),
-                        IsSeen = c.Boolean(nullable: false),
-                        Created = c.Double(nullable: false),
+                        Id = c.Int(false, true),
+                        PostIndex = c.Int(false),
+                        RecipientIndex = c.Int(false),
+                        BroadcasterIndex = c.Int(false),
+                        Type = c.Int(false),
+                        IsSeen = c.Boolean(false),
+                        Created = c.Double(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Account", t => t.BroadcasterIndex)
@@ -164,18 +163,18 @@ namespace iConfess.Database.Migrations
                 .Index(t => t.PostIndex)
                 .Index(t => t.RecipientIndex)
                 .Index(t => t.BroadcasterIndex);
-            
+
             CreateTable(
-                "dbo.ReportedPost",
-                c => new
+                    "dbo.ReportedPost",
+                    c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        PostIndex = c.Int(nullable: false),
-                        PostOwnerIndex = c.Int(nullable: false),
-                        PostReporterIndex = c.Int(nullable: false),
+                        Id = c.Int(false, true),
+                        PostIndex = c.Int(false),
+                        PostOwnerIndex = c.Int(false),
+                        PostReporterIndex = c.Int(false),
                         Body = c.String(),
                         Reason = c.String(),
-                        Created = c.Double(nullable: false),
+                        Created = c.Double(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Post", t => t.PostIndex)
@@ -184,21 +183,20 @@ namespace iConfess.Database.Migrations
                 .Index(t => t.PostIndex)
                 .Index(t => t.PostOwnerIndex)
                 .Index(t => t.PostReporterIndex);
-            
+
             CreateTable(
-                "dbo.SignalrConnection",
-                c => new
+                    "dbo.SignalrConnection",
+                    c => new
                     {
-                        Index = c.String(nullable: false, maxLength: 128),
-                        OwnerIndex = c.Int(nullable: false),
-                        Created = c.Double(nullable: false),
+                        Index = c.String(false, 128),
+                        OwnerIndex = c.Int(false),
+                        Created = c.Double(false)
                     })
-                .PrimaryKey(t => new { t.Index, t.OwnerIndex })
+                .PrimaryKey(t => new {t.Index, t.OwnerIndex})
                 .ForeignKey("dbo.Account", t => t.OwnerIndex)
                 .Index(t => t.OwnerIndex);
-            
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.SignalrConnection", "OwnerIndex", "dbo.Account");
@@ -225,30 +223,30 @@ namespace iConfess.Database.Migrations
             DropForeignKey("dbo.FollowCategory", "OwnerIndex", "dbo.Account");
             DropForeignKey("dbo.FollowCategory", "CategoryIndex", "dbo.Category");
             DropForeignKey("dbo.Category", "CreatorIndex", "dbo.Account");
-            DropIndex("dbo.SignalrConnection", new[] { "OwnerIndex" });
-            DropIndex("dbo.ReportedPost", new[] { "PostReporterIndex" });
-            DropIndex("dbo.ReportedPost", new[] { "PostOwnerIndex" });
-            DropIndex("dbo.ReportedPost", new[] { "PostIndex" });
-            DropIndex("dbo.NotificationPost", new[] { "BroadcasterIndex" });
-            DropIndex("dbo.NotificationPost", new[] { "RecipientIndex" });
-            DropIndex("dbo.NotificationPost", new[] { "PostIndex" });
-            DropIndex("dbo.FollowPost", new[] { "PostIndex" });
-            DropIndex("dbo.FollowPost", new[] { "FollowerIndex" });
-            DropIndex("dbo.ReportedComment", new[] { "CommentReporterIndex" });
-            DropIndex("dbo.ReportedComment", new[] { "CommentOwnerIndex" });
-            DropIndex("dbo.ReportedComment", new[] { "PostIndex" });
-            DropIndex("dbo.ReportedComment", new[] { "CommentIndex" });
-            DropIndex("dbo.NotificationComment", new[] { "BroadcasterIndex" });
-            DropIndex("dbo.NotificationComment", new[] { "RecipientIndex" });
-            DropIndex("dbo.NotificationComment", new[] { "PostIndex" });
-            DropIndex("dbo.NotificationComment", new[] { "CommentIndex" });
-            DropIndex("dbo.Comment", new[] { "PostIndex" });
-            DropIndex("dbo.Comment", new[] { "OwnerIndex" });
-            DropIndex("dbo.Post", new[] { "CategoryIndex" });
-            DropIndex("dbo.Post", new[] { "OwnerIndex" });
-            DropIndex("dbo.FollowCategory", new[] { "CategoryIndex" });
-            DropIndex("dbo.FollowCategory", new[] { "OwnerIndex" });
-            DropIndex("dbo.Category", new[] { "CreatorIndex" });
+            DropIndex("dbo.SignalrConnection", new[] {"OwnerIndex"});
+            DropIndex("dbo.ReportedPost", new[] {"PostReporterIndex"});
+            DropIndex("dbo.ReportedPost", new[] {"PostOwnerIndex"});
+            DropIndex("dbo.ReportedPost", new[] {"PostIndex"});
+            DropIndex("dbo.NotificationPost", new[] {"BroadcasterIndex"});
+            DropIndex("dbo.NotificationPost", new[] {"RecipientIndex"});
+            DropIndex("dbo.NotificationPost", new[] {"PostIndex"});
+            DropIndex("dbo.FollowPost", new[] {"PostIndex"});
+            DropIndex("dbo.FollowPost", new[] {"FollowerIndex"});
+            DropIndex("dbo.ReportedComment", new[] {"CommentReporterIndex"});
+            DropIndex("dbo.ReportedComment", new[] {"CommentOwnerIndex"});
+            DropIndex("dbo.ReportedComment", new[] {"PostIndex"});
+            DropIndex("dbo.ReportedComment", new[] {"CommentIndex"});
+            DropIndex("dbo.NotificationComment", new[] {"BroadcasterIndex"});
+            DropIndex("dbo.NotificationComment", new[] {"RecipientIndex"});
+            DropIndex("dbo.NotificationComment", new[] {"PostIndex"});
+            DropIndex("dbo.NotificationComment", new[] {"CommentIndex"});
+            DropIndex("dbo.Comment", new[] {"PostIndex"});
+            DropIndex("dbo.Comment", new[] {"OwnerIndex"});
+            DropIndex("dbo.Post", new[] {"CategoryIndex"});
+            DropIndex("dbo.Post", new[] {"OwnerIndex"});
+            DropIndex("dbo.FollowCategory", new[] {"CategoryIndex"});
+            DropIndex("dbo.FollowCategory", new[] {"OwnerIndex"});
+            DropIndex("dbo.Category", new[] {"CreatorIndex"});
             DropTable("dbo.SignalrConnection");
             DropTable("dbo.ReportedPost");
             DropTable("dbo.NotificationPost");

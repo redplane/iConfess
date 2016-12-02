@@ -12,7 +12,7 @@ namespace Shared.Repositories
         #region Properties
 
         /// <summary>
-        /// Database context which provides access to database.
+        ///     Database context which provides access to database.
         /// </summary>
         private readonly ConfessionDbContext _iConfessDbContext;
 
@@ -21,7 +21,7 @@ namespace Shared.Repositories
         #region Constructors
 
         /// <summary>
-        /// Initiate repository with dependency injection.
+        ///     Initiate repository with dependency injection.
         /// </summary>
         /// <param name="iConfessDbContext"></param>
         public RepositoryAccount(ConfessionDbContext iConfessDbContext)
@@ -34,7 +34,7 @@ namespace Shared.Repositories
         #region Methods
 
         /// <summary>
-        /// Delete accounts by using specific conditions.
+        ///     Delete accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
         public Task<int> DeleteAccountsAsync()
@@ -43,7 +43,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Find accounts by using specific conditions.
+        ///     Find accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
         public Task<IQueryable<Account>> FindAccountsAsync()
@@ -52,7 +52,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Initiate / update an account asynchronously.
+        ///     Initiate / update an account asynchronously.
         /// </summary>
         /// <returns></returns>
         public Task<Account> InitiateAccountAsync()

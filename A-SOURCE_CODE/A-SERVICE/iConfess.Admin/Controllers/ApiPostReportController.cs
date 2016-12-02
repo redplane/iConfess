@@ -8,7 +8,7 @@ namespace iConfess.Admin.Controllers
     public class ApiPostReportController : ApiController
     {
         /// <summary>
-        /// Delete reports about specific post (using conditions for search)
+        ///     Delete reports about specific post (using conditions for search)
         /// </summary>
         /// <returns></returns>
         [Route("")]
@@ -19,7 +19,7 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        /// Find 
+        ///     Find
         /// </summary>
         /// <returns></returns>
         [Route("find")]
@@ -28,6 +28,5 @@ namespace iConfess.Admin.Controllers
         {
             throw new NotImplementedException();
         }
-
     }
 }

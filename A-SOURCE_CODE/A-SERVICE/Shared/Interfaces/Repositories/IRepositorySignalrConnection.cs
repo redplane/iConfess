@@ -6,19 +6,19 @@ namespace Shared.Interfaces.Repositories
     public interface IRepositorySignalrConnection
     {
         /// <summary>
-        /// Create / update a connection into database.
+        ///     Create / update a connection into database.
         /// </summary>
         /// <returns></returns>
         Task<SignalrConnection> InitiateSignalrConnectionAsync();
 
         /// <summary>
-        /// Find signalr connection by using specific conditions asychronously.
+        ///     Find signalr connection by using specific conditions asychronously.
         /// </summary>
         /// <returns></returns>
         Task<SignalrConnection> FindSignalrConnectionsAsync();
 
         /// <summary>
-        /// Delete signalr connection by using specific conditions asychronously.
+        ///     Delete signalr connection by using specific conditions asychronously.
         /// </summary>
         /// <returns></returns>
         Task<SignalrConnection> DeleteSignalrConnectionsAsync();

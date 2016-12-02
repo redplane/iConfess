@@ -118,7 +118,6 @@ namespace iConfess.Admin
                     id = UrlParameter.Optional
                 }
             );
-            
         }
     }
 }

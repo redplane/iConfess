@@ -1,5 +1,4 @@
 ﻿using System;
-using Shared.Interfaces;
 using Shared.Interfaces.Services;
 
 namespace Shared.Services

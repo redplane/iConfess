@@ -1,34 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using iConfess.Database.Models.Tables;
+using Shared.ViewModels.Categories;
 
 namespace Shared.Interfaces.Repositories
 {
     public interface IRepositoryCategory
     {
         /// <summary>
-        /// Initiate category asynchronously with specific information.
+        ///     Initiate category asynchronously with specific information.
         /// </summary>
         /// <returns></returns>
-        Task InitiateCategoryAsync();
+        /// <param name="category">Category which should be updated/created in database.</param>
+        Task<Category> InitiateCategoryAsync(Category category);
 
         /// <summary>
-        /// Find categories asynchronously with specific information.
+        ///     Find categories asynchronously with specific information.
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<Category>> FindCategoriesAsync();
+        Task<ResponseCategoriesViewModel> FindCategoriesAsync(FindCategoriesViewModel conditions);
 
         /// <summary>
-        /// Update category with specific information.
+        ///     Delete category by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task UpdateCategoryAsync(Category category);
-
-        /// <summary>
-        /// Delete category by using specific conditions.
-        /// </summary>
-        /// <returns></returns>
-        Task DeleteCategoriesAsync(Category category);
+        Task<int> DeleteCategoriesAsync(FindCategoriesViewModel conditions);
     }
 }

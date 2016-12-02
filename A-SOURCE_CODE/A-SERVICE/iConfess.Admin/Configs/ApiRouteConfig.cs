@@ -7,7 +7,7 @@ namespace iConfess.Admin
     public static class ApiRouteConfig
     {
         /// <summary>
-        /// Config routes of web api.
+        ///     Config routes of web api.
         /// </summary>
         /// <param name="config"></param>
         public static void Register(HttpConfiguration config)

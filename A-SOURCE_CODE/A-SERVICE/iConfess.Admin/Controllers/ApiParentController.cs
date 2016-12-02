@@ -11,7 +11,7 @@ namespace iConfess.Admin.Controllers
         #region Properties
 
         /// <summary>
-        /// Contains repositories and methods to access to database.
+        ///     Contains repositories and methods to access to database.
         /// </summary>
         protected readonly IUnitOfWork UnitOfWork;
 
@@ -20,7 +20,7 @@ namespace iConfess.Admin.Controllers
         #region Constructors
 
         /// <summary>
-        /// Initiate controller with dependency injection.
+        ///     Initiate controller with dependency injection.
         /// </summary>
         /// <param name="unitOfWork"></param>
         public ApiParentController(IUnitOfWork unitOfWork)
@@ -33,7 +33,7 @@ namespace iConfess.Admin.Controllers
         #region Methods
 
         /// <summary>
-        /// Find validation messages from modelstate dictionary.
+        ///     Find validation messages from modelstate dictionary.
         /// </summary>
         /// <param name="modelStateDictionary"></param>
         /// <returns></returns>

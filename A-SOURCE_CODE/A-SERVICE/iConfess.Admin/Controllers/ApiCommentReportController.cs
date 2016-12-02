@@ -8,7 +8,7 @@ namespace iConfess.Admin.Controllers
     public class ApiCommentReportController : ApiController
     {
         /// <summary>
-        /// Delete all reports from a comment due to its validation.
+        ///     Delete all reports from a comment due to its validation.
         /// </summary>
         /// <returns></returns>
         [HttpDelete]
@@ -18,7 +18,7 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        /// Find list of comment reports by using specific conditions.
+        ///     Find list of comment reports by using specific conditions.
         /// </summary>
         /// <returns></returns>
         [Route("find")]

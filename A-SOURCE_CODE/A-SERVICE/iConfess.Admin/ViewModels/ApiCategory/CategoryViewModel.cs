@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace iConfess.Admin.ViewModels.ApiCategory
+﻿namespace iConfess.Admin.ViewModels.ApiCategory
 {
     public class CategoryViewModel
     {
@@ -11,6 +6,7 @@ namespace iConfess.Admin.ViewModels.ApiCategory
         ///     Id of category.
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         ///     Who created the current category.
         /// </summary>

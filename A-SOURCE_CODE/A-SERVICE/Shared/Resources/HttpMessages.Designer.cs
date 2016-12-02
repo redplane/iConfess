@@ -88,6 +88,15 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CATEGORY_NOT_FOUND.
+        /// </summary>
+        public static string CategoryNotFound {
+            get {
+                return ResourceManager.GetString("CategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AUTHENTICATION_INFO_INVALID.
         /// </summary>
         public static string InvalidAuthenticationInfo {

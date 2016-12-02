@@ -20,7 +20,7 @@ namespace iConfess.Admin.Middlewares
         public bool AllowMultiple => false;
 
         /// <summary>
-        /// Provider which provides functions to analyze and validate token.
+        ///     Provider which provides functions to analyze and validate token.
         /// </summary>
         public IBearerAuthenticationProvider BearerAuthenticationProvider { get; set; }
 
@@ -29,7 +29,7 @@ namespace iConfess.Admin.Middlewares
         #region Methods
 
         /// <summary>
-        /// Authenticate a request asynchronously.
+        ///     Authenticate a request asynchronously.
         /// </summary>
         /// <param name="httpAuthenticationContext"></param>
         /// <param name="cancellationToken"></param>
@@ -68,7 +68,8 @@ namespace iConfess.Admin.Middlewares
                     return Task.FromResult(0);
 
                 // Decode the token and set to claim. The object should be in dictionary.
-                var claimPairs = JsonWebToken.DecodeToObject<Dictionary<string, string>>(token, bearerAuthenticationProvider.Key);
+                var claimPairs = JsonWebToken.DecodeToObject<Dictionary<string, string>>(token,
+                    bearerAuthenticationProvider.Key);
 
                 var claimIdentity = new ClaimsIdentity(null, bearerAuthenticationProvider.IdentityName);
                 foreach (var key in claimPairs.Keys)
@@ -86,18 +87,19 @@ namespace iConfess.Admin.Middlewares
         }
 
         /// <summary>
-        /// Callback which is called after the authentication which to handle the result.
+        ///     Callback which is called after the authentication which to handle the result.
         /// </summary>
         /// <param name="httpAuthenticationChallengeContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task ChallengeAsync(HttpAuthenticationChallengeContext httpAuthenticationChallengeContext, CancellationToken cancellationToken)
+        public Task ChallengeAsync(HttpAuthenticationChallengeContext httpAuthenticationChallengeContext,
+            CancellationToken cancellationToken)
         {
             return Task.FromResult(0);
         }
 
         /// <summary>
-        /// Find authentication provider from request sent from client.
+        ///     Find authentication provider from request sent from client.
         /// </summary>
         /// <param name="httpAuthenticationContext"></param>
         /// <returns></returns>
@@ -120,7 +122,9 @@ namespace iConfess.Admin.Middlewares
                 if (httpConfiguration == null)
                     return null;
 
-                var result = (IBearerAuthenticationProvider)httpConfiguration.DependencyResolver.GetService(typeof(IBearerAuthenticationProvider));
+                var result =
+                    (IBearerAuthenticationProvider)
+                    httpConfiguration.DependencyResolver.GetService(typeof(IBearerAuthenticationProvider));
                 return Task.FromResult(result);
             }
             catch

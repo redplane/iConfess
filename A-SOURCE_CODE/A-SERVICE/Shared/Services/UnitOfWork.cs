@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
 using iConfess.Database.Models;
-using Shared.Interfaces;
 using Shared.Interfaces.Repositories;
 using Shared.Interfaces.Services;
 using Shared.Repositories;
@@ -10,44 +8,57 @@ namespace Shared.Services
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
+        #region Constructors
+
+        /// <summary>
+        ///     Initiate unit of work with database context provided by Entity Framework.
+        /// </summary>
+        /// <param name="iConfessDbContext"></param>
+        public UnitOfWork(ConfessionDbContext iConfessDbContext)
+        {
+            _iConfessDbContext = iConfessDbContext;
+        }
+
+        #endregion
+
         #region Variables
 
         /// <summary>
-        /// Whether the instance has been disposed or not.
+        ///     Whether the instance has been disposed or not.
         /// </summary>
         private bool _disposed;
 
         /// <summary>
-        /// Provide methods to access confession database.
+        ///     Provide methods to access confession database.
         /// </summary>
         private readonly ConfessionDbContext _iConfessDbContext;
 
         #endregion
 
         #region Properties
-        
+
         /// <summary>
-        /// Provide access to accounts database.
+        ///     Provide access to accounts database.
         /// </summary>
         private IRepositoryAccount _repositoryAccounts;
 
         /// <summary>
-        /// Provide access to categories database.
+        ///     Provide access to categories database.
         /// </summary>
         private IRepositoryCategory _repositoryCategories;
 
         /// <summary>
-        /// Provide access to comments database.
+        ///     Provide access to comments database.
         /// </summary>
         private IRepositoryComment _repositoryComment;
 
         /// <summary>
-        /// Provide access to post report database.
+        ///     Provide access to post report database.
         /// </summary>
         private IRepositoryPostReport _repositoryPostReport;
 
         /// <summary>
-        /// Provide methods to access confession database.
+        ///     Provide methods to access confession database.
         /// </summary>
         public ConfessionDbContext Context
         {
@@ -74,7 +85,7 @@ namespace Shared.Services
         }
 
         /// <summary>
-        /// Provides functions to access comments database.
+        ///     Provides functions to access comments database.
         /// </summary>
         public IRepositoryComment RepositoryComments
         {
@@ -107,23 +118,10 @@ namespace Shared.Services
 
         #endregion
 
-        #region Constructors
+        #region Methods
 
         /// <summary>
-        /// Initiate unit of work with database context provided by Entity Framework.
-        /// </summary>
-        /// <param name="iConfessDbContext"></param>
-        public UnitOfWork(ConfessionDbContext iConfessDbContext)
-        {
-            _iConfessDbContext = iConfessDbContext;
-        }
-        
-        #endregion
-        
-        #region Methods
-        
-        /// <summary>
-        /// Dispose the instance and free it from memory.
+        ///     Dispose the instance and free it from memory.
         /// </summary>
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
@@ -131,19 +129,16 @@ namespace Shared.Services
             // Object has been disposed.
             if (_disposed)
                 return;
-            
+
             // Object is being disposed.
             if (disposing)
-            {
-                // Free the database context.
                 _iConfessDbContext.Dispose();
-            }
-            
+
             _disposed = true;
         }
 
         /// <summary>
-        /// Dispose the instance.
+        ///     Dispose the instance.
         /// </summary>
         public void Dispose()
         {
@@ -152,6 +147,5 @@ namespace Shared.Services
         }
 
         #endregion
-
     }
 }

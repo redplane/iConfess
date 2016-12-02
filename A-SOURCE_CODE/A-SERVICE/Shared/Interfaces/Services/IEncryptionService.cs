@@ -3,7 +3,7 @@
     public interface IEncryptionService
     {
         /// <summary>
-        /// Hash a string by using md5.
+        ///     Hash a string by using md5.
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

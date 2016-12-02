@@ -10,7 +10,7 @@ namespace Shared.Repositories
         #region Properties
 
         /// <summary>
-        /// Provides functions to access to database.
+        ///     Provides functions to access to database.
         /// </summary>
         private readonly ConfessionDbContext _iConfessDbContext;
 
@@ -19,7 +19,7 @@ namespace Shared.Repositories
         #region Constructor
 
         /// <summary>
-        /// Initiate repository with database context.
+        ///     Initiate repository with database context.
         /// </summary>
         /// <param name="iConfessDbContext"></param>
         public RepositoryComment(ConfessionDbContext iConfessDbContext)
@@ -45,7 +45,7 @@ namespace Shared.Repositories
         {
             throw new NotImplementedException();
         }
-        
+
         #endregion
     }
 }

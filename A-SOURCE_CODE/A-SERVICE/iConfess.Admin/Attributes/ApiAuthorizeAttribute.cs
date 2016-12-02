@@ -11,7 +11,6 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using iConfess.Database.Enumerations;
 using iConfess.Database.Models;
-using Shared.Interfaces;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.Services;
@@ -23,12 +22,12 @@ namespace iConfess.Admin.Attributes
         #region Properties
 
         /// <summary>
-        /// Unit of work which handles business of application.
+        ///     Unit of work which handles business of application.
         /// </summary>
         private IUnitOfWork _unitOfWork;
 
         /// <summary>
-        /// Unit of work which handles business of application.
+        ///     Unit of work which handles business of application.
         /// </summary>
         public IUnitOfWork UnitOfWork
         {
@@ -49,14 +48,14 @@ namespace iConfess.Admin.Attributes
 
         #region Methods
 
-
         /// <summary>
         ///     Override this function for checking whether user is allowed to access function.
         /// </summary>
         /// <param name="httpActionContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task OnAuthorizationAsync(HttpActionContext httpActionContext, CancellationToken cancellationToken)
+        public override async Task OnAuthorizationAsync(HttpActionContext httpActionContext,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -85,7 +84,9 @@ namespace iConfess.Admin.Attributes
                     if (IsAllowAnonymousRequest(httpActionContext))
                         return;
 
-                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, HttpMessages.InvalidAuthenticationToken);
+                    httpActionContext.Response =
+                        httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                            HttpMessages.InvalidAuthenticationToken);
                     return;
                 }
 
@@ -94,17 +95,19 @@ namespace iConfess.Admin.Attributes
                 #region Claim identity
 
                 // Find the claim identity.
-                var claimIdentity = (ClaimsIdentity)identity;
+                var claimIdentity = (ClaimsIdentity) identity;
 
                 // Claim doesn't contain email.
                 var claimEmail = claimIdentity.FindFirst(ClaimTypes.Email);
-                if (claimEmail == null || !string.IsNullOrEmpty(claimEmail.Value))
+                if ((claimEmail == null) || !string.IsNullOrEmpty(claimEmail.Value))
                 {
                     // Anonymous request is allowed.
                     if (IsAllowAnonymousRequest(httpActionContext))
                         return;
 
-                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, HttpMessages.InvalidAuthenticationToken);
+                    httpActionContext.Response =
+                        httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                            HttpMessages.InvalidAuthenticationToken);
                     return;
                 }
 
@@ -120,7 +123,9 @@ namespace iConfess.Admin.Attributes
                     if (IsAllowAnonymousRequest(httpActionContext))
                         return;
 
-                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, HttpMessages.InvalidAuthenticationInfo);
+                    httpActionContext.Response =
+                        httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                            HttpMessages.InvalidAuthenticationInfo);
                     return;
                 }
 
@@ -131,7 +136,8 @@ namespace iConfess.Admin.Attributes
                     if (IsAllowAnonymousRequest(httpActionContext))
                         return;
 
-                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Forbidden, HttpMessages.AccountIsPending);
+                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(
+                        HttpStatusCode.Forbidden, HttpMessages.AccountIsPending);
                     return;
                 }
 
@@ -142,10 +148,11 @@ namespace iConfess.Admin.Attributes
                     if (IsAllowAnonymousRequest(httpActionContext))
                         return;
 
-                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Forbidden, HttpMessages.AccountIsForbidden);
+                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(
+                        HttpStatusCode.Forbidden, HttpMessages.AccountIsForbidden);
                     return;
                 }
-                
+
                 // Insert account information into HttpItem for later use.
                 if (httpActionContext.ActionArguments.ContainsKey(ClaimTypes.Actor))
                     httpActionContext.ActionArguments[ClaimTypes.Actor] = account;
@@ -160,20 +167,24 @@ namespace iConfess.Admin.Attributes
                 if (IsAllowAnonymousRequest(httpActionContext))
                     return;
 
-                httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, HttpMessages.InvalidAuthenticationInfo);
+                httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                    HttpMessages.InvalidAuthenticationInfo);
             }
         }
 
         /// <summary>
-        /// Whether method or controller allows anonymous requests or not.
+        ///     Whether method or controller allows anonymous requests or not.
         /// </summary>
         /// <param name="httpActionContext"></param>
         /// <returns></returns>
         private bool IsAllowAnonymousRequest(HttpActionContext httpActionContext)
         {
             return httpActionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any()
-                   || httpActionContext.ControllerContext.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any();
+                   ||
+                   httpActionContext.ControllerContext.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>
+                       ().Any();
         }
+
         #endregion
     }
 }

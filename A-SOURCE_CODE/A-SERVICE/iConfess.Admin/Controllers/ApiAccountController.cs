@@ -22,29 +22,10 @@ namespace iConfess.Admin.Controllers
     [ApiAuthorize]
     public class ApiAccountController : ApiParentController
     {
-        #region Properties
-
-        /// <summary>
-        /// Information of token settings.
-        /// </summary>
-        private readonly IBearerAuthenticationProvider _bearerAuthenticationProvider;
-
-        /// <summary>
-        /// Provides function for time calculation.
-        /// </summary>
-        private readonly ITimeService _timeService;
-
-        /// <summary>
-        /// Instance which is used for log writing.
-        /// </summary>
-        private readonly ILog _log;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
-        /// Initiate controller with dependency injections.
+        ///     Initiate controller with dependency injections.
         /// </summary>
         /// <param name="bearerTokenAuthenticationProvider"></param>
         /// <param name="timeService"></param>
@@ -62,11 +43,30 @@ namespace iConfess.Admin.Controllers
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///     Information of token settings.
+        /// </summary>
+        private readonly IBearerAuthenticationProvider _bearerAuthenticationProvider;
+
+        /// <summary>
+        ///     Provides function for time calculation.
+        /// </summary>
+        private readonly ITimeService _timeService;
+
+        /// <summary>
+        ///     Instance which is used for log writing.
+        /// </summary>
+        private readonly ILog _log;
+
+        #endregion
+
         #region Methods
 
         /// <summary>
-        /// Check account information and sign user into system as the information is valid.
-        /// Allow anonymous access to this function.
+        ///     Check account information and sign user into system as the information is valid.
+        ///     Allow anonymous access to this function.
         /// </summary>
         /// <param name="parameters">Login information</param>
         /// <returns></returns>
@@ -87,15 +87,15 @@ namespace iConfess.Admin.Controllers
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState));
-                
+
                 // Find account information from database.
                 // Password submitted to server is already hashed.
                 var account = await
                     UnitOfWork.Context.Accounts.Where(
-                        x =>
-                            x.Email.Equals(parameters.Email) &&
-                            x.Password.Equals(parameters.Password, StringComparison.InvariantCultureIgnoreCase))
-                            .FirstOrDefaultAsync();
+                            x =>
+                                x.Email.Equals(parameters.Email) &&
+                                x.Password.Equals(parameters.Password, StringComparison.InvariantCultureIgnoreCase))
+                        .FirstOrDefaultAsync();
 
                 // Account is not found.
                 if (account == null)
@@ -119,7 +119,7 @@ namespace iConfess.Admin.Controllers
                     _log.Info($"Account [Email: {parameters.Email}] is disabled");
                     return Request.CreateErrorResponse(HttpStatusCode.Forbidden, HttpMessages.AccountIsPending);
                 }
-                
+
                 // Calculate token expiration time.
                 var tokenExpirationTime = DateTime.UtcNow.AddSeconds(_bearerAuthenticationProvider.Duration);
                 var unixTokenExpirationTime = _timeService.DateTimeUtcToUnix(tokenExpirationTime);
@@ -146,23 +146,21 @@ namespace iConfess.Admin.Controllers
                 _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-            
         }
 
         /// <summary>
-        /// Submit request to service to receive an instruction email about finding account password.
+        ///     Submit request to service to receive an instruction email about finding account password.
         /// </summary>
         /// <returns></returns>
         [Route("lost_password")]
         [HttpGet]
         public HttpResponseMessage RequestFindLostPassword()
         {
-            
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         /// <summary>
-        /// Submit a new password which will replace the old password
+        ///     Submit a new password which will replace the old password
         /// </summary>
         /// <returns></returns>
         [Route("lost_password")]
@@ -173,7 +171,7 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        /// Find list of accounts by using specific conditions.
+        ///     Find list of accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
         [Route("find")]
@@ -184,7 +182,7 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        /// Permanantly or temporarily ban accounts by using specific conditions.
+        ///     Permanantly or temporarily ban accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
         [Route("forbid")]

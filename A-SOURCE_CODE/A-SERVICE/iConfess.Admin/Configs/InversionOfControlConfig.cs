@@ -8,7 +8,6 @@ using iConfess.Admin.Interfaces.Providers;
 using iConfess.Admin.Providers;
 using iConfess.Database.Models;
 using Microsoft.AspNet.SignalR;
-using Shared.Interfaces;
 using Shared.Interfaces.Services;
 using Shared.Services;
 using RegistrationExtensions = Autofac.Integration.SignalR.RegistrationExtensions;

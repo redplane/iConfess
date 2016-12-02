@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using iConfess.Database.Models;
+﻿using iConfess.Database.Models;
 using Shared.Interfaces.Repositories;
 
 namespace Shared.Interfaces.Services
 {
     public interface IUnitOfWork
     {
-        
         #region Properties
 
         /// <summary>
@@ -45,7 +43,7 @@ namespace Shared.Interfaces.Services
         IRepositorySignalrConnection RepositorySignalrConnections { get; }
 
         /// <summary>
-        /// iConfess database context.
+        ///     iConfess database context.
         /// </summary>
         ConfessionDbContext Context { get; }
 

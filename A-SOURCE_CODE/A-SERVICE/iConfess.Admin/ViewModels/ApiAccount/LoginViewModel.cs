@@ -6,15 +6,17 @@ namespace iConfess.Admin.ViewModels.ApiAccount
     public class LoginViewModel
     {
         /// <summary>
-        /// Email of account.
+        ///     Email of account.
         /// </summary>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(HttpValidationMessages), ErrorMessageResourceName = "InformationRequired")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(HttpValidationMessages),
+             ErrorMessageResourceName = "InformationRequired")]
         public string Email { get; set; }
 
         /// <summary>
-        /// Password related to account.
+        ///     Password related to account.
         /// </summary>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(HttpValidationMessages), ErrorMessageResourceName = "InformationRequired")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(HttpValidationMessages),
+             ErrorMessageResourceName = "InformationRequired")]
         public string Password { get; set; }
     }
 }

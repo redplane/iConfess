@@ -1,34 +1,57 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.ViewModels.ApiCategory;
-using iConfess.Database.Models;
 using iConfess.Database.Models.Tables;
 using Shared.Interfaces.Services;
+using Shared.Resources;
+using Shared.ViewModels.Categories;
 
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/category")]
     public class ApiCategoryController : ApiController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly ConfessionDbContext confessionDbContext;
-
-        public ApiCategoryController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        #region Controllers
 
         /// <summary>
-        /// Initiate a category with specific information.
+        ///     Initiate controller with
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="timeService"></param>
+        public ApiCategoryController(IUnitOfWork unitOfWork, ITimeService timeService)
+        {
+            _unitOfWork = unitOfWork;
+            _timeService = timeService;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     Unit of work which provides database context and repositories to handle business of application.
+        /// </summary>
+        private readonly IUnitOfWork _unitOfWork;
+
+        /// <summary>
+        ///     Service which handles time calculation.
+        /// </summary>
+        private readonly ITimeService _timeService;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Initiate a category with specific information.
         /// </summary>
         /// <returns></returns>
         [Route("")]
         [HttpPost]
-        public HttpResponseMessage InitiateCategory(CategoryViewModel categoryViewModel)
+        public async Task<HttpResponseMessage> InitiateCategory([FromBody] CategoryViewModel parameter)
         {
             try
             {
@@ -38,83 +61,79 @@ namespace iConfess.Admin.Controllers
 
                 //Initiate new category
                 var category = new Category();
-                category.CreatorIndex = categoryViewModel.CreatorIndex;
-                category.Created = categoryViewModel.Created;
-                category.Name = categoryViewModel.Name;
-                category.LastModified = categoryViewModel.LastModified;
+                category.CreatorIndex = parameter.CreatorIndex;
+                category.Created = parameter.Created;
+                category.Name = parameter.Name;
 
                 //Add category record
-                confessionDbContext.Categories.Add(category);
-                //Save change
-                confessionDbContext.SaveChanges();
+                await _unitOfWork.RepositoryCategories.InitiateCategoryAsync(category);
 
                 return Request.CreateResponse(HttpStatusCode.Created, category);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                    "Error occured while executing category");
+                // TODO: Write log.
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
 
         /// <summary>
-        /// Update category information.
+        ///     Update category information.
         /// </summary>
         /// <returns></returns>
         [Route("")]
         [HttpPut]
-        public HttpResponseMessage UpdateCategory(CategoryViewModel categoryViewModel)
+        public async Task<HttpResponseMessage> UpdateCategory([FromUri] int index,
+            [FromBody] CategoryViewModel parameters)
         {
             try
             {
-                //Request parameters are invalid
-                if (!ModelState.IsValid)
-                    return Request.CreateResponse(HttpStatusCode.Created, ModelState);
+                // Parameters haven't been initialized.
+                if (parameters == null)
+                {
+                    parameters = new CategoryViewModel();
+                    Validate(parameters);
+                }
 
-                //Find category record
-                var category = confessionDbContext.Categories.FirstOrDefault(i => i.Id.Equals(categoryViewModel.Id));
-
-                category.Created = categoryViewModel.Created;
-                category.CreatorIndex = categoryViewModel.CreatorIndex;
-                category.Name = categoryViewModel.Name;
-                category.LastModified = categoryViewModel.LastModified;
-
-                //Update category record
-                confessionDbContext.Entry(category).State = EntityState.Modified;
-                //Save change
-                confessionDbContext.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.Created, category);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                    "Error occured while executing category");
-            }
-        }
-
-        /// <summary>
-        /// Delete a specific category.
-        /// </summary>
-        /// <returns></returns>
-        [Route("")]
-        [HttpDelete]
-        public HttpResponseMessage DeleteCategories(int id)
-        {
-            try
-            {
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
 
-                //find category record
-                var category = confessionDbContext.Categories.FirstOrDefault(i => i.Id.Equals(id));
-                //Delete record
-                confessionDbContext.Categories.Remove(category);
-                //SaveChange
-                confessionDbContext.SaveChanges();
+                // Find the category
+                var findCategoryViewModel = new FindCategoriesViewModel();
+                findCategoryViewModel.Id = index;
 
-                return Request.CreateResponse(HttpStatusCode.Created, category);
+                // Find categories by using specific conditions.
+                var response = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(findCategoryViewModel);
+
+                // No record has been found
+                if (response.Total < 1)
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+
+                // Begin transaction.
+                using (var transaction = _unitOfWork.Context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Update all categories.
+                        foreach (var category in response.Categories)
+                        {
+                            category.Name = parameters.Name;
+                            category.LastModified = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
+                        }
+
+                        // Save changes into database.
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        // Rollback transaction.
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -124,30 +143,76 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        /// Filter categories by using specific conditions.
+        ///     Delete a specific category.
         /// </summary>
         /// <returns></returns>
-        [Route("find")]
-        [HttpGet]
-        public HttpResponseMessage FindCategories()
+        [Route("")]
+        [HttpDelete]
+        public async Task<HttpResponseMessage> DeleteCategories([FromBody] FindCategoriesViewModel conditions)
         {
             try
             {
-                var categories = confessionDbContext.Categories.ToList();
-                if (categories.Any())
+                // Conditions haven't been initialized.
+                if (conditions == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, categories);
+                    conditions = new FindCategoriesViewModel();
+                    Validate(conditions);
                 }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "show message");
-                }
+
+                //Request parameters are invalid
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+
+                // Delete categories by using specific conditions.
+                var totalRecords = await _unitOfWork.RepositoryCategories.DeleteCategoriesAsync(conditions);
+
+                // No record has been deleted.
+                if (totalRecords < 1)
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+
+                // Tell the client , deletion is successful.
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                    "Error occured while executing category");
+                // TODO: Add log
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        /// <summary>
+        ///     Filter categories by using specific conditions.
+        /// </summary>
+        /// <returns></returns>
+        [Route("find")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> FindCategories([FromBody] FindCategoriesViewModel conditions)
+        {
+            try
+            {
+                // Conditions haven't been initialized.
+                if (conditions == null)
+                {
+                    conditions = new FindCategoriesViewModel();
+                    Validate(conditions);
+                }
+
+                // Parameters are invalid.
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                // Find categories by using specific conditions.
+                var response = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception exception)
+            {
+                // TODO: Add log
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        #endregion
     }
 }
