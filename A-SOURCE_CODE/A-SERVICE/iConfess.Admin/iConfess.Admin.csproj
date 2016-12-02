@@ -267,6 +267,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ApiAccount\FindAccountViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ApiCategory\CategoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
