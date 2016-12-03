@@ -55,17 +55,9 @@
   <ItemGroup>
     <Compile Include="Enumerations\AccountStatus.cs" />
     <Compile Include="Enumerations\NotificationType.cs" />
-    <Compile Include="Migrations\201611210907275_11212016001.cs" />
-    <Compile Include="Migrations\201611210907275_11212016001.Designer.cs">
-      <DependentUpon>201611210907275_11212016001.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611250415443_11252016001.cs" />
-    <Compile Include="Migrations\201611250415443_11252016001.Designer.cs">
-      <DependentUpon>201611250415443_11252016001.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611250857214_11252016002.cs" />
-    <Compile Include="Migrations\201611250857214_11252016002.Designer.cs">
-      <DependentUpon>201611250857214_11252016002.cs</DependentUpon>
+    <Compile Include="Migrations\201612031004566_20161203001.cs" />
+    <Compile Include="Migrations\201612031004566_20161203001.Designer.cs">
+      <DependentUpon>201612031004566_20161203001.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Tables\Account.cs" />
@@ -89,14 +81,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611210907275_11212016001.resx">
-      <DependentUpon>201611210907275_11212016001.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611250415443_11252016001.resx">
-      <DependentUpon>201611250415443_11252016001.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611250857214_11252016002.resx">
-      <DependentUpon>201611250857214_11252016002.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612031004566_20161203001.resx">
+      <DependentUpon>201612031004566_20161203001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
