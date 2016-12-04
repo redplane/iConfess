@@ -26,13 +26,22 @@ var CategoryEditBoxComponent = (function () {
     CategoryEditBoxComponent.prototype.setCategory = function (category) {
         this._category = category;
     };
-    CategoryEditBoxComponent.prototype.getCategory = function () {
-        return this._category;
-    };
-    // Open the dialog.
+    // Display change category information modal.
     CategoryEditBoxComponent.prototype.open = function () {
-        console.log(this);
+        $(this.changeCategoryBox.nativeElement).modal('show');
     };
+    // Close change category information modal.
+    CategoryEditBoxComponent.prototype.close = function () {
+        $(this.changeCategoryBox.nativeElement).modal('close');
+    };
+    // Toggle change category information modal.
+    CategoryEditBoxComponent.prototype.toggle = function () {
+        $(this.changeCategoryBox.nativeElement).modal('toggle');
+    };
+    __decorate([
+        core_1.ViewChild('changeCategoryBox'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], CategoryEditBoxComponent.prototype, "changeCategoryBox", void 0);
     CategoryEditBoxComponent = __decorate([
         core_1.Component({
             selector: 'category-edit-box',

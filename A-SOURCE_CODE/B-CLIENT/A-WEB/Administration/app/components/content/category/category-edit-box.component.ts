@@ -1,4 +1,4 @@
-import {Component} from '@angular/core'
+import {Component, ViewChild, ElementRef} from '@angular/core'
 import {CategoryDetailViewModel} from "../../../viewmodels/category/CategoryDetailViewModel";
 import {Account} from "../../../models/Account";
 
@@ -16,11 +16,14 @@ declare var $:any;
 
 export class CategoryEditBoxComponent{
 
+    @ViewChild('changeCategoryBox') private changeCategoryBox: ElementRef;
+
     // Category detail.
     private _category: CategoryDetailViewModel;
 
     // Initiate category edit box component.
     public constructor(){
+
         // Category hasn't been initialized.
         if (this._category == null)
             this._category = new CategoryDetailViewModel();
@@ -37,12 +40,18 @@ export class CategoryEditBoxComponent{
         this._category = category;
     }
 
-    public getCategory(){
-        return this._category;
+    // Display change category information modal.
+    public open() : void {
+        $(this.changeCategoryBox.nativeElement).modal('show');
     }
 
-    // Open the dialog.
-    private open(): void{
-        console.log(this);
+    // Close change category information modal.
+    public close():void{
+        $(this.changeCategoryBox.nativeElement).modal('close');
+    }
+
+    // Toggle change category information modal.
+    public toggle(): void{
+        $(this.changeCategoryBox.nativeElement).modal('toggle');
     }
 }

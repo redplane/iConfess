@@ -73,7 +73,7 @@
     <div class="col-lg-4" *ngFor="let category of _categorySearchResult.categories">
         <category-detail [category]="category"
                          (clickRemoveCategory)="clickRemoveCategory(category)"
-                         (clickChangeCategoryInfo)="clickChangeCategoryInfo(category, boxCategoryChangeInfo)"></category-detail>
+                         (clickChangeCategoryInfo)="clickChangeCategoryInfo(category, f)"></category-detail>
     </div>
 </div>
 
@@ -89,6 +89,4 @@
     </div>
 </div>
 
-<category-edit-box #boxCategoryChangeInfo></category-edit-box>
-
-
+<category-edit-box #f></category-edit-box>

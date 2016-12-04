@@ -21,9 +21,9 @@ var CategoryManagementComponent = (function () {
     CategoryManagementComponent.prototype.clickRemoveCategory = function (category) {
         console.log(category);
     };
-    CategoryManagementComponent.prototype.clickChangeCategoryInfo = function (category, boxCategoryChangeInfo) {
-        console.log(category);
-        console.log(boxCategoryChangeInfo);
+    CategoryManagementComponent.prototype.clickChangeCategoryInfo = function (category, changeCategoryBox) {
+        var a = 1;
+        changeCategoryBox.open();
     };
     CategoryManagementComponent = __decorate([
         core_1.Component({
