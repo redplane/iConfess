@@ -1,14 +1,13 @@
 /*
 * Category properties.
 * */
-import {Account} from "./Account";
 export class Category{
 
     // Id of category.
     public id: number;
 
-    // Category creator information.
-    public creator: Account;
+    // Category creator index information.
+    public creatorIndex: number;
 
     // Name of category.
     public name: string;

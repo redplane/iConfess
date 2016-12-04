@@ -1,4 +1,7 @@
 "use strict";
+/*
+* Category properties.
+* */
 var Category = (function () {
     function Category() {
     }

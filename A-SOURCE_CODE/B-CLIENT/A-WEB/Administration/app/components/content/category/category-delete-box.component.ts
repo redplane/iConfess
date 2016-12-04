@@ -1,22 +1,20 @@
 import {Component, ViewChild, ElementRef} from '@angular/core'
 import {CategoryDetailViewModel} from "../../../viewmodels/category/CategoryDetailViewModel";
-import {Account} from "../../../models/Account";
 
 // Allow $ symbol to be usable.
 declare var $:any;
 
 @Component({
-    selector: 'category-edit-box',
-    templateUrl: './app/html/content/category/category-edit-box.component.html',
+    selector: 'category-delete-box',
+    templateUrl: './app/html/content/category/category-delete-box.component.html',
     providers:[
-        CategoryDetailViewModel,
-        Account
+        CategoryDetailViewModel
     ]
 })
 
-export class CategoryEditBoxComponent{
+export class CategoryDeleteBoxComponent{
 
-    @ViewChild('changeCategoryBox') private changeCategoryBox: ElementRef;
+    @ViewChild('deleteCategoryBox') private deleteCategoryBox: ElementRef;
 
     // Category detail.
     private _category: CategoryDetailViewModel;
@@ -36,16 +34,16 @@ export class CategoryEditBoxComponent{
 
     // Display change category information modal.
     public open() : void {
-        $(this.changeCategoryBox.nativeElement).modal('show');
+        $(this.deleteCategoryBox.nativeElement).modal('show');
     }
 
     // Close change category information modal.
     public close():void{
-        $(this.changeCategoryBox.nativeElement).modal('close');
+        $(this.deleteCategoryBox.nativeElement).modal('close');
     }
 
     // Toggle change category information modal.
     public toggle(): void{
-        $(this.changeCategoryBox.nativeElement).modal('toggle');
+        $(this.deleteCategoryBox.nativeElement).modal('toggle');
     }
 }

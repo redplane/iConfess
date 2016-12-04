@@ -8,6 +8,7 @@ import {CategoryManagementComponent} from "../components/category-management.com
 import {CategoryDetailBoxComponent} from '../components/content/category/category-detail-box.component';
 import {CategoryEditBoxComponent} from "../components/content/category/category-edit-box.component";
 import {FormsModule} from '@angular/forms';
+import {CategoryDeleteBoxComponent} from "../components/content/category/category-delete-box.component";
 
 @NgModule({
     imports:      [
@@ -19,10 +20,11 @@ import {FormsModule} from '@angular/forms';
         NavigationBarComponent,
         SidebarComponent,
         AccountManagementComponent,
+
         CategoryManagementComponent,
         CategoryDetailBoxComponent,
-
-        CategoryEditBoxComponent
+        CategoryEditBoxComponent,
+        CategoryDeleteBoxComponent
     ],
     bootstrap:    [
         MainApplicationComponent

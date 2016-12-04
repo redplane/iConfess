@@ -10,46 +10,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var CategoryDetailViewModel_1 = require("../../../viewmodels/category/CategoryDetailViewModel");
-var Account_1 = require("../../../models/Account");
-var CategoryEditBoxComponent = (function () {
+var CategoryDeleteBoxComponent = (function () {
     // Initiate category edit box component.
-    function CategoryEditBoxComponent() {
+    function CategoryDeleteBoxComponent() {
         // Category hasn't been initialized.
         if (this._category == null)
             this._category = new CategoryDetailViewModel_1.CategoryDetailViewModel();
     }
     // Update category which should be shown on screen.
-    CategoryEditBoxComponent.prototype.setCategory = function (category) {
+    CategoryDeleteBoxComponent.prototype.setCategory = function (category) {
         this._category = category;
     };
     // Display change category information modal.
-    CategoryEditBoxComponent.prototype.open = function () {
-        $(this.changeCategoryBox.nativeElement).modal('show');
+    CategoryDeleteBoxComponent.prototype.open = function () {
+        $(this.deleteCategoryBox.nativeElement).modal('show');
     };
     // Close change category information modal.
-    CategoryEditBoxComponent.prototype.close = function () {
-        $(this.changeCategoryBox.nativeElement).modal('close');
+    CategoryDeleteBoxComponent.prototype.close = function () {
+        $(this.deleteCategoryBox.nativeElement).modal('close');
     };
     // Toggle change category information modal.
-    CategoryEditBoxComponent.prototype.toggle = function () {
-        $(this.changeCategoryBox.nativeElement).modal('toggle');
+    CategoryDeleteBoxComponent.prototype.toggle = function () {
+        $(this.deleteCategoryBox.nativeElement).modal('toggle');
     };
     __decorate([
-        core_1.ViewChild('changeCategoryBox'), 
+        core_1.ViewChild('deleteCategoryBox'), 
         __metadata('design:type', core_1.ElementRef)
-    ], CategoryEditBoxComponent.prototype, "changeCategoryBox", void 0);
-    CategoryEditBoxComponent = __decorate([
+    ], CategoryDeleteBoxComponent.prototype, "deleteCategoryBox", void 0);
+    CategoryDeleteBoxComponent = __decorate([
         core_1.Component({
-            selector: 'category-edit-box',
-            templateUrl: './app/html/content/category/category-edit-box.component.html',
+            selector: 'category-delete-box',
+            templateUrl: './app/html/content/category/category-delete-box.component.html',
             providers: [
-                CategoryDetailViewModel_1.CategoryDetailViewModel,
-                Account_1.Account
+                CategoryDetailViewModel_1.CategoryDetailViewModel
             ]
         }), 
         __metadata('design:paramtypes', [])
-    ], CategoryEditBoxComponent);
-    return CategoryEditBoxComponent;
+    ], CategoryDeleteBoxComponent);
+    return CategoryDeleteBoxComponent;
 }());
-exports.CategoryEditBoxComponent = CategoryEditBoxComponent;
-//# sourceMappingURL=category-edit-box.component.js.map
+exports.CategoryDeleteBoxComponent = CategoryDeleteBoxComponent;
+//# sourceMappingURL=category-delete-box.component.js.map

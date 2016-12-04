@@ -18,11 +18,17 @@ var CategoryManagementComponent = (function () {
         this._categorySearchResult = this._categoryService.findCategories();
     }
     // Callback is fired when a category is created to be removed.
-    CategoryManagementComponent.prototype.clickRemoveCategory = function (category) {
-        console.log(category);
+    CategoryManagementComponent.prototype.clickRemoveCategory = function (category, deleteCategoryBox) {
+        // Update category information into box.
+        deleteCategoryBox.setCategory(category);
+        // Open delete category confirmation box.
+        deleteCategoryBox.open();
     };
+    // Callback which is fired when change category box is clicked.
     CategoryManagementComponent.prototype.clickChangeCategoryInfo = function (category, changeCategoryBox) {
-        var a = 1;
+        // Update category information into box.
+        changeCategoryBox.setCategory(category);
+        // Open change category information box.
         changeCategoryBox.open();
     };
     CategoryManagementComponent = __decorate([
