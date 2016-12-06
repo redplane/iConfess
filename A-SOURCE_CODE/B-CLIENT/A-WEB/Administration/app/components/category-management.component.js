@@ -31,6 +31,10 @@ var CategoryManagementComponent = (function () {
         // Open change category information box.
         changeCategoryBox.open();
     };
+    // Callback which is fired when search button of category search box is clicked.
+    CategoryManagementComponent.prototype.clickSearch = function (categorySearch) {
+        console.log(categorySearch);
+    };
     CategoryManagementComponent = __decorate([
         core_1.Component({
             selector: 'category-management',
