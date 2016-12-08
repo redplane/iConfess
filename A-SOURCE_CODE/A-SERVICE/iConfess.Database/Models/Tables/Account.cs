@@ -117,25 +117,25 @@ namespace iConfess.Database.Models.Tables
         ///     One account can report many comments.
         /// </summary>
         [JsonIgnore]
-        public ICollection<ReportedComment> OutgoingReportedComments { get; set; }
+        public ICollection<CommentReport> OutgoingReportedComments { get; set; }
 
         /// <summary>
         ///     One account can be reported about its many comments.
         /// </summary>
         [JsonIgnore]
-        public ICollection<ReportedComment> IncomingReportedComments { get; set; }
+        public ICollection<CommentReport> IncomingReportedComments { get; set; }
 
         /// <summary>
         ///     One account can report many posts.
         /// </summary>
         [JsonIgnore]
-        public ICollection<ReportedPost> OutgoingReportedPosts { get; set; }
+        public ICollection<PostReport> OutgoingReportedPosts { get; set; }
 
         /// <summary>
         ///     One account can be reported about its many posts.
         /// </summary>
         [JsonIgnore]
-        public ICollection<ReportedPost> IncomingReportedPosts { get; set; }
+        public ICollection<PostReport> IncomingReportedPosts { get; set; }
 
         /// <summary>
         ///     One account can broadcast many signalr connections to the server.

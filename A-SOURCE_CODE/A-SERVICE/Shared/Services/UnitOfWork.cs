@@ -109,7 +109,7 @@ namespace Shared.Services
             set { throw new NotImplementedException(); }
         }
 
-        public IRepositoryCommentReport RepostiCommentReports
+        public IRepositoryCommentReport RepositoryCommentReports
         {
             get { throw new NotImplementedException(); }
 

@@ -113,5 +113,14 @@ namespace Shared.Resources {
                 return ResourceManager.GetString("InvalidAuthenticationToken", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POST_NOT_FOUND.
+        /// </summary>
+        public static string PostNotFound {
+            get {
+                return ResourceManager.GetString("PostNotFound", resourceCulture);
+            }
+        }
     }
 }

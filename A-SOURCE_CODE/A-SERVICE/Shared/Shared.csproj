@@ -87,6 +87,7 @@
     <Compile Include="Interfaces\Services\ITimeService.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\TextSearch.cs" />
+    <Compile Include="Repositories\RepositoryPost.cs" />
     <Compile Include="Services\EncryptionService.cs" />
     <Compile Include="Services\UnitOfWork.cs" />
     <Compile Include="Models\UnixDateRange.cs" />
@@ -107,6 +108,9 @@
     <Compile Include="Services\TimeService.cs" />
     <Compile Include="ViewModels\Categories\FindCategoriesViewModel.cs" />
     <Compile Include="ViewModels\Categories\ResponseCategoriesViewModel.cs" />
+    <Compile Include="ViewModels\Posts\FindPostViewModel.cs" />
+    <Compile Include="ViewModels\Posts\InitiatePostViewModel.cs" />
+    <Compile Include="ViewModels\Posts\ResponsePostsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

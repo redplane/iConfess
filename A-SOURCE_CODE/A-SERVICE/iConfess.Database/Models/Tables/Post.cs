@@ -92,13 +92,13 @@ namespace iConfess.Database.Models.Tables
         ///     One post can have many reports about its comments.
         /// </summary>
         [JsonIgnore]
-        public ICollection<ReportedComment> ReportedComments { get; set; }
+        public ICollection<CommentReport> ReportedComments { get; set; }
 
         /// <summary>
         ///     One post can have many reports about it.
         /// </summary>
         [JsonIgnore]
-        public ICollection<ReportedPost> ReportedPosts { get; set; }
+        public ICollection<PostReport> PostReports { get; set; }
 
         #endregion
     }

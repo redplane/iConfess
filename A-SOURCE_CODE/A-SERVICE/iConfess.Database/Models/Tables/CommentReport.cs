@@ -4,39 +4,44 @@ using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
 {
-    public class ReportedPost
+    public class CommentReport
     {
         #region Properties
 
         /// <summary>
-        ///     Id of report.
+        ///     Id of report (Auto incremented)
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
-        ///     Which post is reported.
+        ///     Comment which is reported.
+        /// </summary>
+        public int CommentIndex { get; set; }
+
+        /// <summary>
+        ///     The post comment belongs to.
         /// </summary>
         public int PostIndex { get; set; }
 
         /// <summary>
-        ///     Who owns the post.
+        ///     Owner of comment.
         /// </summary>
-        public int PostOwnerIndex { get; set; }
+        public int CommentOwnerIndex { get; set; }
 
         /// <summary>
-        ///     Who report the post.
+        ///     Who created the report.
         /// </summary>
-        public int PostReporterIndex { get; set; }
+        public int CommentReporterIndex { get; set; }
 
         /// <summary>
-        ///     Original content of post.
+        ///     Content of report.
         /// </summary>
         public string Body { get; set; }
 
         /// <summary>
-        ///     Reason the post was reported.
+        ///     Reason the comment is reported.
         /// </summary>
         public string Reason { get; set; }
 
@@ -50,25 +55,28 @@ namespace iConfess.Database.Models.Tables
         #region Relationships
 
         /// <summary>
-        ///     One report is about one post, just one.
+        ///     One report can only belongs to one comment.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostIndex))]
+        public Comment Comment { get; set; }
+
+        /// <summary>
+        ///     One report can only belongs to one post.
+        /// </summary>
+        [JsonIgnore]
         public Post Post { get; set; }
 
         /// <summary>
-        ///     Report can only be about one account.
+        ///     Account which owns the comment
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostOwnerIndex))]
-        public Account PostOwner { get; set; }
+        public Account CommentOwner { get; set; }
 
         /// <summary>
-        ///     Report can only belong to one account.
+        ///     One report belongs to one specific account.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostReporterIndex))]
-        public Account PostReporter { get; set; }
+        public Account CommentReporter { get; set; }
 
         #endregion
     }

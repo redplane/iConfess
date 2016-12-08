@@ -69,8 +69,8 @@
     <Compile Include="Models\Tables\NotificationComment.cs" />
     <Compile Include="Models\Tables\NotificationPost.cs" />
     <Compile Include="Models\Tables\Post.cs" />
-    <Compile Include="Models\Tables\ReportedComment.cs" />
-    <Compile Include="Models\Tables\ReportedPost.cs" />
+    <Compile Include="Models\Tables\CommentReport.cs" />
+    <Compile Include="Models\Tables\PostReport.cs" />
     <Compile Include="Models\Tables\SignalrConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
