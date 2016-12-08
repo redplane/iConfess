@@ -8,11 +8,12 @@ using iConfess.Database.Models.Tables;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.ViewModels.Categories;
+using Shared.ViewModels.Comments;
 
 namespace iConfess.Admin.Controllers
 {
-    [RoutePrefix("api/category")]
-    public class ApiCategoryController : ApiController
+    [RoutePrefix("api/comment")]
+    public class ApiCommentController : ApiController
     {
         #region Controllers
 
@@ -21,7 +22,7 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
-        public ApiCategoryController(IUnitOfWork unitOfWork, ITimeService timeService)
+        public ApiCommentController(IUnitOfWork unitOfWork, ITimeService timeService)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
@@ -51,14 +52,16 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpPost]
-        public async Task<HttpResponseMessage> InitiateCategory([FromBody] CategoryViewModel parameters)
+        public async Task<HttpResponseMessage> InitiateComment([FromBody] InitiateCommentViewModel parameters)
         {
             try
             {
+                #region Parameters validation
+
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
-                    parameters = new CategoryViewModel();
+                    parameters = new InitiateCommentViewModel();
                     Validate(parameters);
                 }
 
@@ -69,16 +72,20 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
 
-                //Initiate new category
-                var category = new Category();
-                category.CreatorIndex = parameters.CreatorIndex;
-                category.Created = parameters.Created;
-                category.Name = parameters.Name;
+                #endregion
+
+                // TODO : Find owner index of request.
+                var ownerIndex = 1;
+                var comment = new Comment();
+                comment.OwnerIndex = ownerIndex;
+                comment.PostIndex = parameters.PostIndex;
+                comment.Content = parameters.Content;
+                comment.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 //Add category record
-                await _unitOfWork.RepositoryCategories.InitiateCategoryAsync(category);
+                comment = await _unitOfWork.RepositoryComments.InitiateCommentAsync(comment);
 
-                return Request.CreateResponse(HttpStatusCode.Created, category);
+                return Request.CreateResponse(HttpStatusCode.Created, comment);
             }
             catch (Exception exception)
             {
@@ -93,15 +100,17 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpPut]
-        public async Task<HttpResponseMessage> UpdateCategory([FromUri] int index,
-            [FromBody] CategoryViewModel parameters)
+        public async Task<HttpResponseMessage> UpdateComment([FromUri] int index,
+            [FromBody] InitiateCommentViewModel parameters)
         {
             try
             {
+                #region Parameters validation
+
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
-                    parameters = new CategoryViewModel();
+                    parameters = new InitiateCommentViewModel();
                     Validate(parameters);
                 }
 
@@ -111,33 +120,42 @@ namespace iConfess.Admin.Controllers
                     // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
+
+                #endregion
+
+                #region Record find
+
                 // Find the category
-                var findCategoryViewModel = new FindCategoriesViewModel();
-                findCategoryViewModel.Id = index;
+                var findComment = new FindCommentViewModel();
+                findComment.Id = index;
 
                 // Find categories by using specific conditions.
-                var response = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(findCategoryViewModel);
+                var response = await _unitOfWork.RepositoryComments.FindCommentsAsync(findComment);
 
                 // No record has been found
                 if (response.Total < 1)
                 {
-                    // TODO: Add log
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+                    // TODO: Add log.
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
                 }
+
+                #endregion
+
+                #region Record update
 
                 // Begin transaction.
                 using (var transaction = _unitOfWork.Context.Database.BeginTransaction())
                 {
                     try
                     {
-                        // Find unix system time.
+                        // Calculate the system time.
                         var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                         // Update all categories.
-                        foreach (var category in response.Categories)
+                        foreach (var comment in response.Comments)
                         {
-                            category.Name = parameters.Name;
-                            category.LastModified = unixSystemTime;
+                            comment.Content = parameters.Content;
+                            comment.LastModified = unixSystemTime;
                         }
 
                         // Save changes into database.
@@ -151,10 +169,13 @@ namespace iConfess.Admin.Controllers
                     }
                 }
 
+                #endregion
+
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception exception)
             {
+                // TODO: Add log
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -165,14 +186,16 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteCategories([FromBody] FindCategoriesViewModel conditions)
+        public async Task<HttpResponseMessage> DeleteComments([FromBody] FindCommentViewModel conditions)
         {
             try
             {
+                #region Parameters validation
+
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindCategoriesViewModel();
+                    conditions = new FindCommentViewModel();
                     Validate(conditions);
                 }
 
@@ -182,15 +205,23 @@ namespace iConfess.Admin.Controllers
                     // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
+
+                #endregion
+
+                #region Find & delete records
+
                 // Delete categories by using specific conditions.
-                var totalRecords = await _unitOfWork.RepositoryCategories.DeleteCategoriesAsync(conditions);
+                var totalRecords = await _unitOfWork.RepositoryComments.DeleteCommentsAsync(conditions);
 
                 // No record has been deleted.
                 if (totalRecords < 1)
                 {
                     // TODO: Add log.
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
                 }
+
+                #endregion
+
                 // Tell the client , deletion is successful.
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -207,14 +238,14 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
-        public async Task<HttpResponseMessage> FindCategories([FromBody] FindCategoriesViewModel conditions)
+        public async Task<HttpResponseMessage> FindComments([FromBody] FindCommentViewModel conditions)
         {
             try
             {
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindCategoriesViewModel();
+                    conditions = new FindCommentViewModel();
                     Validate(conditions);
                 }
 
@@ -226,7 +257,7 @@ namespace iConfess.Admin.Controllers
                 }
 
                 // Find categories by using specific conditions.
-                var response = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
+                var response = await _unitOfWork.RepositoryComments.FindCommentsAsync(conditions);
 
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }

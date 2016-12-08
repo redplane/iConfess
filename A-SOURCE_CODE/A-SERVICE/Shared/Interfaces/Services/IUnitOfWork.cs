@@ -25,7 +25,7 @@ namespace Shared.Interfaces.Services
         /// <summary>
         ///     Provides functions to access comment reports database.
         /// </summary>
-        IRepositoryCommentReport RepostiCommentReports { get; }
+        IRepositoryCommentReport RepositoryCommentReports { get; }
 
         /// <summary>
         ///     Provides functions to access post reports database.

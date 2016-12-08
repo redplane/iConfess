@@ -58,6 +58,11 @@ namespace Shared.Services
         private IRepositoryPostReport _repositoryPostReport;
 
         /// <summary>
+        /// Provides access to post database.
+        /// </summary>
+        private IRepositoryPost _repositoryPost;
+
+        /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
         public ConfessionDbContext Context
@@ -95,11 +100,12 @@ namespace Shared.Services
 
         public IRepositoryPostReport RepositoryPostReports { get; set; }
 
+        /// <summary>
+        /// Provides functions to access post database.
+        /// </summary>
         public IRepositoryPost RepositoryPosts
         {
-            get { throw new NotImplementedException(); }
-
-            set { throw new NotImplementedException(); }
+            get { return _repositoryPost ?? (_repositoryPost = new RepositoryPost(_iConfessDbContext)); }
         }
 
         public IRepositorySignalrConnection RepositorySignalrConnections

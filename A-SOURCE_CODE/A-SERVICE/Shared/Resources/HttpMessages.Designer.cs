@@ -97,6 +97,15 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to COMMENT_NOT_FOUND.
+        /// </summary>
+        public static string CommentNotFound {
+            get {
+                return ResourceManager.GetString("CommentNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AUTHENTICATION_INFO_INVALID.
         /// </summary>
         public static string InvalidAuthenticationInfo {
