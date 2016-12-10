@@ -132,6 +132,12 @@
   <data name="CommentNotFound" xml:space="preserve">
     <value>COMMENT_NOT_FOUND</value>
   </data>
+  <data name="CommentReportNotFound" xml:space="preserve">
+    <value>COMMENT_REPORT_NOT_FOUND</value>
+  </data>
+  <data name="CommentReportNotUnique" xml:space="preserve">
+    <value>COMMENT_REPORT_NOT_UNIQUE</value>
+  </data>
   <data name="InvalidAuthenticationInfo" xml:space="preserve">
     <value>AUTHENTICATION_INFO_INVALID</value>
   </data>

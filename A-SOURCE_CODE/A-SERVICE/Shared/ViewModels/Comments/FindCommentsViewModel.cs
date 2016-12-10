@@ -2,7 +2,7 @@
 
 namespace Shared.ViewModels.Comments
 {
-    public class FindCommentViewModel
+    public class FindCommentsViewModel
     {
         /// <summary>
         /// Comment index.

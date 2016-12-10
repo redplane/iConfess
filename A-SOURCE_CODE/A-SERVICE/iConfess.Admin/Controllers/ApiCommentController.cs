@@ -126,7 +126,7 @@ namespace iConfess.Admin.Controllers
                 #region Record find
 
                 // Find the category
-                var findComment = new FindCommentViewModel();
+                var findComment = new FindCommentsViewModel();
                 findComment.Id = index;
 
                 // Find categories by using specific conditions.
@@ -186,7 +186,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteComments([FromBody] FindCommentViewModel conditions)
+        public async Task<HttpResponseMessage> DeleteComments([FromBody] FindCommentsViewModel conditions)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace iConfess.Admin.Controllers
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindCommentViewModel();
+                    conditions = new FindCommentsViewModel();
                     Validate(conditions);
                 }
 
@@ -238,14 +238,14 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
-        public async Task<HttpResponseMessage> FindComments([FromBody] FindCommentViewModel conditions)
+        public async Task<HttpResponseMessage> FindComments([FromBody] FindCommentsViewModel conditions)
         {
             try
             {
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindCommentViewModel();
+                    conditions = new FindCommentsViewModel();
                     Validate(conditions);
                 }
 

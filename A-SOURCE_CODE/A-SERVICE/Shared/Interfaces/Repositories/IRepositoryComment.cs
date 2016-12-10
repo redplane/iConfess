@@ -16,12 +16,12 @@ namespace Shared.Interfaces.Repositories
         ///     Find comments by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task<ResponseCommentsViewModel> FindCommentsAsync(FindCommentViewModel conditions);
+        Task<ResponseCommentsViewModel> FindCommentsAsync(FindCommentsViewModel conditions);
 
         /// <summary>
         ///     Delete comments asychronously.
         /// </summary>
         /// <returns></returns>
-        Task<int> DeleteCommentsAsync(FindCommentViewModel conditions);
+        Task<int> DeleteCommentsAsync(FindCommentsViewModel conditions);
     }
 }

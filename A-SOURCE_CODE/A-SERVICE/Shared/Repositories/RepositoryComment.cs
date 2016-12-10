@@ -42,7 +42,7 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public async Task<int> DeleteCommentsAsync(FindCommentViewModel conditions)
+        public async Task<int> DeleteCommentsAsync(FindCommentsViewModel conditions)
         {
             using (var transaction = _iConfessDbContext.Database.BeginTransaction())
             {
@@ -84,7 +84,7 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public async Task<ResponseCommentsViewModel> FindCommentsAsync(FindCommentViewModel conditions)
+        public async Task<ResponseCommentsViewModel> FindCommentsAsync(FindCommentsViewModel conditions)
         {
             // Find all comments first.
             var comments = _iConfessDbContext.Comments.AsQueryable();
@@ -128,7 +128,7 @@ namespace Shared.Repositories
         /// <param name="comments"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<Comment> FindComments(IQueryable<Comment> comments, FindCommentViewModel conditions)
+        public IQueryable<Comment> FindComments(IQueryable<Comment> comments, FindCommentsViewModel conditions)
         {
             // Comment index is specified.
             if (conditions.Id != null)

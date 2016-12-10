@@ -53,6 +53,11 @@ namespace Shared.Services
         private IRepositoryComment _repositoryComment;
 
         /// <summary>
+        /// Provide functions to access comment reports database.
+        /// </summary>
+        private IRepositoryCommentReport _repositoryCommentReport;
+
+        /// <summary>
         ///     Provide access to post report database.
         /// </summary>
         private IRepositoryPostReport _repositoryPostReport;
@@ -62,6 +67,7 @@ namespace Shared.Services
         /// </summary>
         private IRepositoryPost _repositoryPost;
 
+        
         /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
@@ -98,7 +104,10 @@ namespace Shared.Services
         }
 
 
-        public IRepositoryPostReport RepositoryPostReports { get; set; }
+        /// <summary>
+        /// Provides functions to access to post reports database.
+        /// </summary>
+        public IRepositoryPostReport RepositoryPostReports => _repositoryPostReport ?? (_repositoryPostReport = new RepositoryPostReport(_iConfessDbContext));
 
         /// <summary>
         /// Provides functions to access post database.
@@ -115,12 +124,11 @@ namespace Shared.Services
             set { throw new NotImplementedException(); }
         }
 
-        public IRepositoryCommentReport RepositoryCommentReports
-        {
-            get { throw new NotImplementedException(); }
-
-            set { throw new NotImplementedException(); }
-        }
+        /// <summary>
+        /// Provides functions to access comment reports database.
+        /// </summary>
+        public IRepositoryCommentReport RepositoryCommentReports => _repositoryCommentReport ??
+                                                                    (_repositoryCommentReport = new RepositoryCommentReport(_iConfessDbContext));
 
         #endregion
 
