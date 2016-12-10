@@ -124,11 +124,29 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to POST_NOT_UNIQUE.
+        /// </summary>
+        public static string PostIsNotUnique {
+            get {
+                return ResourceManager.GetString("PostIsNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to POST_NOT_FOUND.
         /// </summary>
         public static string PostNotFound {
             get {
                 return ResourceManager.GetString("PostNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POST_REPORT_NOT_FOUND.
+        /// </summary>
+        public static string PostReportNotFound {
+            get {
+                return ResourceManager.GetString("PostReportNotFound", resourceCulture);
             }
         }
     }

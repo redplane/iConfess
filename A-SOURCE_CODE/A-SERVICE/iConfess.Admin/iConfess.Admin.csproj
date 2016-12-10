@@ -251,6 +251,7 @@
     <Compile Include="Configs\MvcRouteConfig.cs" />
     <Compile Include="Configs\ApiRouteConfig.cs" />
     <Compile Include="Controllers\ApiAccountController.cs" />
+    <Compile Include="Controllers\ApiCommentController.cs" />
     <Compile Include="Controllers\ApiPostController.cs" />
     <Compile Include="Controllers\ApiCommentReportController.cs" />
     <Compile Include="Controllers\ApiCategoryController.cs" />

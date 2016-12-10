@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using iConfess.Database.Models;
 using iConfess.Database.Models.Tables;
@@ -17,7 +16,7 @@ namespace Shared.Repositories
         #region Properties
 
         /// <summary>
-        /// Instance which is used for accessing database context.
+        ///     Instance which is used for accessing database context.
         /// </summary>
         private readonly ConfessionDbContext _iConfessDbContext;
 
@@ -26,7 +25,7 @@ namespace Shared.Repositories
         #region Constructors
 
         /// <summary>
-        /// Initiate repository with inversion of control.
+        ///     Initiate repository with inversion of control.
         /// </summary>
         public RepositoryPost(ConfessionDbContext iConfessionDbContext)
         {
@@ -38,7 +37,7 @@ namespace Shared.Repositories
         #region Methods
 
         /// <summary>
-        /// Initiate / update a post information.
+        ///     Initiate / update a post information.
         /// </summary>
         /// <param name="post"></param>
         /// <returns></returns>
@@ -54,7 +53,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Find posts by using specific conditions.
+        ///     Find posts by using specific conditions.
         /// </summary>
         /// <returns></returns>
         public async Task<ResponsePostsViewModel> FindPostsAsync(FindPostViewModel conditions)
@@ -78,12 +77,12 @@ namespace Shared.Repositories
                 responsePostsViewModel.Posts = responsePostsViewModel.Posts.Skip(pagination.Index*pagination.Record)
                     .Take(pagination.Record);
             }
-            
+
             return responsePostsViewModel;
         }
 
         /// <summary>
-        /// Delete pots by using specific conditions.
+        ///     Delete pots by using specific conditions.
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
@@ -120,7 +119,7 @@ namespace Shared.Repositories
                             _iConfessDbContext.NotificationComments.Where(x => x.PostIndex == post.Id);
                         _iConfessDbContext.NotificationComments.RemoveRange(commentNotifications);
                     }
-                    
+
                     // Save changes asynchronously.
                     var totalRecords = await _iConfessDbContext.SaveChangesAsync();
 
@@ -136,12 +135,10 @@ namespace Shared.Repositories
                     throw;
                 }
             }
-            
-
         }
 
         /// <summary>
-        /// Find posts by using specific conditions.
+        ///     Find posts by using specific conditions.
         /// </summary>
         /// <param name="posts"></param>
         /// <param name="conditions"></param>
@@ -151,7 +148,7 @@ namespace Shared.Repositories
             // Id is specified.
             if (conditions.Id != null)
                 posts = posts.Where(x => x.Id == conditions.Id.Value);
-            
+
             // Owner index is specified.
             if (conditions.OwnerIndex != null)
                 posts = posts.Where(x => x.OwnerIndex == conditions.OwnerIndex.Value);
@@ -161,14 +158,13 @@ namespace Shared.Repositories
                 posts = posts.Where(x => x.CategoryIndex == conditions.CategoryIndex.Value);
 
             // Title is specified.
-            if (conditions.Title != null && !string.IsNullOrEmpty(conditions.Title.Value))
-            {
+            if ((conditions.Title != null) && !string.IsNullOrEmpty(conditions.Title.Value))
                 switch (conditions.Title.Mode)
                 {
                     case TextComparision.Contain:
                         posts = posts.Where(x => x.Title.Contains(conditions.Title.Value));
                         break;
-                        case TextComparision.Equal:
+                    case TextComparision.Equal:
                         posts = posts.Where(x => x.Title.Equals(conditions.Title.Value));
                         break;
                     default:
@@ -177,11 +173,9 @@ namespace Shared.Repositories
                                 x => x.Title.Equals(conditions.Title.Value, StringComparison.InvariantCultureIgnoreCase));
                         break;
                 }
-            }
 
             // Body is specified.
-            if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
-            {
+            if ((conditions.Body != null) && !string.IsNullOrEmpty(conditions.Body.Value))
                 switch (conditions.Body.Mode)
                 {
                     case TextComparision.Contain:
@@ -196,7 +190,6 @@ namespace Shared.Repositories
                                 x => x.Body.Equals(conditions.Body.Value, StringComparison.InvariantCultureIgnoreCase));
                         break;
                 }
-            }
 
             // Created is specified.
             if (conditions.Created != null)
@@ -228,7 +221,7 @@ namespace Shared.Repositories
 
             return posts;
         }
-        
+
         #endregion
     }
 }

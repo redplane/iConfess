@@ -138,7 +138,13 @@
   <data name="InvalidAuthenticationToken" xml:space="preserve">
     <value>TOKEN_INVALID</value>
   </data>
+  <data name="PostIsNotUnique" xml:space="preserve">
+    <value>POST_NOT_UNIQUE</value>
+  </data>
   <data name="PostNotFound" xml:space="preserve">
     <value>POST_NOT_FOUND</value>
+  </data>
+  <data name="PostReportNotFound" xml:space="preserve">
+    <value>POST_REPORT_NOT_FOUND</value>
   </data>
 </root>
