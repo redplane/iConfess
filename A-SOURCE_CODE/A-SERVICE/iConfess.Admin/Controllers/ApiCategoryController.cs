@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.ViewModels.ApiCategory;
 using iConfess.Database.Models.Tables;
+using log4net;
+using Shared.Enumerations;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.ViewModels.Categories;
@@ -21,10 +23,12 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
-        public ApiCategoryController(IUnitOfWork unitOfWork, ITimeService timeService)
+        /// <param name="log"></param>
+        public ApiCategoryController(IUnitOfWork unitOfWork, ITimeService timeService, ILog log)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
+            _log = log;
         }
 
         #endregion
@@ -40,6 +44,11 @@ namespace iConfess.Admin.Controllers
         ///     Service which handles time calculation.
         /// </summary>
         private readonly ITimeService _timeService;
+
+        /// <summary>
+        /// Service which is for logging.
+        /// </summary>
+        private readonly ILog _log;
 
         #endregion
 
@@ -82,7 +91,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
-                // TODO: Write log.
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -155,6 +164,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -196,7 +206,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
-                // TODO: Add log
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -211,6 +221,8 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameters validation
+
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
@@ -225,6 +237,8 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
                 }
 
+                #endregion
+
                 // Find categories by using specific conditions.
                 var response = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
 
@@ -232,7 +246,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
-                // TODO: Add log
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }

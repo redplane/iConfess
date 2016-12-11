@@ -261,7 +261,7 @@
     <Compile Include="Interfaces\Services\INotificationService.cs" />
     <Compile Include="Middlewares\BearerAuthenticationMiddleware.cs" />
     <Compile Include="Models\JwtResponse.cs" />
-    <Compile Include="Module\Log4NetModule.cs" />
+    <Compile Include="Module\LogModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\Providers\IBearerAuthenticationProvider.cs" />
     <Compile Include="Providers\BearerAuthenticationProvider.cs" />
