@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using iConfess.Database.Models.Tables;
+using Shared.ViewModels.Comments;
 
 namespace Shared.Interfaces.Repositories
 {
@@ -8,18 +10,18 @@ namespace Shared.Interfaces.Repositories
         ///     Create a comment asynchronously by using specific information.
         /// </summary>
         /// <returns></returns>
-        Task InitiateCommentAsync();
+        Task<Comment> InitiateCommentAsync(Comment comment);
 
         /// <summary>
         ///     Find comments by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task FindCommentsAsync();
+        Task<ResponseCommentsViewModel> FindCommentsAsync(FindCommentsViewModel conditions);
 
         /// <summary>
         ///     Delete comments asychronously.
         /// </summary>
         /// <returns></returns>
-        Task DeleteCommentsAsync();
+        Task<int> DeleteCommentsAsync(FindCommentsViewModel conditions);
     }
 }

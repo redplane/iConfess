@@ -53,10 +53,21 @@ namespace Shared.Services
         private IRepositoryComment _repositoryComment;
 
         /// <summary>
+        /// Provide functions to access comment reports database.
+        /// </summary>
+        private IRepositoryCommentReport _repositoryCommentReport;
+
+        /// <summary>
         ///     Provide access to post report database.
         /// </summary>
         private IRepositoryPostReport _repositoryPostReport;
 
+        /// <summary>
+        /// Provides access to post database.
+        /// </summary>
+        private IRepositoryPost _repositoryPost;
+
+        
         /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
@@ -93,13 +104,17 @@ namespace Shared.Services
         }
 
 
-        public IRepositoryPostReport RepositoryPostReports { get; set; }
+        /// <summary>
+        /// Provides functions to access to post reports database.
+        /// </summary>
+        public IRepositoryPostReport RepositoryPostReports => _repositoryPostReport ?? (_repositoryPostReport = new RepositoryPostReport(_iConfessDbContext));
 
+        /// <summary>
+        /// Provides functions to access post database.
+        /// </summary>
         public IRepositoryPost RepositoryPosts
         {
-            get { throw new NotImplementedException(); }
-
-            set { throw new NotImplementedException(); }
+            get { return _repositoryPost ?? (_repositoryPost = new RepositoryPost(_iConfessDbContext)); }
         }
 
         public IRepositorySignalrConnection RepositorySignalrConnections
@@ -109,12 +124,11 @@ namespace Shared.Services
             set { throw new NotImplementedException(); }
         }
 
-        public IRepositoryCommentReport RepostiCommentReports
-        {
-            get { throw new NotImplementedException(); }
-
-            set { throw new NotImplementedException(); }
-        }
+        /// <summary>
+        /// Provides functions to access comment reports database.
+        /// </summary>
+        public IRepositoryCommentReport RepositoryCommentReports => _repositoryCommentReport ??
+                                                                    (_repositoryCommentReport = new RepositoryCommentReport(_iConfessDbContext));
 
         #endregion
 

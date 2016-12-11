@@ -62,12 +62,12 @@ namespace iConfess.Database.Models
         /// <summary>
         ///     List of comments which have been reported.
         /// </summary>
-        public DbSet<ReportedComment> ReportedComments { get; set; }
+        public DbSet<CommentReport> CommentReports { get; set; }
 
         /// <summary>
         ///     List of posts which have been reported.
         /// </summary>
-        public DbSet<ReportedPost> ReportedPosts { get; set; }
+        public DbSet<PostReport> PostReports { get; set; }
 
         /// <summary>
         ///     List of connections which have been broadcasted to server and vice versa.
@@ -319,7 +319,7 @@ namespace iConfess.Database.Models
         private void InitiateReportedCommentTable(DbModelBuilder dbModelBuilder)
         {
             // Find post entity configuration.
-            var reportedComment = dbModelBuilder.Entity<ReportedComment>();
+            var reportedComment = dbModelBuilder.Entity<CommentReport>();
 
             // One report belongs to one comment.
             // One comment can have many reports.
@@ -360,11 +360,11 @@ namespace iConfess.Database.Models
         private void InitiateReportedPostTable(DbModelBuilder dbModelBuilder)
         {
             // Find post entity configuration.
-            var reportedPost = dbModelBuilder.Entity<ReportedPost>();
+            var reportedPost = dbModelBuilder.Entity<PostReport>();
 
             // One report is about a specific post.
             // One post can have many comments.
-            reportedPost.HasRequired(x => x.Post).WithMany(x => x.ReportedPosts).HasForeignKey(x => x.PostIndex);
+            reportedPost.HasRequired(x => x.Post).WithMany(x => x.PostReports).HasForeignKey(x => x.PostIndex);
 
             // One account can have many post reports.
             // One report is about one account.

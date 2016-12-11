@@ -97,6 +97,33 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to COMMENT_NOT_FOUND.
+        /// </summary>
+        public static string CommentNotFound {
+            get {
+                return ResourceManager.GetString("CommentNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COMMENT_REPORT_NOT_FOUND.
+        /// </summary>
+        public static string CommentReportNotFound {
+            get {
+                return ResourceManager.GetString("CommentReportNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COMMENT_REPORT_NOT_UNIQUE.
+        /// </summary>
+        public static string CommentReportNotUnique {
+            get {
+                return ResourceManager.GetString("CommentReportNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AUTHENTICATION_INFO_INVALID.
         /// </summary>
         public static string InvalidAuthenticationInfo {
@@ -111,6 +138,33 @@ namespace Shared.Resources {
         public static string InvalidAuthenticationToken {
             get {
                 return ResourceManager.GetString("InvalidAuthenticationToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POST_NOT_UNIQUE.
+        /// </summary>
+        public static string PostIsNotUnique {
+            get {
+                return ResourceManager.GetString("PostIsNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POST_NOT_FOUND.
+        /// </summary>
+        public static string PostNotFound {
+            get {
+                return ResourceManager.GetString("PostNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POST_REPORT_NOT_FOUND.
+        /// </summary>
+        public static string PostReportNotFound {
+            get {
+                return ResourceManager.GetString("PostReportNotFound", resourceCulture);
             }
         }
     }

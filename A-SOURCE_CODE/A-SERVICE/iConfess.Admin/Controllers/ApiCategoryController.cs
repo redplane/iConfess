@@ -51,19 +51,29 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpPost]
-        public async Task<HttpResponseMessage> InitiateCategory([FromBody] CategoryViewModel parameter)
+        public async Task<HttpResponseMessage> InitiateCategory([FromBody] CategoryViewModel parameters)
         {
             try
             {
+                // Parameters haven't been initialized.
+                if (parameters == null)
+                {
+                    parameters = new CategoryViewModel();
+                    Validate(parameters);
+                }
+
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
+                {
+                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
 
                 //Initiate new category
                 var category = new Category();
-                category.CreatorIndex = parameter.CreatorIndex;
-                category.Created = parameter.Created;
-                category.Name = parameter.Name;
+                category.CreatorIndex = parameters.CreatorIndex;
+                category.Created = parameters.Created;
+                category.Name = parameters.Name;
 
                 //Add category record
                 await _unitOfWork.RepositoryCategories.InitiateCategoryAsync(category);
@@ -97,8 +107,10 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
+                {
+                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-
+                }
                 // Find the category
                 var findCategoryViewModel = new FindCategoriesViewModel();
                 findCategoryViewModel.Id = index;
@@ -108,18 +120,24 @@ namespace iConfess.Admin.Controllers
 
                 // No record has been found
                 if (response.Total < 1)
+                {
+                    // TODO: Add log
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+                }
 
                 // Begin transaction.
                 using (var transaction = _unitOfWork.Context.Database.BeginTransaction())
                 {
                     try
                     {
+                        // Find unix system time.
+                        var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
+
                         // Update all categories.
                         foreach (var category in response.Categories)
                         {
                             category.Name = parameters.Name;
-                            category.LastModified = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
+                            category.LastModified = unixSystemTime;
                         }
 
                         // Save changes into database.
@@ -135,10 +153,9 @@ namespace iConfess.Admin.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                    "Error occured while executing category");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
 
@@ -161,15 +178,19 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
+                {
+                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-
+                }
                 // Delete categories by using specific conditions.
                 var totalRecords = await _unitOfWork.RepositoryCategories.DeleteCategoriesAsync(conditions);
 
                 // No record has been deleted.
                 if (totalRecords < 1)
+                {
+                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
-
+                }
                 // Tell the client , deletion is successful.
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -199,7 +220,10 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
+                {
+                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
 
                 // Find categories by using specific conditions.
                 var response = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);

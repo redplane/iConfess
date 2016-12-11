@@ -69,7 +69,7 @@ namespace iConfess.Database.Models.Tables
         ///     One comment can have many reports.
         /// </summary>
         [JsonIgnore]
-        public ICollection<ReportedComment> ReportedComments { get; set; }
+        public ICollection<CommentReport> ReportedComments { get; set; }
 
         #endregion
     }

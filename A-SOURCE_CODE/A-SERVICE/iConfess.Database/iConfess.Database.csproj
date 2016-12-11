@@ -55,10 +55,6 @@
   <ItemGroup>
     <Compile Include="Enumerations\AccountStatus.cs" />
     <Compile Include="Enumerations\NotificationType.cs" />
-    <Compile Include="Migrations\201612031004566_20161203001.cs" />
-    <Compile Include="Migrations\201612031004566_20161203001.Designer.cs">
-      <DependentUpon>201612031004566_20161203001.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Tables\Account.cs" />
     <Compile Include="Models\Tables\Category.cs" />
@@ -69,8 +65,8 @@
     <Compile Include="Models\Tables\NotificationComment.cs" />
     <Compile Include="Models\Tables\NotificationPost.cs" />
     <Compile Include="Models\Tables\Post.cs" />
-    <Compile Include="Models\Tables\ReportedComment.cs" />
-    <Compile Include="Models\Tables\ReportedPost.cs" />
+    <Compile Include="Models\Tables\CommentReport.cs" />
+    <Compile Include="Models\Tables\PostReport.cs" />
     <Compile Include="Models\Tables\SignalrConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -80,11 +76,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612031004566_20161203001.resx">
-      <DependentUpon>201612031004566_20161203001.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

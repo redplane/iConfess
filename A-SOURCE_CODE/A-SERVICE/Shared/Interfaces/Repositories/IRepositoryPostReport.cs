@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using iConfess.Database.Models.Tables;
+using Shared.ViewModels.PostReports;
 
 namespace Shared.Interfaces.Repositories
 {
@@ -8,24 +10,18 @@ namespace Shared.Interfaces.Repositories
         ///     Create a post report asynchronously with specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task InitiatePostReportAsync();
+        Task<PostReport> InitiatePostReportAsync(PostReport postReport);
 
         /// <summary>
         ///     Find post reports by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task FindPostReportsAsync();
-
-        /// <summary>
-        ///     Update post report by using specific conditions.
-        /// </summary>
-        /// <returns></returns>
-        Task UpdatePostReportAsync();
+        Task<ResponsePostReportsViewModel> FindPostReportsAsync(FindPostReportsViewModel conditions);
 
         /// <summary>
         ///     Delete post reports asynchronously by searching specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task DeletePostReportsAsync();
+        Task<int> DeletePostsAsync(FindPostReportsViewModel conditions);
     }
 }

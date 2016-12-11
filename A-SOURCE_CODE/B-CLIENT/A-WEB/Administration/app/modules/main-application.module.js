@@ -19,6 +19,8 @@ var category_detail_box_component_1 = require('../components/content/category/ca
 var category_edit_box_component_1 = require("../components/content/category/category-edit-box.component");
 var forms_1 = require('@angular/forms');
 var category_delete_box_component_1 = require("../components/content/category/category-delete-box.component");
+var angular2_select_1 = require("angular2-select");
+var category_find_box_component_1 = require("../components/content/category/category-find-box.component");
 var MainApplicationModule = (function () {
     function MainApplicationModule() {
     }
@@ -26,7 +28,8 @@ var MainApplicationModule = (function () {
         core_1.NgModule({
             imports: [
                 platform_browser_1.BrowserModule,
-                forms_1.FormsModule
+                forms_1.FormsModule,
+                angular2_select_1.SelectModule
             ],
             declarations: [
                 main_application_component_1.MainApplicationComponent,
@@ -36,7 +39,8 @@ var MainApplicationModule = (function () {
                 category_management_component_1.CategoryManagementComponent,
                 category_detail_box_component_1.CategoryDetailBoxComponent,
                 category_edit_box_component_1.CategoryEditBoxComponent,
-                category_delete_box_component_1.CategoryDeleteBoxComponent
+                category_delete_box_component_1.CategoryDeleteBoxComponent,
+                category_find_box_component_1.CategoryFindBoxComponent
             ],
             bootstrap: [
                 main_application_component_1.MainApplicationComponent
