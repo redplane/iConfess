@@ -40,7 +40,7 @@ var CategoryService = (function () {
         }
     }
     // Find categories by using specific conditions.
-    CategoryService.prototype.findCategories = function () {
+    CategoryService.prototype.findCategories = function (categorySearch) {
         // Initiate category search result.
         var categoriesSearchResult = new CategorySearchDetailViewModel_1.CategorySearchDetailViewModel();
         categoriesSearchResult.categories = this.categories;

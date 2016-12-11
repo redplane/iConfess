@@ -13,6 +13,9 @@ import {CategorySearchViewModel} from "../../../viewmodels/category/CategorySear
 
 export class CategoryFindBoxComponent{
 
+    // Whether records are being loaded from server or not.
+    private _isLoading: boolean;
+
     // Category search information.
     private _categorySearch : CategorySearchViewModel;
 
@@ -31,7 +34,14 @@ export class CategoryFindBoxComponent{
 
     // Callback which is fired when search button is clicked.
     public clickSearch(): void{
-        this.search.emit(this._categorySearch);
+
+        this._isLoading = true;
+        setTimeout(() => {
+            this._isLoading = false;
+            this.search.emit(this._categorySearch);
+        }, 10000);
+
+
     }
 
 }

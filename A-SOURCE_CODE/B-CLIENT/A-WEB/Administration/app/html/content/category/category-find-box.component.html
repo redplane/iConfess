@@ -1,5 +1,10 @@
 <div class="box box-default">
 
+    <div class="overlay"
+         *ngIf="_isLoading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+
     <div class="box-header">
         <span class="glyphicon glyphicon-search"></span>
         <span> Category search</span>
@@ -14,85 +19,85 @@
     <div class="box-body">
 
         <div class="row">
-        <div class="col-lg-6">
+            <div class="col-lg-6">
 
-            <!-- Creator -->
-            <div class="form-group">
-                <label>Creator</label>
-                <input class="form-control"
-                       placeholder="Creator"
-                       [(ngModel)]="_categorySearch.creatorIndex"/>
-            </div>
-
-            <!-- Category name -->
-            <div class="form-group">
-                <label>Name</label>
-                <input class="form-control"
-                       placeholder="Category name"
-                       [(ngModel)]="_categorySearch.name"/>
-            </div>
-
-        </div>
-
-        <div class="col-lg-6">
-
-            <!-- Created -->
-            <div class="row form-group">
-                <div class="col-lg-12">
-                    <label>Created</label>
+                <!-- Creator -->
+                <div class="form-group">
+                    <label>Creator</label>
+                    <input class="form-control"
+                           placeholder="Creator"
+                           [(ngModel)]="_categorySearch.creatorIndex"/>
                 </div>
 
-                <div class="col-lg-6">
-                    <div class="input-group">
+                <!-- Category name -->
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control"
+                           placeholder="Category name"
+                           [(ngModel)]="_categorySearch.name"/>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <!-- Created -->
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label>Created</label>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-hourglass-start" aria-hidden="true"></i>
                                 </span>
-                        <input class="form-control"
-                               type="date"
-                               [(ngModel)]="_categorySearch.created.from"/>
+                            <input class="form-control"
+                                   type="date"
+                                   [(ngModel)]="_categorySearch.created.from"/>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-lg-6">
-                    <div class="input-group">
+                    <div class="col-lg-6">
+                        <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-hourglass-end"
                                        aria-hidden="true"></i>
                                 </span>
-                        <input class="form-control"
-                               type="date"
-                               [(ngModel)]="_categorySearch.created.to"/>
+                            <input class="form-control"
+                                   type="date"
+                                   [(ngModel)]="_categorySearch.created.to"/>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Last modified -->
-            <div class="row form-group">
-                <div class="col-lg-12">
-                    <label>Last modified</label>
-                </div>
+                <!-- Last modified -->
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label>Last modified</label>
+                    </div>
 
-                <div class="col-lg-6">
-                    <div class="input-group">
+                    <div class="col-lg-6">
+                        <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-hourglass-start" aria-hidden="true"></i>
                                 </span>
-                        <input class="form-control"
-                               type="date"/>
+                            <input class="form-control"
+                                   type="date"/>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-lg-6">
-                    <div class="input-group">
+                    <div class="col-lg-6">
+                        <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                                 </span>
-                        <input class="form-control"
-                               type="date"/>
+                            <input class="form-control"
+                                   type="date"/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <div class="row">
@@ -100,7 +105,9 @@
                 {{_categorySearch | json}}
             </div>
         </div>
-        </div>
+
+
+    </div>
 
     <div class="box-footer">
         <button class="btn btn-primary btn-flat"

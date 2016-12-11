@@ -12,10 +12,10 @@ var core_1 = require('@angular/core');
 var CategoryService_1 = require("../services/CategoryService");
 var TimeService_1 = require("../services/TimeService");
 var CategoryManagementComponent = (function () {
+    // Initiate component with dependency injections.
     function CategoryManagementComponent(categoryService, timeService) {
         this._categoryService = categoryService;
         this._timeService = timeService;
-        this._categorySearchResult = this._categoryService.findCategories();
     }
     // Callback is fired when a category is created to be removed.
     CategoryManagementComponent.prototype.clickRemoveCategory = function (category, deleteCategoryBox) {
@@ -33,7 +33,8 @@ var CategoryManagementComponent = (function () {
     };
     // Callback which is fired when search button of category search box is clicked.
     CategoryManagementComponent.prototype.clickSearch = function (categorySearch) {
-        console.log(categorySearch);
+        // Find categories by using specific conditions.
+        this._categorySearchResult = this._categoryService.findCategories(categorySearch);
     };
     CategoryManagementComponent = __decorate([
         core_1.Component({

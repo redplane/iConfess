@@ -4,6 +4,7 @@ import {CategoryDetailViewModel} from "../viewmodels/category/CategoryDetailView
 import {Account} from "../models/Account";
 import {AccountStatuses} from "../enumerations/AccountStatuses";
 import {Injectable} from '@angular/core';
+import {CategorySearchViewModel} from "../viewmodels/category/CategorySearchViewModel";
 
 /*
 * Service which handles category business.
@@ -44,7 +45,7 @@ export class CategoryService implements ICategoryService {
         }
     }
     // Find categories by using specific conditions.
-    findCategories(): CategorySearchDetailViewModel {
+    findCategories(categorySearch: CategorySearchViewModel): CategorySearchDetailViewModel {
 
         // Initiate category search result.
         let categoriesSearchResult = new CategorySearchDetailViewModel();

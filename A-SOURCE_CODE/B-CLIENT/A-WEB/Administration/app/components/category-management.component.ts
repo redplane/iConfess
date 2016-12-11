@@ -1,4 +1,4 @@
-import {Component, ElementRef} from '@angular/core'
+import {Component} from '@angular/core'
 import {CategorySearchDetailViewModel} from "../viewmodels/category/CategorySearchDetailViewModel";
 import {CategoryService} from "../services/CategoryService";
 import {ICategoryService} from "../interfaces/services/ICategoryService";
@@ -32,10 +32,13 @@ export class CategoryManagementComponent{
     // Service which handles time conversion.
     private _timeService: ITimeService;
 
+    // Whether records are being searched or not.
+    private _isLoading : boolean;
+
+    // Initiate component with dependency injections.
     public constructor(categoryService: CategoryService, timeService: TimeService) {
         this._categoryService = categoryService;
         this._timeService = timeService;
-        this._categorySearchResult = this._categoryService.findCategories();
     }
 
     // Callback is fired when a category is created to be removed.
@@ -58,6 +61,7 @@ export class CategoryManagementComponent{
 
     // Callback which is fired when search button of category search box is clicked.
     public clickSearch(categorySearch: CategorySearchViewModel): void{
-        console.log(categorySearch);
+        // Find categories by using specific conditions.
+        this._categorySearchResult =  this._categoryService.findCategories(categorySearch);
     }
 }
