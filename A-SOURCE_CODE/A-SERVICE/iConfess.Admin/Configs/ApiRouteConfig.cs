@@ -18,8 +18,7 @@ namespace iConfess.Admin.Configs
             config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 
             // Enable CORS
-            var cors = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(cors);
+            config.EnableCors();
 
             // Web API configuration and services
             // Make web API support multipart/form-data request.
