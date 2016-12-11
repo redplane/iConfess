@@ -12,7 +12,7 @@ using Shared.Interfaces.Services;
 using Shared.Services;
 using RegistrationExtensions = Autofac.Integration.SignalR.RegistrationExtensions;
 
-namespace iConfess.Admin
+namespace iConfess.Admin.Configs
 {
     public class InversionOfControlConfig
     {
@@ -33,6 +33,9 @@ namespace iConfess.Admin
 
             // Unit of work registration.
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+
+            // Time service.
+            containerBuilder.RegisterType<TimeService>().As<ITimeService>().InstancePerLifetimeScope();
 
             // Web api dependency registration.
             containerBuilder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);

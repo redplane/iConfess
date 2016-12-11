@@ -1,8 +1,9 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Cors;
 using MultipartFormDataMediaFormatter;
+using Newtonsoft.Json.Serialization;
 
-namespace iConfess.Admin
+namespace iConfess.Admin.Configs
 {
     public static class ApiRouteConfig
     {
@@ -12,6 +13,10 @@ namespace iConfess.Admin
         /// <param name="config"></param>
         public static void Register(HttpConfiguration config)
         {
+            // Make json returned in camelcase.
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
+
             // Enable CORS
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
