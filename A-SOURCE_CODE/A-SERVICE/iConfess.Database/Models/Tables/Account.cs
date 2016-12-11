@@ -36,6 +36,11 @@ namespace iConfess.Database.Models.Tables
         public AccountStatus Status { get; set; }
 
         /// <summary>
+        /// Role of account
+        /// </summary>
+        public AccountRole Role { get; set; }
+
+        /// <summary>
         ///     Relative url (http url) of user photo.
         /// </summary>
         public string PhotoRelativeUrl { get; set; }
