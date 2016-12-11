@@ -20,12 +20,9 @@ var CategoryFindBoxComponent = (function () {
     }
     // Callback which is fired when search button is clicked.
     CategoryFindBoxComponent.prototype.clickSearch = function () {
-        var _this = this;
         this._isLoading = true;
-        setTimeout(function () {
-            _this._isLoading = false;
-            _this.search.emit(_this._categorySearch);
-        }, 10000);
+        this._isLoading = false;
+        this.search.emit(this._categorySearch);
     };
     CategoryFindBoxComponent = __decorate([
         core_1.Component({

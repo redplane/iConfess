@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var CategoryService_1 = require("../services/CategoryService");
 var TimeService_1 = require("../services/TimeService");
+var HyperlinkService_1 = require("../services/HyperlinkService");
 var CategoryManagementComponent = (function () {
     // Initiate component with dependency injections.
     function CategoryManagementComponent(categoryService, timeService) {
@@ -42,7 +43,8 @@ var CategoryManagementComponent = (function () {
             templateUrl: './app/html/pages/category-management.component.html',
             providers: [
                 CategoryService_1.CategoryService,
-                TimeService_1.TimeService
+                TimeService_1.TimeService,
+                HyperlinkService_1.HyperlinkService
             ],
         }), 
         __metadata('design:paramtypes', [CategoryService_1.CategoryService, TimeService_1.TimeService])
