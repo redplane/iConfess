@@ -24,6 +24,7 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Name of category.
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
