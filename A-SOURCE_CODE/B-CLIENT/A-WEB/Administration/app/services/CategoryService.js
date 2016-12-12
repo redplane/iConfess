@@ -13,12 +13,17 @@ var CategoryDetailViewModel_1 = require("../viewmodels/category/CategoryDetailVi
 var Account_1 = require("../models/Account");
 var AccountStatuses_1 = require("../enumerations/AccountStatuses");
 var core_1 = require('@angular/core');
+var HyperlinkService_1 = require("./HyperlinkService");
+var http_1 = require("@angular/http");
+require('rxjs/add/operator/toPromise');
 /*
 * Service which handles category business.
 * */
 var CategoryService = (function () {
     // Initiate instance of category service.
-    function CategoryService() {
+    function CategoryService(hyperlinkService, httpClient) {
+        this._hyperlinkService = hyperlinkService;
+        this._httpClient = httpClient;
         // Initiate account information.
         this.creator = new Account_1.Account();
         this.creator.id = 1;
@@ -45,11 +50,30 @@ var CategoryService = (function () {
         var categoriesSearchResult = new CategorySearchDetailViewModel_1.CategorySearchDetailViewModel();
         categoriesSearchResult.categories = this.categories;
         categoriesSearchResult.total = this.categories.length;
+        var requestOptions = new http_1.RequestOptions({
+            headers: new http_1.Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+        var requestBody = {};
+        this._httpClient.post(this._hyperlinkService.apiFindCategory, requestBody, requestOptions)
+            .toPromise()
+            .then(this.processFindCategoriesResult)
+            .catch(this.handleError);
+        console.log(this._hyperlinkService.apiFindCategory);
         return categoriesSearchResult;
+    };
+    // This callback is called when data is sent back from server which find categories request was sent.
+    CategoryService.prototype.processFindCategoriesResult = function (response) {
+        console.log(response);
+    };
+    // This callback is called when data is sent back from service due to its invalidity.
+    CategoryService.prototype.handleError = function (response) {
+        console.log(response);
     };
     CategoryService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [HyperlinkService_1.HyperlinkService, http_1.Http])
     ], CategoryService);
     return CategoryService;
 }());

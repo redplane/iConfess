@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Routing;
 using iConfess.Admin;
+using iConfess.Admin.Configs;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
@@ -26,7 +27,7 @@ namespace iConfess.Admin
 
             // Dependency injection registration.
             InversionOfControlConfig.Register();
-
+            
             // Map signalr hubs.
             app.Map("/signalr", map =>
             {

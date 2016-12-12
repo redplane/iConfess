@@ -8,7 +8,7 @@ import {CategoryDetailViewModel} from "../viewmodels/category/CategoryDetailView
 import {CategoryEditBoxComponent} from "./content/category/category-edit-box.component";
 import {CategoryDeleteBoxComponent} from "./content/category/category-delete-box.component";
 import {CategorySearchViewModel} from "../viewmodels/category/CategorySearchViewModel";
-
+import {HyperlinkService} from "../services/HyperlinkService";
 
 declare var $:any;
 
@@ -17,7 +17,8 @@ declare var $:any;
     templateUrl: './app/html/pages/category-management.component.html',
     providers:[
         CategoryService,
-        TimeService
+        TimeService,
+        HyperlinkService
     ],
 })
 

@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using iConfess.Admin.Middlewares;
 
-namespace iConfess.Admin
+namespace iConfess.Admin.Configs
 {
     public class GlobalFilterConfig
     {

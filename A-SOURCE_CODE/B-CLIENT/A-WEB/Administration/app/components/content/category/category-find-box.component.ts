@@ -36,12 +36,8 @@ export class CategoryFindBoxComponent{
     public clickSearch(): void{
 
         this._isLoading = true;
-        setTimeout(() => {
-            this._isLoading = false;
-            this.search.emit(this._categorySearch);
-        }, 10000);
-
-
+        this._isLoading = false;
+        this.search.emit(this._categorySearch);
     }
 
 }

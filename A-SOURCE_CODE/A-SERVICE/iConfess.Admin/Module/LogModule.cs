@@ -10,7 +10,7 @@ namespace iConfess.Admin.Module
     ///     Thanks for the original idea/contribution by Rich Tebb/Bailey Ling where the idea was posted on:
     ///     https://groups.google.com/forum/#!msg/autofac/Qb-dVPMbna0/s-jLeWeST3AJ
     /// </summary>
-    public class Log4NetModule : Autofac.Module
+    public class LogModule : Autofac.Module
     {
         private static void InjectLoggerProperties(object instance)
         {

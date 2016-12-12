@@ -1,35 +1,19 @@
+using System;
+using System.Data.Entity.Migrations;
 using iConfess.Database.Enumerations;
+using iConfess.Database.Models;
 using iConfess.Database.Models.Tables;
 
 namespace iConfess.Database.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<iConfess.Database.Models.ConfessionDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ConfessionDbContext>
     {
-        #region Properties
-
-        /// <summary>
-        /// List of first names.
-        /// </summary>
-        private readonly string [] FirstNames = new [] {"Nguyen", "Tran", "Cao", "Do", "La", "Le"};
-
-        /// <summary>
-        /// List of last names.
-        /// </summary>
-        private readonly string [] LastNames = new [] {"Linh", "Duong", "Phuong", "Tuan", "Hung", "Thang", "Trong", "Hoang Anh", "Hieu"};
-        
-        #endregion
-
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(iConfess.Database.Models.ConfessionDbContext context)
+        protected override void Seed(ConfessionDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -48,13 +32,13 @@ namespace iConfess.Database.Migrations
 
             // Element index initiator.
             var indexGenerator = new Random();
-            
+
             for (var i = 0; i < 100; i++)
             {
                 var account = new Account();
                 account.Email = $"{Guid.NewGuid().ToString("N")}@gmail.com";
                 account.Nickname =
-                    $"{FirstNames[indexGenerator.Next(FirstNames.Length)]} {LastNames[indexGenerator.Next(LastNames.Length)]}";
+                    $"{_firstNames[indexGenerator.Next(_firstNames.Length)]} {_lastNames[indexGenerator.Next(_lastNames.Length)]}";
 
                 // Password is : administrator
                 account.Password = "200CEB26807D6BF99FD6F4F0D1CA54D4";
@@ -65,10 +49,10 @@ namespace iConfess.Database.Migrations
                     account.Role = AccountRole.Admin;
                 else
                     account.Role = AccountRole.Ordinary;
-                
+
                 account.PhotoRelativeUrl = "https://s6.postimg.org/w6lcoipkh/avatar_pacman.png";
                 account.Joined = 1480762181918;
-
+                
                 // Add or update existing account.
                 context.Accounts.AddOrUpdate(account);
             }
@@ -76,8 +60,26 @@ namespace iConfess.Database.Migrations
             #endregion
 
             #region Categories
-            
+
             #endregion
         }
+
+        #region Properties
+
+        /// <summary>
+        ///     List of first names.
+        /// </summary>
+        private readonly string[] _firstNames = {"Nguyen", "Tran", "Cao", "Do", "La", "Le"};
+
+        /// <summary>
+        ///     List of last names.
+        /// </summary>
+        private readonly string[] _lastNames =
+        {
+            "Linh", "Duong", "Phuong", "Tuan", "Hung", "Thang", "Trong", "Hoang Anh",
+            "Hieu"
+        };
+
+        #endregion
     }
 }

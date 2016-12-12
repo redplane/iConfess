@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace iConfess.Admin
+namespace iConfess.Admin.Configs
 {
     public class MvcRouteConfig
     {

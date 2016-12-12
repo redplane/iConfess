@@ -21,6 +21,7 @@ var forms_1 = require('@angular/forms');
 var category_delete_box_component_1 = require("../components/content/category/category-delete-box.component");
 var angular2_select_1 = require("angular2-select");
 var category_find_box_component_1 = require("../components/content/category/category-find-box.component");
+var http_1 = require('@angular/http');
 var MainApplicationModule = (function () {
     function MainApplicationModule() {
     }
@@ -29,7 +30,9 @@ var MainApplicationModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
-                angular2_select_1.SelectModule
+                angular2_select_1.SelectModule,
+                http_1.HttpModule,
+                http_1.JsonpModule
             ],
             declarations: [
                 main_application_component_1.MainApplicationComponent,

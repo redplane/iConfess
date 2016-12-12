@@ -11,12 +11,15 @@ import {FormsModule} from '@angular/forms';
 import {CategoryDeleteBoxComponent} from "../components/content/category/category-delete-box.component";
 import {SelectModule} from "angular2-select";
 import {CategoryFindBoxComponent} from "../components/content/category/category-find-box.component";
+import { HttpModule, JsonpModule } from '@angular/http';
 
 @NgModule({
     imports:      [
         BrowserModule,
         FormsModule,
-        SelectModule
+        SelectModule,
+        HttpModule,
+        JsonpModule
     ],
     declarations: [
         MainApplicationComponent ,

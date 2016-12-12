@@ -1,18 +1,22 @@
 ﻿using System.Configuration;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using iConfess.Admin.Interfaces.Providers;
+using iConfess.Admin.Module;
 using iConfess.Admin.Providers;
 using iConfess.Database.Models;
+using log4net;
+using log4net.Config;
 using Microsoft.AspNet.SignalR;
 using Shared.Interfaces.Services;
 using Shared.Services;
 using RegistrationExtensions = Autofac.Integration.SignalR.RegistrationExtensions;
 
-namespace iConfess.Admin
+namespace iConfess.Admin.Configs
 {
     public class InversionOfControlConfig
     {
@@ -21,6 +25,8 @@ namespace iConfess.Admin
             // Initiate container builder to register dependency injection.
             var containerBuilder = new ContainerBuilder();
 
+            #region Controllers & hubs
+
             // Controllers & hubs
             containerBuilder.RegisterApiControllers(typeof(Startup).Assembly);
             containerBuilder.RegisterControllers(typeof(Startup).Assembly);
@@ -28,11 +34,37 @@ namespace iConfess.Admin
             // Register your SignalR hubs.
             RegistrationExtensions.RegisterHubs(containerBuilder);
 
+            #endregion
+
+            #region Unit of work & Database context
+
             // Database context initialization.
             containerBuilder.RegisterType<ConfessionDbContext>().InstancePerLifetimeScope();
 
             // Unit of work registration.
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+
+            #endregion
+
+            #region Services
+
+            // Time service.
+            containerBuilder.RegisterType<TimeService>().As<ITimeService>().SingleInstance();
+
+            // Encryption service.
+            containerBuilder.RegisterType<EncryptionService>().As<IEncryptionService>().SingleInstance();
+
+            #endregion
+
+            #region Modules
+
+            // Log4net module registration (this is for logging)
+            XmlConfigurator.Configure();
+            containerBuilder.RegisterModule<LogModule>();
+
+            #endregion
+
+            #region Providers
 
             // Web api dependency registration.
             containerBuilder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
@@ -43,8 +75,9 @@ namespace iConfess.Admin
                 .As<IBearerAuthenticationProvider>()
                 .OnActivating(x => x.ReplaceInstance(bearerAuthenticationProvider));
 
-            // Services.
-            containerBuilder.RegisterType<EncryptionService>().As<IEncryptionService>().SingleInstance();
+            #endregion
+
+            #region IoC build
 
             // Container build.
             var container = containerBuilder.Build();
@@ -53,8 +86,9 @@ namespace iConfess.Admin
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             GlobalHost.DependencyResolver = new Autofac.Integration.SignalR.AutofacDependencyResolver(container);
-        }
 
+            #endregion
+        }
 
         /// <summary>
         ///     Find bearer authentication setting from web.config.
