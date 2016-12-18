@@ -242,7 +242,9 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\ApiAuthorizeAttribute.cs" />
@@ -269,7 +271,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ApiAccount\FindAccountViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\LoginViewModel.cs" />
-    <Compile Include="ViewModels\ApiCategory\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\ApiCategory\InitiateCategoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

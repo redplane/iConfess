@@ -79,8 +79,8 @@ namespace Shared.Repositories
             // Pagination is defined.
             var pagination = parameters.Pagination;
             if (pagination != null)
-                commentReports = commentReports.Skip(pagination.Index & pagination.Record)
-                    .Take(pagination.Record);
+                commentReports = commentReports.Skip(pagination.Index & pagination.Records)
+                    .Take(pagination.Records);
 
             var responseCommentReports = new ResponseCommentReportsViewModel();
             responseCommentReports.CommentReports = commentReports;

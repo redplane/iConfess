@@ -86,7 +86,7 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState));
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(parameters)));
 
                 // Find account information from database.
                 // Password submitted to server is already hashed.

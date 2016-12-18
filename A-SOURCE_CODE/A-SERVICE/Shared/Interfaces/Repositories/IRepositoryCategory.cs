@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using iConfess.Database.Models.Tables;
 using Shared.ViewModels.Categories;
 
@@ -18,6 +19,14 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         Task<ResponseCategoriesViewModel> FindCategoriesAsync(FindCategoriesViewModel conditions);
+
+        /// <summary>
+        ///  Find categories by using specific conditions.
+        /// </summary>
+        /// <param name="categories"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        IQueryable<Category> FindCategories(IQueryable<Category> categories, FindCategoriesViewModel conditions);
 
         /// <summary>
         ///     Delete category by using specific conditions.
