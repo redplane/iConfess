@@ -7,19 +7,23 @@ import {AccountManagementComponent} from "../components/account-management.compo
 import {CategoryManagementComponent} from "../components/category-management.component";
 import {CategoryDetailBoxComponent} from '../components/content/category/category-detail-box.component';
 import {CategoryEditBoxComponent} from "../components/content/category/category-edit-box.component";
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CategoryDeleteBoxComponent} from "../components/content/category/category-delete-box.component";
 import {SelectModule} from "angular2-select";
 import {CategoryFindBoxComponent} from "../components/content/category/category-find-box.component";
 import { HttpModule, JsonpModule } from '@angular/http';
+import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports:      [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         SelectModule,
         HttpModule,
-        JsonpModule
+        JsonpModule,
+
+        PaginationModule
     ],
     declarations: [
         MainApplicationComponent ,

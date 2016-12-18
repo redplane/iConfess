@@ -19,7 +19,10 @@
             </tr>
             <tr>
                 <th>Last modified</th>
-                <td>{{_timeService.findUnixTime(category.lastModified).toUTCString()}}</td>
+                <td>
+                    <span *ngIf="category.lastModified != null">{{_timeService.findUnixTime(category.lastModified).toUTCString()}}</span>
+                    <span *ngIf="category.lastModified == null">---</span>
+                </td>
             </tr>
             </tbody>
         </table>

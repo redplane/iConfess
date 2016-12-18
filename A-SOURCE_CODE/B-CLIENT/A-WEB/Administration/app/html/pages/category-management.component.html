@@ -3,15 +3,40 @@
     <div class="col-lg-12">
 
         <!-- Category information find box -->
-        <category-find-box (search)="clickSearch($event)"></category-find-box>
+        <category-find-box #categoryFindBox
+                           (search)="clickSearch($event)"
+                           [isLoading]="_isLoading"></category-find-box>
     </div>
 </div>
+
+<!-- Pagination section -->
+<div class="row" *ngIf="_categorySearchResult != null && _categorySearchResult.total > 0">
+    <div class="col-lg-12">
+        <div class="text-center">
+            <pagination [totalItems]="_categorySearchResult.total"
+                        [itemsPerPage]="_categorySearchConditions.pagination.records"
+                        [(ngModel)]="_categorySearchConditions.pagination.index"
+                        [rotate]="_configurationService.ngPaginationSettings.rotate"
+                        [firstText]="_configurationService.ngPaginationSettings.firstText"
+                        [previousText]="_configurationService.ngPaginationSettings.previousText"
+                        [nextText]="_configurationService.ngPaginationSettings.nextText"
+                        [lastText]="_configurationService.ngPaginationSettings.lastText"></pagination>
+        </div>
+    </div>
+</div>
+
 
 <!-- List of categories -->
 <div class="row"
      *ngIf="_categorySearchResult != null && _categorySearchResult.categories != null">
     <div class="col-lg-12">
         <div class="box box-default">
+            <!-- Loading overlay -->
+            <div class="overlay"
+                 *ngIf="_isLoading">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+
             <div class="box-body">
                 <!-- List of categories -->
                 <div class="col-lg-4" *ngFor="let category of _categorySearchResult.categories">
@@ -20,25 +45,26 @@
                                      (clickChangeCategoryInfo)="clickChangeCategoryInfo(category, changeCategoryBox)"></category-detail>
                 </div>
             </div>
-            <div class="box-footer">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="text-center">
-                            <ul class="pagination">
-                                <li><a href="javascript:void(0);"><<</a></li>
-                                <li><a href="javascript:void(0);"><</a></li>
-                                <li class="active"><a href="javascript:void(0);">1</a></li>
-                                <li><a href="javascript:void(0);">></a></li>
-                                <li><a href="javascript:void(0);">>></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
 
+<!-- Pagination section -->
+<div class="row" *ngIf="_categorySearchResult != null && _categorySearchResult.total > 0">
+    <div class="col-lg-12">
+        <div class="text-center">
+            <pagination [totalItems]="_categorySearchResult.total"
+                        [itemsPerPage]="_categorySearchConditions.pagination.records"
+                        [(ngModel)]="_categorySearchConditions.pagination.index"
+                        [rotate]="_configurationService.ngPaginationSettings.rotate"
+                        [firstText]="_configurationService.ngPaginationSettings.firstText"
+                        [previousText]="_configurationService.ngPaginationSettings.previousText"
+                        [nextText]="_configurationService.ngPaginationSettings.nextText"
+                        [lastText]="_configurationService.ngPaginationSettings.lastText"></pagination>
+        </div>
+    </div>
+</div>
 
 <category-edit-box #changeCategoryBox></category-edit-box>
 <category-delete-box #deleteCategoryBox></category-delete-box>

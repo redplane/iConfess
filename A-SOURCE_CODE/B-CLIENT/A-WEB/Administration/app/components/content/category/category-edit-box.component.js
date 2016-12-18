@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var CategoryDetailViewModel_1 = require("../../../viewmodels/category/CategoryDetailViewModel");
 var Account_1 = require("../../../models/Account");
 var CategoryEditBoxComponent = (function () {
@@ -34,22 +34,22 @@ var CategoryEditBoxComponent = (function () {
     CategoryEditBoxComponent.prototype.toggle = function () {
         $(this.changeCategoryBox.nativeElement).modal('toggle');
     };
-    __decorate([
-        core_1.ViewChild('changeCategoryBox'), 
-        __metadata('design:type', core_1.ElementRef)
-    ], CategoryEditBoxComponent.prototype, "changeCategoryBox", void 0);
-    CategoryEditBoxComponent = __decorate([
-        core_1.Component({
-            selector: 'category-edit-box',
-            templateUrl: './app/html/content/category/category-edit-box.component.html',
-            providers: [
-                CategoryDetailViewModel_1.CategoryDetailViewModel,
-                Account_1.Account
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], CategoryEditBoxComponent);
     return CategoryEditBoxComponent;
 }());
+__decorate([
+    core_1.ViewChild('changeCategoryBox'),
+    __metadata("design:type", core_1.ElementRef)
+], CategoryEditBoxComponent.prototype, "changeCategoryBox", void 0);
+CategoryEditBoxComponent = __decorate([
+    core_1.Component({
+        selector: 'category-edit-box',
+        templateUrl: './app/html/content/category/category-edit-box.component.html',
+        providers: [
+            CategoryDetailViewModel_1.CategoryDetailViewModel,
+            Account_1.Account
+        ]
+    }),
+    __metadata("design:paramtypes", [])
+], CategoryEditBoxComponent);
 exports.CategoryEditBoxComponent = CategoryEditBoxComponent;
 //# sourceMappingURL=category-edit-box.component.js.map

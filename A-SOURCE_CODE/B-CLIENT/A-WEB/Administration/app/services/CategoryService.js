@@ -8,14 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var CategorySearchDetailViewModel_1 = require("../viewmodels/category/CategorySearchDetailViewModel");
-var CategoryDetailViewModel_1 = require("../viewmodels/category/CategoryDetailViewModel");
-var Account_1 = require("../models/Account");
-var AccountStatuses_1 = require("../enumerations/AccountStatuses");
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var HyperlinkService_1 = require("./HyperlinkService");
 var http_1 = require("@angular/http");
-require('rxjs/add/operator/toPromise');
+require("rxjs/add/operator/toPromise");
 /*
 * Service which handles category business.
 * */
@@ -24,58 +20,29 @@ var CategoryService = (function () {
     function CategoryService(hyperlinkService, httpClient) {
         this._hyperlinkService = hyperlinkService;
         this._httpClient = httpClient;
-        // Initiate account information.
-        this.creator = new Account_1.Account();
-        this.creator.id = 1;
-        this.creator.email = "linhndse03150@fpt.edu.vn";
-        this.creator.nickname = "Linh Nguyen";
-        this.creator.status = AccountStatuses_1.AccountStatuses.Active;
-        this.creator.joined = 0;
-        this.creator.lastModified = 0;
-        // Initiate list of categories.
-        this.categories = new Array();
-        for (var i = 0; i < 10; i++) {
-            var category = new CategoryDetailViewModel_1.CategoryDetailViewModel();
-            category.id = i;
-            category.creator = this.creator;
-            category.name = "category[" + i + "]";
-            category.created = i;
-            category.lastModified = i;
-            this.categories.push(category);
-        }
     }
     // Find categories by using specific conditions.
     CategoryService.prototype.findCategories = function (categorySearch) {
-        // Initiate category search result.
-        var categoriesSearchResult = new CategorySearchDetailViewModel_1.CategorySearchDetailViewModel();
-        categoriesSearchResult.categories = this.categories;
-        categoriesSearchResult.total = this.categories.length;
         var requestOptions = new http_1.RequestOptions({
             headers: new http_1.Headers({
                 'Content-Type': 'application/json'
             })
         });
-        var requestBody = {};
-        this._httpClient.post(this._hyperlinkService.apiFindCategory, requestBody, requestOptions)
-            .toPromise()
-            .then(this.processFindCategoriesResult)
-            .catch(this.handleError);
-        console.log(this._hyperlinkService.apiFindCategory);
-        return categoriesSearchResult;
+        var requestBody = {
+            pagination: {
+                index: 0,
+                records: 20
+            }
+        };
+        // Request to api to obtain list of available categories in system.
+        return this._httpClient.post(this._hyperlinkService.apiFindCategory, requestBody, requestOptions)
+            .toPromise();
     };
-    // This callback is called when data is sent back from server which find categories request was sent.
-    CategoryService.prototype.processFindCategoriesResult = function (response) {
-        console.log(response);
-    };
-    // This callback is called when data is sent back from service due to its invalidity.
-    CategoryService.prototype.handleError = function (response) {
-        console.log(response);
-    };
-    CategoryService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [HyperlinkService_1.HyperlinkService, http_1.Http])
-    ], CategoryService);
     return CategoryService;
 }());
+CategoryService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [HyperlinkService_1.HyperlinkService, http_1.Http])
+], CategoryService);
 exports.CategoryService = CategoryService;
 //# sourceMappingURL=CategoryService.js.map

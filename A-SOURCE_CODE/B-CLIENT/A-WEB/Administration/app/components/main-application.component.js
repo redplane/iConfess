@@ -8,18 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var MainApplicationComponent = (function () {
     function MainApplicationComponent() {
     }
-    MainApplicationComponent = __decorate([
-        core_1.Component({
-            selector: 'main-application',
-            templateUrl: './app/html/main-application.html'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], MainApplicationComponent);
     return MainApplicationComponent;
 }());
+MainApplicationComponent = __decorate([
+    core_1.Component({
+        selector: 'main-application',
+        templateUrl: './app/html/main-application.html'
+    }),
+    __metadata("design:paramtypes", [])
+], MainApplicationComponent);
 exports.MainApplicationComponent = MainApplicationComponent;
 //# sourceMappingURL=main-application.component.js.map

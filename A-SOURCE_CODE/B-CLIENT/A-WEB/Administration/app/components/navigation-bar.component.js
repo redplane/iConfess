@@ -8,18 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var NavigationBarComponent = (function () {
     function NavigationBarComponent() {
     }
-    NavigationBarComponent = __decorate([
-        core_1.Component({
-            selector: 'navigation-bar',
-            templateUrl: './app/html/navigation-bar.component.html'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], NavigationBarComponent);
     return NavigationBarComponent;
 }());
+NavigationBarComponent = __decorate([
+    core_1.Component({
+        selector: 'navigation-bar',
+        templateUrl: './app/html/navigation-bar.component.html'
+    }),
+    __metadata("design:paramtypes", [])
+], NavigationBarComponent);
 exports.NavigationBarComponent = NavigationBarComponent;
 //# sourceMappingURL=navigation-bar.component.js.map

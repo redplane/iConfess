@@ -1,7 +1,9 @@
-<div class="box box-default">
+<div [formGroup]="findCategoryBox"
+     class="box box-default">
 
+    <!-- Overlay which is used for blocking box. -->
     <div class="overlay"
-         *ngIf="_isLoading">
+         *ngIf="isLoading">
         <i class="fa fa-refresh fa-spin"></i>
     </div>
 
@@ -26,7 +28,7 @@
                     <label>Creator</label>
                     <input class="form-control"
                            placeholder="Creator"
-                           [(ngModel)]="_categorySearch.creatorIndex"/>
+                           formControlName="creatorIndex"/>
                 </div>
 
                 <!-- Category name -->
@@ -34,9 +36,22 @@
                     <label>Name</label>
                     <input class="form-control"
                            placeholder="Category name"
-                           [(ngModel)]="_categorySearch.name"/>
+                           formControlName="name"/>
                 </div>
 
+                <!-- Pagination -->
+                <div class="form-group"
+                     formGroupName="pagination">
+                    <label>Records</label>
+                    <select class="form-control"
+                            formControlName="records"
+                            [(ngModel)]="_categoriesSearchConditions.pagination.records">
+                        <option *ngFor="let item of _configurationService.pageRecords; let i = index"
+                                [value]="_configurationService.pageRecords[i]">
+                            {{_configurationService.pageRecords[i]}}
+                        </option>
+                    </select>
+                </div>
             </div>
 
             <div class="col-lg-6">
@@ -47,18 +62,20 @@
                         <label>Created</label>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-6"
+                         formGroupName="created">
                         <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-hourglass-start" aria-hidden="true"></i>
                                 </span>
                             <input class="form-control"
                                    type="date"
-                                   [(ngModel)]="_categorySearch.created.from"/>
+                                   formControlName="from"/>
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-6"
+                         formGroupName="created">
                         <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-hourglass-end"
@@ -66,7 +83,7 @@
                                 </span>
                             <input class="form-control"
                                    type="date"
-                                   [(ngModel)]="_categorySearch.created.to"/>
+                                   formControlName="to"/>
                         </div>
                     </div>
                 </div>
@@ -77,47 +94,85 @@
                         <label>Last modified</label>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-6"
+                         formGroupName="lastModified">
                         <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-hourglass-start" aria-hidden="true"></i>
                                 </span>
                             <input class="form-control"
-                                   type="date"/>
+                                   type="date"
+                                   formControlName="from"/>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6"
+                         formGroupName="lastModified">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                                </span>
+                            <input class="form-control"
+                                   type="date"
+                                   formControlName="to"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sorting -->
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label>Sorting</label>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-folder" aria-hidden="true"></i>
+                                </span>
+
+                            <select class="form-control"
+                                    formControlName="sort"
+                                    [(ngModel)]="_categoriesSearchConditions.sort">
+                                <option *ngFor="let key of _configurationService.categorySortProperties.keys()"
+                                        [value]="_configurationService.categorySortProperties.item(key)">
+                                    {{key}}
+                                </option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="input-group">
                                 <span class="input-group-addon">
-                                    <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
                                 </span>
-                            <input class="form-control"
-                                   type="date"/>
+
+                            <select class="form-control"
+                                    formControlName="direction"
+                                    [(ngModel)]="_categoriesSearchConditions.direction">
+                                <option *ngFor="let key of _configurationService.sortDirections.keys()"
+                                        [value]="_configurationService.sortDirections.item(key)">
+                                    {{key}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pagination -->
-                <div class="form-group">
-                    <label>Records</label>
-                    <input class="form-control"/>
-                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-12">
-                {{_categorySearch | json}}
+                <span>{{findCategoryBox.value | json}}</span>
             </div>
         </div>
-
-
     </div>
 
     <div class="box-footer">
         <button class="btn btn-primary btn-flat"
-                (click)="clickSearch()">
+                (click)="clickSearch(findCategoryBox)">
             <span class="glyphicon glyphicon-search"></span>
             <span>Search</span>
         </button>

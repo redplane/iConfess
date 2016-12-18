@@ -8,18 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var ReportedPostManagement = (function () {
     function ReportedPostManagement() {
     }
-    ReportedPostManagement = __decorate([
-        core_1.Component({
-            selector: 'reported-post-management',
-            templateUrl: './app/html/pages/reported-post-management.html'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], ReportedPostManagement);
     return ReportedPostManagement;
 }());
+ReportedPostManagement = __decorate([
+    core_1.Component({
+        selector: 'reported-post-management',
+        templateUrl: './app/html/pages/reported-post-management.html'
+    }),
+    __metadata("design:paramtypes", [])
+], ReportedPostManagement);
 exports.ReportedPostManagement = ReportedPostManagement;
 //# sourceMappingURL=reported-post-management.component.js.map

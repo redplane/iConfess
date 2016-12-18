@@ -1,4 +1,7 @@
 import {UnixDateRange} from "../UnixDateRange";
+import {Pagination} from "../Pagination";
+import {SortDirection} from "../../enumerations/SortDirection";
+import {CategorySortProperty} from "../../enumerations/CategorySortProperty";
 
 export class CategorySearchViewModel{
 
@@ -14,11 +17,23 @@ export class CategorySearchViewModel{
     // When the category was lastly modified.
     public lastModified: UnixDateRange;
 
+    // Results pagination.
+    public pagination: Pagination;
+
+    // Results sorting.
+    public direction: SortDirection;
+
+    // Property which is used for sorting.
+    public sort: CategorySortProperty;
+
     // Initiate view model with properties.
     public constructor(){
         this.name = null;
         this.creatorIndex = null;
         this.created = new UnixDateRange();
         this.lastModified = new UnixDateRange();
+        this.pagination = new Pagination();
+        this.direction = SortDirection.Ascending;
+        this.sort = CategorySortProperty.index;
     }
 }
