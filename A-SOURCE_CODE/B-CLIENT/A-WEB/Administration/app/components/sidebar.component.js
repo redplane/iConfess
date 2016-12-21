@@ -17,7 +17,7 @@ var SidebarComponent = (function () {
 SidebarComponent = __decorate([
     core_1.Component({
         selector: 'sidebar',
-        templateUrl: './app/html/sidebar.component.html'
+        templateUrl: './app/views/sidebar.component.html'
     }),
     __metadata("design:paramtypes", [])
 ], SidebarComponent);

@@ -17,7 +17,7 @@ var AccountManagementComponent = (function () {
 AccountManagementComponent = __decorate([
     core_1.Component({
         selector: 'account-management',
-        templateUrl: './app/html/pages/account-management.component.html'
+        templateUrl: './app/views/pages/account-management.component.html'
     }),
     __metadata("design:paramtypes", [])
 ], AccountManagementComponent);

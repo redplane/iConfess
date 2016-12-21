@@ -1,12 +1,14 @@
 import {UnixDateRange} from "../UnixDateRange";
 import {Pagination} from "../Pagination";
 import {SortDirection} from "../../enumerations/SortDirection";
-import {CategorySortProperty} from "../../enumerations/CategorySortProperty";
+import {CategorySortProperty} from "../../enumerations/order/CategorySortProperty";
+import {TextSearchMode} from "../../enumerations/TextSearchMode";
+import {TextSearch} from "../TextSearch";
 
 export class CategorySearchViewModel{
 
     // Name of category
-    public name: string;
+    public name: TextSearch;
 
     // Index of category creator.
     public creatorIndex: number;
@@ -28,7 +30,7 @@ export class CategorySearchViewModel{
 
     // Initiate view model with properties.
     public constructor(){
-        this.name = null;
+        this.name = new TextSearch();
         this.creatorIndex = null;
         this.created = new UnixDateRange();
         this.lastModified = new UnixDateRange();

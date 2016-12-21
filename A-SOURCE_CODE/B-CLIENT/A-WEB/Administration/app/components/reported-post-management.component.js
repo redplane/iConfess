@@ -17,7 +17,7 @@ var ReportedPostManagement = (function () {
 ReportedPostManagement = __decorate([
     core_1.Component({
         selector: 'reported-post-management',
-        templateUrl: './app/html/pages/reported-post-management.html'
+        templateUrl: './app/views/pages/reported-post-management.html'
     }),
     __metadata("design:paramtypes", [])
 ], ReportedPostManagement);

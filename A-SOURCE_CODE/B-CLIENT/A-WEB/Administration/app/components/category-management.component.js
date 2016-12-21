@@ -10,12 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var CategorySearchDetailViewModel_1 = require("../viewmodels/category/CategorySearchDetailViewModel");
-var CategoryService_1 = require("../services/CategoryService");
+var ClientCategoryService_1 = require("../services/clients/ClientCategoryService");
 var TimeService_1 = require("../services/TimeService");
-var CategorySearchViewModel_1 = require("../viewmodels/category/CategorySearchViewModel");
+var FindCategoriesViewModel_1 = require("../viewmodels/category/FindCategoriesViewModel");
 var HyperlinkService_1 = require("../services/HyperlinkService");
 var ResponseAnalyzeService_1 = require("../services/ResponseAnalyzeService");
-var ConfigurationService_1 = require("../services/ConfigurationService");
+var ClientConfigurationService_1 = require("../services/ClientConfigurationService");
+var Pagination_1 = require("../viewmodels/Pagination");
 var CategoryManagementComponent = (function () {
     // Initiate component with dependency injections.
     function CategoryManagementComponent(categoryService, timeService, responseAnalyzeService, configurationService) {
@@ -23,11 +24,9 @@ var CategoryManagementComponent = (function () {
         this._timeService = timeService;
         this._responseAnalyzeService = responseAnalyzeService;
         // Find configuration service in IoC.
-        this._configurationService = configurationService;
+        this._clientConfigurationService = configurationService;
         // Initiate categories search result.
         this._categorySearchResult = new CategorySearchDetailViewModel_1.CategorySearchDetailViewModel();
-        // Initiate category search conditions.
-        this._categorySearchConditions = new CategorySearchViewModel_1.CategorySearchViewModel();
     }
     // Callback is fired when a category is created to be removed.
     CategoryManagementComponent.prototype.clickRemoveCategory = function (category, deleteCategoryBox) {
@@ -44,41 +43,54 @@ var CategoryManagementComponent = (function () {
         changeCategoryBox.open();
     };
     // Callback which is fired when search button of category search box is clicked.
-    CategoryManagementComponent.prototype.clickSearch = function (categoriesSearchConditions) {
+    CategoryManagementComponent.prototype.clickSearch = function () {
         var _this = this;
-        // Update search conditions.
-        this._categorySearchConditions = categoriesSearchConditions;
         // Freeze the find box.
         this._isLoading = true;
         // Find categories by using specific conditions.
-        this._categoryService.findCategories(categoriesSearchConditions)
+        this._categoryService.findCategories(this._findCategoriesViewModel)
             .then(function (response) {
             // Update categories list.
             _this._categorySearchResult = response.json();
             // Unfreeze the category find box.
             _this._isLoading = false;
-            console.log(response);
         })
             .catch(function (response) {
             _this._isLoading = false;
         });
+    };
+    // Callback which is fired when page selection is changed.
+    CategoryManagementComponent.prototype.clickPageChange = function (pagination) {
+        // Update pagination index.
+        this._findCategoriesViewModel.pagination.index = pagination.page;
+        // Call search function.
+        this.clickSearch();
+    };
+    // This callback is fired when category management component is initiated.
+    CategoryManagementComponent.prototype.ngOnInit = function () {
+        // Initiate category search conditions.
+        this._findCategoriesViewModel = new FindCategoriesViewModel_1.CategorySearchViewModel();
+        var pagination = new Pagination_1.Pagination();
+        pagination.index = 1;
+        pagination.records = this._clientConfigurationService.findMaxPageRecords();
+        this._findCategoriesViewModel.pagination = pagination;
     };
     return CategoryManagementComponent;
 }());
 CategoryManagementComponent = __decorate([
     core_1.Component({
         selector: 'category-management',
-        templateUrl: './app/html/pages/category-management.component.html',
+        templateUrl: './app/views/pages/category-management.component.html',
         providers: [
-            CategoryService_1.CategoryService,
+            ClientCategoryService_1.ClientCategoryService,
             TimeService_1.TimeService,
             HyperlinkService_1.HyperlinkService,
             ResponseAnalyzeService_1.ResponseAnalyzeService,
-            ConfigurationService_1.ConfigurationService
+            ClientConfigurationService_1.ConfigurationService
         ],
     }),
-    __metadata("design:paramtypes", [CategoryService_1.CategoryService, TimeService_1.TimeService,
-        ResponseAnalyzeService_1.ResponseAnalyzeService, ConfigurationService_1.ConfigurationService])
+    __metadata("design:paramtypes", [ClientCategoryService_1.ClientCategoryService, TimeService_1.TimeService,
+        ResponseAnalyzeService_1.ResponseAnalyzeService, ClientConfigurationService_1.ConfigurationService])
 ], CategoryManagementComponent);
 exports.CategoryManagementComponent = CategoryManagementComponent;
 //# sourceMappingURL=category-management.component.js.map

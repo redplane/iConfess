@@ -17,7 +17,7 @@ var MainApplicationComponent = (function () {
 MainApplicationComponent = __decorate([
     core_1.Component({
         selector: 'main-application',
-        templateUrl: './app/html/main-application.html'
+        templateUrl: './app/views/main-application.html'
     }),
     __metadata("design:paramtypes", [])
 ], MainApplicationComponent);

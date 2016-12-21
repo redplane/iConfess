@@ -16,7 +16,8 @@ var HyperlinkService = (function () {
     function HyperlinkService() {
         // Hyperlink which is used for searching for categories.
         this.apiFindCategory = "http://confession.azurewebsites.net/api/category/find";
-        //public apiFindCategory : string = "http://localhost:2101/api/category/find";
+        // Hyperlink which is used for searching for accounts.
+        this.apiFindAccount = "http://confession.azurewebsites.net/api/account/find";
     }
     return HyperlinkService;
 }());

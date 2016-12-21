@@ -1,9 +1,12 @@
-import {CategorySearchViewModel} from "../../viewmodels/category/CategorySearchViewModel";
+import {CategorySearchViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
 import 'rxjs/add/operator/toPromise';
 import {Response} from "@angular/http";
 
-export interface ICategoryService{
+export interface IClientCategoryService{
 
     // Find categories by using specific conditions.
-    findCategories(categorySearch: CategorySearchViewModel);
+    findCategories(categorySearch: CategorySearchViewModel): any;
+
+    // Reset categories search conditions.
+    resetFindCategoriesConditions(): CategorySearchViewModel;
 }

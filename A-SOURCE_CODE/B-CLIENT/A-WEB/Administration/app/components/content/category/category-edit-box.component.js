@@ -43,7 +43,7 @@ __decorate([
 CategoryEditBoxComponent = __decorate([
     core_1.Component({
         selector: 'category-edit-box',
-        templateUrl: './app/html/content/category/category-edit-box.component.html',
+        templateUrl: './app/views/contents/category/category-edit-box.component.html',
         providers: [
             CategoryDetailViewModel_1.CategoryDetailViewModel,
             Account_1.Account

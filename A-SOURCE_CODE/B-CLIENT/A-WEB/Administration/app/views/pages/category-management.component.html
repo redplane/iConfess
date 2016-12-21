@@ -1,0 +1,74 @@
+<!-- Main row -->
+<div class="row">
+    <div class="col-lg-12">
+
+        <!-- Category information find box -->
+        <category-find-box #categoryFindBox
+                           [isLoading]="_isLoading"
+                           [conditions]="_findCategoriesViewModel"
+                           (search)="clickSearch()"></category-find-box>
+    </div>
+</div>
+
+<!-- Pagination section -->
+<div class="row"
+     *ngIf="(_categorySearchResult != null && _categorySearchResult.total > 0 && !_isLoading)">
+    <div class="col-lg-12">
+        <div class="text-center">
+            <pagination [totalItems]="_categorySearchResult.total"
+                        [itemsPerPage]="_findCategoriesViewModel.pagination.records"
+                        [(ngModel)]="_findCategoriesViewModel.pagination.index"
+                        [rotate]="_clientConfigurationService.ngPaginationSettings.rotate"
+                        [firstText]="_clientConfigurationService.ngPaginationSettings.firstText"
+                        [previousText]="_clientConfigurationService.ngPaginationSettings.previousText"
+                        [nextText]="_clientConfigurationService.ngPaginationSettings.nextText"
+                        [lastText]="_clientConfigurationService.ngPaginationSettings.lastText"
+                        (pageChanged)="clickPageChange($event)"></pagination>
+        </div>
+    </div>
+</div>
+
+<!-- List of categories -->
+<div class="row"
+     *ngIf="(_categorySearchResult != null && _categorySearchResult.total > 0 && !_isLoading)">
+    <div class="col-lg-12">
+        <div class="box box-default">
+            <!-- Loading overlay -->
+            <div class="overlay"
+                 *ngIf="_isLoading">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+
+            <div class="box-body">
+                <!-- List of categories -->
+                <div class="col-lg-4" *ngFor="let category of _categorySearchResult.categories">
+                    <category-detail [category]="category"
+                                     (clickRemoveCategory)="clickRemoveCategory(category, deleteCategoryBox)"
+                                     (clickChangeCategoryInfo)="clickChangeCategoryInfo(category, changeCategoryBox)"></category-detail>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Pagination section -->
+<div class="row"
+     *ngIf="(_categorySearchResult != null && _categorySearchResult.total > 0 && !_isLoading)">
+    <div class="col-lg-12">
+        <div class="text-center">
+            <pagination [totalItems]="_categorySearchResult.total"
+                        [itemsPerPage]="_findCategoriesViewModel.pagination.records"
+                        [(ngModel)]="_findCategoriesViewModel.pagination.index"
+                        [rotate]="_clientConfigurationService.ngPaginationSettings.rotate"
+                        [firstText]="_clientConfigurationService.ngPaginationSettings.firstText"
+                        [previousText]="_clientConfigurationService.ngPaginationSettings.previousText"
+                        [nextText]="_clientConfigurationService.ngPaginationSettings.nextText"
+                        [lastText]="_clientConfigurationService.ngPaginationSettings.lastText"
+                        (pageChanged)="clickPageChange($event)"></pagination>
+        </div>
+    </div>
+</div>
+
+<category-edit-box #changeCategoryBox></category-edit-box>
+<category-delete-box #deleteCategoryBox></category-delete-box>

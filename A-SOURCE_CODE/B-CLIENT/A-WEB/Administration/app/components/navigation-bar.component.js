@@ -17,7 +17,7 @@ var NavigationBarComponent = (function () {
 NavigationBarComponent = __decorate([
     core_1.Component({
         selector: 'navigation-bar',
-        templateUrl: './app/html/navigation-bar.component.html'
+        templateUrl: './app/views/navigation-bar.component.html'
     }),
     __metadata("design:paramtypes", [])
 ], NavigationBarComponent);

@@ -42,7 +42,7 @@ __decorate([
 CategoryDeleteBoxComponent = __decorate([
     core_1.Component({
         selector: 'category-delete-box',
-        templateUrl: './app/html/content/category/category-delete-box.component.html',
+        templateUrl: './app/views/contents/category/category-delete-box.component.html',
         providers: [
             CategoryDetailViewModel_1.CategoryDetailViewModel
         ]

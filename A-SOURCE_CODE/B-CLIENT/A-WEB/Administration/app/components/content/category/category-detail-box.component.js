@@ -32,7 +32,7 @@ CategoryDetailBoxComponent = __decorate([
         selector: 'category-detail',
         inputs: ['category'],
         outputs: ['clickRemoveCategory', 'clickChangeCategoryInfo'],
-        templateUrl: './app/html/content/category/category-detail-box.component.html',
+        templateUrl: './app/views/contents/category/category-detail-box.component.html',
         providers: [
             TimeService_1.TimeService
         ]

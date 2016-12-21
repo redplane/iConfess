@@ -12,7 +12,7 @@ import {CategoryDeleteBoxComponent} from "../components/content/category/categor
 import {SelectModule} from "angular2-select";
 import {CategoryFindBoxComponent} from "../components/content/category/category-find-box.component";
 import { HttpModule, JsonpModule } from '@angular/http';
-import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { PaginationModule, TypeaheadModule  } from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports:      [
@@ -23,7 +23,8 @@ import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
         HttpModule,
         JsonpModule,
 
-        PaginationModule
+        PaginationModule,
+        TypeaheadModule
     ],
     declarations: [
         MainApplicationComponent ,

@@ -37,7 +37,8 @@ MainApplicationModule = __decorate([
             angular2_select_1.SelectModule,
             http_1.HttpModule,
             http_1.JsonpModule,
-            ng2_bootstrap_1.PaginationModule
+            ng2_bootstrap_1.PaginationModule,
+            ng2_bootstrap_1.TypeaheadModule
         ],
         declarations: [
             main_application_component_1.MainApplicationComponent,
