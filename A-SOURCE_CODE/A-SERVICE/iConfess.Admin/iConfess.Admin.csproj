@@ -269,7 +269,6 @@
     <Compile Include="Providers\BearerAuthenticationProvider.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\ApiAccount\FindAccountViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\LoginViewModel.cs" />
     <Compile Include="ViewModels\ApiCategory\InitiateCategoryViewModel.cs" />
   </ItemGroup>

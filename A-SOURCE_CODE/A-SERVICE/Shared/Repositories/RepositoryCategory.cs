@@ -186,8 +186,8 @@ namespace Shared.Repositories
                 categories = categories.Where(x => x.Id == conditions.Id.Value);
 
             // Creator has been defined.
-            if (conditions.Creator != null)
-                categories = categories.Where(x => x.CreatorIndex == conditions.Creator.Value);
+            if (conditions.CreatorIndex != null)
+                categories = categories.Where(x => x.CreatorIndex == conditions.CreatorIndex.Value);
 
             // Name search condition has been defined.
             if (conditions.Name != null)
@@ -198,16 +198,16 @@ namespace Shared.Repositories
 
                     switch (conditions.Name.Mode)
                     {
-                        case TextComparision.Contain:
-                            categories = categories.Where(x => x.Name.Contains(categoryName));
-                            break;
                         case TextComparision.Equal:
                             categories = categories.Where(x => x.Name.Equals(categoryName));
                             break;
-                        default:
+                        case TextComparision.EqualIgnoreCase:
                             categories =
                                 categories.Where(
                                     x => x.Name.Equals(categoryName, StringComparison.InvariantCultureIgnoreCase));
+                            break;
+                        default:
+                            categories = categories.Where(x => x.Name.Contains(categoryName));
                             break;
                     }
                 }

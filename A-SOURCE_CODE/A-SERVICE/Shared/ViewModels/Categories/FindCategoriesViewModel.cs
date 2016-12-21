@@ -15,7 +15,7 @@ namespace Shared.ViewModels.Categories
         /// <summary>
         ///     Index of creator.
         /// </summary>
-        public int? Creator { get; set; }
+        public int? CreatorIndex { get; set; }
 
         /// <summary>
         ///     Name of category.

@@ -15,11 +15,12 @@ using JWT;
 using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
+using Shared.ViewModels.Accounts;
 
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/account")]
-    [ApiAuthorize]
+    //[ApiAuthorize]
     public class ApiAccountController : ApiParentController
     {
         #region Constructors
@@ -176,9 +177,28 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
-        public HttpResponseMessage FindAccounts()
+        public async Task<HttpResponseMessage> FindAccounts([FromBody] FindAccountsViewModel conditions)
         {
-            throw new NotImplementedException();
+            #region Parameters validation
+
+            // Conditions haven't been initialized.
+            if (conditions == null)
+            {
+                conditions = new FindAccountsViewModel();
+                Validate(conditions);
+            }
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(conditions)));
+
+            #endregion
+
+            #region Find account
+
+            var result = await UnitOfWork.RepositoryAccounts.FindAccountsAsync(conditions);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+            
+            #endregion
         }
 
         /// <summary>

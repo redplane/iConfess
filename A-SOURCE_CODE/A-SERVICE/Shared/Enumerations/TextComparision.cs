@@ -2,8 +2,8 @@
 {
     public enum TextComparision
     {
-        Contain,
         Equal,
-        EqualIgnoreCase
+        EqualIgnoreCase,
+        Contain
     }
 }
