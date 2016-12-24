@@ -5,7 +5,10 @@ import {CategorySortProperty} from "../../enumerations/order/CategorySortPropert
 import {TextSearchMode} from "../../enumerations/TextSearchMode";
 import {TextSearch} from "../TextSearch";
 
-export class CategorySearchViewModel{
+export class FindCategoriesViewModel{
+
+    // Index of category.
+    public id: number;
 
     // Name of category
     public name: TextSearch;

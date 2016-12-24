@@ -16,6 +16,10 @@ var HyperlinkService = (function () {
     function HyperlinkService() {
         // Hyperlink which is used for searching for categories.
         this.apiFindCategory = "http://confession.azurewebsites.net/api/category/find";
+        // Hyperlink which is used for searching for categories for deleting 'em.
+        this.apiDeleteCategory = "http://confession.azurewebsites.net/api/category";
+        // Hyperlink which is used for changing category information.
+        this.apiChangeCategoryDetail = "http://confession.azurewebsites.net/api/category";
         // Hyperlink which is used for searching for accounts.
         this.apiFindAccount = "http://confession.azurewebsites.net/api/account/find";
     }

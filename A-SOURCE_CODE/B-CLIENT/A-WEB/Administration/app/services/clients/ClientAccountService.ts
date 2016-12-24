@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CategorySearchViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
+import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
 import {HyperlinkService} from "../HyperlinkService";
 import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import 'rxjs/add/operator/toPromise';

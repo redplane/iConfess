@@ -17,10 +17,11 @@ var HyperlinkService_1 = require("../services/HyperlinkService");
 var ResponseAnalyzeService_1 = require("../services/ResponseAnalyzeService");
 var ClientConfigurationService_1 = require("../services/ClientConfigurationService");
 var Pagination_1 = require("../viewmodels/Pagination");
+var Category_1 = require("../models/Category");
 var CategoryManagementComponent = (function () {
     // Initiate component with dependency injections.
     function CategoryManagementComponent(categoryService, timeService, responseAnalyzeService, configurationService) {
-        this._categoryService = categoryService;
+        this._clientCategoryService = categoryService;
         this._timeService = timeService;
         this._responseAnalyzeService = responseAnalyzeService;
         // Find configuration service in IoC.
@@ -29,26 +30,78 @@ var CategoryManagementComponent = (function () {
         this._categorySearchResult = new CategorySearchDetailViewModel_1.CategorySearchDetailViewModel();
     }
     // Callback is fired when a category is created to be removed.
-    CategoryManagementComponent.prototype.clickRemoveCategory = function (category, deleteCategoryBox) {
+    CategoryManagementComponent.prototype.clickRemoveCategory = function (categoryDetail, deleteCategoryConfirmModal) {
+        // Category detail is not valid.
+        if (categoryDetail == null)
+            return;
         // Update category information into box.
-        deleteCategoryBox.setCategory(category);
+        this._selectCategoryDetail = categoryDetail;
         // Open delete category confirmation box.
-        deleteCategoryBox.open();
+        deleteCategoryConfirmModal.show();
     };
-    // Callback which is fired when change category box is clicked.
-    CategoryManagementComponent.prototype.clickChangeCategoryInfo = function (category, changeCategoryBox) {
-        // Update category information into box.
-        changeCategoryBox.setCategory(category);
-        // Open change category information box.
-        changeCategoryBox.open();
+    // This callback is called when user confirms to delete the selected category.
+    CategoryManagementComponent.prototype.clickConfirmDeleteCategory = function (deleteCategoryConfirmModal) {
+        var _this = this;
+        // Find category by using specific conditions.
+        var findCategoriesConditions = new FindCategoriesViewModel_1.FindCategoriesViewModel();
+        findCategoriesConditions.id = this._selectCategoryDetail.id;
+        // No category detail is selected.
+        if (this._selectCategoryDetail != null) {
+            // Call category service to delete the selected category.
+            this._clientCategoryService.deleteCategories(findCategoriesConditions)
+                .then(function (response) {
+                // Reload the search records list.
+                _this.clickSearch();
+            })
+                .catch(function (response) {
+                console.log(response);
+            });
+        }
+        // Close the modal first.
+        deleteCategoryConfirmModal.hide();
+    };
+    // Callback which is fired when change category detail button is clicked.
+    CategoryManagementComponent.prototype.clickChangeCategoryDetail = function (categoryDetail, changeCategoryDetailModal) {
+        // Category detail is invalid.
+        if (categoryDetail == null)
+            return;
+        // Copy the category detail to selected category detail.
+        this._selectCategoryDetail = categoryDetail;
+        // Display the change category detail box.
+        changeCategoryDetailModal.show();
+    };
+    // Callback which is fired when change category detail action is confirmed.
+    CategoryManagementComponent.prototype.clickConfirmChangeCategoryDetail = function (changeCategoryInfoModal) {
+        var _this = this;
+        // Selected category detail is invalid.
+        if (this._selectCategoryDetail == null)
+            return;
+        // Initiate category information.
+        var category = new Category_1.Category();
+        category.id = this._selectCategoryDetail.id;
+        category.name = this._selectCategoryDetail.name;
+        // Close the change category info modal.
+        changeCategoryInfoModal.hide();
+        // Call service to update category information.
+        this._clientCategoryService.changeCategoryDetails(category.id, category)
+            .then(function (response) {
+            console.log(response);
+            // Reload the categories list.
+            _this.clickSearch();
+        })
+            .catch(function (response) {
+            console.log(response);
+        });
     };
     // Callback which is fired when search button of category search box is clicked.
     CategoryManagementComponent.prototype.clickSearch = function () {
         var _this = this;
         // Freeze the find box.
         this._isLoading = true;
+        // Reset the selected category detail.
+        this._selectCategoryDetail = null;
         // Find categories by using specific conditions.
-        this._categoryService.findCategories(this._findCategoriesViewModel)
+        this._clientCategoryService.findCategories(this._findCategoriesViewModel)
             .then(function (response) {
             // Update categories list.
             _this._categorySearchResult = response.json();
@@ -69,7 +122,7 @@ var CategoryManagementComponent = (function () {
     // This callback is fired when category management component is initiated.
     CategoryManagementComponent.prototype.ngOnInit = function () {
         // Initiate category search conditions.
-        this._findCategoriesViewModel = new FindCategoriesViewModel_1.CategorySearchViewModel();
+        this._findCategoriesViewModel = new FindCategoriesViewModel_1.FindCategoriesViewModel();
         var pagination = new Pagination_1.Pagination();
         pagination.index = 1;
         pagination.records = this._clientConfigurationService.findMaxPageRecords();

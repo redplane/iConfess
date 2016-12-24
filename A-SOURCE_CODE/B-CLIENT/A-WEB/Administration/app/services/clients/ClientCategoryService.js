@@ -40,12 +40,39 @@ var ClientCategoryService = (function () {
         return this._httpClient.post(this._hyperlinkService.apiFindCategory, conditions, requestOptions)
             .toPromise();
     };
+    // Find categories by using specific conditions and delete 'em.
+    ClientCategoryService.prototype.deleteCategories = function (findCategoriesConditions) {
+        var requestOptions = new http_1.RequestOptions({
+            headers: new http_1.Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: findCategoriesConditions
+        });
+        // Request to api to obtain list of available categories in system.
+        return this._httpClient.delete(this._hyperlinkService.apiDeleteCategory, requestOptions)
+            .toPromise();
+    };
+    // Change category detail information by searching its index.
+    ClientCategoryService.prototype.changeCategoryDetails = function (id, category) {
+        var requestOptions = new http_1.RequestOptions({
+            headers: new http_1.Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: category
+        });
+        // Construct change category api.
+        var changeCategoryDetailApi = this._hyperlinkService.apiChangeCategoryDetail + "?index=" + id;
+        console.log(category);
+        // Request to api to obtain list of available categories in system.
+        return this._httpClient.put(changeCategoryDetailApi, requestOptions)
+            .toPromise();
+    };
     // Reset categories search conditions.
     ClientCategoryService.prototype.resetFindCategoriesConditions = function () {
         // Initiate find categories conditions.
-        var conditions = new FindCategoriesViewModel_1.CategorySearchViewModel();
+        var conditions = new FindCategoriesViewModel_1.FindCategoriesViewModel();
         if (conditions == null)
-            conditions = new FindCategoriesViewModel_1.CategorySearchViewModel();
+            conditions = new FindCategoriesViewModel_1.FindCategoriesViewModel();
         conditions.creatorIndex = null;
         conditions.name = null;
         conditions.created = new UnixDateRange_1.UnixDateRange();

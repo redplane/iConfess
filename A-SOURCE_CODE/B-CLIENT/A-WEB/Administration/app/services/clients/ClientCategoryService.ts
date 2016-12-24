@@ -1,13 +1,11 @@
-import {IClientCategoryService} from "../../interfaces/services/ICategoryService";
-import {CategoryDetailViewModel} from "../../viewmodels/category/CategoryDetailViewModel";
-import {Account} from "../../models/Account";
+import {IClientCategoryService} from "../../interfaces/services/IClientCategoryService";
 import {Injectable} from '@angular/core';
-import {CategorySearchViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
+import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
 import {HyperlinkService} from "../HyperlinkService";
-import {Http, Headers, RequestOptions, Response} from "@angular/http";
+import {Http, Headers, RequestOptions} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {UnixDateRange} from "../../viewmodels/UnixDateRange";
-import {Pagination} from "../../viewmodels/Pagination";
+import {Category} from "../../models/Category";
 
 /*
 * Service which handles category business.
@@ -29,7 +27,7 @@ export class ClientCategoryService implements IClientCategoryService {
     }
 
     // Find categories by using specific conditions.
-    public findCategories(categorySearch: CategorySearchViewModel) {
+    public findCategories(categorySearch: FindCategoriesViewModel) {
 
         // Page index should be decrease by one.
         let conditions = Object.assign({}, categorySearch);
@@ -47,17 +45,50 @@ export class ClientCategoryService implements IClientCategoryService {
         // Request to api to obtain list of available categories in system.
         return this._httpClient.post(this._hyperlinkService.apiFindCategory, conditions, requestOptions)
             .toPromise();
+    }
 
+    // Find categories by using specific conditions and delete 'em.
+    public deleteCategories(findCategoriesConditions: FindCategoriesViewModel){
+        let requestOptions = new RequestOptions({
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: findCategoriesConditions
+        });
+
+        // Request to api to obtain list of available categories in system.
+        return this._httpClient.delete(this._hyperlinkService.apiDeleteCategory, requestOptions)
+            .toPromise();
+    }
+
+    // Change category detail information by searching its index.
+    public changeCategoryDetails(id: number, category: Category){
+
+        let requestOptions = new RequestOptions({
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: category
+        });
+
+        // Construct change category api.
+        let changeCategoryDetailApi = `${this._hyperlinkService.apiChangeCategoryDetail}?index=${id}`;
+
+        console.log(category);
+
+        // Request to api to obtain list of available categories in system.
+        return this._httpClient.put(changeCategoryDetailApi, requestOptions)
+            .toPromise();
     }
 
     // Reset categories search conditions.
-    public resetFindCategoriesConditions(): CategorySearchViewModel{
+    public resetFindCategoriesConditions(): FindCategoriesViewModel{
 
         // Initiate find categories conditions.
-        let conditions = new CategorySearchViewModel();
+        let conditions = new FindCategoriesViewModel();
 
         if (conditions == null)
-            conditions = new CategorySearchViewModel();
+            conditions = new FindCategoriesViewModel();
 
         conditions.creatorIndex = null;
         conditions.name = null;

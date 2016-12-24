@@ -43,8 +43,8 @@
                 <!-- List of categories -->
                 <div class="col-lg-4" *ngFor="let category of _categorySearchResult.categories">
                     <category-detail [category]="category"
-                                     (clickRemoveCategory)="clickRemoveCategory(category, deleteCategoryBox)"
-                                     (clickChangeCategoryInfo)="clickChangeCategoryInfo(category, changeCategoryBox)"></category-detail>
+                                     (clickRemoveCategory)="clickRemoveCategory(category, deleteCategoryConfirmModal)"
+                                     (clickChangeCategoryInfo)="clickChangeCategoryDetail(category, changeCategoryInfoModal)"></category-detail>
                 </div>
             </div>
 
@@ -70,5 +70,64 @@
     </div>
 </div>
 
-<category-edit-box #changeCategoryBox></category-edit-box>
-<category-delete-box #deleteCategoryBox></category-delete-box>
+<div bsModal
+     #deleteCategoryConfirmModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+     (onHide)="_selectCategoryDetail = null">
+
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <span *ngIf="_selectCategoryDetail != null">
+                        Are you sure to delete <b class="text-danger">{{_selectCategoryDetail.name}}</b>  ?
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button class="btn btn-flat btn-danger"
+                            (click)="clickConfirmDeleteCategory(deleteCategoryConfirmModal)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal
+     #changeCategoryInfoModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+     (onHide)="_selectCategoryDetail = null">
+
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Change category detail information</span>
+            </div>
+            <div class="modal-body"
+                 *ngIf="_selectCategoryDetail != null">
+                <div class="form-group">
+                    <label>Category name</label>
+                    <input class="form-control"
+                           [(ngModel)]="_selectCategoryDetail.name"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button class="btn btn-flat btn-primary"
+                            (click)="clickConfirmChangeCategoryDetail(changeCategoryInfoModal)">
+                        <span class="glyphicon glyphicon-check"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

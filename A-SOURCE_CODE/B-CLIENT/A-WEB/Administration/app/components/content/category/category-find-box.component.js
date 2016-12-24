@@ -98,7 +98,7 @@ CategoryFindBoxComponent = __decorate([
         outputs: ['search'],
         providers: [
             forms_1.FormBuilder,
-            FindCategoriesViewModel_1.CategorySearchViewModel,
+            FindCategoriesViewModel_1.FindCategoriesViewModel,
             ClientConfigurationService_1.ConfigurationService,
             ClientAccountService_1.ClientAccountService
         ]

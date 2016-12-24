@@ -1,5 +1,5 @@
 import {Component, EventEmitter} from '@angular/core';
-import {CategorySearchViewModel} from "../../../viewmodels/category/FindCategoriesViewModel";
+import {FindCategoriesViewModel} from "../../../viewmodels/category/FindCategoriesViewModel";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ConfigurationService} from "../../../services/ClientConfigurationService";
 import {Account} from "../../../models/Account";
@@ -17,7 +17,7 @@ import {TextSearch} from "../../../viewmodels/TextSearch";
     outputs: ['search'],
     providers: [
         FormBuilder,
-        CategorySearchViewModel,
+        FindCategoriesViewModel,
 
         ConfigurationService,
         ClientAccountService
@@ -39,7 +39,7 @@ export class CategoryFindBoxComponent {
     private _clientConfigurationService: ConfigurationService;
 
     // Collection of conditions which are used for searching categories.
-    private conditions: CategorySearchViewModel;
+    private conditions: FindCategoriesViewModel;
 
     // List of accounts which are used for typeahead binding.
     private _accounts: Array<Account>;

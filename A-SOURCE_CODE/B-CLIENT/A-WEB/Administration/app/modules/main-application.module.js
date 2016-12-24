@@ -16,9 +16,7 @@ var sidebar_component_1 = require("../components/sidebar.component");
 var account_management_component_1 = require("../components/account-management.component");
 var category_management_component_1 = require("../components/category-management.component");
 var category_detail_box_component_1 = require("../components/content/category/category-detail-box.component");
-var category_edit_box_component_1 = require("../components/content/category/category-edit-box.component");
 var forms_1 = require("@angular/forms");
-var category_delete_box_component_1 = require("../components/content/category/category-delete-box.component");
 var angular2_select_1 = require("angular2-select");
 var category_find_box_component_1 = require("../components/content/category/category-find-box.component");
 var http_1 = require("@angular/http");
@@ -37,6 +35,7 @@ MainApplicationModule = __decorate([
             angular2_select_1.SelectModule,
             http_1.HttpModule,
             http_1.JsonpModule,
+            ng2_bootstrap_1.ModalModule,
             ng2_bootstrap_1.PaginationModule,
             ng2_bootstrap_1.TypeaheadModule
         ],
@@ -47,8 +46,6 @@ MainApplicationModule = __decorate([
             account_management_component_1.AccountManagementComponent,
             category_management_component_1.CategoryManagementComponent,
             category_detail_box_component_1.CategoryDetailBoxComponent,
-            category_edit_box_component_1.CategoryEditBoxComponent,
-            category_delete_box_component_1.CategoryDeleteBoxComponent,
             category_find_box_component_1.CategoryFindBoxComponent
         ],
         bootstrap: [
