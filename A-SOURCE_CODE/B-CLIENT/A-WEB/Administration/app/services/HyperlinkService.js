@@ -13,15 +13,16 @@ var core_1 = require("@angular/core");
 * Service which handles hyperlink of api.
 * */
 var HyperlinkService = (function () {
+    // Initiate service with settings.
     function HyperlinkService() {
-        // Hyperlink which is used for searching for categories.
-        this.apiFindCategory = "http://confession.azurewebsites.net/api/category/find";
-        // Hyperlink which is used for searching for categories for deleting 'em.
-        this.apiDeleteCategory = "http://confession.azurewebsites.net/api/category";
-        // Hyperlink which is used for changing category information.
-        this.apiChangeCategoryDetail = "http://confession.azurewebsites.net/api/category";
-        // Hyperlink which is used for searching for accounts.
-        this.apiFindAccount = "http://confession.azurewebsites.net/api/account/find";
+        // Api which web application will consume the service.
+        this.apiUrl = "http://192.168.1.101";
+        // Find category api url.
+        this.apiFindCategory = this.apiUrl + "/api/category/find";
+        this.apiDeleteCategory = this.apiUrl + "/api/category";
+        this.apiChangeCategoryDetail = this.apiUrl + "/api/category";
+        // Find category account api url.
+        this.apiFindAccount = this.apiUrl + "/api/account/find";
     }
     return HyperlinkService;
 }());
