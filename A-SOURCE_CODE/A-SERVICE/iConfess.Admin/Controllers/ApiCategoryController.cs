@@ -155,6 +155,9 @@ namespace iConfess.Admin.Controllers
                         }
 
                         // Save changes into database.
+                        await UnitOfWork.Context.SaveChangesAsync();
+
+                        // Save changes into database.
                         transaction.Commit();
                     }
                     catch
