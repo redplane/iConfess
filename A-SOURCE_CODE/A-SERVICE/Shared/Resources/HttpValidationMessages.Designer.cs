@@ -68,5 +68,23 @@ namespace Shared.Resources {
                 return ResourceManager.GetString("InformationRequired", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INVALID_PAGE_RECORD.
+        /// </summary>
+        public static string InvalidPageRecord {
+            get {
+                return ResourceManager.GetString("InvalidPageRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAGINATION_REQUIRED.
+        /// </summary>
+        public static string PaginationRequired {
+            get {
+                return ResourceManager.GetString("PaginationRequired", resourceCulture);
+            }
+        }
     }
 }

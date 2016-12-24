@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using iConfess.Database.Models;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Categories;
+using SortDirection = Shared.Enumerations.Order.SortDirection;
 
 namespace Shared.Repositories
 {
@@ -76,14 +78,80 @@ namespace Shared.Repositories
             // Count total records which match with conditions.
             responseCategoriesViewModel.Total = await responseCategoriesViewModel.Categories.CountAsync();
 
+            // Result sort.
+            switch (conditions.Direction)
+            {
+                case SortDirection.Decending:
+                    switch (conditions.Sort)
+                    {
+                        case CategoriesSort.CreatorIndex:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderByDescending(x => x.CreatorIndex);
+                            break;
+
+                        case CategoriesSort.Name:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderByDescending(x => x.Name);
+                            break;
+
+                        case CategoriesSort.Created:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderByDescending(x => x.Created);
+                            break;
+
+                        case CategoriesSort.LastModified:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderByDescending(x => x.LastModified);
+                            break;
+
+                        default:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderByDescending(x => x.Id);
+                            break;
+
+                    }
+
+                    break;
+
+                default:
+                    switch (conditions.Sort)
+                    {
+                        case CategoriesSort.CreatorIndex:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderBy(x => x.CreatorIndex);
+                            break;
+
+                        case CategoriesSort.Name:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderBy(x => x.Name);
+                            break;
+
+                        case CategoriesSort.Created:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderBy(x => x.Created);
+                            break;
+
+                        case CategoriesSort.LastModified:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderBy(x => x.LastModified);
+                            break;
+
+                        default:
+                            responseCategoriesViewModel.Categories =
+                                responseCategoriesViewModel.Categories.OrderBy(x => x.Id);
+                            break;
+                    }
+
+                    break;
+            }
             // Pagination is defined.
             if (conditions.Pagination != null)
             {
                 // Find pagination from filter.
                 var pagination = conditions.Pagination;
                 responseCategoriesViewModel.Categories = responseCategoriesViewModel.Categories
-                    .Skip(pagination.Index*pagination.Record)
-                    .Take(pagination.Record);
+                    .Skip(pagination.Index * pagination.Records)
+                    .Take(pagination.Records);
             }
 
             return responseCategoriesViewModel;
@@ -111,15 +179,15 @@ namespace Shared.Repositories
         /// <param name="categories"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        private IQueryable<Category> FindCategories(IQueryable<Category> categories, FindCategoriesViewModel conditions)
+        public IQueryable<Category> FindCategories(IQueryable<Category> categories, FindCategoriesViewModel conditions)
         {
             // Id has been defined.
             if (conditions.Id != null)
                 categories = categories.Where(x => x.Id == conditions.Id.Value);
 
             // Creator has been defined.
-            if (conditions.Creator != null)
-                categories = categories.Where(x => x.CreatorIndex == conditions.Creator.Value);
+            if (conditions.CreatorIndex != null)
+                categories = categories.Where(x => x.CreatorIndex == conditions.CreatorIndex.Value);
 
             // Name search condition has been defined.
             if (conditions.Name != null)
@@ -130,16 +198,16 @@ namespace Shared.Repositories
 
                     switch (conditions.Name.Mode)
                     {
-                        case TextComparision.Contain:
-                            categories = categories.Where(x => x.Name.Contains(categoryName));
-                            break;
                         case TextComparision.Equal:
                             categories = categories.Where(x => x.Name.Equals(categoryName));
                             break;
-                        default:
+                        case TextComparision.EqualIgnoreCase:
                             categories =
                                 categories.Where(
                                     x => x.Name.Equals(categoryName, StringComparison.InvariantCultureIgnoreCase));
+                            break;
+                        default:
+                            categories = categories.Where(x => x.Name.Contains(categoryName));
                             break;
                     }
                 }

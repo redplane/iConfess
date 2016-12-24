@@ -74,11 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\DataConstraints.cs" />
-    <Compile Include="Enumerations\SortDirection.cs" />
+    <Compile Include="Constants\UiControlConstrains.cs" />
+    <Compile Include="Enumerations\Order\AccountsSort.cs" />
+    <Compile Include="Enumerations\Order\CategoriesSort.cs" />
+    <Compile Include="Enumerations\Order\SortDirection.cs" />
     <Compile Include="Constants\Regexes.cs" />
     <Compile Include="Enumerations\NumericComparision.cs" />
     <Compile Include="Enumerations\TextComparision.cs" />
-    <Compile Include="Interfaces\IPagination.cs" />
     <Compile Include="Interfaces\Services\IEncryptionService.cs" />
     <Compile Include="Interfaces\Services\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryAccount.cs" />
@@ -112,7 +114,12 @@
       <DependentUpon>HttpValidationMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\TimeService.cs" />
+    <Compile Include="ViewModels\Accounts\AccountViewModel.cs" />
+    <Compile Include="ViewModels\Accounts\FindAccountsViewModel.cs" />
+    <Compile Include="ViewModels\Accounts\ResponseAccountsViewModel.cs" />
+    <Compile Include="ViewModels\Categories\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Categories\FindCategoriesViewModel.cs" />
+    <Compile Include="ViewModels\Categories\ResponseApiCategoriesViewModel.cs" />
     <Compile Include="ViewModels\Categories\ResponseCategoriesViewModel.cs" />
     <Compile Include="ViewModels\CommentReports\FindCommentReportsViewModel.cs" />
     <Compile Include="ViewModels\CommentReports\InitiateCommentReportViewModel.cs" />

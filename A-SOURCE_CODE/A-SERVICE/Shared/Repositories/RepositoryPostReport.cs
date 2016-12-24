@@ -76,8 +76,8 @@ namespace Shared.Repositories
                 var pagination = conditions.Pagination;
 
                 responsePostReportsViewModel.PostReports = responsePostReportsViewModel.PostReports.Skip(
-                        pagination.Index*pagination.Record)
-                    .Take(pagination.Record);
+                        pagination.Index*pagination.Records)
+                    .Take(pagination.Records);
             }
 
             return responsePostReportsViewModel;

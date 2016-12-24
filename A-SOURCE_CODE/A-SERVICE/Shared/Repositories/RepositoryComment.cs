@@ -100,8 +100,8 @@ namespace Shared.Repositories
             if (conditions.Pagination != null)
             {
                 var pagination = conditions.Pagination;
-                responseComment.Comments = responseComment.Comments.Skip(pagination.Index*pagination.Record)
-                    .Take(pagination.Record);
+                responseComment.Comments = responseComment.Comments.Skip(pagination.Index*pagination.Records)
+                    .Take(pagination.Records);
             }
 
             return responseComment;

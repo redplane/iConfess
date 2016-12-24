@@ -8,5 +8,7 @@ export class HyperlinkService{
 
     // Hyperlink which is used for searching for categories.
     public apiFindCategory : string = "http://confession.azurewebsites.net/api/category/find";
-    //public apiFindCategory : string = "http://localhost:2101/api/category/find";
+
+    // Hyperlink which is used for searching for accounts.
+    public apiFindAccount : string = "http://confession.azurewebsites.net/api/account/find";
 }

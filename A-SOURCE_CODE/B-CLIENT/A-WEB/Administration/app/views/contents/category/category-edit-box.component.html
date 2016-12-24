@@ -1,0 +1,29 @@
+<div #changeCategoryBox
+     class="modal fade"
+     role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal contentw-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <span>Change category information</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <!-- Category name -->
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control"
+                           [(ngModel)]="_category.name"
+                           placeholder="Category name is required"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -16,12 +16,14 @@ var HyperlinkService = (function () {
     function HyperlinkService() {
         // Hyperlink which is used for searching for categories.
         this.apiFindCategory = "http://confession.azurewebsites.net/api/category/find";
+        // Hyperlink which is used for searching for accounts.
+        this.apiFindAccount = "http://confession.azurewebsites.net/api/account/find";
     }
-    HyperlinkService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], HyperlinkService);
     return HyperlinkService;
 }());
+HyperlinkService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
+], HyperlinkService);
 exports.HyperlinkService = HyperlinkService;
 //# sourceMappingURL=HyperlinkService.js.map

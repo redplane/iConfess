@@ -8,50 +8,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var main_application_component_1 = require('../components/main-application.component');
+var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
+var main_application_component_1 = require("../components/main-application.component");
 var navigation_bar_component_1 = require("../components/navigation-bar.component");
 var sidebar_component_1 = require("../components/sidebar.component");
 var account_management_component_1 = require("../components/account-management.component");
 var category_management_component_1 = require("../components/category-management.component");
-var category_detail_box_component_1 = require('../components/content/category/category-detail-box.component');
+var category_detail_box_component_1 = require("../components/content/category/category-detail-box.component");
 var category_edit_box_component_1 = require("../components/content/category/category-edit-box.component");
-var forms_1 = require('@angular/forms');
+var forms_1 = require("@angular/forms");
 var category_delete_box_component_1 = require("../components/content/category/category-delete-box.component");
 var angular2_select_1 = require("angular2-select");
 var category_find_box_component_1 = require("../components/content/category/category-find-box.component");
-var http_1 = require('@angular/http');
+var http_1 = require("@angular/http");
+var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var MainApplicationModule = (function () {
     function MainApplicationModule() {
     }
-    MainApplicationModule = __decorate([
-        core_1.NgModule({
-            imports: [
-                platform_browser_1.BrowserModule,
-                forms_1.FormsModule,
-                angular2_select_1.SelectModule,
-                http_1.HttpModule,
-                http_1.JsonpModule
-            ],
-            declarations: [
-                main_application_component_1.MainApplicationComponent,
-                navigation_bar_component_1.NavigationBarComponent,
-                sidebar_component_1.SidebarComponent,
-                account_management_component_1.AccountManagementComponent,
-                category_management_component_1.CategoryManagementComponent,
-                category_detail_box_component_1.CategoryDetailBoxComponent,
-                category_edit_box_component_1.CategoryEditBoxComponent,
-                category_delete_box_component_1.CategoryDeleteBoxComponent,
-                category_find_box_component_1.CategoryFindBoxComponent
-            ],
-            bootstrap: [
-                main_application_component_1.MainApplicationComponent
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], MainApplicationModule);
     return MainApplicationModule;
 }());
+MainApplicationModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            platform_browser_1.BrowserModule,
+            forms_1.FormsModule,
+            forms_1.ReactiveFormsModule,
+            angular2_select_1.SelectModule,
+            http_1.HttpModule,
+            http_1.JsonpModule,
+            ng2_bootstrap_1.PaginationModule,
+            ng2_bootstrap_1.TypeaheadModule
+        ],
+        declarations: [
+            main_application_component_1.MainApplicationComponent,
+            navigation_bar_component_1.NavigationBarComponent,
+            sidebar_component_1.SidebarComponent,
+            account_management_component_1.AccountManagementComponent,
+            category_management_component_1.CategoryManagementComponent,
+            category_detail_box_component_1.CategoryDetailBoxComponent,
+            category_edit_box_component_1.CategoryEditBoxComponent,
+            category_delete_box_component_1.CategoryDeleteBoxComponent,
+            category_find_box_component_1.CategoryFindBoxComponent
+        ],
+        bootstrap: [
+            main_application_component_1.MainApplicationComponent
+        ]
+    }),
+    __metadata("design:paramtypes", [])
+], MainApplicationModule);
 exports.MainApplicationModule = MainApplicationModule;
 //# sourceMappingURL=main-application.module.js.map

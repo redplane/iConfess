@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,12 +13,13 @@ using log4net;
 using Shared.Enumerations;
 using Shared.Interfaces.Services;
 using Shared.Resources;
+using Shared.ViewModels.Accounts;
 using Shared.ViewModels.Categories;
 
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/category")]
-    public class ApiCategoryController : ApiController
+    public class ApiCategoryController : ApiParentController
     {
         #region Controllers
 
@@ -24,7 +29,7 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="log"></param>
-        public ApiCategoryController(IUnitOfWork unitOfWork, ITimeService timeService, ILog log)
+        public ApiCategoryController(IUnitOfWork unitOfWork, ITimeService timeService, ILog log): base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
@@ -60,14 +65,14 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpPost]
-        public async Task<HttpResponseMessage> InitiateCategory([FromBody] CategoryViewModel parameters)
+        public async Task<HttpResponseMessage> InitiateCategory([FromBody] InitiateCategoryViewModel parameters)
         {
             try
             {
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
-                    parameters = new CategoryViewModel();
+                    parameters = new InitiateCategoryViewModel();
                     Validate(parameters);
                 }
 
@@ -103,14 +108,14 @@ namespace iConfess.Admin.Controllers
         [Route("")]
         [HttpPut]
         public async Task<HttpResponseMessage> UpdateCategory([FromUri] int index,
-            [FromBody] CategoryViewModel parameters)
+            [FromBody] InitiateCategoryViewModel parameters)
         {
             try
             {
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
-                    parameters = new CategoryViewModel();
+                    parameters = new InitiateCategoryViewModel();
                     Validate(parameters);
                 }
 
@@ -148,6 +153,9 @@ namespace iConfess.Admin.Controllers
                             category.Name = parameters.Name;
                             category.LastModified = unixSystemTime;
                         }
+
+                        // Save changes into database.
+                        await UnitOfWork.Context.SaveChangesAsync();
 
                         // Save changes into database.
                         transaction.Commit();
@@ -234,15 +242,41 @@ namespace iConfess.Admin.Controllers
                 if (!ModelState.IsValid)
                 {
                     // TODO: Add log.
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(conditions)));
                 }
 
                 #endregion
 
-                // Find categories by using specific conditions.
-                var response = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
-
-                return Request.CreateResponse(HttpStatusCode.OK, response);
+                // Find all categories.
+                var findCategoriesResult = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
+                
+                // Find all accounts in the database.
+                var accounts = _unitOfWork.Context.Accounts.AsQueryable();
+                
+                var apiCategories = from account in accounts
+                                    from category in findCategoriesResult.Categories
+                                    where account.Id == category.CreatorIndex
+                                    select new CategoryViewModel
+                                    {
+                                        Id = category.Id,
+                                        Creator = new AccountViewModel
+                                        {
+                                            Id = account.Id,
+                                            Email = account.Email,
+                                            Nickname = account.Nickname,
+                                            Status = account.Status,
+                                            Joined = account.Joined
+                                        },
+                                        Name = category.Name,
+                                        Created = category.Created,
+                                        LastModified = category.LastModified
+                                    };
+                
+                return Request.CreateResponse(HttpStatusCode.OK, new ResponseApiCategoriesViewModel
+                {
+                    Categories = apiCategories,
+                    Total = findCategoriesResult.Total
+                });
             }
             catch (Exception exception)
             {

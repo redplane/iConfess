@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using iConfess.Database.Models.Tables;
+using Shared.ViewModels.Accounts;
 
 namespace Shared.Interfaces.Repositories
 {
@@ -10,18 +10,21 @@ namespace Shared.Interfaces.Repositories
         ///     Create / update an account asynchronously with specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task<Account> InitiateAccountAsync();
+        /// <param name="account"></param>
+        Task<Account> InitiateAccountAsync(Account account);
 
         /// <summary>
         ///     Find accounts by using specific conditions.
-        /// </summary>
+        /// </summary>  
         /// <returns></returns>
-        Task<IQueryable<Account>> FindAccountsAsync();
+        /// <param name="conditions"></param>
+        Task<ResponseAccountsViewModel> FindAccountsAsync(FindAccountsViewModel conditions);
 
         /// <summary>
         ///     Delete accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task<int> DeleteAccountsAsync();
+        /// <param name="conditions"></param>
+        Task<int> DeleteAccountsAsync(FindAccountsViewModel conditions);
     }
 }

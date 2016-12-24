@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var CategoryDetailViewModel_1 = require("../../../viewmodels/category/CategoryDetailViewModel");
 var CategoryDeleteBoxComponent = (function () {
     // Initiate category edit box component.
@@ -33,21 +33,21 @@ var CategoryDeleteBoxComponent = (function () {
     CategoryDeleteBoxComponent.prototype.toggle = function () {
         $(this.deleteCategoryBox.nativeElement).modal('toggle');
     };
-    __decorate([
-        core_1.ViewChild('deleteCategoryBox'), 
-        __metadata('design:type', core_1.ElementRef)
-    ], CategoryDeleteBoxComponent.prototype, "deleteCategoryBox", void 0);
-    CategoryDeleteBoxComponent = __decorate([
-        core_1.Component({
-            selector: 'category-delete-box',
-            templateUrl: './app/html/content/category/category-delete-box.component.html',
-            providers: [
-                CategoryDetailViewModel_1.CategoryDetailViewModel
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], CategoryDeleteBoxComponent);
     return CategoryDeleteBoxComponent;
 }());
+__decorate([
+    core_1.ViewChild('deleteCategoryBox'),
+    __metadata("design:type", core_1.ElementRef)
+], CategoryDeleteBoxComponent.prototype, "deleteCategoryBox", void 0);
+CategoryDeleteBoxComponent = __decorate([
+    core_1.Component({
+        selector: 'category-delete-box',
+        templateUrl: './app/views/contents/category/category-delete-box.component.html',
+        providers: [
+            CategoryDetailViewModel_1.CategoryDetailViewModel
+        ]
+    }),
+    __metadata("design:paramtypes", [])
+], CategoryDeleteBoxComponent);
 exports.CategoryDeleteBoxComponent = CategoryDeleteBoxComponent;
 //# sourceMappingURL=category-delete-box.component.js.map

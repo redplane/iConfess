@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var TimeService_1 = require("../../../services/TimeService");
 var CategoryDetailBoxComponent = (function () {
     // Initiate category detail box with dependency injections.
@@ -25,19 +25,19 @@ var CategoryDetailBoxComponent = (function () {
     CategoryDetailBoxComponent.prototype.changeCategoryInfo = function (category) {
         this.clickChangeCategoryInfo.emit(category);
     };
-    CategoryDetailBoxComponent = __decorate([
-        core_1.Component({
-            selector: 'category-detail',
-            inputs: ['category'],
-            outputs: ['clickRemoveCategory', 'clickChangeCategoryInfo'],
-            templateUrl: './app/html/content/category/category-detail-box.component.html',
-            providers: [
-                TimeService_1.TimeService
-            ]
-        }), 
-        __metadata('design:paramtypes', [TimeService_1.TimeService])
-    ], CategoryDetailBoxComponent);
     return CategoryDetailBoxComponent;
 }());
+CategoryDetailBoxComponent = __decorate([
+    core_1.Component({
+        selector: 'category-detail',
+        inputs: ['category'],
+        outputs: ['clickRemoveCategory', 'clickChangeCategoryInfo'],
+        templateUrl: './app/views/contents/category/category-detail-box.component.html',
+        providers: [
+            TimeService_1.TimeService
+        ]
+    }),
+    __metadata("design:paramtypes", [TimeService_1.TimeService])
+], CategoryDetailBoxComponent);
 exports.CategoryDetailBoxComponent = CategoryDetailBoxComponent;
 //# sourceMappingURL=category-detail-box.component.js.map
