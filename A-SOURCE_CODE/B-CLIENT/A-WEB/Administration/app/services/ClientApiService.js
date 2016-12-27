@@ -12,23 +12,24 @@ var core_1 = require("@angular/core");
 /*
 * Service which handles hyperlink of api.
 * */
-var HyperlinkService = (function () {
+var ClientApiService = (function () {
     // Initiate service with settings.
-    function HyperlinkService() {
+    function ClientApiService() {
         // Api which web application will consume the service.
-        this.apiUrl = "http://192.168.1.101";
+        this.apiUrl = "http://confession.azurewebsites.net";
         // Find category api url.
         this.apiFindCategory = this.apiUrl + "/api/category/find";
         this.apiDeleteCategory = this.apiUrl + "/api/category";
         this.apiChangeCategoryDetail = this.apiUrl + "/api/category";
+        this.apiInitiateCategory = this.apiUrl + "/api/category";
         // Find category account api url.
         this.apiFindAccount = this.apiUrl + "/api/account/find";
     }
-    return HyperlinkService;
+    return ClientApiService;
 }());
-HyperlinkService = __decorate([
+ClientApiService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [])
-], HyperlinkService);
-exports.HyperlinkService = HyperlinkService;
-//# sourceMappingURL=HyperlinkService.js.map
+], ClientApiService);
+exports.ClientApiService = ClientApiService;
+//# sourceMappingURL=ClientApiService.js.map

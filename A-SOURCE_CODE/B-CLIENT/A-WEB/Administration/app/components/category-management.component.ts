@@ -6,7 +6,7 @@ import {TimeService} from "../services/TimeService";
 import {ITimeService} from "../interfaces/services/ITimeService";
 import {CategoryDetailViewModel} from "../viewmodels/category/CategoryDetailViewModel";
 import {FindCategoriesViewModel} from "../viewmodels/category/FindCategoriesViewModel";
-import {HyperlinkService} from "../services/HyperlinkService";
+import {ClientApiService} from "../services/ClientApiService";
 import {Response} from "@angular/http";
 import {ResponseAnalyzeService} from "../services/ResponseAnalyzeService";
 import {ConfigurationService} from "../services/ClientConfigurationService";
@@ -22,7 +22,7 @@ declare var $: any;
     providers: [
         ClientCategoryService,
         TimeService,
-        HyperlinkService,
+        ClientApiService,
         ResponseAnalyzeService,
         ConfigurationService
     ],
@@ -150,6 +150,28 @@ export class CategoryManagementComponent implements OnInit {
                 console.log(response);
             });
 
+    }
+
+    // Callback which is fired when a category should be created into system.
+    public clickInitiateCategory(category: any): void{
+
+        // Make content be loaded.
+        this._isLoading = true;
+
+        // Call service to initiate category.
+        this._clientCategoryService.initiateCategory(category)
+            .then((response: Response | any) => {
+
+                console.log(response);
+
+                // Cancel content loading.
+                this._isLoading = false;
+            })
+            .catch((response: Response | any) => {
+
+                // Cancel content loading.
+                this._isLoading = false;
+            });
     }
     // Callback which is fired when search button of category search box is clicked.
     public clickSearch(): void {

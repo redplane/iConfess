@@ -14,6 +14,9 @@ export interface IClientCategoryService{
     // Find categories by using index and update their information.
     changeCategoryDetails(id: number, category: Category);
 
+    // Initiate category into system.
+    initiateCategory(category:any) : any;
+
     // Reset categories search conditions.
     resetFindCategoriesConditions(): FindCategoriesViewModel;
 }

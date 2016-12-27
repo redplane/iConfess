@@ -13,7 +13,7 @@ var CategorySearchDetailViewModel_1 = require("../viewmodels/category/CategorySe
 var ClientCategoryService_1 = require("../services/clients/ClientCategoryService");
 var TimeService_1 = require("../services/TimeService");
 var FindCategoriesViewModel_1 = require("../viewmodels/category/FindCategoriesViewModel");
-var HyperlinkService_1 = require("../services/HyperlinkService");
+var ClientApiService_1 = require("../services/ClientApiService");
 var ResponseAnalyzeService_1 = require("../services/ResponseAnalyzeService");
 var ClientConfigurationService_1 = require("../services/ClientConfigurationService");
 var Pagination_1 = require("../viewmodels/Pagination");
@@ -93,6 +93,23 @@ var CategoryManagementComponent = (function () {
             console.log(response);
         });
     };
+    // Callback which is fired when a category should be created into system.
+    CategoryManagementComponent.prototype.clickInitiateCategory = function (category) {
+        var _this = this;
+        // Make content be loaded.
+        this._isLoading = true;
+        // Call service to initiate category.
+        this._clientCategoryService.initiateCategory(category)
+            .then(function (response) {
+            console.log(response);
+            // Cancel content loading.
+            _this._isLoading = false;
+        })
+            .catch(function (response) {
+            // Cancel content loading.
+            _this._isLoading = false;
+        });
+    };
     // Callback which is fired when search button of category search box is clicked.
     CategoryManagementComponent.prototype.clickSearch = function () {
         var _this = this;
@@ -137,7 +154,7 @@ CategoryManagementComponent = __decorate([
         providers: [
             ClientCategoryService_1.ClientCategoryService,
             TimeService_1.TimeService,
-            HyperlinkService_1.HyperlinkService,
+            ClientApiService_1.ClientApiService,
             ResponseAnalyzeService_1.ResponseAnalyzeService,
             ClientConfigurationService_1.ConfigurationService
         ],

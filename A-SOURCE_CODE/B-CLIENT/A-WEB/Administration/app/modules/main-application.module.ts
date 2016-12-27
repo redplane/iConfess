@@ -6,6 +6,7 @@ import {SidebarComponent} from "../components/sidebar.component";
 import {AccountManagementComponent} from "../components/account-management.component";
 import {CategoryManagementComponent} from "../components/category-management.component";
 import {CategoryDetailBoxComponent} from '../components/content/category/category-detail-box.component';
+import {CategoryInitiateBoxComponent} from '../components/content/category/category-initiate-box.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SelectModule} from "angular2-select";
 import {CategoryFindBoxComponent} from "../components/content/category/category-find-box.component";
@@ -33,7 +34,9 @@ import { ModalModule, PaginationModule, TypeaheadModule  } from 'ng2-bootstrap/n
 
         CategoryManagementComponent,
         CategoryDetailBoxComponent,
-        CategoryFindBoxComponent
+        CategoryFindBoxComponent,
+        CategoryInitiateBoxComponent
+
     ],
     bootstrap:    [
         MainApplicationComponent

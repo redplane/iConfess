@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var FindCategoriesViewModel_1 = require("../../viewmodels/category/FindCategoriesViewModel");
-var HyperlinkService_1 = require("../HyperlinkService");
+var ClientApiService_1 = require("../ClientApiService");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
 var UnixDateRange_1 = require("../../viewmodels/UnixDateRange");
@@ -57,14 +57,25 @@ var ClientCategoryService = (function () {
         var requestOptions = new http_1.RequestOptions({
             headers: new http_1.Headers({
                 'Content-Type': 'application/json'
-            }),
-            body: category
+            })
         });
         // Construct change category api.
         var changeCategoryDetailApi = this._hyperlinkService.apiChangeCategoryDetail + "?index=" + id;
-        console.log(category);
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.put(changeCategoryDetailApi, requestOptions)
+        return this._httpClient.put(changeCategoryDetailApi, category, requestOptions)
+            .toPromise();
+    };
+    // Initiate category into system.
+    ClientCategoryService.prototype.initiateCategory = function (category) {
+        var requestOptions = new http_1.RequestOptions({
+            headers: new http_1.Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+        // Construct change category api.
+        var changeCategoryDetailApi = "" + this._hyperlinkService.apiInitiateCategory;
+        // Request to api to obtain list of available categories in system.
+        return this._httpClient.put(changeCategoryDetailApi, category, requestOptions)
             .toPromise();
     };
     // Reset categories search conditions.
@@ -83,7 +94,7 @@ var ClientCategoryService = (function () {
 }());
 ClientCategoryService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [HyperlinkService_1.HyperlinkService, http_1.Http])
+    __metadata("design:paramtypes", [ClientApiService_1.ClientApiService, http_1.Http])
 ], ClientCategoryService);
 exports.ClientCategoryService = ClientCategoryService;
 //# sourceMappingURL=ClientCategoryService.js.map

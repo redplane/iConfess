@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
-import {HyperlinkService} from "../HyperlinkService";
+import {ClientApiService} from "../ClientApiService";
 import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {UnixDateRange} from "../../viewmodels/UnixDateRange";
@@ -15,13 +15,13 @@ import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewM
 export class ClientAccountService implements IClientAccountService {
 
     // Service which handles hyperlink.
-    private _hyperlinkService: HyperlinkService;
+    private _hyperlinkService: ClientApiService;
 
     // HttpClient which is used for handling request to web api service.
     private _httpClient: Http;
 
     // Initiate instance of category service.
-    public constructor(hyperlinkService: HyperlinkService, httpClient: Http){
+    public constructor(hyperlinkService: ClientApiService, httpClient: Http){
 
         this._hyperlinkService = hyperlinkService;
         this._httpClient = httpClient;

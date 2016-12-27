@@ -10,6 +10,22 @@
     </div>
 </div>
 
+<!-- Create category button -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="text-center">
+            <button class="btn btn-default btn-flat btn-block"
+                    (click)="initiateCategoryInfoModal.show()"
+                    *ngIf="!_isLoading">
+                <span class="fa fa-plus"></span>
+                <span>Create category</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
 <!-- Pagination section -->
 <div class="row"
      *ngIf="(_categorySearchResult != null && _categorySearchResult.total > 0 && !_isLoading)">
@@ -99,6 +115,7 @@
     </div>
 </div>
 
+<!-- Change category information modal dialog -->
 <div bsModal
      #changeCategoryInfoModal="bs-modal"
      class="modal fade"
@@ -128,6 +145,22 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Initiate category information modal dialog -->
+<div bsModal
+     #initiateCategoryInfoModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <category-initiate-box (initiateCategory)="clickInitiateCategory($event)"
+                                   [isLoading]="_isLoading"></category-initiate-box>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 import {IClientCategoryService} from "../../interfaces/services/IClientCategoryService";
 import {Injectable} from '@angular/core';
 import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
-import {HyperlinkService} from "../HyperlinkService";
+import {ClientApiService} from "../ClientApiService";
 import {Http, Headers, RequestOptions} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {UnixDateRange} from "../../viewmodels/UnixDateRange";
@@ -14,13 +14,13 @@ import {Category} from "../../models/Category";
 export class ClientCategoryService implements IClientCategoryService {
 
     // Service which handles hyperlink.
-    private _hyperlinkService: HyperlinkService;
+    private _hyperlinkService: ClientApiService;
 
     // HttpClient which is used for handling request to web api service.
     private _httpClient: Http;
 
     // Initiate instance of category service.
-    public constructor(hyperlinkService: HyperlinkService, httpClient: Http){
+    public constructor(hyperlinkService: ClientApiService, httpClient: Http){
 
         this._hyperlinkService = hyperlinkService;
         this._httpClient = httpClient;
@@ -67,20 +67,33 @@ export class ClientCategoryService implements IClientCategoryService {
         let requestOptions = new RequestOptions({
             headers: new Headers({
                 'Content-Type': 'application/json'
-            }),
-            body: category
+            })
         });
 
         // Construct change category api.
         let changeCategoryDetailApi = `${this._hyperlinkService.apiChangeCategoryDetail}?index=${id}`;
 
-        console.log(category);
-
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.put(changeCategoryDetailApi, requestOptions)
+        return this._httpClient.put(changeCategoryDetailApi, category, requestOptions)
             .toPromise();
     }
 
+    // Initiate category into system.
+    public initiateCategory(category: any) : any {
+
+        let requestOptions = new RequestOptions({
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+
+        // Construct change category api.
+        let changeCategoryDetailApi = `${this._hyperlinkService.apiInitiateCategory}`;
+
+        // Request to api to obtain list of available categories in system.
+        return this._httpClient.put(changeCategoryDetailApi, category, requestOptions)
+            .toPromise();
+    }
     // Reset categories search conditions.
     public resetFindCategoriesConditions(): FindCategoriesViewModel{
 

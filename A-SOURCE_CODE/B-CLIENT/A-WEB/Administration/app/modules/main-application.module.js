@@ -16,6 +16,7 @@ var sidebar_component_1 = require("../components/sidebar.component");
 var account_management_component_1 = require("../components/account-management.component");
 var category_management_component_1 = require("../components/category-management.component");
 var category_detail_box_component_1 = require("../components/content/category/category-detail-box.component");
+var category_initiate_box_component_1 = require("../components/content/category/category-initiate-box.component");
 var forms_1 = require("@angular/forms");
 var angular2_select_1 = require("angular2-select");
 var category_find_box_component_1 = require("../components/content/category/category-find-box.component");
@@ -46,7 +47,8 @@ MainApplicationModule = __decorate([
             account_management_component_1.AccountManagementComponent,
             category_management_component_1.CategoryManagementComponent,
             category_detail_box_component_1.CategoryDetailBoxComponent,
-            category_find_box_component_1.CategoryFindBoxComponent
+            category_find_box_component_1.CategoryFindBoxComponent,
+            category_initiate_box_component_1.CategoryInitiateBoxComponent
         ],
         bootstrap: [
             main_application_component_1.MainApplicationComponent

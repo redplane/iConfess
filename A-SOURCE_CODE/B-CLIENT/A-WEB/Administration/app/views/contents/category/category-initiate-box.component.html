@@ -1,0 +1,35 @@
+<div [formGroup]="initiateCategoryBox">
+    <div class="box-header">
+        <span class="fa fa-folder"></span>
+        <span> Create a category</span>
+    </div>
+
+    <div class="box-body">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="form-group">
+                    <label>Category name</label>
+                    <input class="form-control"
+                           formControlName="name"
+                           placeholder="Please enter category name"
+                           [attr.disabled]="isLoading"
+                           [class.disabled]="isLoading"
+                           autofocus/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="box-footer">
+        <div class="text-center">
+            <button class="btn btn-primary btn-flat"
+                    (click)="clickInitiateCategory()"
+                    [attr.disabled]="isLoading"
+                    [class.disabled]="isLoading">
+                <span class="glyphicon glyphicon-check"></span>
+                <span>Create</span>
+            </button>
+        </div>
+    </div>
+</div>

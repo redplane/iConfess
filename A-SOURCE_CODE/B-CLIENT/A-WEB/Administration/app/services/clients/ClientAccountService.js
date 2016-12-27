@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var HyperlinkService_1 = require("../HyperlinkService");
+var ClientApiService_1 = require("../ClientApiService");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
 /*
@@ -42,7 +42,7 @@ var ClientAccountService = (function () {
 }());
 ClientAccountService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [HyperlinkService_1.HyperlinkService, http_1.Http])
+    __metadata("design:paramtypes", [ClientApiService_1.ClientApiService, http_1.Http])
 ], ClientAccountService);
 exports.ClientAccountService = ClientAccountService;
 //# sourceMappingURL=ClientAccountService.js.map
