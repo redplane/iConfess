@@ -3,11 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using iConfess.Admin.ViewModels.ApiCategory;
 using iConfess.Database.Models.Tables;
 using Shared.Interfaces.Services;
 using Shared.Resources;
-using Shared.ViewModels.Categories;
 using Shared.ViewModels.Comments;
 
 namespace iConfess.Admin.Controllers
@@ -67,10 +65,7 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 
@@ -116,10 +111,7 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 
@@ -134,10 +126,7 @@ namespace iConfess.Admin.Controllers
 
                 // No record has been found
                 if (response.Total < 1)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
-                }
 
                 #endregion
 
@@ -201,10 +190,7 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 
@@ -215,10 +201,7 @@ namespace iConfess.Admin.Controllers
 
                 // No record has been deleted.
                 if (totalRecords < 1)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
-                }
 
                 #endregion
 
@@ -251,10 +234,7 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
-                }
 
                 // Find categories by using specific conditions.
                 var response = await _unitOfWork.RepositoryComments.FindCommentsAsync(conditions);

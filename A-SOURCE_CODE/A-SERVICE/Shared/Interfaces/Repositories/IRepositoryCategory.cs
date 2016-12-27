@@ -15,13 +15,20 @@ namespace Shared.Interfaces.Repositories
         Task<Category> InitiateCategoryAsync(Category category);
 
         /// <summary>
-        ///     Find categories asynchronously with specific information.
+        ///     Find categories asynchronously with specific conditions.
         /// </summary>
         /// <returns></returns>
         Task<ResponseCategoriesViewModel> FindCategoriesAsync(FindCategoriesViewModel conditions);
 
         /// <summary>
-        ///  Find categories by using specific conditions.
+        ///     Find category asynchronously with specific conditions.
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        Task<Category> FindFirstCategoryAsync(FindCategoriesViewModel conditions);
+
+        /// <summary>
+        ///     Find categories by using specific conditions.
         /// </summary>
         /// <param name="categories"></param>
         /// <param name="conditions"></param>

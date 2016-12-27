@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -20,7 +21,7 @@ using Shared.ViewModels.Accounts;
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/account")]
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class ApiAccountController : ApiParentController
     {
         #region Constructors
@@ -30,15 +31,18 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="bearerTokenAuthenticationProvider"></param>
         /// <param name="timeService"></param>
+        /// <param name="encryptionService"></param>
         /// <param name="unitOfWork"></param>
         /// <param name="log"></param>
         public ApiAccountController(
             IBearerAuthenticationProvider bearerTokenAuthenticationProvider,
             ITimeService timeService,
+            IEncryptionService encryptionService,
             IUnitOfWork unitOfWork, ILog log) : base(unitOfWork)
         {
             _bearerAuthenticationProvider = bearerTokenAuthenticationProvider;
             _timeService = timeService;
+            _encryptionService = encryptionService;
             _log = log;
         }
 
@@ -55,6 +59,11 @@ namespace iConfess.Admin.Controllers
         ///     Provides function for time calculation.
         /// </summary>
         private readonly ITimeService _timeService;
+
+        /// <summary>
+        /// Service which is for encryption purpose.
+        /// </summary>
+        private readonly IEncryptionService _encryptionService;
 
         /// <summary>
         ///     Instance which is used for log writing.
@@ -87,7 +96,11 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(parameters)));
+                    return Request.CreateResponse(HttpStatusCode.BadRequest,
+                        FindValidationMessage(ModelState, nameof(parameters)));
+
+                // Find encrypted password.
+                var encryptedPassword = _encryptionService.Md5Hash(parameters.Password);
 
                 // Find account information from database.
                 // Password submitted to server is already hashed.
@@ -95,7 +108,7 @@ namespace iConfess.Admin.Controllers
                     UnitOfWork.Context.Accounts.Where(
                             x =>
                                 x.Email.Equals(parameters.Email) &&
-                                x.Password.Equals(parameters.Password, StringComparison.InvariantCultureIgnoreCase))
+                                x.Password.Equals(encryptedPassword, StringComparison.InvariantCultureIgnoreCase))
                         .FirstOrDefaultAsync();
 
                 // Account is not found.
@@ -126,11 +139,11 @@ namespace iConfess.Admin.Controllers
                 var unixTokenExpirationTime = _timeService.DateTimeUtcToUnix(tokenExpirationTime);
 
                 // Claim identity initialization.
-                var claimsIdentity = new ClaimsIdentity(_bearerAuthenticationProvider.IdentityName);
-                claimsIdentity.AddClaim(new Claim(ClaimTypes.Email, account.Email));
-                claimsIdentity.AddClaim(new Claim(ClaimTypes.Hash, account.Password));
-                claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, account.Nickname));
-                claimsIdentity.AddClaim(new Claim(ClaimTypes.Expiration, unixTokenExpirationTime.ToString("N")));
+                var claimsIdentity = new Dictionary<string, object>();
+                claimsIdentity.Add(ClaimTypes.Email, account.Email);
+                claimsIdentity.Add(ClaimTypes.Hash, account.Password);
+                claimsIdentity.Add(ClaimTypes.Name, account.Nickname);
+                claimsIdentity.Add(ClaimTypes.Expiration, unixTokenExpirationTime.ToString("N"));
 
                 // Initiate token response.
                 var jwtResponse = new JwtResponse();
@@ -189,7 +202,8 @@ namespace iConfess.Admin.Controllers
             }
 
             if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(conditions)));
+                return Request.CreateResponse(HttpStatusCode.BadRequest,
+                    FindValidationMessage(ModelState, nameof(conditions)));
 
             #endregion
 
@@ -197,7 +211,7 @@ namespace iConfess.Admin.Controllers
 
             var result = await UnitOfWork.RepositoryAccounts.FindAccountsAsync(conditions);
             return Request.CreateResponse(HttpStatusCode.OK, result);
-            
+
             #endregion
         }
 

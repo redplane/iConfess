@@ -15,24 +15,10 @@ namespace iConfess.Admin.Controllers
     [RoutePrefix("api/report/comment")]
     public class ApiCommentReportController : ApiController
     {
-        #region Properties
-
-        /// <summary>
-        /// Provides repositories to access database.
-        /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
-
-        /// <summary>
-        /// Service which is used for time calculation.
-        /// </summary>
-        private readonly ITimeService _timeService;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
-        /// Initiate controller with IoC
+        ///     Initiate controller with IoC
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
@@ -44,10 +30,24 @@ namespace iConfess.Admin.Controllers
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///     Provides repositories to access database.
+        /// </summary>
+        private readonly IUnitOfWork _unitOfWork;
+
+        /// <summary>
+        ///     Service which is used for time calculation.
+        /// </summary>
+        private readonly ITimeService _timeService;
+
+        #endregion
+
         #region Methods
 
         /// <summary>
-        /// Initiate a comment report.
+        ///     Initiate a comment report.
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
@@ -67,10 +67,7 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 
@@ -82,26 +79,17 @@ namespace iConfess.Admin.Controllers
 
                 // Find the comment with specific conditions.
                 var findCommentResult = await _unitOfWork.RepositoryComments.FindCommentsAsync(findCommentViewModel);
-                if (findCommentResult == null || findCommentResult.Total < 1)
-                {
-                    // TODO: Add log.
+                if ((findCommentResult == null) || (findCommentResult.Total < 1))
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
-                }
 
                 // Result is not unique.
                 if (findCommentResult.Total != 1)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.Conflict, HttpMessages.CommentReportNotUnique);
-                }
 
                 // Result cannot be retrieved.
                 var comment = await findCommentResult.Comments.FirstOrDefaultAsync();
                 if (comment == null)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
-                }
 
                 #endregion
 
@@ -120,7 +108,7 @@ namespace iConfess.Admin.Controllers
 
                 // Save record into database.
                 commentReport = await _unitOfWork.RepositoryCommentReports.InitiateCommentReportAsync(commentReport);
-                
+
                 #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK, commentReport);
@@ -151,10 +139,7 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 
@@ -162,10 +147,7 @@ namespace iConfess.Admin.Controllers
                 var totalRecords = await _unitOfWork.RepositoryCommentReports.DeleteCommentReportsAsync(parameters);
 
                 if (totalRecords < 1)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentReportNotFound);
-                }
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -196,10 +178,7 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 

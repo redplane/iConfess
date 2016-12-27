@@ -5,42 +5,42 @@ namespace Shared.ViewModels.PostReports
     public class FindPostReportsViewModel
     {
         /// <summary>
-        /// Index of post report.
+        ///     Index of post report.
         /// </summary>
         public int? Id { get; set; }
 
         /// <summary>
-        /// Index of post which is reported.
+        ///     Index of post which is reported.
         /// </summary>
         public int? PostIndex { get; set; }
 
         /// <summary>
-        /// Index of post owner.
+        ///     Index of post owner.
         /// </summary>
         public int? PostOwnerIndex { get; set; }
 
         /// <summary>
-        /// Index of report.
+        ///     Index of report.
         /// </summary>
         public int? PostReporterIndex { get; set; }
 
         /// <summary>
-        /// Post report body.
+        ///     Post report body.
         /// </summary>
         public TextSearch Body { get; set; }
 
         /// <summary>
-        /// Post report reason.
+        ///     Post report reason.
         /// </summary>
         public TextSearch Reason { get; set; }
 
         /// <summary>
-        /// When the report was created.
+        ///     When the report was created.
         /// </summary>
         public UnixDateRange Created { get; set; }
 
         /// <summary>
-        /// Result pagination.
+        ///     Result pagination.
         /// </summary>
         public Pagination Pagination { get; set; }
     }

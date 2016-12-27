@@ -52,7 +52,7 @@ namespace iConfess.Database.Migrations
 
                 account.PhotoRelativeUrl = "https://s6.postimg.org/w6lcoipkh/avatar_pacman.png";
                 account.Joined = 1480762181918;
-                
+
                 // Add or update existing account.
                 context.Accounts.AddOrUpdate(account);
             }

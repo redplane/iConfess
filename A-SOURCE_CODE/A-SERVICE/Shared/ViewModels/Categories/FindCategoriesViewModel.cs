@@ -33,20 +33,20 @@ namespace Shared.ViewModels.Categories
         public UnixDateRange LastModified { get; set; }
 
         /// <summary>
-        /// Which property should be used for sorting categories.
+        ///     Which property should be used for sorting categories.
         /// </summary>
         public CategoriesSort Sort { get; set; }
 
         /// <summary>
-        /// Whether records should be sorted ascendingly or decendingly.
+        ///     Whether records should be sorted ascendingly or decendingly.
         /// </summary>
         public SortDirection Direction { get; set; }
 
         /// <summary>
         ///     Pagination information.
         /// </summary>
-        [Required(ErrorMessageResourceType = typeof(HttpValidationMessages), ErrorMessageResourceName = "PaginationRequired")]
+        [Required(ErrorMessageResourceType = typeof(HttpValidationMessages),
+             ErrorMessageResourceName = "PaginationRequired")]
         public Pagination Pagination { get; set; }
-        
     }
 }

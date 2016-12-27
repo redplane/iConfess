@@ -82,6 +82,7 @@
     <Compile Include="Enumerations\NumericComparision.cs" />
     <Compile Include="Enumerations\TextComparision.cs" />
     <Compile Include="Interfaces\Services\IEncryptionService.cs" />
+    <Compile Include="Interfaces\Services\IIdentityService.cs" />
     <Compile Include="Interfaces\Services\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryAccount.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryCategory.cs" />
@@ -156,6 +157,7 @@
     <EmbeddedResource Include="Resources\HttpMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HttpMessages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HttpValidationMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

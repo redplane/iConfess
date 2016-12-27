@@ -15,7 +15,7 @@ namespace Shared.Interfaces.Repositories
 
         /// <summary>
         ///     Find accounts by using specific conditions.
-        /// </summary>  
+        /// </summary>
         /// <returns></returns>
         /// <param name="conditions"></param>
         Task<ResponseAccountsViewModel> FindAccountsAsync(FindAccountsViewModel conditions);

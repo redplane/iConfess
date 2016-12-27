@@ -31,18 +31,23 @@ namespace iConfess.Admin.Attributes
         /// </summary>
         public IUnitOfWork UnitOfWork
         {
-            get
-            {
-                if (_unitOfWork == null)
-                {
-                    var iConfessDbContext = new ConfessionDbContext();
-                    _unitOfWork = new UnitOfWork(iConfessDbContext);
-                }
+            //get
+            //{
+            //    if (_unitOfWork == null)
+            //    {
+            //        var iConfessDbContext = new ConfessionDbContext();
+            //        _unitOfWork = new UnitOfWork(iConfessDbContext);
+            //    }
 
-                return _unitOfWork;
-            }
-            set { _unitOfWork = value; }
-        }
+            //    return _unitOfWork;
+            //}
+            //set { _unitOfWork = value; }
+            get; set; }
+
+        /// <summary>
+        /// Service which is for handling time calculation.
+        /// </summary>
+        public ITimeService TimeService { get; set; }
 
         #endregion
 
@@ -99,7 +104,7 @@ namespace iConfess.Admin.Attributes
 
                 // Claim doesn't contain email.
                 var claimEmail = claimIdentity.FindFirst(ClaimTypes.Email);
-                if ((claimEmail == null) || !string.IsNullOrEmpty(claimEmail.Value))
+                if ((claimEmail == null) || string.IsNullOrEmpty(claimEmail.Value))
                 {
                     // Anonymous request is allowed.
                     if (IsAllowAnonymousRequest(httpActionContext))
@@ -154,10 +159,11 @@ namespace iConfess.Admin.Attributes
                 }
 
                 // Insert account information into HttpItem for later use.
-                if (httpActionContext.ActionArguments.ContainsKey(ClaimTypes.Actor))
-                    httpActionContext.ActionArguments[ClaimTypes.Actor] = account;
+                var properties = httpActionContext.Request.Properties;
+                if (properties.ContainsKey(ClaimTypes.Actor))
+                    properties[ClaimTypes.Actor] = account;
                 else
-                    httpActionContext.ActionArguments.Add(ClaimTypes.Actor, account);
+                    properties.Add(ClaimTypes.Actor, account);
 
                 #endregion
             }

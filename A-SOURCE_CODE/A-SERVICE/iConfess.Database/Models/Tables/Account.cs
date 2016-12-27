@@ -36,7 +36,7 @@ namespace iConfess.Database.Models.Tables
         public AccountStatus Status { get; set; }
 
         /// <summary>
-        /// Role of account
+        ///     Role of account
         /// </summary>
         public AccountRole Role { get; set; }
 

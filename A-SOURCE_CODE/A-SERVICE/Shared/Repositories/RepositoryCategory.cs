@@ -9,7 +9,6 @@ using Shared.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Categories;
-using SortDirection = Shared.Enumerations.Order.SortDirection;
 
 namespace Shared.Repositories
 {
@@ -108,7 +107,6 @@ namespace Shared.Repositories
                             responseCategoriesViewModel.Categories =
                                 responseCategoriesViewModel.Categories.OrderByDescending(x => x.Id);
                             break;
-
                     }
 
                     break;
@@ -150,11 +148,25 @@ namespace Shared.Repositories
                 // Find pagination from filter.
                 var pagination = conditions.Pagination;
                 responseCategoriesViewModel.Categories = responseCategoriesViewModel.Categories
-                    .Skip(pagination.Index * pagination.Records)
+                    .Skip(pagination.Index*pagination.Records)
                     .Take(pagination.Records);
             }
 
             return responseCategoriesViewModel;
+        }
+
+        /// <summary>
+        ///     Find the first matched category in database.
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public async Task<Category> FindFirstCategoryAsync(FindCategoriesViewModel conditions)
+        {
+            // Find all categories.
+            var categories = _iConfessDbContext.Categories;
+
+            // Find categories with specific conditions.
+            return await FindCategories(categories, conditions).FirstOrDefaultAsync();
         }
 
         /// <summary>

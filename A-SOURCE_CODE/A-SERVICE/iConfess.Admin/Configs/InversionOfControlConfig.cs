@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
@@ -8,8 +7,8 @@ using Autofac.Integration.WebApi;
 using iConfess.Admin.Interfaces.Providers;
 using iConfess.Admin.Module;
 using iConfess.Admin.Providers;
+using iConfess.Admin.Services;
 using iConfess.Database.Models;
-using log4net;
 using log4net.Config;
 using Microsoft.AspNet.SignalR;
 using Shared.Interfaces.Services;
@@ -53,6 +52,9 @@ namespace iConfess.Admin.Configs
 
             // Encryption service.
             containerBuilder.RegisterType<EncryptionService>().As<IEncryptionService>().SingleInstance();
+
+            // Handle businesses related to identity.
+            containerBuilder.RegisterType<IdentityService>().As<IIdentityService>().SingleInstance();
 
             #endregion
 

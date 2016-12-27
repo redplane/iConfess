@@ -3,12 +3,12 @@
     public class InitiatePostReportViewModel
     {
         /// <summary>
-        /// Index of post which should be reported.
+        ///     Index of post which should be reported.
         /// </summary>
         public int PostIndex { get; set; }
 
         /// <summary>
-        /// Reason why the post should be reported.
+        ///     Reason why the post should be reported.
         /// </summary>
         public string Reason { get; set; }
     }

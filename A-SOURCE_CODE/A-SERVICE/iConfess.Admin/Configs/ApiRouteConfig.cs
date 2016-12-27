@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using System.Web.Http.Cors;
+using iConfess.Admin.Middlewares;
 using MultipartFormDataMediaFormatter;
 using Newtonsoft.Json.Serialization;
 
@@ -13,8 +13,12 @@ namespace iConfess.Admin.Configs
         /// <param name="config"></param>
         public static void Register(HttpConfiguration config)
         {
+            // Bearer authentication middleware.
+            config.Filters.Add(new BearerAuthenticationMiddleware());
+
             // Make json returned in camelcase.
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
             config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 
             // Enable CORS

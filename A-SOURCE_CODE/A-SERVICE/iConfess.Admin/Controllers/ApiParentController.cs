@@ -38,17 +38,19 @@ namespace iConfess.Admin.Controllers
         /// <param name="modelStateDictionary"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
-        protected Dictionary<string, string[]> FindValidationMessage(ModelStateDictionary modelStateDictionary, string parameterName)
+        protected Dictionary<string, string[]> FindValidationMessage(ModelStateDictionary modelStateDictionary,
+            string parameterName)
         {
-
             // Parameter prefix.
             var parameterPrefix = $"{parameterName}.";
 
             // Parameter prefix length.
             var parameterPrefixLength = parameterPrefix.Length;
 
-            return modelStateDictionary.ToDictionary(x => x.Key.StartsWith(parameterPrefix) ? x.Key.Substring(parameterPrefixLength) : x.Key,
-                x => x.Value.Errors.Select(y => y.ErrorMessage).ToArray());
+            return
+                modelStateDictionary.ToDictionary(
+                    x => x.Key.StartsWith(parameterPrefix) ? x.Key.Substring(parameterPrefixLength) : x.Key,
+                    x => x.Value.Errors.Select(y => y.ErrorMessage).ToArray());
         }
 
         #endregion

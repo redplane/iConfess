@@ -15,23 +15,10 @@ namespace iConfess.Admin.Controllers
     [RoutePrefix("api/report/post")]
     public class ApiPostReportController : ApiController
     {
-        #region Properties
-
-        /// <summary>
-        /// Provides repositories to access database.
-        /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
-
-        /// <summary>
-        /// Provides function for time calculation.
-        /// </summary>
-        private readonly ITimeService _timeService;
-        #endregion
-
         #region Constructors
 
         /// <summary>
-        /// Initiate controller with IoC
+        ///     Initiate controller with IoC
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
@@ -44,7 +31,7 @@ namespace iConfess.Admin.Controllers
         #endregion
 
         /// <summary>
-        /// Initiate a post report with given information.
+        ///     Initiate a post report with given information.
         /// </summary>
         /// <returns></returns>
         public async Task<HttpResponseMessage> InitiatePostReport([FromBody] InitiatePostReportViewModel parameters)
@@ -63,10 +50,7 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 
@@ -79,26 +63,17 @@ namespace iConfess.Admin.Controllers
                 var findPostsResult = await _unitOfWork.RepositoryPosts.FindPostsAsync(findPostViewModel);
 
                 // No record has been found.
-                if (findPostsResult == null || findPostsResult.Total < 0)
-                {
-                    // TODO: Add log.
+                if ((findPostsResult == null) || (findPostsResult.Total < 0))
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostNotFound);
-                }
 
                 // Not only one record has been found.
                 if (findPostsResult.Total != 1)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostIsNotUnique);
-                }
 
                 // Find the post information.
                 var post = await findPostsResult.Posts.FirstOrDefaultAsync();
                 if (post == null)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostNotFound);
-                }
 
                 #endregion
 
@@ -152,10 +127,7 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 
@@ -164,10 +136,7 @@ namespace iConfess.Admin.Controllers
 
                 // No record has been affected.
                 if (totalRecords < 1)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostReportNotFound);
-                }
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -200,16 +169,13 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
 
                 #endregion
 
                 // Delete post reports by using specific conditions.
                 var findResult = await _unitOfWork.RepositoryPostReports.FindPostReportsAsync(parameters);
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, findResult);
             }
             catch (Exception exception)
@@ -218,5 +184,19 @@ namespace iConfess.Admin.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        #region Properties
+
+        /// <summary>
+        ///     Provides repositories to access database.
+        /// </summary>
+        private readonly IUnitOfWork _unitOfWork;
+
+        /// <summary>
+        ///     Provides function for time calculation.
+        /// </summary>
+        private readonly ITimeService _timeService;
+
+        #endregion
     }
 }

@@ -6,43 +6,43 @@ namespace Shared.ViewModels.Accounts
     public class AccountViewModel
     {
         /// <summary>
-        /// Id of account.
+        ///     Id of account.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int? Id { get; set; }
 
         /// <summary>
-        /// Email of account.
+        ///     Email of account.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Email { get; set; }
 
         /// <summary>
-        /// Nickname of account.
+        ///     Nickname of account.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Nickname { get; set; }
 
         /// <summary>
-        /// Account password.
+        ///     Account password.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Password { get; set; }
 
         /// <summary>
-        /// Account status.
+        ///     Account status.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public AccountStatus? Status { get; set; }
 
         /// <summary>
-        /// When the account was created.
+        ///     When the account was created.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public double? Joined { get; set; }
 
         /// <summary>
-        /// When the account information was lastly changed.
+        ///     When the account information was lastly changed.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public double? LastModified { get; set; }

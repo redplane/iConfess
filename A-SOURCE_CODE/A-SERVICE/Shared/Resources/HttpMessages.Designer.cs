@@ -88,6 +88,15 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CATEGORY_DUPLICATED.
+        /// </summary>
+        public static string CategoryDuplicated {
+            get {
+                return ResourceManager.GetString("CategoryDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CATEGORY_NOT_FOUND.
         /// </summary>
         public static string CategoryNotFound {

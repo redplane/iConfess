@@ -8,7 +8,8 @@ namespace iConfess.Admin.ViewModels.ApiCategory
         /// <summary>
         ///     Name of category.
         /// </summary>
-        [Required(ErrorMessageResourceType = typeof(HttpValidationMessages), ErrorMessageResourceName = "")]
+        [Required(ErrorMessageResourceType = typeof(HttpValidationMessages),
+             ErrorMessageResourceName = "InformationRequired")]
         public string Name { get; set; }
     }
 }

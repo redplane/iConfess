@@ -27,7 +27,7 @@ namespace iConfess.Admin
 
             // Dependency injection registration.
             InversionOfControlConfig.Register();
-            
+
             // Map signalr hubs.
             app.Map("/signalr", map =>
             {

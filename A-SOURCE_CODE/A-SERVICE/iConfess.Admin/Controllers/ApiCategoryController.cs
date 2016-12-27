@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using iConfess.Admin.Attributes;
 using iConfess.Admin.ViewModels.ApiCategory;
 using iConfess.Database.Models.Tables;
 using log4net;
 using Shared.Enumerations;
 using Shared.Interfaces.Services;
+using Shared.Models;
 using Shared.Resources;
 using Shared.ViewModels.Accounts;
 using Shared.ViewModels.Categories;
@@ -19,6 +18,7 @@ using Shared.ViewModels.Categories;
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/category")]
+    [ApiAuthorize]
     public class ApiCategoryController : ApiParentController
     {
         #region Controllers
@@ -28,11 +28,15 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
+        /// <param name="identityService"></param>
         /// <param name="log"></param>
-        public ApiCategoryController(IUnitOfWork unitOfWork, ITimeService timeService, ILog log): base(unitOfWork)
+        public ApiCategoryController(IUnitOfWork unitOfWork,
+            ITimeService timeService, IIdentityService identityService,
+            ILog log) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
+            _identityService = identityService;
             _log = log;
         }
 
@@ -51,9 +55,14 @@ namespace iConfess.Admin.Controllers
         private readonly ITimeService _timeService;
 
         /// <summary>
-        /// Service which is for logging.
+        ///     Service which is for logging.
         /// </summary>
         private readonly ILog _log;
+
+        /// <summary>
+        ///     Service which analyzes identity in request.
+        /// </summary>
+        private readonly IIdentityService _identityService;
 
         #endregion
 
@@ -80,9 +89,33 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+
+                #endregion
+
+                #region Account validate
+
+                // Find account information attached in the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
+
+                #endregion
+
+                #region Record duplicate check
+
+                var findCategoryConditions = new FindCategoriesViewModel();
+                findCategoryConditions.Name = new TextSearch();
+                findCategoryConditions.Name.Value = parameters.Name;
+                findCategoryConditions.Name.Mode = TextComparision.EqualIgnoreCase;
+
+                // Category has been created before.
+                var category = await _unitOfWork.RepositoryCategories.FindFirstCategoryAsync(findCategoryConditions);
+                if (category != null)
+                {
+                    _log.Error($"Category with name : {parameters.Name} has been created before.");
+                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, HttpMessages.CategoryDuplicated);
                 }
 
                 #endregion
@@ -92,9 +125,10 @@ namespace iConfess.Admin.Controllers
                 // Find current time on system.
                 var systemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
+                // Find the id of requester.
                 //Initiate new category
-                var category = new Category();
-                // TODO: category.CreatorIndex
+                category = new Category();
+                category.CreatorIndex = account.Id;
                 category.Created = systemTime;
                 category.Name = parameters.Name;
 
@@ -132,10 +166,7 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
                 // Find the category
                 var findCategoryViewModel = new FindCategoriesViewModel();
                 findCategoryViewModel.Id = index;
@@ -145,10 +176,7 @@ namespace iConfess.Admin.Controllers
 
                 // No record has been found
                 if (response.Total < 1)
-                {
-                    // TODO: Add log
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
-                }
 
                 // Begin transaction.
                 using (var transaction = _unitOfWork.Context.Database.BeginTransaction())
@@ -207,19 +235,13 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-                }
                 // Delete categories by using specific conditions.
                 var totalRecords = await _unitOfWork.RepositoryCategories.DeleteCategoriesAsync(conditions);
 
                 // No record has been deleted.
                 if (totalRecords < 1)
-                {
-                    // TODO: Add log.
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
-                }
                 // Tell the client , deletion is successful.
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -251,38 +273,36 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                {
-                    // TODO: Add log.
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(conditions)));
-                }
+                    return Request.CreateResponse(HttpStatusCode.BadRequest,
+                        FindValidationMessage(ModelState, nameof(conditions)));
 
                 #endregion
 
                 // Find all categories.
                 var findCategoriesResult = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
-                
+
                 // Find all accounts in the database.
                 var accounts = _unitOfWork.Context.Accounts.AsQueryable();
-                
+
                 var apiCategories = from account in accounts
-                                    from category in findCategoriesResult.Categories
-                                    where account.Id == category.CreatorIndex
-                                    select new CategoryViewModel
-                                    {
-                                        Id = category.Id,
-                                        Creator = new AccountViewModel
-                                        {
-                                            Id = account.Id,
-                                            Email = account.Email,
-                                            Nickname = account.Nickname,
-                                            Status = account.Status,
-                                            Joined = account.Joined
-                                        },
-                                        Name = category.Name,
-                                        Created = category.Created,
-                                        LastModified = category.LastModified
-                                    };
-                
+                    from category in findCategoriesResult.Categories
+                    where account.Id == category.CreatorIndex
+                    select new CategoryViewModel
+                    {
+                        Id = category.Id,
+                        Creator = new AccountViewModel
+                        {
+                            Id = account.Id,
+                            Email = account.Email,
+                            Nickname = account.Nickname,
+                            Status = account.Status,
+                            Joined = account.Joined
+                        },
+                        Name = category.Name,
+                        Created = category.Created,
+                        LastModified = category.LastModified
+                    };
+
                 return Request.CreateResponse(HttpStatusCode.OK, new ResponseApiCategoriesViewModel
                 {
                     Categories = apiCategories,

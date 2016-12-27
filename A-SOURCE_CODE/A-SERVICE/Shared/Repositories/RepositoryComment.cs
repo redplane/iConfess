@@ -38,7 +38,7 @@ namespace Shared.Repositories
         #region Methods
 
         /// <summary>
-        /// Delete a list of comments which match with the specific conditions.
+        ///     Delete a list of comments which match with the specific conditions.
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
@@ -80,7 +80,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Find comments by using specific conditions asychronously.
+        ///     Find comments by using specific conditions asychronously.
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
@@ -95,7 +95,7 @@ namespace Shared.Repositories
 
             // Count total of comments which match with the conditions.
             responseComment.Total = await responseComment.Comments.CountAsync();
-            
+
             // Do pagination.
             if (conditions.Pagination != null)
             {
@@ -108,7 +108,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Initiate / update a comment information.
+        ///     Initiate / update a comment information.
         /// </summary>
         /// <returns></returns>
         public async Task<Comment> InitiateCommentAsync(Comment comment)
@@ -123,7 +123,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Find comments by using specific conditions.
+        ///     Find comments by using specific conditions.
         /// </summary>
         /// <param name="comments"></param>
         /// <param name="conditions"></param>
@@ -149,21 +149,20 @@ namespace Shared.Repositories
 
                 // Content value is not blank.
                 if (!string.IsNullOrEmpty(content.Value))
-                {
                     switch (content.Mode)
                     {
                         case TextComparision.Contain:
                             comments = comments.Where(x => x.Content.Contains(content.Value));
                             break;
-                            case TextComparision.Equal:
+                        case TextComparision.Equal:
                             comments = comments.Where(x => x.Content.Equals(content.Value));
                             break;
                         default:
                             comments =
-                                comments.Where(x => x.Content.Equals(content.Value, StringComparison.InvariantCultureIgnoreCase));
+                                comments.Where(
+                                    x => x.Content.Equals(content.Value, StringComparison.InvariantCultureIgnoreCase));
                             break;
                     }
-                }
             }
 
             // Created is specified.
@@ -198,7 +197,7 @@ namespace Shared.Repositories
 
             return comments;
         }
-        
+
         #endregion
     }
 }

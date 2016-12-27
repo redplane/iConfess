@@ -48,6 +48,5 @@ namespace Shared.Interfaces.Services
         ConfessionDbContext Context { get; }
 
         #endregion
-        
     }
 }

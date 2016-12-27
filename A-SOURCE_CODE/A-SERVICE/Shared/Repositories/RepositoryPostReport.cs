@@ -184,7 +184,6 @@ namespace Shared.Repositories
 
             return postReports;
         }
-        
 
         #endregion
     }

@@ -47,7 +47,7 @@ namespace Shared.Repositories
         {
             // Find all accounts in database.
             var accounts = _iConfessDbContext.Accounts.AsQueryable();
-            
+
             // Find accounts by using conditions.
             accounts = FindAccounts(accounts, conditions);
 
@@ -127,7 +127,7 @@ namespace Shared.Repositories
                 accounts = accounts.Skip(pagination.Index*pagination.Records)
                     .Take(pagination.Records);
             }
-         
+
             var result = new ResponseAccountsViewModel();
             result.Total = totalRecords;
             result.Accounts = accounts;
@@ -143,7 +143,7 @@ namespace Shared.Repositories
         {
             // Add / update account.
             _iConfessDbContext.Accounts.AddOrUpdate(account);
-            
+
             // Save change into database.
             await _iConfessDbContext.SaveChangesAsync();
 
@@ -157,7 +157,7 @@ namespace Shared.Repositories
                 accounts = accounts.Where(x => x.Id != conditions.Id.Value);
 
             // Email has been identified.
-            if (conditions.Email != null && !string.IsNullOrWhiteSpace(conditions.Email.Value))
+            if ((conditions.Email != null) && !string.IsNullOrWhiteSpace(conditions.Email.Value))
             {
                 // Find email.
                 var email = conditions.Email;
@@ -177,7 +177,7 @@ namespace Shared.Repositories
             }
 
             // Nickname has been identified.
-            if (conditions.Nickname != null && !string.IsNullOrWhiteSpace(conditions.Nickname.Value))
+            if ((conditions.Nickname != null) && !string.IsNullOrWhiteSpace(conditions.Nickname.Value))
             {
                 // Find email.
                 var nickname = conditions.Nickname;
@@ -188,7 +188,8 @@ namespace Shared.Repositories
                         break;
                     case TextComparision.EqualIgnoreCase:
                         accounts =
-                            accounts.Where(x => x.Nickname.Equals(nickname.Value, StringComparison.InvariantCultureIgnoreCase));
+                            accounts.Where(
+                                x => x.Nickname.Equals(nickname.Value, StringComparison.InvariantCultureIgnoreCase));
                         break;
                     default:
                         accounts = accounts.Where(x => x.Nickname.Contains(nickname.Value));
@@ -230,6 +231,7 @@ namespace Shared.Repositories
 
             return accounts;
         }
+
         #endregion
     }
 }
