@@ -69,6 +69,8 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameters validation
+
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
@@ -83,14 +85,23 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
 
+                #endregion
+
+                #region Record initialization
+
+                // Find current time on system.
+                var systemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
+
                 //Initiate new category
                 var category = new Category();
-                category.CreatorIndex = parameters.CreatorIndex;
-                category.Created = parameters.Created;
+                // TODO: category.CreatorIndex
+                category.Created = systemTime;
                 category.Name = parameters.Name;
 
                 //Add category record
                 await _unitOfWork.RepositoryCategories.InitiateCategoryAsync(category);
+
+                #endregion
 
                 return Request.CreateResponse(HttpStatusCode.Created, category);
             }
