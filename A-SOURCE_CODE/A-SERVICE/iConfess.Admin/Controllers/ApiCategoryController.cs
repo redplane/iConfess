@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
 using iConfess.Admin.ViewModels.ApiCategory;
+using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
 using Shared.Enumerations;
@@ -96,8 +98,16 @@ namespace iConfess.Admin.Controllers
                 #region Account validate
 
                 // Find account information attached in the current request.
-                var account = _identityService.FindAccount(Request.Properties);
+                Account account = null;
 
+#if UNAUTHENTICATION_ALLOW
+                account =
+                    await _unitOfWork.Context.Accounts.Where(
+                        x => x.Status == AccountStatus.Active && x.Role == AccountRole.Admin).FirstOrDefaultAsync();
+#else
+                account = _identityService.FindAccount(Request.Properties);
+#endif
+                
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
 
@@ -124,7 +134,7 @@ namespace iConfess.Admin.Controllers
 
                 // Find current time on system.
                 var systemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
-
+                
                 // Find the id of requester.
                 //Initiate new category
                 category = new Category();
