@@ -12,6 +12,24 @@ import {SelectModule} from "angular2-select";
 import {CategoryFindBoxComponent} from "../components/content/category/category-find-box.component";
 import { HttpModule, JsonpModule } from '@angular/http';
 import { ModalModule, PaginationModule, TypeaheadModule  } from 'ng2-bootstrap/ng2-bootstrap';
+import { RouterModule, Routes } from '@angular/router';
+
+// Routing configuration.
+const appRoutes: Routes = [
+    {
+        path: '',
+        component: CategoryManagementComponent
+    },
+    {
+        path: 'account-management',
+        component: AccountManagementComponent
+    },
+    {
+        path: 'category-management',
+        component: CategoryManagementComponent
+    }
+];
+
 
 @NgModule({
     imports:      [
@@ -24,7 +42,10 @@ import { ModalModule, PaginationModule, TypeaheadModule  } from 'ng2-bootstrap/n
 
         ModalModule,
         PaginationModule,
-        TypeaheadModule
+        TypeaheadModule,
+
+        // Initiate application routing configuration.
+        RouterModule.forRoot(appRoutes)
     ],
     declarations: [
         MainApplicationComponent ,

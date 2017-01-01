@@ -12,7 +12,6 @@
                     <input class="form-control"
                            formControlName="name"
                            placeholder="Please enter category name"
-                           [attr.disabled]="isLoading"
                            [class.disabled]="isLoading"
                            autofocus/>
                 </div>
@@ -25,7 +24,6 @@
         <div class="text-center">
             <button class="btn btn-primary btn-flat"
                     (click)="clickInitiateCategory()"
-                    [attr.disabled]="isLoading"
                     [class.disabled]="isLoading">
                 <span class="glyphicon glyphicon-check"></span>
                 <span>Create</span>
