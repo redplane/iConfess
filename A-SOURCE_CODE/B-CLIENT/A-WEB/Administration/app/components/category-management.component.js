@@ -14,7 +14,7 @@ var ClientCategoryService_1 = require("../services/clients/ClientCategoryService
 var TimeService_1 = require("../services/TimeService");
 var FindCategoriesViewModel_1 = require("../viewmodels/category/FindCategoriesViewModel");
 var ClientApiService_1 = require("../services/ClientApiService");
-var ResponseAnalyzeService_1 = require("../services/ResponseAnalyzeService");
+var ClientProceedResponseService_1 = require("../services/ClientProceedResponseService");
 var ClientConfigurationService_1 = require("../services/ClientConfigurationService");
 var Pagination_1 = require("../viewmodels/Pagination");
 var Category_1 = require("../models/Category");
@@ -23,7 +23,7 @@ var CategoryManagementComponent = (function () {
     function CategoryManagementComponent(categoryService, timeService, responseAnalyzeService, configurationService) {
         this._clientCategoryService = categoryService;
         this._timeService = timeService;
-        this._responseAnalyzeService = responseAnalyzeService;
+        this._clientProceedResponseService = responseAnalyzeService;
         // Find configuration service in IoC.
         this._clientConfigurationService = configurationService;
         // Initiate categories search result.
@@ -47,6 +47,8 @@ var CategoryManagementComponent = (function () {
         findCategoriesConditions.id = this._selectCategoryDetail.id;
         // No category detail is selected.
         if (this._selectCategoryDetail != null) {
+            // Make the loading start.
+            this._isLoading = true;
             // Call category service to delete the selected category.
             this._clientCategoryService.deleteCategories(findCategoriesConditions)
                 .then(function (response) {
@@ -54,7 +56,8 @@ var CategoryManagementComponent = (function () {
                 _this.clickSearch();
             })
                 .catch(function (response) {
-                console.log(response);
+                // Cancel loading.
+                _this._isLoading = false;
             });
         }
         // Close the modal first.
@@ -82,15 +85,17 @@ var CategoryManagementComponent = (function () {
         category.name = this._selectCategoryDetail.name;
         // Close the change category info modal.
         changeCategoryInfoModal.hide();
+        // Start loading.
+        this._isLoading = true;
         // Call service to update category information.
         this._clientCategoryService.changeCategoryDetails(category.id, category)
             .then(function (response) {
-            console.log(response);
             // Reload the categories list.
             _this.clickSearch();
         })
             .catch(function (response) {
-            console.log(response);
+            // Cancel loading.
+            _this._isLoading = false;
         });
     };
     // Callback which is fired when a category should be created into system.
@@ -101,13 +106,14 @@ var CategoryManagementComponent = (function () {
         // Call service to initiate category.
         this._clientCategoryService.initiateCategory(category)
             .then(function (response) {
-            console.log(response);
             // Cancel content loading.
             _this._isLoading = false;
         })
             .catch(function (response) {
             // Cancel content loading.
             _this._isLoading = false;
+            // Handle common business for common invalid response.
+            _this._clientProceedResponseService.proceedInvalidResponse(response);
         });
     };
     // Callback which is fired when search button of category search box is clicked.
@@ -155,12 +161,12 @@ CategoryManagementComponent = __decorate([
             ClientCategoryService_1.ClientCategoryService,
             TimeService_1.TimeService,
             ClientApiService_1.ClientApiService,
-            ResponseAnalyzeService_1.ResponseAnalyzeService,
+            ClientProceedResponseService_1.ClientProceedResponseService,
             ClientConfigurationService_1.ConfigurationService
         ],
     }),
     __metadata("design:paramtypes", [ClientCategoryService_1.ClientCategoryService, TimeService_1.TimeService,
-        ResponseAnalyzeService_1.ResponseAnalyzeService, ClientConfigurationService_1.ConfigurationService])
+        ClientProceedResponseService_1.ClientProceedResponseService, ClientConfigurationService_1.ConfigurationService])
 ], CategoryManagementComponent);
 exports.CategoryManagementComponent = CategoryManagementComponent;
 //# sourceMappingURL=category-management.component.js.map

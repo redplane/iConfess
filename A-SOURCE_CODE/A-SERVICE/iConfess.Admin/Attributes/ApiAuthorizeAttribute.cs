@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using iConfess.Database.Enumerations;
@@ -17,7 +18,7 @@ namespace iConfess.Admin.Attributes
     public class ApiAuthorizeAttribute : AuthorizationFilterAttribute
     {
         #region Properties
-
+        
         /// <summary>
         ///     Unit of work which handles business of application.
         /// </summary>
@@ -164,16 +165,15 @@ namespace iConfess.Admin.Attributes
         /// <returns></returns>
         private bool IsAllowAnonymousRequest(HttpActionContext httpActionContext)
         {
-#if UNAUTHENTICATED_DEBUG
+#if UNAUTHENTICATION_ALLOW
             return true;
-#else
+#endif
             return httpActionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any()
                    ||
                    httpActionContext.ControllerContext.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>
                        ().Any();
-#endif
         }
 
-        #endregion
+#endregion
     }
 }

@@ -75,7 +75,7 @@ var ClientCategoryService = (function () {
         // Construct change category api.
         var changeCategoryDetailApi = "" + this._hyperlinkService.apiInitiateCategory;
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.put(changeCategoryDetailApi, category, requestOptions)
+        return this._httpClient.post(changeCategoryDetailApi, category, requestOptions)
             .toPromise();
     };
     // Reset categories search conditions.
