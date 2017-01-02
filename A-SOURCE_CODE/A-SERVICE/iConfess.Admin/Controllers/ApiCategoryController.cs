@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -128,7 +129,17 @@ namespace iConfess.Admin.Controllers
                 // Find the id of requester.
                 //Initiate new category
                 category = new Category();
+
+#if UNAUTHENTICATED_DEBUG
+
+                account = await _unitOfWork.Context.Accounts.FirstOrDefaultAsync();
+                if (account == null)
+                    throw new Exception("No account has been found");
+                
                 category.CreatorIndex = account.Id;
+#else
+                category.CreatorIndex = account.Id;
+#endif
                 category.Created = systemTime;
                 category.Name = parameters.Name;
 

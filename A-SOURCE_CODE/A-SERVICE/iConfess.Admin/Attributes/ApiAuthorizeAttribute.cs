@@ -6,14 +6,11 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using iConfess.Database.Enumerations;
-using iConfess.Database.Models;
 using Shared.Interfaces.Services;
 using Shared.Resources;
-using Shared.Services;
 
 namespace iConfess.Admin.Attributes
 {
@@ -24,28 +21,10 @@ namespace iConfess.Admin.Attributes
         /// <summary>
         ///     Unit of work which handles business of application.
         /// </summary>
-        private IUnitOfWork _unitOfWork;
+        public IUnitOfWork UnitOfWork { get; set; }
 
         /// <summary>
-        ///     Unit of work which handles business of application.
-        /// </summary>
-        public IUnitOfWork UnitOfWork
-        {
-            //get
-            //{
-            //    if (_unitOfWork == null)
-            //    {
-            //        var iConfessDbContext = new ConfessionDbContext();
-            //        _unitOfWork = new UnitOfWork(iConfessDbContext);
-            //    }
-
-            //    return _unitOfWork;
-            //}
-            //set { _unitOfWork = value; }
-            get; set; }
-
-        /// <summary>
-        /// Service which is for handling time calculation.
+        ///     Service which is for handling time calculation.
         /// </summary>
         public ITimeService TimeService { get; set; }
 
@@ -117,7 +96,7 @@ namespace iConfess.Admin.Attributes
                 }
 
                 // Find email in the database.
-                var account = await _unitOfWork.Context.Accounts
+                var account = await UnitOfWork.Context.Accounts
                     .Where(x => x.Email.Equals(claimEmail.Value, StringComparison.InvariantCultureIgnoreCase))
                     .FirstOrDefaultAsync(cancellationToken);
 
@@ -185,10 +164,14 @@ namespace iConfess.Admin.Attributes
         /// <returns></returns>
         private bool IsAllowAnonymousRequest(HttpActionContext httpActionContext)
         {
+#if UNAUTHENTICATED_DEBUG
+            return true;
+#else
             return httpActionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any()
                    ||
                    httpActionContext.ControllerContext.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>
                        ().Any();
+#endif
         }
 
         #endregion
