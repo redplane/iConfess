@@ -24,6 +24,8 @@ var ClientApiService = (function () {
         this.apiInitiateCategory = this.apiUrl + "/api/category";
         // Find category account api url.
         this.apiFindAccount = this.apiUrl + "/api/account/find";
+        // Key of local storage in which access token should be stored.
+        this.accessTokenStorage = 'iConfess';
     }
     return ClientApiService;
 }());

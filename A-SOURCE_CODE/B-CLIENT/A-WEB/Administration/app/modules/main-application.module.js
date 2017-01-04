@@ -22,6 +22,22 @@ var angular2_select_1 = require("angular2-select");
 var category_find_box_component_1 = require("../components/content/category/category-find-box.component");
 var http_1 = require("@angular/http");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
+var router_1 = require("@angular/router");
+// Routing configuration.
+var appRoutes = [
+    {
+        path: '',
+        component: category_management_component_1.CategoryManagementComponent
+    },
+    {
+        path: 'account-management',
+        component: account_management_component_1.AccountManagementComponent
+    },
+    {
+        path: 'category-management',
+        component: category_management_component_1.CategoryManagementComponent
+    }
+];
 var MainApplicationModule = (function () {
     function MainApplicationModule() {
     }
@@ -38,7 +54,9 @@ MainApplicationModule = __decorate([
             http_1.JsonpModule,
             ng2_bootstrap_1.ModalModule,
             ng2_bootstrap_1.PaginationModule,
-            ng2_bootstrap_1.TypeaheadModule
+            ng2_bootstrap_1.TypeaheadModule,
+            // Initiate application routing configuration.
+            router_1.RouterModule.forRoot(appRoutes)
         ],
         declarations: [
             main_application_component_1.MainApplicationComponent,

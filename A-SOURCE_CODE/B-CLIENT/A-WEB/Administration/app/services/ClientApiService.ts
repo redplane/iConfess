@@ -24,6 +24,9 @@ export class ClientApiService{
     // Hyperlink which is used for searching for accounts.
     public apiFindAccount : string;
 
+    // Key in local storage which access token should be stored.
+    public accessTokenStorage: string;
+
     // Initiate service with settings.
     public constructor(){
 
@@ -35,5 +38,8 @@ export class ClientApiService{
 
         // Find category account api url.
         this.apiFindAccount = `${this.apiUrl}/api/account/find`;
+
+        // Key of local storage in which access token should be stored.
+        this.accessTokenStorage = 'iConfess';
     }
 }

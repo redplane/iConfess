@@ -8,7 +8,7 @@ import {CategoryDetailViewModel} from "../viewmodels/category/CategoryDetailView
 import {FindCategoriesViewModel} from "../viewmodels/category/FindCategoriesViewModel";
 import {ClientApiService} from "../services/ClientApiService";
 import {Response} from "@angular/http";
-import {ResponseAnalyzeService} from "../services/ResponseAnalyzeService";
+import {ClientProceedResponseService} from "../services/ClientProceedResponseService";
 import {ConfigurationService} from "../services/ClientConfigurationService";
 import {Pagination} from "../viewmodels/Pagination";
 import {ModalDirective} from "ng2-bootstrap";
@@ -23,7 +23,7 @@ declare var $: any;
         ClientCategoryService,
         TimeService,
         ClientApiService,
-        ResponseAnalyzeService,
+        ClientProceedResponseService,
         ConfigurationService
     ],
 })
@@ -37,7 +37,7 @@ export class CategoryManagementComponent implements OnInit {
     private _timeService: ITimeService;
 
     // Service which provides function to analyze response sent back from server.
-    private _responseAnalyzeService: ResponseAnalyzeService;
+    private _clientProceedResponseService: ClientProceedResponseService;
 
     // Service which handles category business.
     private _clientCategoryService: IClientCategoryService;
@@ -56,10 +56,10 @@ export class CategoryManagementComponent implements OnInit {
 
     // Initiate component with dependency injections.
     public constructor(categoryService: ClientCategoryService, timeService: TimeService,
-                       responseAnalyzeService: ResponseAnalyzeService, configurationService: ConfigurationService) {
+                       responseAnalyzeService: ClientProceedResponseService, configurationService: ConfigurationService) {
         this._clientCategoryService = categoryService;
         this._timeService = timeService;
-        this._responseAnalyzeService = responseAnalyzeService;
+        this._clientProceedResponseService = responseAnalyzeService;
 
         // Find configuration service in IoC.
         this._clientConfigurationService = configurationService;
@@ -91,6 +91,10 @@ export class CategoryManagementComponent implements OnInit {
 
         // No category detail is selected.
         if (this._selectCategoryDetail != null){
+
+            // Make the loading start.
+            this._isLoading = true;
+
             // Call category service to delete the selected category.
             this._clientCategoryService.deleteCategories(findCategoriesConditions)
                 .then((response: Response | any) => {
@@ -99,7 +103,8 @@ export class CategoryManagementComponent implements OnInit {
                     this.clickSearch();
                 })
                 .catch((response:any) => {
-                    console.log(response);
+                    // Cancel loading.
+                    this._isLoading = false;
                 });
         }
 
@@ -137,17 +142,18 @@ export class CategoryManagementComponent implements OnInit {
         // Close the change category info modal.
         changeCategoryInfoModal.hide();
 
+        // Start loading.
+        this._isLoading = true;
 
         // Call service to update category information.
         this._clientCategoryService.changeCategoryDetails(category.id, category)
             .then((response: Response | any) => {
-                console.log(response);
-
                 // Reload the categories list.
                 this.clickSearch();
             })
             .catch((response: Response | any) => {
-                console.log(response);
+                // Cancel loading.
+                this._isLoading = false;
             });
 
     }
@@ -161,16 +167,16 @@ export class CategoryManagementComponent implements OnInit {
         // Call service to initiate category.
         this._clientCategoryService.initiateCategory(category)
             .then((response: Response | any) => {
-
-                console.log(response);
-
                 // Cancel content loading.
                 this._isLoading = false;
             })
             .catch((response: Response | any) => {
-
                 // Cancel content loading.
                 this._isLoading = false;
+
+                // Handle common business for common invalid response.
+                this._clientProceedResponseService.proceedInvalidResponse(response);
+
             });
     }
     // Callback which is fired when search button of category search box is clicked.
