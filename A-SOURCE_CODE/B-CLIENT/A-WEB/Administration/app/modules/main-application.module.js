@@ -23,11 +23,12 @@ var category_find_box_component_1 = require("../components/content/category/cate
 var http_1 = require("@angular/http");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var router_1 = require("@angular/router");
+var login_component_1 = require("../components/login.component");
 // Routing configuration.
 var appRoutes = [
     {
         path: '',
-        component: category_management_component_1.CategoryManagementComponent
+        component: login_component_1.LoginComponent
     },
     {
         path: 'account-management',
@@ -62,6 +63,7 @@ MainApplicationModule = __decorate([
             main_application_component_1.MainApplicationComponent,
             navigation_bar_component_1.NavigationBarComponent,
             sidebar_component_1.SidebarComponent,
+            login_component_1.LoginComponent,
             account_management_component_1.AccountManagementComponent,
             category_management_component_1.CategoryManagementComponent,
             category_detail_box_component_1.CategoryDetailBoxComponent,

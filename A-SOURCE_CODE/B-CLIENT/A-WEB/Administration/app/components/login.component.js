@@ -9,22 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var MainApplicationComponent = (function () {
-    // Initiate component with IoC.
-    function MainApplicationComponent(router) {
-        this._router = router;
-        // Find the page location.
-        this.location = router.url;
+var forms_1 = require("@angular/forms");
+var LoginComponent = (function () {
+    // Initiate login box component with IoC.
+    function LoginComponent(formBuilder) {
+        // Initiate login box and its components.
+        this.loginBox = formBuilder.group({
+            email: ['', forms_1.Validators.compose([forms_1.Validators.required])],
+            password: ['', forms_1.Validators.compose([forms_1.Validators.required])]
+        });
     }
-    return MainApplicationComponent;
+    return LoginComponent;
 }());
-MainApplicationComponent = __decorate([
+LoginComponent = __decorate([
     core_1.Component({
-        selector: 'main-application',
-        templateUrl: './app/views/main-application.html'
+        selector: 'login',
+        templateUrl: './app/views/pages/login.component.html'
     }),
-    __metadata("design:paramtypes", [router_1.Router])
-], MainApplicationComponent);
-exports.MainApplicationComponent = MainApplicationComponent;
-//# sourceMappingURL=main-application.component.js.map
+    __metadata("design:paramtypes", [forms_1.FormBuilder])
+], LoginComponent);
+exports.LoginComponent = LoginComponent;
+//# sourceMappingURL=login.component.js.map

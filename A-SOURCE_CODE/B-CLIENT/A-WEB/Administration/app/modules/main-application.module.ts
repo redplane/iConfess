@@ -13,12 +13,13 @@ import {CategoryFindBoxComponent} from "../components/content/category/category-
 import { HttpModule, JsonpModule } from '@angular/http';
 import { ModalModule, PaginationModule, TypeaheadModule  } from 'ng2-bootstrap/ng2-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
+import {LoginComponent} from "../components/login.component";
 
 // Routing configuration.
 const appRoutes: Routes = [
     {
         path: '',
-        component: CategoryManagementComponent
+        component: LoginComponent
     },
     {
         path: 'account-management',
@@ -51,6 +52,9 @@ const appRoutes: Routes = [
         MainApplicationComponent ,
         NavigationBarComponent,
         SidebarComponent,
+
+        LoginComponent,
+
         AccountManagementComponent,
 
         CategoryManagementComponent,

@@ -1,31 +1,30 @@
 <div class="wrapper">
     <!-- Top horizontal navigation bar -->
-    <navigation-bar></navigation-bar>
+    <navigation-bar *ngIf = "location != '/'"></navigation-bar>
 
     <!-- Sidebar -->
-    <sidebar></sidebar>
+    <sidebar *ngIf = "location != '/'"></sidebar>
 
     <!-- Main page content -->
     <div class="content-wrapper">
         <!-- Content header -->
-        <section class="content-header">
+        <section class="content-header"
+                 *ngIf = "location != '/'">
             <h1>
-                Dashboard
+                <div>{{location | json}}</div>
             </h1>
         </section>
 
         <!-- Application main content -->
         <section class="content">
-            <!--<account-management></account-management>-->
-            <!--<category-management></category-management>-->
-
             <!-- Render routed views -->
             <router-outlet></router-outlet>
         </section>
     </div>
 
     <!-- Main footer -->
-    <footer class="main-footer">
+    <footer class="main-footer"
+            *ngIf = "location != '/'">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.3.7
         </div>
