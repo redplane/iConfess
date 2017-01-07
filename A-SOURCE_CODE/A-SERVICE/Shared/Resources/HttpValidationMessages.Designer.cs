@@ -61,11 +61,38 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DATA_MAX_LENGTH_EXCEEDED.
+        /// </summary>
+        public static string DataMaxLengthExceeded {
+            get {
+                return ResourceManager.GetString("DataMaxLengthExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DATA_MIN_LENGTH_INVALID.
+        /// </summary>
+        public static string DataMinLengthInvalid {
+            get {
+                return ResourceManager.GetString("DataMinLengthInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INFORMATION_REQUIRED.
         /// </summary>
         public static string InformationRequired {
             get {
                 return ResourceManager.GetString("InformationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INVALID_DATA_FORMAT.
+        /// </summary>
+        public static string InvalidDataFormat {
+            get {
+                return ResourceManager.GetString("InvalidDataFormat", resourceCulture);
             }
         }
         

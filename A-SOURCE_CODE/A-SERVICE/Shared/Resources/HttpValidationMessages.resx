@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DataMaxLengthExceeded" xml:space="preserve">
+    <value>DATA_MAX_LENGTH_EXCEEDED</value>
+  </data>
+  <data name="DataMinLengthInvalid" xml:space="preserve">
+    <value>DATA_MIN_LENGTH_INVALID</value>
+  </data>
   <data name="InformationRequired" xml:space="preserve">
     <value>INFORMATION_REQUIRED</value>
+  </data>
+  <data name="InvalidDataFormat" xml:space="preserve">
+    <value>INVALID_DATA_FORMAT</value>
   </data>
   <data name="InvalidPageRecord" xml:space="preserve">
     <value>INVALID_PAGE_RECORD</value>
