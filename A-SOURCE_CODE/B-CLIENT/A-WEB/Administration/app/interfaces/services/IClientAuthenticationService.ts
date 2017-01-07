@@ -3,7 +3,7 @@ import {ClientAuthenticationToken} from "../../models/ClientAuthenticationToken"
 export interface IClientAuthenticationService{
 
     // Find key in local storage where authentication information is stored.
-    findAuthenticationStorageKey: string;
+    findAuthenticationStorageKey(): string;
 
     // Find client authentication token information from local storage.
     findClientAuthenticationToken(): ClientAuthenticationToken;

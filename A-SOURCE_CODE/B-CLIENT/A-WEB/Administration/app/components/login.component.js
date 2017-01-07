@@ -10,23 +10,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
+var ClientAuthenticationService_1 = require("../services/clients/ClientAuthenticationService");
+var LoginViewModel_1 = require("../viewmodels/accounts/LoginViewModel");
 var LoginComponent = (function () {
     // Initiate login box component with IoC.
-    function LoginComponent(formBuilder) {
+    function LoginComponent(formBuilder, clientAuthenticationService) {
+        // Initiate login view model.
+        this._loginViewModel = new LoginViewModel_1.LoginViewModel();
         // Initiate login box and its components.
         this.loginBox = formBuilder.group({
             email: ['', forms_1.Validators.compose([forms_1.Validators.required])],
             password: ['', forms_1.Validators.compose([forms_1.Validators.required])]
         });
+        // Client authentication service injection.
+        this._clientAuthenticationService = clientAuthenticationService;
     }
+    // This callback is fired when login button is clicked.
+    LoginComponent.prototype.login = function (event) {
+    };
     return LoginComponent;
 }());
 LoginComponent = __decorate([
     core_1.Component({
         selector: 'login',
-        templateUrl: './app/views/pages/login.component.html'
+        templateUrl: './app/views/pages/login.component.html',
+        providers: [
+            ClientAuthenticationService_1.ClientAuthenticationService
+        ]
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder])
+    __metadata("design:paramtypes", [forms_1.FormBuilder, ClientAuthenticationService_1.ClientAuthenticationService])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

@@ -1,67 +1,51 @@
-import {IClientAuthenticationService} from "../../interfaces/services/IClientAuthenticationService";
-import {ClientAuthenticationToken} from "../../models/ClientAuthenticationToken";
-
+"use strict";
+var ClientAuthenticationToken_1 = require("../../models/ClientAuthenticationToken");
 // Implement authentication business handler.
-export class ClientAuthenticationService implements IClientAuthenticationService{
-
-    // Key in local storage where authentication token should be stored at.
-    private _authenticationKey : string;
-
-    // The the name of key which is used for sotring authentication information.
-    public findAuthenticationStorageKey(): string{
-        return this._authenticationKey;
+var ClientAuthenticationService = (function () {
+    // Initiate service with IoC.
+    function ClientAuthenticationService() {
+        this._authenticationKey = "authentication-iConfess";
     }
-
+    // The the name of key which is used for sotring authentication information.
+    ClientAuthenticationService.prototype.findAuthenticationStorageKey = function () {
+        return this._authenticationKey;
+    };
     // Find client authentication token from local storage.
-    public findClientAuthenticationToken(): ClientAuthenticationToken {
-
+    ClientAuthenticationService.prototype.findClientAuthenticationToken = function () {
         // Find information from local storage with given key.
-        let clientAuthenticationInfo = localStorage.getItem(this._authenticationKey);
-
+        var clientAuthenticationInfo = localStorage.getItem(this._authenticationKey);
         // No information is stored in localStorage.
         if (clientAuthenticationInfo == null || clientAuthenticationInfo.length < 1)
             return null;
-
         // Parse the information into authentication class.
-        let clientAuthenticationToken = new ClientAuthenticationToken();
+        var clientAuthenticationToken = new ClientAuthenticationToken_1.ClientAuthenticationToken();
         clientAuthenticationToken = JSON.parse(clientAuthenticationInfo);
         return clientAuthenticationToken;
-    }
-
+    };
     // Check whether client authentication information is valid to login or not.
-    isAuthenticationSolid(clientAuthenticationToken: ClientAuthenticationToken): boolean {
-
+    ClientAuthenticationService.prototype.isAuthenticationSolid = function (clientAuthenticationToken) {
         // Token is empty.
         if (clientAuthenticationToken.token == null || clientAuthenticationToken.token.length < 1)
             return false;
-
         // Token type is invalid.
         if (clientAuthenticationToken.type == null || clientAuthenticationToken.type.length < 1)
             return false;
-
         // Token expiration is invalid.
         if (clientAuthenticationToken.expire == null)
             return false;
-
         // Token has been expired.
         if (clientAuthenticationToken.expire < Date.now())
             return false;
-
         return true;
-    }
-
+    };
     // Save authentication information into local storage.
-    saveAuthenticationToken(clientAuthenticationToken: ClientAuthenticationToken): void {
-
+    ClientAuthenticationService.prototype.saveAuthenticationToken = function (clientAuthenticationToken) {
         // Serialize token into string.
-        let authenticationInfo = JSON.stringify(clientAuthenticationToken);
-
+        var authenticationInfo = JSON.stringify(clientAuthenticationToken);
         // Save the authentication information into local storage
         localStorage.setItem(this._authenticationKey, authenticationInfo);
-    }
-
-    // Initiate service with IoC.
-    public constructor(){
-        this._authenticationKey = "authentication-iConfess";
-    }
-}
+    };
+    return ClientAuthenticationService;
+}());
+exports.ClientAuthenticationService = ClientAuthenticationService;
+//# sourceMappingURL=ClientAuthenticationService.js.map
