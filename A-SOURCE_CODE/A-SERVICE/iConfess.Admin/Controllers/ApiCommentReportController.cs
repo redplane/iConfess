@@ -51,6 +51,8 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
+        [Route("initiate")]
+        [HttpPost]
         public async Task<HttpResponseMessage> InitiateCommentReport(
             [FromBody] InitiateCommentReportViewModel parameters)
         {
@@ -123,6 +125,7 @@ namespace iConfess.Admin.Controllers
         ///     Delete all reports from a comment due to its validation.
         /// </summary>
         /// <returns></returns>
+        [Route("delete")]
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteCommentReport([FromBody] FindCommentReportsViewModel parameters)
         {

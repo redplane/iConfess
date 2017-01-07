@@ -168,9 +168,39 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("lost_password")]
         [HttpGet]
-        public HttpResponseMessage RequestFindLostPassword()
+        [AllowAnonymous]
+        public async Task<HttpResponseMessage> RequestFindLostPassword([FromUri] string email)
         {
-            return Request.CreateResponse(HttpStatusCode.OK);
+            try
+            {
+                if (string.IsNullOrWhiteSpace(email))
+                    Request.CreateResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
+
+                // Find account information from database.
+                var account = await
+                    UnitOfWork.Context.Accounts.Where(
+                            x =>
+                                x.Email.Equals(email)
+                                && x.Status == AccountStatus.Active)
+                        .FirstOrDefaultAsync();
+
+                // Account is not found.
+                if (account == null)
+                {
+                    _log.Info(
+                        $"Account [Email : {email}] is not found in database");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
+                }
+
+                // Create token here
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception exception)
+            {
+                _log.Error(exception.Message, exception);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         /// <summary>
@@ -179,9 +209,43 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("lost_password")]
         [HttpPost]
-        public HttpResponseMessage SubmitAlternativePassword()
+        [AllowAnonymous]
+        public async Task<HttpResponseMessage> SubmitAlternativePassword([FromBody] ResetPasswordViewModel parameters)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Parameters haven't been initialized.
+                if (parameters == null)
+                {
+                    parameters = new ResetPasswordViewModel();
+                    Validate(parameters);
+                }
+
+                // Parameters are invalid.
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest,
+                        FindValidationMessage(ModelState, nameof(parameters)));
+
+                // Find account information from database.
+                var account = await
+                    UnitOfWork.Context.Accounts.Where(
+                            x =>
+                                x.Email.Equals(parameters.Email))
+                        .FirstOrDefaultAsync();
+                
+                // Find token imfomation from database
+
+                // Compare email infomation
+
+                // Update password
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception exception)
+            {
+                _log.Error(exception.Message, exception);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         /// <summary>
