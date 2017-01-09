@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
-import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
 import {ClientApiService} from "../ClientApiService";
 import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
-import {UnixDateRange} from "../../viewmodels/UnixDateRange";
-import {Pagination} from "../../viewmodels/Pagination";
 import {IClientAccountService} from "../../interfaces/services/IClientAccountService";
 import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
+import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
 
 /*
  * Service which handles category business.
@@ -15,15 +13,15 @@ import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewM
 export class ClientAccountService implements IClientAccountService {
 
     // Service which handles hyperlink.
-    private _hyperlinkService: ClientApiService;
+    private _clientApiService: ClientApiService;
 
     // HttpClient which is used for handling request to web api service.
     private _httpClient: Http;
 
     // Initiate instance of category service.
-    public constructor(hyperlinkService: ClientApiService, httpClient: Http){
+    public constructor(clientApiService: ClientApiService, httpClient: Http){
 
-        this._hyperlinkService = hyperlinkService;
+        this._clientApiService = clientApiService;
         this._httpClient = httpClient;
     }
 
@@ -44,7 +42,12 @@ export class ClientAccountService implements IClientAccountService {
         });
 
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.post(this._hyperlinkService.apiFindAccount, conditions, requestOptions)
+        return this._httpClient.post(this._clientApiService.apiFindAccount, conditions, requestOptions)
             .toPromise();
+    }
+
+    // Sign an account into system.
+    public login(loginViewModel: LoginViewModel): any {
+        return this._httpClient.post(this._clientApiService.apiLogin, loginViewModel).toPromise();
     }
 }

@@ -5,6 +5,7 @@ import {Response} from "@angular/http";
 * */
 export class ClientProceedResponseService{
 
+    // Proceed response which is sent from service.
     public proceedInvalidResponse(response: Response | any): void{
 
         // Response is invalid.

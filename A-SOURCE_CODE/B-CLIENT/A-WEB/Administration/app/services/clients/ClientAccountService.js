@@ -17,8 +17,8 @@ require("rxjs/add/operator/toPromise");
  * */
 var ClientAccountService = (function () {
     // Initiate instance of category service.
-    function ClientAccountService(hyperlinkService, httpClient) {
-        this._hyperlinkService = hyperlinkService;
+    function ClientAccountService(clientApiService, httpClient) {
+        this._clientApiService = clientApiService;
         this._httpClient = httpClient;
     }
     // Find categories by using specific conditions.
@@ -35,8 +35,12 @@ var ClientAccountService = (function () {
             })
         });
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.post(this._hyperlinkService.apiFindAccount, conditions, requestOptions)
+        return this._httpClient.post(this._clientApiService.apiFindAccount, conditions, requestOptions)
             .toPromise();
+    };
+    // Sign an account into system.
+    ClientAccountService.prototype.login = function (loginViewModel) {
+        return this._httpClient.post(this._clientApiService.apiLogin, loginViewModel).toPromise();
     };
     return ClientAccountService;
 }());

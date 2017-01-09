@@ -1,11 +1,24 @@
 import {IClientAuthenticationService} from "../../interfaces/services/IClientAuthenticationService";
 import {ClientAuthenticationToken} from "../../models/ClientAuthenticationToken";
+import {Injectable} from "@angular/core";
+import {ClientApiService} from "../ClientApiService";
+import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
+import {Http} from "@angular/http";
 
-// Implement authentication business handler.
+/*
+* Implement authentication business handler
+* */
+@Injectable()
 export class ClientAuthenticationService implements IClientAuthenticationService{
 
     // Key in local storage where authentication token should be stored at.
     private _authenticationKey : string;
+
+    // Service which handles client api
+    private _clientApiService: ClientApiService;
+
+    // Http client service.
+    private _httpClient: Http;
 
     // The the name of key which is used for sotring authentication information.
     public findAuthenticationStorageKey(): string{
@@ -29,7 +42,7 @@ export class ClientAuthenticationService implements IClientAuthenticationService
     }
 
     // Check whether client authentication information is valid to login or not.
-    isAuthenticationSolid(clientAuthenticationToken: ClientAuthenticationToken): boolean {
+    public isAuthenticationSolid(clientAuthenticationToken: ClientAuthenticationToken): boolean {
 
         // Token is empty.
         if (clientAuthenticationToken.token == null || clientAuthenticationToken.token.length < 1)
@@ -51,7 +64,7 @@ export class ClientAuthenticationService implements IClientAuthenticationService
     }
 
     // Save authentication information into local storage.
-    saveAuthenticationToken(clientAuthenticationToken: ClientAuthenticationToken): void {
+    public saveAuthenticationToken(clientAuthenticationToken: ClientAuthenticationToken): void {
 
         // Serialize token into string.
         let authenticationInfo = JSON.stringify(clientAuthenticationToken);
@@ -61,7 +74,10 @@ export class ClientAuthenticationService implements IClientAuthenticationService
     }
 
     // Initiate service with IoC.
-    public constructor(){
+    public constructor(clientApiService: ClientApiService, httpClient: Http){
         this._authenticationKey = "authentication-iConfess";
+
+        // client api service injection.
+        this._clientApiService = clientApiService;
     }
 }

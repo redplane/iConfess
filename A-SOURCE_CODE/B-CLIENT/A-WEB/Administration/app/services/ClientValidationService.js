@@ -1,38 +1,15 @@
 "use strict";
-var ValidationService = (function () {
-    function ValidationService() {
-        /*
-        * Convert validation property sent back from back-end.
-        * */
-        this.findFrontendValidationModel = function (dictionary, pointer, parameter) {
-            // Invalid parameter.
-            if (parameter == null)
-                return;
-            if (parameter instanceof Array) {
-                for (var index = 0; index < parameter.length; index++) {
-                    var property = parameter[index];
-                    if (dictionary != null && dictionary[property] != null && dictionary[property].length > 0)
-                        pointer[dictionary[property]] = true;
-                    else
-                        pointer[property] = true;
-                }
-                return;
-            }
-            // Find all properties of parameter.
-            var properties = Object.keys(parameter);
-            for (var i = 0; i < properties.length; i++) {
-                var key = properties[i];
-                if (pointer[key] == null)
-                    pointer[key] = {};
-                this.findFrontendValidationModel(dictionary, pointer[key], parameter[key]);
-            }
+var ClientValidationService = (function () {
+    function ClientValidationService() {
+        this.validationDictionary = {
+            'INFORMATION_REQUIRED': 'required'
         };
     }
     /*
     * Build a structure of validation messages sent back from web service.
     * Such as: conditions.pagination.records
     * */
-    ValidationService.prototype.findPropertiesValidationMessages = function (parameter) {
+    ClientValidationService.prototype.findPropertiesValidationMessages = function (parameter) {
         // Find list of keys in object.
         var keys = Object.keys(parameter);
         // Initiate properties list after refinement.
@@ -54,7 +31,7 @@ var ValidationService = (function () {
      * Such as: conditions.pagination.records
      * Scope: one property.
      * */
-    ValidationService.prototype.findPropertyValidationMessages = function (sourceProperty, property, value) {
+    ClientValidationService.prototype.findPropertyValidationMessages = function (sourceProperty, property, value) {
         // Split property by character .
         var keys = property.split('.');
         // Initiate pointer.
@@ -85,16 +62,40 @@ var ValidationService = (function () {
         }
     };
     /*
+    * Convert validation property sent back from back-end.
+    * */
+    ClientValidationService.prototype.findFrontendValidationModel = function (dictionary, pointer, parameter) {
+        // Invalid parameter.
+        if (parameter == null)
+            return;
+        if (parameter instanceof Array) {
+            for (var index = 0; index < parameter.length; index++) {
+                var property = parameter[index];
+                pointer[dictionary[property]] = true;
+            }
+            return;
+        }
+        // Find all properties of parameter.
+        var properties = Object.keys(parameter);
+        for (var i = 0; i < properties.length; i++) {
+            var key = properties[i];
+            if (pointer[key] == null) {
+                pointer[key] = {};
+            }
+            this.findFrontendValidationModel(dictionary, pointer[key], parameter[key]);
+        }
+    };
+    /*
     * Find property name in camel-case.
     * */
-    ValidationService.prototype.findCamelCasePropertyName = function (propertyName) {
+    ClientValidationService.prototype.findCamelCasePropertyName = function (propertyName) {
         return propertyName.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
             if (+match === 0)
                 return '';
             return index == 0 ? match.toLowerCase() : match.toUpperCase();
         });
     };
-    return ValidationService;
+    return ClientValidationService;
 }());
-exports.ValidationService = ValidationService;
-//# sourceMappingURL=ParameterValidationService.js.map
+exports.ClientValidationService = ClientValidationService;
+//# sourceMappingURL=ClientValidationService.js.map

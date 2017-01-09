@@ -1,4 +1,5 @@
 import {ClientAuthenticationToken} from "../../models/ClientAuthenticationToken";
+import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
 
 export interface IClientAuthenticationService{
 

@@ -1,10 +1,26 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var ClientAuthenticationToken_1 = require("../../models/ClientAuthenticationToken");
-// Implement authentication business handler.
+var core_1 = require("@angular/core");
+var ClientApiService_1 = require("../ClientApiService");
+var http_1 = require("@angular/http");
+/*
+* Implement authentication business handler
+* */
 var ClientAuthenticationService = (function () {
     // Initiate service with IoC.
-    function ClientAuthenticationService() {
+    function ClientAuthenticationService(clientApiService, httpClient) {
         this._authenticationKey = "authentication-iConfess";
+        // client api service injection.
+        this._clientApiService = clientApiService;
     }
     // The the name of key which is used for sotring authentication information.
     ClientAuthenticationService.prototype.findAuthenticationStorageKey = function () {
@@ -47,5 +63,9 @@ var ClientAuthenticationService = (function () {
     };
     return ClientAuthenticationService;
 }());
+ClientAuthenticationService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [ClientApiService_1.ClientApiService, http_1.Http])
+], ClientAuthenticationService);
 exports.ClientAuthenticationService = ClientAuthenticationService;
 //# sourceMappingURL=ClientAuthenticationService.js.map

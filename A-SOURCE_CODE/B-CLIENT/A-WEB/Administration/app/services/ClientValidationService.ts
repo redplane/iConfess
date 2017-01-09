@@ -1,4 +1,8 @@
-export class ValidationService{
+export class ClientValidationService{
+
+    public validationDictionary : any = {
+            'INFORMATION_REQUIRED': 'required'
+    };
 
     /*
     * Build a structure of validation messages sent back from web service.
@@ -77,7 +81,7 @@ export class ValidationService{
     /*
     * Convert validation property sent back from back-end.
     * */
-    public findFrontendValidationModel = function(dictionary: any, pointer:any, parameter:any){
+    public findFrontendValidationModel(dictionary: any, pointer:any, parameter:any) : any{
 
         // Invalid parameter.
         if (parameter == null)
@@ -87,23 +91,19 @@ export class ValidationService{
 
             for (let index = 0; index < parameter.length; index++){
                 let property = parameter[index];
-
-                if (dictionary != null && dictionary[property] != null && dictionary[property].length > 0)
-                    pointer[dictionary[property]] = true;
-                else
-                    pointer[property] = true;
+                pointer[dictionary[property]] = true;
             }
-
             return;
         }
 
         // Find all properties of parameter.
-        let properties = Object.keys(parameter);
+        var properties = Object.keys(parameter);
 
         for (let i = 0; i < properties.length; i++){
-            let key = properties[i];
-            if (pointer[key] == null)
+            var key = properties[i];
+            if (pointer[key] == null) {
                 pointer[key] = {};
+            }
 
             this.findFrontendValidationModel(dictionary, pointer[key], parameter[key]);
         }
