@@ -99,11 +99,11 @@ CategoryFindBoxComponent = __decorate([
         providers: [
             forms_1.FormBuilder,
             FindCategoriesViewModel_1.FindCategoriesViewModel,
-            ClientConfigurationService_1.ConfigurationService,
+            ClientConfigurationService_1.ClientConfigurationService,
             ClientAccountService_1.ClientAccountService
         ]
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder, ClientConfigurationService_1.ConfigurationService,
+    __metadata("design:paramtypes", [forms_1.FormBuilder, ClientConfigurationService_1.ClientConfigurationService,
         ClientAccountService_1.ClientAccountService])
 ], CategoryFindBoxComponent);
 exports.CategoryFindBoxComponent = CategoryFindBoxComponent;

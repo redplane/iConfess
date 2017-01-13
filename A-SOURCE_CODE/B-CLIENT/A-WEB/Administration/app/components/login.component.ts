@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ClientAuthenticationService} from "../services/clients/ClientAuthenticationService";
 import {IClientAuthenticationService} from "../interfaces/services/IClientAuthenticationService";
@@ -9,6 +9,7 @@ import {IClientAccountService} from "../interfaces/services/IClientAccountServic
 import {Response} from "@angular/http";
 import {ClientValidationService} from "../services/ClientValidationService";
 import {Router} from '@angular/router';
+import {ClientAuthenticationToken} from "../models/ClientAuthenticationToken";
 
 @Component({
     selector: 'login',
@@ -20,7 +21,8 @@ import {Router} from '@angular/router';
         ClientAuthenticationService
     ]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
 
     // Box which contains information for login purpose.
     public loginBox: FormGroup;
@@ -59,8 +61,8 @@ export class LoginComponent {
 
         // Initiate login box and its components.
         this.loginBox = formBuilder.group({
-            email: ['', Validators.compose([Validators.required])],
-            password: ['', Validators.compose([Validators.required])]
+            email: [''],
+            password: ['']
         });
 
         // Client api service injection.
@@ -83,15 +85,24 @@ export class LoginComponent {
     // This callback is fired when login button is clicked.
     public login(event:any): void{
 
+        // Make the component show the loading process.
+        this._isLoading = true;
+
         // Pass the login view model to service.
         this._clientAccountService.login(this._loginViewModel)
             .then((response: Response | any) => {
 
+                // Convert response from service to ClientAuthenticationToken data type.
+                let clientAuthenticationDetail = <ClientAuthenticationToken> response;
+
                 // Save the client authentication information.
-                this._clientAuthenticationService.saveAuthenticationToken(response);
+                this._clientAuthenticationService.saveAuthenticationToken(clientAuthenticationDetail);
 
                 // Redirect user to account management page.
                 this._clientRoutingService.navigate(['/account-management']);
+
+                // Cancel loading process.
+                this._isLoading = false;
             })
             .catch((response : any) => {
                 if (!(response instanceof Response))
@@ -120,6 +131,15 @@ export class LoginComponent {
                         // TODO: Display message.
                         break;
                 }
+
+                // Cancel loading process.
+                this._isLoading = false;
             });
+    }
+
+    // Called when component has been rendered successfully.
+    public ngOnInit(): void {
+        // By default, component loads nothing.
+        this._isLoading = false;
     }
 }

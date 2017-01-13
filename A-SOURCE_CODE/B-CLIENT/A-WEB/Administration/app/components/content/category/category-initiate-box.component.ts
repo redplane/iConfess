@@ -1,6 +1,6 @@
 import {Component, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ConfigurationService} from "../../../services/ClientConfigurationService";
+import {ClientConfigurationService} from "../../../services/ClientConfigurationService";
 import {ClientAccountService} from "../../../services/clients/ClientAccountService";
 
 @Component({
@@ -10,7 +10,7 @@ import {ClientAccountService} from "../../../services/clients/ClientAccountServi
     outputs:['initiateCategory'],
     providers: [
         FormBuilder,
-        ConfigurationService,
+        ClientConfigurationService,
         ClientAccountService
     ]
 })
@@ -27,10 +27,10 @@ export class CategoryInitiateBoxComponent {
     private initiateCategoryBox: FormGroup;
 
     // Service which provides function to access application configuration.
-    private _clientConfigurationService: ConfigurationService;
+    private _clientConfigurationService: ClientConfigurationService;
 
     // Initiate component with default dependency injection.
-    public constructor(private formBuilder: FormBuilder, clientConfigurationService: ConfigurationService) {
+    public constructor(private formBuilder: FormBuilder, clientConfigurationService: ClientConfigurationService) {
 
         // Find configuration service from IoC.
         this._clientConfigurationService = clientConfigurationService;

@@ -9,7 +9,7 @@ import {FindCategoriesViewModel} from "../viewmodels/category/FindCategoriesView
 import {ClientApiService} from "../services/ClientApiService";
 import {Response} from "@angular/http";
 import {ClientProceedResponseService} from "../services/ClientProceedResponseService";
-import {ConfigurationService} from "../services/ClientConfigurationService";
+import {ClientConfigurationService} from "../services/ClientConfigurationService";
 import {Pagination} from "../viewmodels/Pagination";
 import {ModalDirective} from "ng2-bootstrap";
 import {Category} from "../models/Category";
@@ -24,7 +24,7 @@ declare var $: any;
         TimeService,
         ClientApiService,
         ClientProceedResponseService,
-        ConfigurationService
+        ClientConfigurationService
     ],
 })
 
@@ -43,7 +43,7 @@ export class CategoryManagementComponent implements OnInit {
     private _clientCategoryService: IClientCategoryService;
 
     // Service which provides functions to access application configuration.
-    private _clientConfigurationService: ConfigurationService;
+    private _clientConfigurationService: ClientConfigurationService;
 
     // Whether records are being searched or not.
     private _isLoading: boolean;
@@ -56,7 +56,7 @@ export class CategoryManagementComponent implements OnInit {
 
     // Initiate component with dependency injections.
     public constructor(categoryService: ClientCategoryService, timeService: TimeService,
-                       responseAnalyzeService: ClientProceedResponseService, configurationService: ConfigurationService) {
+                       responseAnalyzeService: ClientProceedResponseService, configurationService: ClientConfigurationService) {
         this._clientCategoryService = categoryService;
         this._timeService = timeService;
         this._clientProceedResponseService = responseAnalyzeService;

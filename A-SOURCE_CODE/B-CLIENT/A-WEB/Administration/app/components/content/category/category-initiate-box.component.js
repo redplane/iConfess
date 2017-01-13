@@ -40,11 +40,11 @@ CategoryInitiateBoxComponent = __decorate([
         outputs: ['initiateCategory'],
         providers: [
             forms_1.FormBuilder,
-            ClientConfigurationService_1.ConfigurationService,
+            ClientConfigurationService_1.ClientConfigurationService,
             ClientAccountService_1.ClientAccountService
         ]
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder, ClientConfigurationService_1.ConfigurationService])
+    __metadata("design:paramtypes", [forms_1.FormBuilder, ClientConfigurationService_1.ClientConfigurationService])
 ], CategoryInitiateBoxComponent);
 exports.CategoryInitiateBoxComponent = CategoryInitiateBoxComponent;
 //# sourceMappingURL=category-initiate-box.component.js.map

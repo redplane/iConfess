@@ -1,13 +1,14 @@
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>i</b>Confess</a>
+        <a href="/"><b>i</b>Confess</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
 
         <form [formGroup]="loginBox"
-              #clientLoginBox="ngForm">
+              #clientLoginBox="ngForm"
+              novalidate>
 
             <!-- Email -->
             <div class="form-group has-feedback">
@@ -16,6 +17,8 @@
                        class="form-control"
                        placeholder="Email"
                        formControlName="email"
+                       autofocus="true"
+                       [readonly]="_isLoading"
 
                        required="required"
                        maxlength="128"
@@ -38,6 +41,7 @@
                        class="form-control"
                        placeholder="Password"
                        formControlName="password"
+                       [readonly]="_isLoading"
 
                        required="required"
                        minlength="6"
@@ -57,7 +61,7 @@
             <div class="form-group has-feedback">
                 <button type="button"
                         class="btn btn-primary btn-block btn-flat"
-                        [disabled]="!loginBox.valid"
+                        [disabled]="!loginBox.valid || _isLoading"
                         (click)="login($event)">
                     <span>Sign In</span>
                 </button>

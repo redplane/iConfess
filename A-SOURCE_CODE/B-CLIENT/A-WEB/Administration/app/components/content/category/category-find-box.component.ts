@@ -1,7 +1,7 @@
 import {Component, EventEmitter} from '@angular/core';
 import {FindCategoriesViewModel} from "../../../viewmodels/category/FindCategoriesViewModel";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ConfigurationService} from "../../../services/ClientConfigurationService";
+import {ClientConfigurationService} from "../../../services/ClientConfigurationService";
 import {Account} from "../../../models/Account";
 import {IClientAccountService} from "../../../interfaces/services/IClientAccountService";
 import {ClientAccountService} from "../../../services/clients/ClientAccountService";
@@ -19,7 +19,7 @@ import {TextSearch} from "../../../viewmodels/TextSearch";
         FormBuilder,
         FindCategoriesViewModel,
 
-        ConfigurationService,
+        ClientConfigurationService,
         ClientAccountService
     ]
 })
@@ -36,7 +36,7 @@ export class CategoryFindBoxComponent {
     private findCategoryBox: FormGroup;
 
     // Service which provides function to access application configuration.
-    private _clientConfigurationService: ConfigurationService;
+    private _clientConfigurationService: ClientConfigurationService;
 
     // Collection of conditions which are used for searching categories.
     private conditions: FindCategoriesViewModel;
@@ -48,7 +48,7 @@ export class CategoryFindBoxComponent {
     private _clientAccountService: IClientAccountService;
 
     // Initiate component with default dependency injection.
-    public constructor(private formBuilder: FormBuilder, clientConfigurationService: ConfigurationService,
+    public constructor(private formBuilder: FormBuilder, clientConfigurationService: ClientConfigurationService,
                        clientAccountService: ClientAccountService) {
 
         // Initiate account typeahead data.

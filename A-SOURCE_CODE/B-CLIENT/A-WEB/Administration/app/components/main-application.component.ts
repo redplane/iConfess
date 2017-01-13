@@ -11,16 +11,14 @@ export class MainApplicationComponent {
     // Router service which is used for routing.
     private _router: Router;
 
-    // Location of the current page.
-    public location: string;
-
     // Initiate component with IoC.
     public constructor(router: Router){
         this._router = router;
+    }
 
-        // Find the page location.
-        this.location = router.url;
-
+    // Find location of the current page.
+    public getLocation(): string{
+        return this._router.url;
     }
 
 }

@@ -24,6 +24,8 @@ var http_1 = require("@angular/http");
 var ng2_bootstrap_1 = require("ng2-bootstrap/ng2-bootstrap");
 var router_1 = require("@angular/router");
 var login_component_1 = require("../components/login.component");
+var account_detail_box_component_1 = require("../components/content/account/account-detail-box.component");
+var account_find_box_component_1 = require("../components/content/account/account-find-box.component");
 // Routing configuration.
 var appRoutes = [
     {
@@ -65,6 +67,8 @@ MainApplicationModule = __decorate([
             sidebar_component_1.SidebarComponent,
             login_component_1.LoginComponent,
             account_management_component_1.AccountManagementComponent,
+            account_detail_box_component_1.AccountDetailBoxComponent,
+            account_find_box_component_1.AccountFindBoxComponent,
             category_management_component_1.CategoryManagementComponent,
             category_detail_box_component_1.CategoryDetailBoxComponent,
             category_find_box_component_1.CategoryFindBoxComponent,

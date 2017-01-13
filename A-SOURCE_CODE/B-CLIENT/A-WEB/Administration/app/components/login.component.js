@@ -24,8 +24,8 @@ var LoginComponent = (function () {
         this._loginViewModel = new LoginViewModel_1.LoginViewModel();
         // Initiate login box and its components.
         this.loginBox = formBuilder.group({
-            email: ['', forms_1.Validators.compose([forms_1.Validators.required])],
-            password: ['', forms_1.Validators.compose([forms_1.Validators.required])]
+            email: [''],
+            password: ['']
         });
         // Client api service injection.
         this._clientApiService = clientApiService;
@@ -41,13 +41,19 @@ var LoginComponent = (function () {
     // This callback is fired when login button is clicked.
     LoginComponent.prototype.login = function (event) {
         var _this = this;
+        // Make the component show the loading process.
+        this._isLoading = true;
         // Pass the login view model to service.
         this._clientAccountService.login(this._loginViewModel)
             .then(function (response) {
+            // Convert response from service to ClientAuthenticationToken data type.
+            var clientAuthenticationDetail = response;
             // Save the client authentication information.
-            _this._clientAuthenticationService.saveAuthenticationToken(response);
+            _this._clientAuthenticationService.saveAuthenticationToken(clientAuthenticationDetail);
             // Redirect user to account management page.
             _this._clientRoutingService.navigate(['/account-management']);
+            // Cancel loading process.
+            _this._isLoading = false;
         })
             .catch(function (response) {
             if (!(response instanceof http_1.Response))
@@ -71,7 +77,14 @@ var LoginComponent = (function () {
                     // TODO: Display message.
                     break;
             }
+            // Cancel loading process.
+            _this._isLoading = false;
         });
+    };
+    // Called when component has been rendered successfully.
+    LoginComponent.prototype.ngOnInit = function () {
+        // By default, component loads nothing.
+        this._isLoading = false;
     };
     return LoginComponent;
 }());

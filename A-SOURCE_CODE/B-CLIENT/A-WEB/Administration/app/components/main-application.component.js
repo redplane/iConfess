@@ -14,9 +14,11 @@ var MainApplicationComponent = (function () {
     // Initiate component with IoC.
     function MainApplicationComponent(router) {
         this._router = router;
-        // Find the page location.
-        this.location = router.url;
     }
+    // Find location of the current page.
+    MainApplicationComponent.prototype.getLocation = function () {
+        return this._router.url;
+    };
     return MainApplicationComponent;
 }());
 MainApplicationComponent = __decorate([

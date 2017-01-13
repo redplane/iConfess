@@ -162,11 +162,11 @@ CategoryManagementComponent = __decorate([
             TimeService_1.TimeService,
             ClientApiService_1.ClientApiService,
             ClientProceedResponseService_1.ClientProceedResponseService,
-            ClientConfigurationService_1.ConfigurationService
+            ClientConfigurationService_1.ClientConfigurationService
         ],
     }),
     __metadata("design:paramtypes", [ClientCategoryService_1.ClientCategoryService, TimeService_1.TimeService,
-        ClientProceedResponseService_1.ClientProceedResponseService, ClientConfigurationService_1.ConfigurationService])
+        ClientProceedResponseService_1.ClientProceedResponseService, ClientConfigurationService_1.ClientConfigurationService])
 ], CategoryManagementComponent);
 exports.CategoryManagementComponent = CategoryManagementComponent;
 //# sourceMappingURL=category-management.component.js.map

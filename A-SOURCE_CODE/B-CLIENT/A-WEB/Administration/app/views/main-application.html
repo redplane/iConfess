@@ -1,18 +1,15 @@
 <div class="wrapper">
     <!-- Top horizontal navigation bar -->
-    <navigation-bar *ngIf = "location != '/'"></navigation-bar>
+    <navigation-bar *ngIf = "getLocation() != '/'"></navigation-bar>
 
     <!-- Sidebar -->
-    <sidebar *ngIf = "location != '/'"></sidebar>
+    <sidebar *ngIf = "getLocation() != '/'"></sidebar>
 
     <!-- Main page content -->
     <div class="content-wrapper">
         <!-- Content header -->
         <section class="content-header"
-                 *ngIf = "location != '/'">
-            <h1>
-                <div>{{location | json}}</div>
-            </h1>
+                 *ngIf = "getLocation() != '/'">
         </section>
 
         <!-- Application main content -->
@@ -24,7 +21,7 @@
 
     <!-- Main footer -->
     <footer class="main-footer"
-            *ngIf = "location != '/'">
+            *ngIf = "getLocation() != '/'">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.3.7
         </div>
