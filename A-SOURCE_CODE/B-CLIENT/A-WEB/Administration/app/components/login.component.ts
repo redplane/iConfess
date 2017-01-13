@@ -8,6 +8,7 @@ import {ClientAccountService} from "../services/clients/ClientAccountService";
 import {IClientAccountService} from "../interfaces/services/IClientAccountService";
 import {Response} from "@angular/http";
 import {ClientValidationService} from "../services/ClientValidationService";
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'login',
@@ -22,7 +23,7 @@ import {ClientValidationService} from "../services/ClientValidationService";
 export class LoginComponent {
 
     // Box which contains information for login purpose.
-    private loginBox: FormGroup;
+    public loginBox: FormGroup;
 
     // Service which handles links to access apis.
     private _clientApiService: ClientApiService;
@@ -36,14 +37,22 @@ export class LoginComponent {
     // Service which handles client validation.
     private _clientValidationService: ClientValidationService;
 
+    // Service which is for routing in client application.
+    private _clientRoutingService: Router;
+
     // Model which stores
     private _loginViewModel: LoginViewModel;
+
+    // Whether component is being loaded or not.
+    private _isLoading: boolean;
 
     // Initiate login box component with IoC.
     public constructor(formBuilder: FormBuilder,
                        clientApiService: ClientApiService,
                        clientValidationService: ClientValidationService,
-                       clientAuthenticationService: ClientAuthenticationService, clientAccountService: ClientAccountService){
+                       clientAuthenticationService: ClientAuthenticationService,
+                       clientAccountService: ClientAccountService,
+                       clientRoutingService: Router){
 
         // Initiate login view model.
         this._loginViewModel = new LoginViewModel();
@@ -65,15 +74,24 @@ export class LoginComponent {
 
         // Client account service injection.
         this._clientAccountService = clientAccountService;
+
+        // Service which is for routing.
+        this._clientRoutingService = clientRoutingService;
+
     }
 
     // This callback is fired when login button is clicked.
     public login(event:any): void{
 
         // Pass the login view model to service.
-        let result = this._clientAccountService.login(this._loginViewModel)
+        this._clientAccountService.login(this._loginViewModel)
             .then((response: Response | any) => {
 
+                // Save the client authentication information.
+                this._clientAuthenticationService.saveAuthenticationToken(response);
+
+                // Redirect user to account management page.
+                this._clientRoutingService.navigate(['/account-management']);
             })
             .catch((response : any) => {
                 if (!(response instanceof Response))
@@ -83,16 +101,25 @@ export class LoginComponent {
                 let information = response.json();
 
                 switch (response.status){
-                    case 400: // Bad request
 
-                        let model = {};
-                        this._clientValidationService.findFrontendValidationModel(this._clientValidationService.validationDictionary, model, information);
-                        console.log(model);
+                    // Bad request, usually submited parameters are invalid.
+                    case 400:
+
+                        // Refined the information.
+                        information = this._clientValidationService.findPropertiesValidationMessages(information);
+
+                        // Parse the response and update to controls of form.
+                        this._clientValidationService.findFrontendValidationModel(this._clientValidationService.validationDictionary, this.loginBox, information);
+                        break;
+                    case 404:
+                        console.log(response);
+                        // TODO: Display message.
+                        break;
+                    case 500:
+                        console.log(response);
+                        // TODO: Display message.
                         break;
                 }
-
-
             });
-        console.log(result);
     }
 }

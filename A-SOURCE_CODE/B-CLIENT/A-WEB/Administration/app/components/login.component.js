@@ -16,9 +16,10 @@ var ClientApiService_1 = require("../services/ClientApiService");
 var ClientAccountService_1 = require("../services/clients/ClientAccountService");
 var http_1 = require("@angular/http");
 var ClientValidationService_1 = require("../services/ClientValidationService");
+var router_1 = require("@angular/router");
 var LoginComponent = (function () {
     // Initiate login box component with IoC.
-    function LoginComponent(formBuilder, clientApiService, clientValidationService, clientAuthenticationService, clientAccountService) {
+    function LoginComponent(formBuilder, clientApiService, clientValidationService, clientAuthenticationService, clientAccountService, clientRoutingService) {
         // Initiate login view model.
         this._loginViewModel = new LoginViewModel_1.LoginViewModel();
         // Initiate login box and its components.
@@ -34,13 +35,19 @@ var LoginComponent = (function () {
         this._clientAuthenticationService = clientAuthenticationService;
         // Client account service injection.
         this._clientAccountService = clientAccountService;
+        // Service which is for routing.
+        this._clientRoutingService = clientRoutingService;
     }
     // This callback is fired when login button is clicked.
     LoginComponent.prototype.login = function (event) {
         var _this = this;
         // Pass the login view model to service.
-        var result = this._clientAccountService.login(this._loginViewModel)
+        this._clientAccountService.login(this._loginViewModel)
             .then(function (response) {
+            // Save the client authentication information.
+            _this._clientAuthenticationService.saveAuthenticationToken(response);
+            // Redirect user to account management page.
+            _this._clientRoutingService.navigate(['/account-management']);
         })
             .catch(function (response) {
             if (!(response instanceof http_1.Response))
@@ -48,14 +55,23 @@ var LoginComponent = (function () {
             // Find the response object.
             var information = response.json();
             switch (response.status) {
+                // Bad request, usually submited parameters are invalid.
                 case 400:
-                    var model = {};
-                    _this._clientValidationService.findFrontendValidationModel(_this._clientValidationService.validationDictionary, model, information);
-                    console.log(model);
+                    // Refined the information.
+                    information = _this._clientValidationService.findPropertiesValidationMessages(information);
+                    // Parse the response and update to controls of form.
+                    _this._clientValidationService.findFrontendValidationModel(_this._clientValidationService.validationDictionary, _this.loginBox, information);
+                    break;
+                case 404:
+                    console.log(response);
+                    // TODO: Display message.
+                    break;
+                case 500:
+                    console.log(response);
+                    // TODO: Display message.
                     break;
             }
         });
-        console.log(result);
     };
     return LoginComponent;
 }());
@@ -73,7 +89,9 @@ LoginComponent = __decorate([
     __metadata("design:paramtypes", [forms_1.FormBuilder,
         ClientApiService_1.ClientApiService,
         ClientValidationService_1.ClientValidationService,
-        ClientAuthenticationService_1.ClientAuthenticationService, ClientAccountService_1.ClientAccountService])
+        ClientAuthenticationService_1.ClientAuthenticationService,
+        ClientAccountService_1.ClientAccountService,
+        router_1.Router])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

@@ -23,7 +23,8 @@ const appRoutes: Routes = [
     },
     {
         path: 'account-management',
-        component: AccountManagementComponent
+        component: AccountManagementComponent,
+
     },
     {
         path: 'category-management',

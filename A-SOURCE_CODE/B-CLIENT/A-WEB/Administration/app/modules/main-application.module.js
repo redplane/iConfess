@@ -32,7 +32,7 @@ var appRoutes = [
     },
     {
         path: 'account-management',
-        component: account_management_component_1.AccountManagementComponent
+        component: account_management_component_1.AccountManagementComponent,
     },
     {
         path: 'category-management',

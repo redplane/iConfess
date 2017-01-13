@@ -19,15 +19,19 @@ export class ClientValidationService{
         // Get through every key in parameter.
         for (let i = 0; i < keys.length; i++){
 
-            // Find key in list of keys.
-            let key = this.findCamelCasePropertyName(keys[i]);
+            // Find the key.
+            let key = keys[i];
 
             // Invalid key.
             if (key == null || key.length < 1)
                 continue;
 
+            // Find key in list of keys.
+            let camelCaseKey = this.findCamelCasePropertyName(keys[i]);
+
+
             // Find validation message of the specific key.
-            this.findPropertyValidationMessages(properties, key, parameter[key]);
+            this.findPropertyValidationMessages(properties, camelCaseKey, parameter[key]);
         }
 
         return properties;
@@ -59,6 +63,8 @@ export class ClientValidationService{
             if (key == null || key.length < 1)
                 continue;
 
+            key = this.findCamelCasePropertyName(key);
+
             // Key already exists in the source property.
             if (pointer[key] != null){
                 pointer = pointer[key];
@@ -81,7 +87,32 @@ export class ClientValidationService{
     /*
     * Convert validation property sent back from back-end.
     * */
-    public findFrontendValidationModel(dictionary: any, pointer:any, parameter:any) : any{
+    /*
+     * Input:
+     * input = {
+     * 	pagination:{
+     * 		index: ['INFORMATION_REQUIRED'],
+     * 		records: ['RECORD_MIN_INVALID','RECORD_MAX_INVALID']
+     * 		}
+     * 	};
+     *
+     * Output:
+     * output = {
+     *  controls:{
+     *      pagination:{
+     *          controls:{
+     *              index:{
+     *                  required: true
+     *              },
+     *              records:{
+     *                  required: true
+     *              }
+     *          }
+     *      }
+     *  }
+     * }
+     * */
+    public findFrontendValidationModel(propertyValidationMap: any, model: any, parameter:any): void {
 
         // Invalid parameter.
         if (parameter == null)
@@ -89,9 +120,19 @@ export class ClientValidationService{
 
         if (parameter instanceof Array){
 
-            for (let index = 0; index < parameter.length; index++){
-                let property = parameter[index];
-                pointer[dictionary[property]] = true;
+            let errorsList = {};
+
+            for (var index = 0; index < parameter.length; index++){
+                var property = parameter[index];
+
+                errorsList[propertyValidationMap[property]] = true;
+
+                // Mark propery as it has been changed.
+                model.markAsDirty();
+                model.markAsTouched();
+
+                model.setErrors(errorsList);
+
             }
             return;
         }
@@ -99,15 +140,30 @@ export class ClientValidationService{
         // Find all properties of parameter.
         var properties = Object.keys(parameter);
 
-        for (let i = 0; i < properties.length; i++){
+        // Iterate through every property of object. (Root is validationModel)
+        for (var i = 0; i < properties.length; i++){
+
+            // Find the key which is currently iterated.
             var key = properties[i];
-            if (pointer[key] == null) {
-                pointer[key] = {};
+
+            // Initiate a controls object which contains the iterated property name.
+            if (model['controls'] == null) {
+                console.log('model doesn\'t have controls');
+                continue;
             }
 
-            this.findFrontendValidationModel(dictionary, pointer[key], parameter[key]);
+
+            // Property doesn't exist in the model.
+            if (model['controls'][key] == null) {
+                console.log(`model["controls"][${key}] doesn't exist`);
+                continue;
+            }
+
+            console.log(`key = ${key}`);
+            //model['controls'][key] = {};
+            this.findFrontendValidationModel(propertyValidationMap, model['controls'][key], parameter[key]);
         }
-    }
+    };
 
     /*
     * Find property name in camel-case.
