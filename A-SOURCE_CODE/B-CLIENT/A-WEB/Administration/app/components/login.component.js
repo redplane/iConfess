@@ -47,7 +47,7 @@ var LoginComponent = (function () {
         this._clientAccountService.login(this._loginViewModel)
             .then(function (response) {
             // Convert response from service to ClientAuthenticationToken data type.
-            var clientAuthenticationDetail = response;
+            var clientAuthenticationDetail = response.json();
             // Save the client authentication information.
             _this._clientAuthenticationService.saveAuthenticationToken(clientAuthenticationDetail);
             // Redirect user to account management page.

@@ -49,7 +49,14 @@
                     <input class="form-control"
                            placeholder="Category name"
                            formControlName="name"
-                           [(ngModel)]="conditions.name.value"/>
+                           [(ngModel)]="conditions.name.value"
+
+                           [minlength]="_clientDataConstraintService.minLengthCategoryName"
+                           [maxlength]="_clientDataConstraintService.maxLengthCategoryName"/>
+
+                    <ul class="validation-summary-errors">
+                        <li *ngIf="findCategoryBox.controls.name.hasError('minlength')">Category name must contain at least {{_clientDataConstraintService.minLengthCategoryName}} characters</li>
+                    </ul>
                 </div>
 
                 <!-- Pagination -->

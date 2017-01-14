@@ -18,14 +18,18 @@ var ClientProceedResponseService_1 = require("../services/ClientProceedResponseS
 var ClientConfigurationService_1 = require("../services/ClientConfigurationService");
 var Pagination_1 = require("../viewmodels/Pagination");
 var Category_1 = require("../models/Category");
+var ClientAuthenticationService_1 = require("../services/clients/ClientAuthenticationService");
 var CategoryManagementComponent = (function () {
     // Initiate component with dependency injections.
-    function CategoryManagementComponent(categoryService, timeService, responseAnalyzeService, configurationService) {
+    function CategoryManagementComponent(categoryService, timeService, clientProceedResponseService, clientConfigurationService, clientAuthenticationService) {
         this._clientCategoryService = categoryService;
         this._timeService = timeService;
-        this._clientProceedResponseService = responseAnalyzeService;
+        // Find client proceed response service.
+        this._clientProceedResponseService = clientProceedResponseService;
         // Find configuration service in IoC.
-        this._clientConfigurationService = configurationService;
+        this._clientConfigurationService = clientConfigurationService;
+        // Find client authentication service.
+        this._clientAuthenticationService = clientAuthenticationService;
         // Initiate categories search result.
         this._categorySearchResult = new CategorySearchDetailViewModel_1.CategorySearchDetailViewModel();
     }
@@ -146,6 +150,7 @@ var CategoryManagementComponent = (function () {
     CategoryManagementComponent.prototype.ngOnInit = function () {
         // Initiate category search conditions.
         this._findCategoriesViewModel = new FindCategoriesViewModel_1.FindCategoriesViewModel();
+        // Refactoring pagination.
         var pagination = new Pagination_1.Pagination();
         pagination.index = 1;
         pagination.records = this._clientConfigurationService.findMaxPageRecords();
@@ -162,11 +167,14 @@ CategoryManagementComponent = __decorate([
             TimeService_1.TimeService,
             ClientApiService_1.ClientApiService,
             ClientProceedResponseService_1.ClientProceedResponseService,
-            ClientConfigurationService_1.ClientConfigurationService
+            ClientConfigurationService_1.ClientConfigurationService,
+            ClientAuthenticationService_1.ClientAuthenticationService
         ],
     }),
     __metadata("design:paramtypes", [ClientCategoryService_1.ClientCategoryService, TimeService_1.TimeService,
-        ClientProceedResponseService_1.ClientProceedResponseService, ClientConfigurationService_1.ClientConfigurationService])
+        ClientProceedResponseService_1.ClientProceedResponseService,
+        ClientConfigurationService_1.ClientConfigurationService,
+        ClientAuthenticationService_1.ClientAuthenticationService])
 ], CategoryManagementComponent);
 exports.CategoryManagementComponent = CategoryManagementComponent;
 //# sourceMappingURL=category-management.component.js.map

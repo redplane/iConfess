@@ -9,10 +9,10 @@ export interface IClientCategoryService{
     findCategories(categorySearch: FindCategoriesViewModel): any;
 
     // Find categories by using specific conditions and delete 'em all.
-    deleteCategories(findCategoriesConditions: FindCategoriesViewModel);
+    deleteCategories(findCategoriesConditions: FindCategoriesViewModel): any;
 
     // Find categories by using index and update their information.
-    changeCategoryDetails(id: number, category: Category);
+    changeCategoryDetails(id: number, category: Category): any;
 
     // Initiate category into system.
     initiateCategory(category:any) : any;

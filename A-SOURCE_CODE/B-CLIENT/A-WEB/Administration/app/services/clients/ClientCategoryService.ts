@@ -2,10 +2,11 @@ import {IClientCategoryService} from "../../interfaces/services/IClientCategoryS
 import {Injectable} from '@angular/core';
 import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
 import {ClientApiService} from "../ClientApiService";
-import {Http, Headers, RequestOptions} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {UnixDateRange} from "../../viewmodels/UnixDateRange";
 import {Category} from "../../models/Category";
+import {ClientAuthenticationService} from "./ClientAuthenticationService";
+import {toPromise} from "rxjs/operator/toPromise";
 
 /*
 * Service which handles category business.
@@ -14,16 +15,18 @@ import {Category} from "../../models/Category";
 export class ClientCategoryService implements IClientCategoryService {
 
     // Service which handles hyperlink.
-    private _hyperlinkService: ClientApiService;
+    private _clientApiService: ClientApiService;
 
-    // HttpClient which is used for handling request to web api service.
-    private _httpClient: Http;
+    // Authentication service.
+    private _clientAuthenticationService : ClientAuthenticationService;
 
     // Initiate instance of category service.
-    public constructor(hyperlinkService: ClientApiService, httpClient: Http){
+    public constructor(
+        clientApiService: ClientApiService,
+        clientAuthenticationService: ClientAuthenticationService){
 
-        this._hyperlinkService = hyperlinkService;
-        this._httpClient = httpClient;
+        this._clientApiService = clientApiService;
+        this._clientAuthenticationService = clientAuthenticationService;
     }
 
     // Find categories by using specific conditions.
@@ -36,62 +39,38 @@ export class ClientCategoryService implements IClientCategoryService {
         if (conditions.pagination.index < 0)
             conditions.pagination.index = 0;
 
-        let requestOptions = new RequestOptions({
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-
-        // Request to api to obtain list of available categories in system.
-        return this._httpClient.post(this._hyperlinkService.apiFindCategory, conditions, requestOptions)
+        return this._clientApiService.post(
+            this._clientAuthenticationService.findClientAuthenticationToken(),
+            this._clientApiService.apiFindCategory,
+            null,
+            conditions)
             .toPromise();
     }
 
     // Find categories by using specific conditions and delete 'em.
     public deleteCategories(findCategoriesConditions: FindCategoriesViewModel){
-        let requestOptions = new RequestOptions({
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: findCategoriesConditions
-        });
-
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.delete(this._hyperlinkService.apiDeleteCategory, requestOptions)
+        return this._clientApiService.delete(
+            this._clientAuthenticationService.findClientAuthenticationToken(),
+            this._clientApiService.apiDeleteCategory,
+            null,
+            findCategoriesConditions)
             .toPromise();
     }
 
     // Change category detail information by searching its index.
     public changeCategoryDetails(id: number, category: Category){
-
-        let requestOptions = new RequestOptions({
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-
-        // Construct change category api.
-        let changeCategoryDetailApi = `${this._hyperlinkService.apiChangeCategoryDetail}?index=${id}`;
-
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.put(changeCategoryDetailApi, category, requestOptions)
+        return this._clientApiService.put(this._clientAuthenticationService.findClientAuthenticationToken(),
+            this._clientApiService.apiChangeCategoryDetail, {index: id}, category)
             .toPromise();
     }
 
     // Initiate category into system.
     public initiateCategory(category: any) : any {
-
-        let requestOptions = new RequestOptions({
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-
-        // Construct change category api.
-        let changeCategoryDetailApi = `${this._hyperlinkService.apiInitiateCategory}`;
-
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.post(changeCategoryDetailApi, category, requestOptions)
+        return this._clientApiService.put(this._clientAuthenticationService.findClientAuthenticationToken(),
+            this._clientApiService.apiInitiateCategory, null, category)
             .toPromise();
     }
     // Reset categories search conditions.

@@ -11,17 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var FindCategoriesViewModel_1 = require("../../viewmodels/category/FindCategoriesViewModel");
 var ClientApiService_1 = require("../ClientApiService");
-var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
 var UnixDateRange_1 = require("../../viewmodels/UnixDateRange");
+var ClientAuthenticationService_1 = require("./ClientAuthenticationService");
 /*
 * Service which handles category business.
 * */
 var ClientCategoryService = (function () {
     // Initiate instance of category service.
-    function ClientCategoryService(hyperlinkService, httpClient) {
-        this._hyperlinkService = hyperlinkService;
-        this._httpClient = httpClient;
+    function ClientCategoryService(clientApiService, clientAuthenticationService) {
+        this._clientApiService = clientApiService;
+        this._clientAuthenticationService = clientAuthenticationService;
     }
     // Find categories by using specific conditions.
     ClientCategoryService.prototype.findCategories = function (categorySearch) {
@@ -31,51 +31,25 @@ var ClientCategoryService = (function () {
         conditions.pagination.index -= 1;
         if (conditions.pagination.index < 0)
             conditions.pagination.index = 0;
-        var requestOptions = new http_1.RequestOptions({
-            headers: new http_1.Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-        // Request to api to obtain list of available categories in system.
-        return this._httpClient.post(this._hyperlinkService.apiFindCategory, conditions, requestOptions)
+        return this._clientApiService.post(this._clientAuthenticationService.findClientAuthenticationToken(), this._clientApiService.apiFindCategory, null, conditions)
             .toPromise();
     };
     // Find categories by using specific conditions and delete 'em.
     ClientCategoryService.prototype.deleteCategories = function (findCategoriesConditions) {
-        var requestOptions = new http_1.RequestOptions({
-            headers: new http_1.Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: findCategoriesConditions
-        });
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.delete(this._hyperlinkService.apiDeleteCategory, requestOptions)
+        return this._clientApiService.delete(this._clientAuthenticationService.findClientAuthenticationToken(), this._clientApiService.apiDeleteCategory, null, findCategoriesConditions)
             .toPromise();
     };
     // Change category detail information by searching its index.
     ClientCategoryService.prototype.changeCategoryDetails = function (id, category) {
-        var requestOptions = new http_1.RequestOptions({
-            headers: new http_1.Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-        // Construct change category api.
-        var changeCategoryDetailApi = this._hyperlinkService.apiChangeCategoryDetail + "?index=" + id;
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.put(changeCategoryDetailApi, category, requestOptions)
+        return this._clientApiService.put(this._clientAuthenticationService.findClientAuthenticationToken(), this._clientApiService.apiChangeCategoryDetail, { index: id }, category)
             .toPromise();
     };
     // Initiate category into system.
     ClientCategoryService.prototype.initiateCategory = function (category) {
-        var requestOptions = new http_1.RequestOptions({
-            headers: new http_1.Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-        // Construct change category api.
-        var changeCategoryDetailApi = "" + this._hyperlinkService.apiInitiateCategory;
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.post(changeCategoryDetailApi, category, requestOptions)
+        return this._clientApiService.put(this._clientAuthenticationService.findClientAuthenticationToken(), this._clientApiService.apiInitiateCategory, null, category)
             .toPromise();
     };
     // Reset categories search conditions.
@@ -94,7 +68,8 @@ var ClientCategoryService = (function () {
 }());
 ClientCategoryService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [ClientApiService_1.ClientApiService, http_1.Http])
+    __metadata("design:paramtypes", [ClientApiService_1.ClientApiService,
+        ClientAuthenticationService_1.ClientAuthenticationService])
 ], ClientCategoryService);
 exports.ClientCategoryService = ClientCategoryService;
 //# sourceMappingURL=ClientCategoryService.js.map

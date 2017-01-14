@@ -13,6 +13,7 @@ import {ClientConfigurationService} from "../services/ClientConfigurationService
 import {Pagination} from "../viewmodels/Pagination";
 import {ModalDirective} from "ng2-bootstrap";
 import {Category} from "../models/Category";
+import {ClientAuthenticationService} from "../services/clients/ClientAuthenticationService";
 
 declare var $: any;
 
@@ -22,9 +23,11 @@ declare var $: any;
     providers: [
         ClientCategoryService,
         TimeService,
+
         ClientApiService,
         ClientProceedResponseService,
-        ClientConfigurationService
+        ClientConfigurationService,
+        ClientAuthenticationService
     ],
 })
 
@@ -45,6 +48,9 @@ export class CategoryManagementComponent implements OnInit {
     // Service which provides functions to access application configuration.
     private _clientConfigurationService: ClientConfigurationService;
 
+    // Service which handles authentication information.
+    private _clientAuthenticationService: ClientAuthenticationService;
+
     // Whether records are being searched or not.
     private _isLoading: boolean;
 
@@ -56,13 +62,20 @@ export class CategoryManagementComponent implements OnInit {
 
     // Initiate component with dependency injections.
     public constructor(categoryService: ClientCategoryService, timeService: TimeService,
-                       responseAnalyzeService: ClientProceedResponseService, configurationService: ClientConfigurationService) {
+                       clientProceedResponseService: ClientProceedResponseService,
+                       clientConfigurationService: ClientConfigurationService,
+                       clientAuthenticationService: ClientAuthenticationService) {
         this._clientCategoryService = categoryService;
         this._timeService = timeService;
-        this._clientProceedResponseService = responseAnalyzeService;
+
+        // Find client proceed response service.
+        this._clientProceedResponseService = clientProceedResponseService;
 
         // Find configuration service in IoC.
-        this._clientConfigurationService = configurationService;
+        this._clientConfigurationService = clientConfigurationService;
+
+        // Find client authentication service.
+        this._clientAuthenticationService = clientAuthenticationService;
 
         // Initiate categories search result.
         this._categorySearchResult = new CategorySearchDetailViewModel();
@@ -217,6 +230,7 @@ export class CategoryManagementComponent implements OnInit {
         // Initiate category search conditions.
         this._findCategoriesViewModel = new FindCategoriesViewModel();
 
+        // Refactoring pagination.
         let pagination = new Pagination();
         pagination.index = 1;
         pagination.records = this._clientConfigurationService.findMaxPageRecords();

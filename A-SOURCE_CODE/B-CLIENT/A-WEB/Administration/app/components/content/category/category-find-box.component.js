@@ -16,15 +16,17 @@ var ClientAccountService_1 = require("../../../services/clients/ClientAccountSer
 var Pagination_1 = require("../../../viewmodels/Pagination");
 var FindAccountsViewModel_1 = require("../../../viewmodels/accounts/FindAccountsViewModel");
 var TextSearch_1 = require("../../../viewmodels/TextSearch");
+var ClientDataConstraintService_1 = require("../../../services/ClientDataConstraintService");
 var CategoryFindBoxComponent = (function () {
     // Initiate component with default dependency injection.
-    function CategoryFindBoxComponent(formBuilder, clientConfigurationService, clientAccountService) {
+    function CategoryFindBoxComponent(formBuilder, clientConfigurationService, clientAccountService, clientDataConstraintService) {
         this.formBuilder = formBuilder;
         // Initiate account typeahead data.
         this._accounts = new Array();
         // Find configuration service from IoC.
         this._clientConfigurationService = clientConfigurationService;
         this._clientAccountService = clientAccountService;
+        this._clientDataConstraintService = clientDataConstraintService;
         // Form control of find category box.
         this.findCategoryBox = this.formBuilder.group({
             name: [null],
@@ -100,11 +102,14 @@ CategoryFindBoxComponent = __decorate([
             forms_1.FormBuilder,
             FindCategoriesViewModel_1.FindCategoriesViewModel,
             ClientConfigurationService_1.ClientConfigurationService,
-            ClientAccountService_1.ClientAccountService
+            ClientAccountService_1.ClientAccountService,
+            ClientDataConstraintService_1.ClientDataConstraintService
         ]
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder, ClientConfigurationService_1.ClientConfigurationService,
-        ClientAccountService_1.ClientAccountService])
+    __metadata("design:paramtypes", [forms_1.FormBuilder,
+        ClientConfigurationService_1.ClientConfigurationService,
+        ClientAccountService_1.ClientAccountService,
+        ClientDataConstraintService_1.ClientDataConstraintService])
 ], CategoryFindBoxComponent);
 exports.CategoryFindBoxComponent = CategoryFindBoxComponent;
 //# sourceMappingURL=category-find-box.component.js.map

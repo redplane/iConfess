@@ -14,12 +14,6 @@ export class ClientAuthenticationService implements IClientAuthenticationService
     // Key in local storage where authentication token should be stored at.
     private _authenticationKey : string;
 
-    // Service which handles client api
-    private _clientApiService: ClientApiService;
-
-    // Http client service.
-    private _httpClient: Http;
-
     // The the name of key which is used for sotring authentication information.
     public findAuthenticationStorageKey(): string{
         return this._authenticationKey;
@@ -74,10 +68,7 @@ export class ClientAuthenticationService implements IClientAuthenticationService
     }
 
     // Initiate service with IoC.
-    public constructor(clientApiService: ClientApiService, httpClient: Http){
+    public constructor(clientApiService: ClientApiService){
         this._authenticationKey = "authentication-iConfess";
-
-        // client api service injection.
-        this._clientApiService = clientApiService;
     }
 }

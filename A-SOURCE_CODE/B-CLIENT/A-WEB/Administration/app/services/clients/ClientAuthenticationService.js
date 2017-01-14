@@ -11,16 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ClientAuthenticationToken_1 = require("../../models/ClientAuthenticationToken");
 var core_1 = require("@angular/core");
 var ClientApiService_1 = require("../ClientApiService");
-var http_1 = require("@angular/http");
 /*
 * Implement authentication business handler
 * */
 var ClientAuthenticationService = (function () {
     // Initiate service with IoC.
-    function ClientAuthenticationService(clientApiService, httpClient) {
+    function ClientAuthenticationService(clientApiService) {
         this._authenticationKey = "authentication-iConfess";
-        // client api service injection.
-        this._clientApiService = clientApiService;
     }
     // The the name of key which is used for sotring authentication information.
     ClientAuthenticationService.prototype.findAuthenticationStorageKey = function () {
@@ -65,7 +62,7 @@ var ClientAuthenticationService = (function () {
 }());
 ClientAuthenticationService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [ClientApiService_1.ClientApiService, http_1.Http])
+    __metadata("design:paramtypes", [ClientApiService_1.ClientApiService])
 ], ClientAuthenticationService);
 exports.ClientAuthenticationService = ClientAuthenticationService;
 //# sourceMappingURL=ClientAuthenticationService.js.map

@@ -23,8 +23,6 @@ export class ClientConfigurationService{
     // List of properties which can be used for categories sorting.
     public categorySortProperties: Dictionary<CategorySortProperty>;
 
-
-
     public constructor(){
 
         // Amount of records which can be displayed on the screen.

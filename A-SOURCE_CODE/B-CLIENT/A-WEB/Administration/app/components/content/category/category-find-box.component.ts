@@ -9,6 +9,7 @@ import {Pagination} from "../../../viewmodels/Pagination";
 import {FindAccountsViewModel} from "../../../viewmodels/accounts/FindAccountsViewModel";
 import {Response} from "@angular/http";
 import {TextSearch} from "../../../viewmodels/TextSearch";
+import {ClientDataConstraintService} from "../../../services/ClientDataConstraintService";
 
 @Component({
     selector: 'category-find-box',
@@ -20,7 +21,8 @@ import {TextSearch} from "../../../viewmodels/TextSearch";
         FindCategoriesViewModel,
 
         ClientConfigurationService,
-        ClientAccountService
+        ClientAccountService,
+        ClientDataConstraintService
     ]
 })
 
@@ -35,9 +37,6 @@ export class CategoryFindBoxComponent {
     // Category find box which contains category.
     private findCategoryBox: FormGroup;
 
-    // Service which provides function to access application configuration.
-    private _clientConfigurationService: ClientConfigurationService;
-
     // Collection of conditions which are used for searching categories.
     private conditions: FindCategoriesViewModel;
 
@@ -47,9 +46,17 @@ export class CategoryFindBoxComponent {
     // Service which handles client accounts api to service.
     private _clientAccountService: IClientAccountService;
 
+    // Service which provides function to access application configuration.
+    private _clientConfigurationService: ClientConfigurationService;
+
+    // Service which handles data constraint of application.
+    private _clientDataConstraintService: ClientDataConstraintService;
+
     // Initiate component with default dependency injection.
-    public constructor(private formBuilder: FormBuilder, clientConfigurationService: ClientConfigurationService,
-                       clientAccountService: ClientAccountService) {
+    public constructor(private formBuilder: FormBuilder,
+                       clientConfigurationService: ClientConfigurationService,
+                       clientAccountService: ClientAccountService,
+                       clientDataConstraintService: ClientDataConstraintService) {
 
         // Initiate account typeahead data.
         this._accounts = new Array<Account>();
@@ -57,6 +64,7 @@ export class CategoryFindBoxComponent {
         // Find configuration service from IoC.
         this._clientConfigurationService = clientConfigurationService;
         this._clientAccountService = clientAccountService;
+        this._clientDataConstraintService = clientDataConstraintService;
 
         // Form control of find category box.
         this.findCategoryBox = this.formBuilder.group({

@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
             .then((response: Response | any) => {
 
                 // Convert response from service to ClientAuthenticationToken data type.
-                let clientAuthenticationDetail = <ClientAuthenticationToken> response;
+                let clientAuthenticationDetail = <ClientAuthenticationToken> response.json();
 
                 // Save the client authentication information.
                 this._clientAuthenticationService.saveAuthenticationToken(clientAuthenticationDetail);
