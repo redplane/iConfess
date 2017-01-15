@@ -156,4 +156,10 @@
   <data name="PostReportNotFound" xml:space="preserve">
     <value>POST_REPORT_NOT_FOUND</value>
   </data>
+  <data name="TokenExpired" xml:space="preserve">
+    <value>TOEKN_EXPIRED</value>
+  </data>
+  <data name="TokenNotFound" xml:space="preserve">
+    <value>TOKEN_NOT_FOUND</value>
+  </data>
 </root>
