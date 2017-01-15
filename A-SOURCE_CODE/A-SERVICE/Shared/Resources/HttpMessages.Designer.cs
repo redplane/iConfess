@@ -176,5 +176,23 @@ namespace Shared.Resources {
                 return ResourceManager.GetString("PostReportNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOEKN_EXPIRED.
+        /// </summary>
+        public static string TokenExpired {
+            get {
+                return ResourceManager.GetString("TokenExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOKEN_NOT_FOUND.
+        /// </summary>
+        public static string TokenNotFound {
+            get {
+                return ResourceManager.GetString("TokenNotFound", resourceCulture);
+            }
+        }
     }
 }
