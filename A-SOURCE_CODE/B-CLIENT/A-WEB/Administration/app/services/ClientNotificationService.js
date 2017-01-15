@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 /*
 * Position of toast notification.
 * */
+var ToastPosition;
 (function (ToastPosition) {
     ToastPosition[ToastPosition["topRight"] = 0] = "topRight";
     ToastPosition[ToastPosition["topLeft"] = 1] = "topLeft";
@@ -21,8 +22,7 @@ var core_1 = require("@angular/core");
     ToastPosition[ToastPosition["bottomFullWidth"] = 5] = "bottomFullWidth";
     ToastPosition[ToastPosition["topCenter"] = 6] = "topCenter";
     ToastPosition[ToastPosition["bottomCenter"] = 7] = "bottomCenter";
-})(exports.ToastPosition || (exports.ToastPosition = {}));
-var ToastPosition = exports.ToastPosition;
+})(ToastPosition = exports.ToastPosition || (exports.ToastPosition = {}));
 /*
 * Configuration of toast.
 * */
@@ -101,11 +101,11 @@ var ClientNotificationService = (function () {
                 return 'toast-top-right';
         }
     };
-    ClientNotificationService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], ClientNotificationService);
     return ClientNotificationService;
 }());
+ClientNotificationService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
+], ClientNotificationService);
 exports.ClientNotificationService = ClientNotificationService;
 //# sourceMappingURL=ClientNotificationService.js.map
