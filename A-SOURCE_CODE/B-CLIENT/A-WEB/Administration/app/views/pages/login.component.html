@@ -4,7 +4,9 @@
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">
+            <span>{{_loginResponseMessage == null ? 'Sign in to start your session': _loginResponseMessage}} </span>
+        </p>
 
         <form [formGroup]="loginBox"
               #clientLoginBox="ngForm"

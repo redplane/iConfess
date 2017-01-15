@@ -24,23 +24,11 @@ import {ClientAuthenticationToken} from "../models/ClientAuthenticationToken";
 export class LoginComponent implements OnInit {
 
 
+    // Error message which should be displayed on the login box component.
+    private _loginResponseMessage: string;
+
     // Box which contains information for login purpose.
     public loginBox: FormGroup;
-
-    // Service which handles links to access apis.
-    private _clientApiService: ClientApiService;
-
-    // Service which handles client authentication.
-    private _clientAuthenticationService: IClientAuthenticationService;
-
-    // Service which handles stuffs related to account.
-    private _clientAccountService : IClientAccountService;
-
-    // Service which handles client validation.
-    private _clientValidationService: ClientValidationService;
-
-    // Service which is for routing in client application.
-    private _clientRoutingService: Router;
 
     // Model which stores
     private _loginViewModel: LoginViewModel;
@@ -49,36 +37,21 @@ export class LoginComponent implements OnInit {
     private _isLoading: boolean;
 
     // Initiate login box component with IoC.
-    public constructor(formBuilder: FormBuilder,
-                       clientApiService: ClientApiService,
-                       clientValidationService: ClientValidationService,
-                       clientAuthenticationService: ClientAuthenticationService,
-                       clientAccountService: ClientAccountService,
-                       clientRoutingService: Router){
+    public constructor(private formBuilder: FormBuilder,
+                       private clientApiService: ClientApiService,
+                       private clientValidationService: ClientValidationService,
+                       private clientAuthenticationService: ClientAuthenticationService,
+                       private clientAccountService: ClientAccountService,
+                       private clientRoutingService: Router){
 
         // Initiate login view model.
         this._loginViewModel = new LoginViewModel();
 
         // Initiate login box and its components.
-        this.loginBox = formBuilder.group({
+        this.loginBox = this.formBuilder.group({
             email: [''],
             password: ['']
         });
-
-        // Client api service injection.
-        this._clientApiService = clientApiService;
-
-        // Client validation service injection.
-        this._clientValidationService = clientValidationService;
-
-        // Client authentication service injection.
-        this._clientAuthenticationService = clientAuthenticationService;
-
-        // Client account service injection.
-        this._clientAccountService = clientAccountService;
-
-        // Service which is for routing.
-        this._clientRoutingService = clientRoutingService;
 
     }
 
@@ -88,18 +61,21 @@ export class LoginComponent implements OnInit {
         // Make the component show the loading process.
         this._isLoading = true;
 
+        // Clear the previous message.
+        this._loginResponseMessage = "";
+
         // Pass the login view model to service.
-        this._clientAccountService.login(this._loginViewModel)
+        this.clientAccountService.login(this._loginViewModel)
             .then((response: Response | any) => {
 
                 // Convert response from service to ClientAuthenticationToken data type.
                 let clientAuthenticationDetail = <ClientAuthenticationToken> response.json();
 
                 // Save the client authentication information.
-                this._clientAuthenticationService.saveAuthenticationToken(clientAuthenticationDetail);
+                this.clientAuthenticationService.saveAuthenticationToken(clientAuthenticationDetail);
 
                 // Redirect user to account management page.
-                this._clientRoutingService.navigate(['/account-management']);
+                this.clientRoutingService.navigate(['/account-management']);
 
                 // Cancel loading process.
                 this._isLoading = false;
@@ -117,12 +93,13 @@ export class LoginComponent implements OnInit {
                     case 400:
 
                         // Refined the information.
-                        information = this._clientValidationService.findPropertiesValidationMessages(information);
+                        information = this.clientValidationService.findPropertiesValidationMessages(information);
 
                         // Parse the response and update to controls of form.
-                        this._clientValidationService.findFrontendValidationModel(this._clientValidationService.validationDictionary, this.loginBox, information);
+                        this.clientValidationService.findFrontendValidationModel(this.clientValidationService.validationDictionary, this.loginBox, information);
                         break;
                     case 404:
+                        this._loginResponseMessage = information['message'];
                         console.log(response);
                         // TODO: Display message.
                         break;
@@ -139,6 +116,10 @@ export class LoginComponent implements OnInit {
 
     // Called when component has been rendered successfully.
     public ngOnInit(): void {
+
+        // No error should be shown on startup.
+        this._loginResponseMessage = "";
+
         // By default, component loads nothing.
         this._isLoading = false;
     }

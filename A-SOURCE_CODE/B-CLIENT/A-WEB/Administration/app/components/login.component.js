@@ -20,38 +20,36 @@ var router_1 = require("@angular/router");
 var LoginComponent = (function () {
     // Initiate login box component with IoC.
     function LoginComponent(formBuilder, clientApiService, clientValidationService, clientAuthenticationService, clientAccountService, clientRoutingService) {
+        this.formBuilder = formBuilder;
+        this.clientApiService = clientApiService;
+        this.clientValidationService = clientValidationService;
+        this.clientAuthenticationService = clientAuthenticationService;
+        this.clientAccountService = clientAccountService;
+        this.clientRoutingService = clientRoutingService;
         // Initiate login view model.
         this._loginViewModel = new LoginViewModel_1.LoginViewModel();
         // Initiate login box and its components.
-        this.loginBox = formBuilder.group({
+        this.loginBox = this.formBuilder.group({
             email: [''],
             password: ['']
         });
-        // Client api service injection.
-        this._clientApiService = clientApiService;
-        // Client validation service injection.
-        this._clientValidationService = clientValidationService;
-        // Client authentication service injection.
-        this._clientAuthenticationService = clientAuthenticationService;
-        // Client account service injection.
-        this._clientAccountService = clientAccountService;
-        // Service which is for routing.
-        this._clientRoutingService = clientRoutingService;
     }
     // This callback is fired when login button is clicked.
     LoginComponent.prototype.login = function (event) {
         var _this = this;
         // Make the component show the loading process.
         this._isLoading = true;
+        // Clear the previous message.
+        this._loginResponseMessage = "";
         // Pass the login view model to service.
-        this._clientAccountService.login(this._loginViewModel)
+        this.clientAccountService.login(this._loginViewModel)
             .then(function (response) {
             // Convert response from service to ClientAuthenticationToken data type.
             var clientAuthenticationDetail = response.json();
             // Save the client authentication information.
-            _this._clientAuthenticationService.saveAuthenticationToken(clientAuthenticationDetail);
+            _this.clientAuthenticationService.saveAuthenticationToken(clientAuthenticationDetail);
             // Redirect user to account management page.
-            _this._clientRoutingService.navigate(['/account-management']);
+            _this.clientRoutingService.navigate(['/account-management']);
             // Cancel loading process.
             _this._isLoading = false;
         })
@@ -64,11 +62,12 @@ var LoginComponent = (function () {
                 // Bad request, usually submited parameters are invalid.
                 case 400:
                     // Refined the information.
-                    information = _this._clientValidationService.findPropertiesValidationMessages(information);
+                    information = _this.clientValidationService.findPropertiesValidationMessages(information);
                     // Parse the response and update to controls of form.
-                    _this._clientValidationService.findFrontendValidationModel(_this._clientValidationService.validationDictionary, _this.loginBox, information);
+                    _this.clientValidationService.findFrontendValidationModel(_this.clientValidationService.validationDictionary, _this.loginBox, information);
                     break;
                 case 404:
+                    _this._loginResponseMessage = information['message'];
                     console.log(response);
                     // TODO: Display message.
                     break;
@@ -83,6 +82,8 @@ var LoginComponent = (function () {
     };
     // Called when component has been rendered successfully.
     LoginComponent.prototype.ngOnInit = function () {
+        // No error should be shown on startup.
+        this._loginResponseMessage = "";
         // By default, component loads nothing.
         this._isLoading = false;
     };
