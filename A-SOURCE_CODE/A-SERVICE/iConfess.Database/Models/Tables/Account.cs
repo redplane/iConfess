@@ -148,12 +148,6 @@ namespace iConfess.Database.Models.Tables
         [JsonIgnore]
         public ICollection<SignalrConnection> OutgoingSignalrConnections { get; set; }
 
-        /// <summary>
-        ///     One account can have many tokens
-        /// </summary>
-        [JsonIgnore]
-        public ICollection<Token> Tokens { get; set; }
-
         #endregion
     }
 }

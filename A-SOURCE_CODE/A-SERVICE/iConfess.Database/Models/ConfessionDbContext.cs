@@ -74,11 +74,6 @@ namespace iConfess.Database.Models
         /// </summary>
         public DbSet<SignalrConnection> SignalrConnections { get; set; }
 
-        /// <summary>
-        ///     List of tokens in database
-        /// </summary>
-        public DbSet<Token> Tokens { get; set; }
-
         #endregion
 
         #region Methods
@@ -126,9 +121,6 @@ namespace iConfess.Database.Models
 
             // Initiate signalr connection table.
             InitiateSignalrConnectionTable(dbModelBuilder);
-
-            // Initiate token table.
-            InitiateTokenTable(dbModelBuilder);
 
             // Initiate follow 
             base.OnModelCreating(dbModelBuilder);
@@ -406,21 +398,6 @@ namespace iConfess.Database.Models
             // One account can broadcast many signalr connections.
             signalrConnection.HasRequired(x => x.Owner)
                 .WithMany(x => x.OutgoingSignalrConnections)
-                .HasForeignKey(x => x.OwnerIndex);
-        }
-
-        /// <summary>
-        ///     Initiate Token table with keys, constraints and relationships.
-        /// </summary>
-        /// <param name="dbModelBuilder"></param>
-        private void InitiateTokenTable(DbModelBuilder dbModelBuilder)
-        {
-            // Find post entity configuration.
-            var token = dbModelBuilder.Entity<Token>();
-
-            // One account can broadcast many tokens.
-            token.HasRequired(x => x.Owner)
-                .WithMany(x => x.Tokens)
                 .HasForeignKey(x => x.OwnerIndex);
         }
 

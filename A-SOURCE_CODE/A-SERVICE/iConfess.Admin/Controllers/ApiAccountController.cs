@@ -192,31 +192,9 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
                 }
 
-                // Calculate token expiration time.
-                var tokenExpirationTime = DateTime.UtcNow.AddSeconds(_bearerAuthenticationProvider.Duration);
-                var unixTokenExpirationTime = _timeService.DateTimeUtcToUnix(tokenExpirationTime);
+                // Create token here
 
-                // Claim identity initialization.
-                var claimsIdentity = new Dictionary<string, object>();
-                claimsIdentity.Add(ClaimTypes.Email, account.Email);
-                claimsIdentity.Add(ClaimTypes.Expiration, unixTokenExpirationTime.ToString("N"));
-
-                // Initiate token response.
-                var jwtResponse = new JwtResponse();
-                jwtResponse.Expire = unixTokenExpirationTime;
-                jwtResponse.Type = "ResetPassword";
-                jwtResponse.Token = JsonWebToken.Encode(claimsIdentity, _bearerAuthenticationProvider.Key,
-                    JwtHashAlgorithm.HS256);
-
-                //Save token to database
-                var token = UnitOfWork.Context.Tokens.Create();
-                token.OwnerIndex = account.Id;
-                token.Code = jwtResponse.Token;
-                token.Type = 1;
-                token.Expire = tokenExpirationTime;
-                await UnitOfWork.Context.SaveChangesAsync();
-
-                return Request.CreateResponse(HttpStatusCode.OK, jwtResponse);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception exception)
             {
@@ -254,47 +232,12 @@ namespace iConfess.Admin.Controllers
                             x =>
                                 x.Email.Equals(parameters.Email))
                         .FirstOrDefaultAsync();
-
-                // Account is not found.
-                if (account == null)
-                {
-                    _log.Info(
-                        $"Account [Email : {parameters.Email}] is not found in database");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
-                }
-
+                
                 // Find token imfomation from database
-                var token = await UnitOfWork.Context.Tokens.
-                                FirstOrDefaultAsync(tk => tk.Code.Equals(parameters.Token));
 
-                // Toke not found
-                if (token == null)
-                {
-                    _log.Info(
-                        $"Token [Code : {parameters.Token}] is not found in database");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
-                }
-
-                // Token not belong to email
-                if(token.OwnerIndex != account.Id)
-                {
-                    _log.Info(
-                        $"Token [Code : {parameters.Token}] is not belong to Account [Email : {parameters.Email}]");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
-                }
-
-                // Token expire
-                if(token.Expire < System.DateTime.Now)
-                {
-                    _log.Info(
-                        $"Token [Code : {parameters.Token}] is expired");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenExpired);
-                }
+                // Compare email infomation
 
                 // Update password
-                account.Password = parameters.NewPassword;
-
-                await UnitOfWork.Context.SaveChangesAsync();
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

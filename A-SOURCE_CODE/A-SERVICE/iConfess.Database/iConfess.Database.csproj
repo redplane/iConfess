@@ -69,7 +69,6 @@
     <Compile Include="Models\Tables\CommentReport.cs" />
     <Compile Include="Models\Tables\PostReport.cs" />
     <Compile Include="Models\Tables\SignalrConnection.cs" />
-    <Compile Include="Models\Tables\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
