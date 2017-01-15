@@ -61,7 +61,7 @@ namespace iConfess.Admin.Controllers
         private readonly ITimeService _timeService;
 
         /// <summary>
-        /// Service which is for encryption purpose.
+        ///     Service which is for encryption purpose.
         /// </summary>
         private readonly IEncryptionService _encryptionService;
 
@@ -181,7 +181,7 @@ namespace iConfess.Admin.Controllers
                     UnitOfWork.Context.Accounts.Where(
                             x =>
                                 x.Email.Equals(email)
-                                && x.Status == AccountStatus.Active)
+                                && (x.Status == AccountStatus.Active))
                         .FirstOrDefaultAsync();
 
                 // Account is not found.
@@ -252,7 +252,7 @@ namespace iConfess.Admin.Controllers
                 var account = await
                     UnitOfWork.Context.Accounts.Where(
                             x =>
-                                x.Email.Equals(parameters.Email))
+                                    x.Email.Equals(parameters.Email))
                         .FirstOrDefaultAsync();
 
                 // Account is not found.
@@ -265,7 +265,7 @@ namespace iConfess.Admin.Controllers
 
                 // Find token imfomation from database
                 var token = await UnitOfWork.Context.Tokens.
-                                FirstOrDefaultAsync(tk => tk.Code.Equals(parameters.Token));
+                    FirstOrDefaultAsync(tk => tk.Code.Equals(parameters.Token));
 
                 // Toke not found
                 if (token == null)
@@ -276,7 +276,7 @@ namespace iConfess.Admin.Controllers
                 }
 
                 // Token not belong to email
-                if(token.OwnerIndex != account.Id)
+                if (token.OwnerIndex != account.Id)
                 {
                     _log.Info(
                         $"Token [Code : {parameters.Token}] is not belong to Account [Email : {parameters.Email}]");
@@ -284,7 +284,7 @@ namespace iConfess.Admin.Controllers
                 }
 
                 // Token expire
-                if(token.Expire < System.DateTime.Now)
+                if (token.Expire < DateTime.Now)
                 {
                     _log.Info(
                         $"Token [Code : {parameters.Token}] is expired");
