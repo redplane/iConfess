@@ -270,6 +270,7 @@
     <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ApiAccount\ChangeAccountInfoViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\LoginViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\ApiCategory\InitiateCategoryViewModel.cs" />

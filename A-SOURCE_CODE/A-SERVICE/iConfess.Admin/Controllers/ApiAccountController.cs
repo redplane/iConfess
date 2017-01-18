@@ -340,11 +340,48 @@ namespace iConfess.Admin.Controllers
         ///     Permanantly or temporarily ban accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        [Route("forbid")]
+        [Route("")]
         [HttpPut]
-        public HttpResponseMessage ForbidAccountAccess()
+        public async Task<HttpResponseMessage> ChangeAccountInformation([FromUri] int index, [FromBody] ChangeAccountInfoViewModel information)
         {
-            throw new NotImplementedException();
+            // Information hasn't been initialized.
+            if (information == null)
+            {
+                information = new ChangeAccountInfoViewModel();
+                Validate(information);
+            }
+
+            // Model state is invalid.
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(information)));
+            
+            // Find account by using index.
+            var findAccountsConditions = new FindAccountsViewModel();
+            findAccountsConditions.Id = index;
+
+            // Find list of accounts which match with conditions.
+            var result = await UnitOfWork.RepositoryAccounts.FindAccountsAsync(findAccountsConditions);
+
+            // Find the first account in the system.
+            var account = await result.Accounts.FirstOrDefaultAsync();
+
+            // Account is not found on server.
+            if (account == null)
+            {
+                _log.Error($"Account with index : {index} is not found on server");
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
+            }
+
+            // Change the information as it is defined.
+            if (!string.IsNullOrWhiteSpace(information.Nickname))
+                account.Nickname = information.Nickname;
+            account.Status = information.Status;
+
+            // Save changes on the service.
+            await UnitOfWork.Context.SaveChangesAsync();
+
+            // Respond result back to client-side.
+            return Request.CreateResponse(HttpStatusCode.OK, account);
         }
 
         #endregion
