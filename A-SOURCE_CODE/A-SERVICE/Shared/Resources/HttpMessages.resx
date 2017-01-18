@@ -147,6 +147,12 @@
   <data name="InvalidAuthenticationToken" xml:space="preserve">
     <value>TOKEN_INVALID</value>
   </data>
+  <data name="PasswordInvalid" xml:space="preserve">
+    <value>PASSWORD_INVALID</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>PASSWORD_NOT_MATCH</value>
+  </data>
   <data name="PostIsNotUnique" xml:space="preserve">
     <value>POST_NOT_UNIQUE</value>
   </data>

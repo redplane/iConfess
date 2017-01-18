@@ -204,16 +204,18 @@ namespace iConfess.Admin.Controllers
                 // Initiate token response.
                 var jwtResponse = new JwtResponse();
                 jwtResponse.Expire = unixTokenExpirationTime;
-                jwtResponse.Type = "ResetPassword";
+                jwtResponse.Type = "ForgotPassword";
                 jwtResponse.Token = JsonWebToken.Encode(claimsIdentity, _bearerAuthenticationProvider.Key,
                     JwtHashAlgorithm.HS256);
 
-                //Save token to database
+                // Save token to database
                 var token = UnitOfWork.Context.Tokens.Create();
                 token.OwnerIndex = account.Id;
                 token.Code = jwtResponse.Token;
                 token.Type = 1;
                 token.Expire = tokenExpirationTime;
+                UnitOfWork.Context.Tokens.Add(token);
+
                 await UnitOfWork.Context.SaveChangesAsync();
 
                 return Request.CreateResponse(HttpStatusCode.OK, jwtResponse);
@@ -236,6 +238,7 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameters validation
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
@@ -275,24 +278,38 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
                 }
 
+                // Token expire
+                if (token.Expire < System.DateTime.UtcNow)
+                {
+                    _log.Info(
+                        $"Token [Code : {parameters.Token}] is expired");
+                    return Request.CreateErrorResponse(HttpStatusCode.Gone, HttpMessages.TokenExpired);
+                }
+
                 // Token not belong to email
-                if(token.OwnerIndex != account.Id)
+                if (token.OwnerIndex != account.Id)
                 {
                     _log.Info(
                         $"Token [Code : {parameters.Token}] is not belong to Account [Email : {parameters.Email}]");
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
                 }
 
-                // Token expire
-                if(token.Expire < System.DateTime.Now)
+                // Validate new password here
+                if(parameters.NewPassword.Length < Shared.Constants.DataConstraints.MinLengthPassword
+                    || parameters.NewPassword.Length > Shared.Constants.DataConstraints.MaxLengthPassword
+                    || new System.Text.RegularExpressions.Regex(Shared.Constants.Regexes.Password).IsMatch(parameters.NewPassword) == false)
                 {
                     _log.Info(
-                        $"Token [Code : {parameters.Token}] is expired");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenExpired);
+                       $"New Password [{parameters.NewPassword}] is not match constraints");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, HttpMessages.PasswordInvalid);
                 }
+                #endregion
 
                 // Update password
-                account.Password = parameters.NewPassword;
+                account.Password = _encryptionService.Md5Hash(parameters.NewPassword);
+
+                // Expire token
+                token.Expire = System.DateTime.UtcNow;
 
                 await UnitOfWork.Context.SaveChangesAsync();
 
