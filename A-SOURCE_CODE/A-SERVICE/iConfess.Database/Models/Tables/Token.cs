@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using iConfess.Database.Enumerations;
 using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
@@ -29,7 +30,7 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     Type of Token.
         /// </summary>
-        public byte Type { get; set; }
+        public TokenType Type { get; set; }
 
         /// <summary>
         ///     When the token expires.

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
@@ -14,6 +15,7 @@ using iConfess.Admin.ViewModels.ApiAccount;
 using iConfess.Database.Enumerations;
 using JWT;
 using log4net;
+using Shared.Constants;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.ViewModels.Accounts;
@@ -169,18 +171,30 @@ namespace iConfess.Admin.Controllers
         [Route("lost_password")]
         [HttpGet]
         [AllowAnonymous]
-        public async Task<HttpResponseMessage> RequestFindLostPassword([FromUri] string email)
+        public async Task<HttpResponseMessage> RequestFindLostPassword(
+            [FromUri] RequestFindLostPasswordViewModel parameter)
         {
+            #region Parameter validation
+
+            if (parameter == null)
+            {
+                parameter = new RequestFindLostPasswordViewModel();
+                Validate(parameter);
+            }
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest,
+                    FindValidationMessage(ModelState, nameof(parameter)));
+
+            #endregion
+
             try
             {
-                if (string.IsNullOrWhiteSpace(email))
-                    Request.CreateResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
-
                 // Find account information from database.
                 var account = await
                     UnitOfWork.Context.Accounts.Where(
                             x =>
-                                x.Email.Equals(email)
+                                x.Email.Equals(parameter.Email)
                                 && (x.Status == AccountStatus.Active))
                         .FirstOrDefaultAsync();
 
@@ -188,7 +202,7 @@ namespace iConfess.Admin.Controllers
                 if (account == null)
                 {
                     _log.Info(
-                        $"Account [Email : {email}] is not found in database");
+                        $"Account [Email : {parameter.Email}] is not found in database");
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
                 }
 
@@ -204,16 +218,18 @@ namespace iConfess.Admin.Controllers
                 // Initiate token response.
                 var jwtResponse = new JwtResponse();
                 jwtResponse.Expire = unixTokenExpirationTime;
-                jwtResponse.Type = "ResetPassword";
+                jwtResponse.Type = "Bearer";
                 jwtResponse.Token = JsonWebToken.Encode(claimsIdentity, _bearerAuthenticationProvider.Key,
                     JwtHashAlgorithm.HS256);
 
-                //Save token to database
+                // Save token to database
                 var token = UnitOfWork.Context.Tokens.Create();
                 token.OwnerIndex = account.Id;
                 token.Code = jwtResponse.Token;
-                token.Type = 1;
+                token.Type = TokenType.Forgot;
                 token.Expire = tokenExpirationTime;
+                UnitOfWork.Context.Tokens.Add(token);
+
                 await UnitOfWork.Context.SaveChangesAsync();
 
                 return Request.CreateResponse(HttpStatusCode.OK, jwtResponse);
@@ -236,6 +252,8 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameters validation
+
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
@@ -275,6 +293,14 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
                 }
 
+                // Token expire
+                if (token.Expire < DateTime.UtcNow)
+                {
+                    _log.Info(
+                        $"Token [Code : {parameters.Token}] is expired");
+                    return Request.CreateErrorResponse(HttpStatusCode.Gone, HttpMessages.TokenExpired);
+                }
+
                 // Token not belong to email
                 if (token.OwnerIndex != account.Id)
                 {
@@ -283,16 +309,23 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
                 }
 
-                // Token expire
-                if (token.Expire < DateTime.Now)
+                // Validate new password here
+                if ((parameters.NewPassword.Length < DataConstraints.MinLengthPassword)
+                    || (parameters.NewPassword.Length > DataConstraints.MaxLengthPassword)
+                    || (new Regex(Regexes.Password).IsMatch(parameters.NewPassword) == false))
                 {
                     _log.Info(
-                        $"Token [Code : {parameters.Token}] is expired");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenExpired);
+                        $"New Password [{parameters.NewPassword}] is not match constraints");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, HttpMessages.PasswordInvalid);
                 }
 
+                #endregion
+
                 // Update password
-                account.Password = parameters.NewPassword;
+                account.Password = _encryptionService.Md5Hash(parameters.NewPassword);
+
+                // Expire token
+                token.Expire = DateTime.UtcNow;
 
                 await UnitOfWork.Context.SaveChangesAsync();
 
@@ -340,48 +373,11 @@ namespace iConfess.Admin.Controllers
         ///     Permanantly or temporarily ban accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        [Route("")]
+        [Route("forbid")]
         [HttpPut]
-        public async Task<HttpResponseMessage> ChangeAccountInformation([FromUri] int index, [FromBody] ChangeAccountInfoViewModel information)
+        public HttpResponseMessage ForbidAccountAccess()
         {
-            // Information hasn't been initialized.
-            if (information == null)
-            {
-                information = new ChangeAccountInfoViewModel();
-                Validate(information);
-            }
-
-            // Model state is invalid.
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(information)));
-            
-            // Find account by using index.
-            var findAccountsConditions = new FindAccountsViewModel();
-            findAccountsConditions.Id = index;
-
-            // Find list of accounts which match with conditions.
-            var result = await UnitOfWork.RepositoryAccounts.FindAccountsAsync(findAccountsConditions);
-
-            // Find the first account in the system.
-            var account = await result.Accounts.FirstOrDefaultAsync();
-
-            // Account is not found on server.
-            if (account == null)
-            {
-                _log.Error($"Account with index : {index} is not found on server");
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
-            }
-
-            // Change the information as it is defined.
-            if (!string.IsNullOrWhiteSpace(information.Nickname))
-                account.Nickname = information.Nickname;
-            account.Status = information.Status;
-
-            // Save changes on the service.
-            await UnitOfWork.Context.SaveChangesAsync();
-
-            // Respond result back to client-side.
-            return Request.CreateResponse(HttpStatusCode.OK, account);
+            throw new NotImplementedException();
         }
 
         #endregion
