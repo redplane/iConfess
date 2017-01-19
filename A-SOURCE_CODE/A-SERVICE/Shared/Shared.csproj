@@ -117,6 +117,7 @@
     <Compile Include="Services\TimeService.cs" />
     <Compile Include="ViewModels\Accounts\AccountViewModel.cs" />
     <Compile Include="ViewModels\Accounts\FindAccountsViewModel.cs" />
+    <Compile Include="ViewModels\Accounts\RequestFindLostPasswordViewModel.cs" />
     <Compile Include="ViewModels\Accounts\ResponseAccountsViewModel.cs" />
     <Compile Include="ViewModels\Categories\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Categories\FindCategoriesViewModel.cs" />
