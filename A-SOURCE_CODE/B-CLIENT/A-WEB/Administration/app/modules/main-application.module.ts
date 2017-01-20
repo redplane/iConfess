@@ -16,6 +16,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "../components/login.component";
 import {AccountDetailBoxComponent} from "../components/content/account/account-detail-box.component";
 import {AccountFindBoxComponent} from "../components/content/account/account-find-box.component";
+import {CommentReportManagementComponent} from "../components/comment-report-management.component";
+import {CommentReportFindBoxComponent} from "../components/content/comment-report/comment-report-find-box.component";
 
 // Routing configuration.
 const appRoutes: Routes = [
@@ -31,6 +33,10 @@ const appRoutes: Routes = [
     {
         path: 'category-management',
         component: CategoryManagementComponent
+    },
+    {
+        path: 'comment-report-management',
+        component: CommentReportManagementComponent
     }
 ];
 
@@ -44,9 +50,9 @@ const appRoutes: Routes = [
         HttpModule,
         JsonpModule,
 
-        ModalModule,
-        PaginationModule,
-        TypeaheadModule,
+        ModalModule.forRoot(),
+        PaginationModule.forRoot(),
+        TypeaheadModule.forRoot(),
 
         // Initiate application routing configuration.
         RouterModule.forRoot(appRoutes)
@@ -65,7 +71,11 @@ const appRoutes: Routes = [
         CategoryManagementComponent,
         CategoryDetailBoxComponent,
         CategoryFindBoxComponent,
-        CategoryInitiateBoxComponent
+        CategoryInitiateBoxComponent,
+
+
+        CommentReportManagementComponent,
+        CommentReportFindBoxComponent
 
     ],
     bootstrap:    [
