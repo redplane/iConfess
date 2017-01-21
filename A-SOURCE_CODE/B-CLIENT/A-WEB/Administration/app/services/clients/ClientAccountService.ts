@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import {IClientAccountService} from "../../interfaces/services/IClientAccountService";
 import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
 import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
+import {AccountStatuses} from "../../enumerations/AccountStatuses";
 
 /*
  * Service which handles category business.
@@ -49,5 +50,25 @@ export class ClientAccountService implements IClientAccountService {
     // Sign an account into system.
     public login(loginViewModel: LoginViewModel): any {
         return this._httpClient.post(this._clientApiService.apiLogin, loginViewModel).toPromise();
+    }
+
+    // Send request to service to obtain token to change password
+    public initiatePasswordChangeRequest(email: string): any{
+        throw 'Not implemented exception';
+    }
+
+    // From the token which has been sent to mail to change password of account.
+    public initiatePasswordChange(email: string, password: string, token: string): any {
+        throw 'Not implemented exception';
+    }
+
+    // Up to account information to forbid account access to system.
+    public forbidAccountAccess(id: number): any{
+        throw 'Not implemented exception';
+    }
+
+
+    public changeAccountInformation(id: number, status: AccountStatuses) : any {
+        throw 'Not implemented exception';
     }
 }

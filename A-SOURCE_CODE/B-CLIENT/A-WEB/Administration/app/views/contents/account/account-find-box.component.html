@@ -33,6 +33,17 @@
 
                 </div>
 
+                <div class="form-group">
+                    <label>Statuses</label>
+
+                    <ng-select [items]="clientConfigurationService.accountStatusSelections"
+                               [active]="clientConfigurationService.accountStatusSelections"
+                               [multiple]="true"
+                               [allowClear]="true">
+                    </ng-select>
+
+                </div>
+
                 <!-- Nickname -->
                 <div class="form-group">
                     <label>Name</label>
@@ -49,9 +60,9 @@
                     <select class="form-control"
                             formControlName="records"
                             [(ngModel)]="conditions.pagination.records">
-                        <option *ngFor="let item of _clientConfigurationService.pageRecords; let i = index"
-                                [value]="_clientConfigurationService.pageRecords[i]">
-                            {{_clientConfigurationService.pageRecords[i]}}
+                        <option *ngFor="let item of clientConfigurationService.pageRecords; let i = index"
+                                [value]="clientConfigurationService.pageRecords[i]">
+                            {{clientConfigurationService.pageRecords[i]}}
                         </option>
                     </select>
                 </div>
@@ -141,8 +152,8 @@
                             <select class="form-control"
                                     formControlName="sort"
                                     [(ngModel)]="conditions.sort">
-                                <option *ngFor="let key of _clientConfigurationService.accountSortProperties.keys()"
-                                        [value]="_clientConfigurationService.accountSortProperties.item(key)">
+                                <option *ngFor="let key of clientConfigurationService.accountSortProperties.keys()"
+                                        [value]="clientConfigurationService.accountSortProperties.item(key)">
                                     {{key}}
                                 </option>
                             </select>
@@ -158,8 +169,8 @@
                             <select class="form-control"
                                     formControlName="direction"
                                     [(ngModel)]="conditions.direction">
-                                <option *ngFor="let key of _clientConfigurationService.sortDirections.keys()"
-                                        [value]="_clientConfigurationService.sortDirections.item(key)">
+                                <option *ngFor="let key of clientConfigurationService.sortDirections.keys()"
+                                        [value]="clientConfigurationService.sortDirections.item(key)">
                                     {{key}}
                                 </option>
                             </select>

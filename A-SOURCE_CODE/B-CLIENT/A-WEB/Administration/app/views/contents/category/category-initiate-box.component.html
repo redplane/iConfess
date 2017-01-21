@@ -1,4 +1,5 @@
-<div [formGroup]="initiateCategoryBox">
+<form [formGroup]="initiateCategoryBox"
+      (submit)="clickInitiateCategory(initiateCategoryBox.value)">
     <div class="box-header">
         <span class="fa fa-folder"></span>
         <span> Create a category</span>
@@ -9,11 +10,23 @@
             <div class="row">
                 <div class="form-group">
                     <label>Category name</label>
-                    <input class="form-control"
+                    <input name="name"
+                           class="form-control"
                            formControlName="name"
                            placeholder="Please enter category name"
                            [class.disabled]="isLoading"
-                           autofocus/>
+                           autofocus="autofocus"
+
+                           required="required"
+                           [minlength]="clientDataConstraintService.minLengthCategoryName"
+                           [maxlength]="clientDataConstraintService.maxLengthCategoryName"/>
+
+                    <ul class="validation-summary-error"
+                        *ngIf="initiateCategoryBox.dirty">
+                        <li *ngIf="initiateCategoryBox.controls.name.hasError('required')">Category name is required</li>
+                        <li *ngIf="initiateCategoryBox.controls.name.hasError('minlength')">Category name must be more than {{clientDataConstraintService.minLengthCategoryName}} characters</li>
+                        <li *ngIf="initiateCategoryBox.controls.name.hasError('maxlength')">Category name must be less than {{clientDataConstraintService.maxLengthCategoryName}} characters"></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -23,11 +36,11 @@
     <div class="box-footer">
         <div class="text-center">
             <button class="btn btn-primary btn-flat"
-                    (click)="clickInitiateCategory()"
-                    [class.disabled]="isLoading">
+                    type="submit"
+                    [disabled]="isLoading || !initiateCategoryBox.valid">
                 <span class="glyphicon glyphicon-check"></span>
                 <span>Create</span>
             </button>
         </div>
     </div>
-</div>
+</form>

@@ -33,11 +33,11 @@
             <pagination [totalItems]="_categorySearchResult.total"
                         [itemsPerPage]="_findCategoriesViewModel.pagination.records"
                         [(ngModel)]="_findCategoriesViewModel.pagination.index"
-                        [rotate]="_clientConfigurationService.ngPaginationSettings.rotate"
-                        [firstText]="_clientConfigurationService.ngPaginationSettings.firstText"
-                        [previousText]="_clientConfigurationService.ngPaginationSettings.previousText"
-                        [nextText]="_clientConfigurationService.ngPaginationSettings.nextText"
-                        [lastText]="_clientConfigurationService.ngPaginationSettings.lastText"
+                        [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
+                        [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
+                        [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
+                        [nextText]="clientConfigurationService.ngPaginationSettings.nextText"
+                        [lastText]="clientConfigurationService.ngPaginationSettings.lastText"
                         (pageChanged)="clickPageChange($event)"></pagination>
         </div>
     </div>
@@ -75,11 +75,11 @@
             <pagination [totalItems]="_categorySearchResult.total"
                         [itemsPerPage]="_findCategoriesViewModel.pagination.records"
                         [(ngModel)]="_findCategoriesViewModel.pagination.index"
-                        [rotate]="_clientConfigurationService.ngPaginationSettings.rotate"
-                        [firstText]="_clientConfigurationService.ngPaginationSettings.firstText"
-                        [previousText]="_clientConfigurationService.ngPaginationSettings.previousText"
-                        [nextText]="_clientConfigurationService.ngPaginationSettings.nextText"
-                        [lastText]="_clientConfigurationService.ngPaginationSettings.lastText"
+                        [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
+                        [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
+                        [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
+                        [nextText]="clientConfigurationService.ngPaginationSettings.nextText"
+                        [lastText]="clientConfigurationService.ngPaginationSettings.lastText"
                         (pageChanged)="clickPageChange($event)"></pagination>
         </div>
     </div>
@@ -124,7 +124,7 @@
      aria-hidden="true"
      (onHide)="_selectCategoryDetail = null">
 
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <span>Change category detail information</span>
@@ -159,7 +159,7 @@
 
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <category-initiate-box (initiateCategory)="clickInitiateCategory($event)"
+            <category-initiate-box (initiateCategory)="clickInitiateCategory($event, initiateCategoryInfoModal)"
                                    [isLoading]="_isLoading"></category-initiate-box>
         </div>
     </div>

@@ -5,6 +5,25 @@
     </div>
 </div>
 
+<!-- Pagination section -->
+<div class="row"
+     *ngIf="(_findAccountsResult != null && _findAccountsResult.total > 0 && !_isLoading)">
+    <div class="col-lg-12">
+        <div class="text-center">
+            <pagination [totalItems]="_findAccountsResult.total"
+                        [itemsPerPage]="_findAccountConditions.pagination.records"
+                        [(ngModel)]="_findAccountConditions.pagination.index"
+                        [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
+                        [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
+                        [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
+                        [nextText]="clientConfigurationService.ngPaginationSettings.nextText"
+                        [lastText]="clientConfigurationService.ngPaginationSettings.lastText"
+                        (pageChanged)="clickPageChange($event)"></pagination>
+        </div>
+    </div>
+</div>
+
+<!-- Content container -->
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-default">

@@ -35,7 +35,7 @@ export class FindAccountsViewModel{
     public constructor(){
         this.email = new TextSearch();
         this.nickname = new TextSearch();
-        this.statuses = [AccountStatuses.Active, AccountStatuses.Disabled, AccountStatuses.Pending];
+        this.statuses = [];
         this.joined = new UnixDateRange();
         this.lastModified = new UnixDateRange();
         this.pagination = new Pagination();

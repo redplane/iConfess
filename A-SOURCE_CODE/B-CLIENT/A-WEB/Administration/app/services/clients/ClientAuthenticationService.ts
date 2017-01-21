@@ -67,8 +67,13 @@ export class ClientAuthenticationService implements IClientAuthenticationService
         localStorage.setItem(this._authenticationKey, authenticationInfo);
     }
 
+    // Clear authentication token from local storage.
+    public clearAuthenticationToken(): void{
+        localStorage.removeItem(this._authenticationKey);
+    }
+
     // Initiate service with IoC.
-    public constructor(clientApiService: ClientApiService){
+    public constructor(){
         this._authenticationKey = "authentication-iConfess";
     }
 }

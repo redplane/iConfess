@@ -5,12 +5,16 @@ import {AccountStatuses} from "../enumerations/AccountStatuses";
 import {FindAccountsViewModel} from "../viewmodels/accounts/FindAccountsViewModel";
 import {Pagination} from "../viewmodels/Pagination";
 import {ClientConfigurationService} from "../services/ClientConfigurationService";
+import {ClientNotificationService} from "../services/ClientNotificationService";
+import {ClientAuthenticationService} from "../services/clients/ClientAuthenticationService";
 
 @Component({
     selector: 'account-management',
     templateUrl: './app/views/pages/account-management.component.html',
     providers: [
-        ClientConfigurationService
+        ClientConfigurationService,
+        ClientNotificationService,
+        ClientAuthenticationService
     ]
 })
 
@@ -25,15 +29,15 @@ export class AccountManagementComponent implements OnInit{
     // Whether components are busy or not.
     private _isLoading: boolean;
 
-    // Service which handles configuration.
-    private _clientConfigurationService: ClientConfigurationService;
-
     // Initiate component with injections.
-    public constructor(clientConfigurationService: ClientConfigurationService){
+    public constructor(private clientConfigurationService: ClientConfigurationService){
         this._findAccountConditions = new FindAccountsViewModel();
+    }
 
-        // Services injection.
-        this._clientConfigurationService = clientConfigurationService;
+    // Callback which is fired when search button of category search box is clicked.
+    public clickSearch(): void {
+        // Freeze the find box.
+        this._isLoading = true;
     }
 
     // Called when component has been successfully rendered.
@@ -53,7 +57,7 @@ export class AccountManagementComponent implements OnInit{
             this._findAccountsResult.accounts.push(account);
         }
 
-        this._findAccountsResult.total = 100;
+        this._findAccountsResult.total = 10;
 
         // Components are not busy loading.
         this._isLoading = false;
@@ -63,8 +67,7 @@ export class AccountManagementComponent implements OnInit{
 
         let pagination = new Pagination();
         pagination.index = 1;
-        pagination.records = this._clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.findMaxPageRecords();
         this._findAccountConditions.pagination = pagination;
     }
-
 }

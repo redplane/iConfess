@@ -1,6 +1,9 @@
 import {Injectable} from "@angular/core";
 import {TokenViewModel} from "../viewmodels/accounts/TokenViewModel";
-import {Headers, Http, RequestOptions} from "@angular/http";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import {ClientNotificationService} from "./ClientNotificationService";
+import {ClientAuthenticationService} from "./clients/ClientAuthenticationService";
+import {Router} from "@angular/router";
 
 /*
 * Service which handles hyperlink of api.
@@ -33,11 +36,11 @@ export class ClientApiService{
     // Key in local storage which access token should be stored.
     public accessTokenStorage: string;
 
-    // Service which is used for sending request to server.
-    private _clientRequestService : Http;
-
     // Initiate service with settings.
-    public constructor(clientRequestService: Http){
+    public constructor(public clientRequestService: Http,
+                       public clientNotificationService: ClientNotificationService,
+                       public clientAuthenticationService: ClientAuthenticationService,
+                       public clientRoutingService: Router){
 
         // Find category api url.
         this.apiFindCategory = `${this.apiUrl}/api/category/find`;
@@ -53,9 +56,6 @@ export class ClientApiService{
 
         // Key of local storage in which access token should be stored.
         this.accessTokenStorage = 'iConfess';
-
-        // Services injection.
-        this._clientRequestService = clientRequestService;
     }
 
     // Send 'GET' to service.
@@ -76,7 +76,7 @@ export class ClientApiService{
         });
 
         // Request to api to obtain list of available categories in system.
-        return this._clientRequestService.get(url, clientRequestOptions);
+        return this.clientRequestService.get(url, clientRequestOptions);
     }
 
     // Send 'POST' to service.
@@ -98,7 +98,7 @@ export class ClientApiService{
         });
 
         // Request to api to obtain list of available categories in system.
-        return this._clientRequestService.post(url, null, clientRequestOptions);
+        return this.clientRequestService.post(url, null, clientRequestOptions);
     }
 
     // Send 'PUT' to service.
@@ -120,7 +120,7 @@ export class ClientApiService{
         });
 
         // Request to api to obtain list of available categories in system.
-        return this._clientRequestService.put(url, null, clientRequestOptions);
+        return this.clientRequestService.put(url, null, clientRequestOptions);
     }
 
     // Send 'PUT' to service.
@@ -142,9 +142,53 @@ export class ClientApiService{
         });
 
         // Request to api to obtain list of available categories in system.
-        return this._clientRequestService.delete(url, clientRequestOptions);
+        return this.clientRequestService.delete(url, clientRequestOptions);
     }
 
+    // Common function to proceed invalid response.
+    public proceedHttpNonSolidResponse(response : Response){
+
+        // Find response information of request.
+        let information = response.json();
+
+        // Base on the status code to determine what action should be taken.
+        switch (response.status){
+
+            // This status is about invalid parameters have been submitted to service.
+            case 400:
+                // TODO: Form control should be passed here to update screen display.
+                break;
+
+            // This status is about invalid authentication information has been passed to service.
+            case 401:
+                // Clear the local storage.
+                this.clientAuthenticationService.clearAuthenticationToken();
+
+                // Display the error message.
+                this.clientNotificationService.error(information['message'], 'System');
+
+                // Redirect user back to login page.
+                this.clientRoutingService.navigate(['/']);
+                break;
+
+            // This status is about request doesn't have enough permission to access service function.
+            case 403:
+                // Display the error message.
+                this.clientNotificationService.error(information['message'], 'System');
+                break;
+
+            // Something went wrong with the service.
+            case 500:
+                // Display the error message.
+                this.clientNotificationService.error('Service malfunctioned. Please try again');
+                break;
+
+            // For default error. Just display messages sent back from service.
+            default:
+                this.clientNotificationService.error(information['message'], 'System');
+                break;
+        }
+    }
 
     // Encrypt url parameters to prevent dangerous parameters are passed to service.
     private encryptUrlParameters(parameters: any) : string{

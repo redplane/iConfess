@@ -4,6 +4,8 @@ import {SortDirection} from "../enumerations/SortDirection";
 import {CategorySortProperty} from "../enumerations/order/CategorySortProperty";
 import {AccountSortProperty} from "../enumerations/order/AccountSortProperty";
 import {Account} from "../models/Account";
+import {AccountStatuses} from "../enumerations/AccountStatuses";
+import {SelectionItem} from "../models/SelectionItem";
 
 @Injectable()
 export class ClientConfigurationService{
@@ -22,6 +24,9 @@ export class ClientConfigurationService{
 
     // List of properties which can be used for categories sorting.
     public categorySortProperties: Dictionary<CategorySortProperty>;
+
+    // List of items which can be selected in accounts list.
+    public accountStatusSelections: Array<SelectionItem>;
 
     public constructor(){
 
@@ -51,6 +56,9 @@ export class ClientConfigurationService{
         this.accountSortProperties.insert('Joined', AccountSortProperty.joined);
         this.accountSortProperties.insert('Last modified', AccountSortProperty.lastModified);
 
+        // Initiate list of account statuses.
+        this.accountStatusSelections = this.initializeAccountSelections();
+
         // Initiate category sort properties.
         this.categorySortProperties = new Dictionary<CategorySortProperty>();
         this.categorySortProperties.insert('Index', CategorySortProperty.index);
@@ -63,5 +71,16 @@ export class ClientConfigurationService{
     // Maximum number of records which can be displayed on page.
     public findMaxPageRecords(): number{
         return this.pageRecords[this.pageRecords.length - 1];
+    }
+
+    // Initiate list of account statuses selection.
+    private initializeAccountSelections(): any{
+        let accountStatusItems = new Array<SelectionItem>();
+
+        accountStatusItems.push(new SelectionItem('Inactive', AccountStatuses.Disabled));
+        accountStatusItems.push(new SelectionItem('Pending', AccountStatuses.Pending));
+        accountStatusItems.push(new SelectionItem('Active', AccountStatuses.Active));
+
+        return accountStatusItems;
     }
 }

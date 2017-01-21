@@ -1,19 +1,17 @@
 import {Component, OnInit} from '@angular/core'
 import {CategorySearchDetailViewModel} from "../viewmodels/category/CategorySearchDetailViewModel";
 import {ClientCategoryService} from "../services/clients/ClientCategoryService";
-import {IClientCategoryService} from "../interfaces/services/IClientCategoryService";
 import {TimeService} from "../services/TimeService";
-import {ITimeService} from "../interfaces/services/ITimeService";
 import {CategoryDetailViewModel} from "../viewmodels/category/CategoryDetailViewModel";
 import {FindCategoriesViewModel} from "../viewmodels/category/FindCategoriesViewModel";
 import {ClientApiService} from "../services/ClientApiService";
 import {Response} from "@angular/http";
-import {ClientProceedResponseService} from "../services/ClientProceedResponseService";
 import {ClientConfigurationService} from "../services/ClientConfigurationService";
 import {Pagination} from "../viewmodels/Pagination";
 import {ModalDirective} from "ng2-bootstrap";
 import {Category} from "../models/Category";
 import {ClientAuthenticationService} from "../services/clients/ClientAuthenticationService";
+import {ClientNotificationService} from "../services/ClientNotificationService";
 
 declare var $: any;
 
@@ -25,9 +23,10 @@ declare var $: any;
         TimeService,
 
         ClientApiService,
-        ClientProceedResponseService,
         ClientConfigurationService,
-        ClientAuthenticationService
+        ClientAuthenticationService,
+
+        ClientNotificationService
     ],
 })
 
@@ -35,21 +34,6 @@ export class CategoryManagementComponent implements OnInit {
 
     // List of categories responded from service.
     private _categorySearchResult: CategorySearchDetailViewModel;
-
-    // Service which handles time conversion.
-    private _timeService: ITimeService;
-
-    // Service which provides function to analyze response sent back from server.
-    private _clientProceedResponseService: ClientProceedResponseService;
-
-    // Service which handles category business.
-    private _clientCategoryService: IClientCategoryService;
-
-    // Service which provides functions to access application configuration.
-    private _clientConfigurationService: ClientConfigurationService;
-
-    // Service which handles authentication information.
-    private _clientAuthenticationService: ClientAuthenticationService;
 
     // Whether records are being searched or not.
     private _isLoading: boolean;
@@ -61,21 +45,10 @@ export class CategoryManagementComponent implements OnInit {
     private _selectCategoryDetail : CategoryDetailViewModel;
 
     // Initiate component with dependency injections.
-    public constructor(categoryService: ClientCategoryService, timeService: TimeService,
-                       clientProceedResponseService: ClientProceedResponseService,
-                       clientConfigurationService: ClientConfigurationService,
-                       clientAuthenticationService: ClientAuthenticationService) {
-        this._clientCategoryService = categoryService;
-        this._timeService = timeService;
-
-        // Find client proceed response service.
-        this._clientProceedResponseService = clientProceedResponseService;
-
-        // Find configuration service in IoC.
-        this._clientConfigurationService = clientConfigurationService;
-
-        // Find client authentication service.
-        this._clientAuthenticationService = clientAuthenticationService;
+    public constructor(public clientCategoryService: ClientCategoryService,
+                       public clientConfigurationService: ClientConfigurationService,
+                       public clientApiService: ClientApiService,
+                       public clientNotificationService: ClientNotificationService) {
 
         // Initiate categories search result.
         this._categorySearchResult = new CategorySearchDetailViewModel();
@@ -109,15 +82,21 @@ export class CategoryManagementComponent implements OnInit {
             this._isLoading = true;
 
             // Call category service to delete the selected category.
-            this._clientCategoryService.deleteCategories(findCategoriesConditions)
+            this.clientCategoryService.deleteCategories(findCategoriesConditions)
                 .then((response: Response | any) => {
 
-                    // Reload the search records list.
+                    // Cancel loading state.
+                    this._isLoading = false;
+
+                    // Reload the categories list.
                     this.clickSearch();
                 })
                 .catch((response:any) => {
                     // Cancel loading.
                     this._isLoading = false;
+
+                    // Proceed common invalid response.
+                    this.clientApiService.proceedHttpNonSolidResponse(response);
                 });
         }
 
@@ -159,7 +138,7 @@ export class CategoryManagementComponent implements OnInit {
         this._isLoading = true;
 
         // Call service to update category information.
-        this._clientCategoryService.changeCategoryDetails(category.id, category)
+        this.clientCategoryService.changeCategoryDetails(category.id, category)
             .then((response: Response | any) => {
                 // Reload the categories list.
                 this.clickSearch();
@@ -172,26 +151,38 @@ export class CategoryManagementComponent implements OnInit {
     }
 
     // Callback which is fired when a category should be created into system.
-    public clickInitiateCategory(category: any): void{
+    public clickInitiateCategory(category: any, initiateCategoryModal: ModalDirective): void{
 
         // Make content be loaded.
         this._isLoading = true;
 
         // Call service to initiate category.
-        this._clientCategoryService.initiateCategory(category)
+        this.clientCategoryService.initiateCategory(category)
             .then((response: Response | any) => {
                 // Cancel content loading.
                 this._isLoading = false;
+
+                // Parse information of response.
+                let information = response.json();
+
+                // Display notification to client screen.
+                this.clientNotificationService.success(`${information['name']} has been created successfully`, 'System');
+
+                // Close the modal.
+                initiateCategoryModal.hide();
+
+                // Reload search results.
+                this.clickSearch();
             })
             .catch((response: Response | any) => {
                 // Cancel content loading.
                 this._isLoading = false;
 
-                // Handle common business for common invalid response.
-                this._clientProceedResponseService.proceedInvalidResponse(response);
-
+                // Proceed common function to handle invalid process.
+                this.clientApiService.proceedHttpNonSolidResponse(response);
             });
     }
+
     // Callback which is fired when search button of category search box is clicked.
     public clickSearch(): void {
 
@@ -202,7 +193,7 @@ export class CategoryManagementComponent implements OnInit {
         this._selectCategoryDetail = null;
 
         // Find categories by using specific conditions.
-        this._clientCategoryService.findCategories(this._findCategoriesViewModel)
+        this.clientCategoryService.findCategories(this._findCategoriesViewModel)
             .then((response: Response)=> {
 
                 // Update categories list.
@@ -212,7 +203,12 @@ export class CategoryManagementComponent implements OnInit {
                 this._isLoading = false;
             })
             .catch((response: Response | any) => {
+
+                // Unlock screen components.
                 this._isLoading = false;
+
+                // Call common function to handle error response.
+                this.clientApiService.proceedHttpNonSolidResponse(response);
             });
     }
 
@@ -233,7 +229,7 @@ export class CategoryManagementComponent implements OnInit {
         // Refactoring pagination.
         let pagination = new Pagination();
         pagination.index = 1;
-        pagination.records = this._clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.findMaxPageRecords();
         this._findCategoriesViewModel.pagination = pagination;
     }
 }

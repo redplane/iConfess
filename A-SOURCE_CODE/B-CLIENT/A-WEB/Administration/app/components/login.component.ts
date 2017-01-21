@@ -10,6 +10,7 @@ import {Response} from "@angular/http";
 import {ClientValidationService} from "../services/ClientValidationService";
 import {Router} from '@angular/router';
 import {ClientAuthenticationToken} from "../models/ClientAuthenticationToken";
+import {ClientNotificationService} from "../services/ClientNotificationService";
 
 @Component({
     selector: 'login',
@@ -18,7 +19,8 @@ import {ClientAuthenticationToken} from "../models/ClientAuthenticationToken";
         ClientValidationService,
         ClientApiService,
         ClientAccountService,
-        ClientAuthenticationService
+        ClientAuthenticationService,
+        ClientNotificationService
     ]
 })
 export class LoginComponent implements OnInit {
@@ -105,32 +107,8 @@ export class LoginComponent implements OnInit {
                 this._isLoading = false;
             })
             .catch((response : any) => {
-                if (!(response instanceof Response))
-                    return;
-
-                // Find the response object.
-                let information = response.json();
-
-                switch (response.status){
-
-                    // Bad request, usually submited parameters are invalid.
-                    case 400:
-
-                        // Refined the information.
-                        information = this._clientValidationService.findPropertiesValidationMessages(information);
-
-                        // Parse the response and update to controls of form.
-                        this._clientValidationService.findFrontendValidationModel(this._clientValidationService.validationDictionary, this.loginBox, information);
-                        break;
-                    case 404:
-                        console.log(response);
-                        // TODO: Display message.
-                        break;
-                    case 500:
-                        console.log(response);
-                        // TODO: Display message.
-                        break;
-                }
+                // Proceed non-solid response.
+                this._clientApiService.proceedHttpNonSolidResponse(response);
 
                 // Cancel loading process.
                 this._isLoading = false;

@@ -103,23 +103,28 @@ export class ClientNotificationService{
     }
 
     // Display success message.
-    public success(message: string, title: string, toastOption: ToastOptions){
+    public success(message: string, title: string = '', toastOption: ToastOptions = null){
         return this.show(message, title, toastOption, 'success');
     }
 
     // Display info message.
-    public info(message: string, title: string, toastOption: ToastOptions){
+    public info(message: string, title: string = '', toastOption: ToastOptions = null){
         return this.show(message, title, toastOption, 'info');
     }
 
     // Display warning message.
-    public warning(message: string, title: string, toastOption: ToastOptions){
+    public warning(message: string, title: string = '', toastOption: ToastOptions = null){
         return this.show(message, title, toastOption, 'warning');
     }
 
     // Display error message.
-    public error(message: string, title: string, toastOption: ToastOptions){
+    public error(message: string, title: string = '', toastOption: ToastOptions = null){
         return this.show(message, title, toastOption, 'error');
+    }
+
+    // Find default toast configuration.
+    public getToastConfiguration(){
+        return this._toastOptions;
     }
 
     // Display toast notification
@@ -143,6 +148,8 @@ export class ClientNotificationService{
                 return 'toast-top-left';
             case ToastPosition.topLeft:
                 return 'toast-top-full-width';
+            case ToastPosition.topFullWidth:
+                return 'toast-top-full-width';
             case ToastPosition.bottomFullWidth:
                 return 'toast-bottom-full-width';
             case ToastPosition.topCenter:
@@ -153,4 +160,5 @@ export class ClientNotificationService{
                 return 'toast-top-right';
         }
     }
+
 }

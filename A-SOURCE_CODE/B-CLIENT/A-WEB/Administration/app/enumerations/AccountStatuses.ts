@@ -2,7 +2,7 @@
 * Collection of statuses that account can be.
 * */
 export enum AccountStatuses{
-    Disabled,
+    Disabled = 1,
     Pending,
     Active
 }

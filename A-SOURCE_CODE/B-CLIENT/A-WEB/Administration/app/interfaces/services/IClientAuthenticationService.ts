@@ -14,4 +14,7 @@ export interface IClientAuthenticationService{
 
     // Save authentication token information into local storage for future use.
     saveAuthenticationToken(clientAuthenticationToken: ClientAuthenticationToken): void;
+
+    // Clear authentication token from local storage.
+    clearAuthenticationToken(): void;
 }

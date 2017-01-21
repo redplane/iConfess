@@ -1,6 +1,6 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { MainApplicationComponent }   from '../components/main-application.component';
+import {NgModule}      from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {MainApplicationComponent}   from '../components/main-application.component';
 import {NavigationBarComponent} from "../components/navigation-bar.component";
 import {SidebarComponent} from "../components/sidebar.component";
 import {AccountManagementComponent} from "../components/account-management.component";
@@ -8,14 +8,15 @@ import {CategoryManagementComponent} from "../components/category-management.com
 import {CategoryDetailBoxComponent} from '../components/content/category/category-detail-box.component';
 import {CategoryInitiateBoxComponent} from '../components/content/category/category-initiate-box.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SelectModule} from "angular2-select";
 import {CategoryFindBoxComponent} from "../components/content/category/category-find-box.component";
-import { HttpModule, JsonpModule } from '@angular/http';
-import { ModalModule, PaginationModule, TypeaheadModule  } from 'ng2-bootstrap/ng2-bootstrap';
-import { RouterModule, Routes } from '@angular/router';
+import {HttpModule, JsonpModule} from '@angular/http';
+import {ModalModule, PaginationModule, TypeaheadModule} from 'ng2-bootstrap/ng2-bootstrap';
+import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from "../components/login.component";
 import {AccountDetailBoxComponent} from "../components/content/account/account-detail-box.component";
 import {AccountFindBoxComponent} from "../components/content/account/account-find-box.component";
+import {SelectModule} from 'ng2-select';
+
 
 // Routing configuration.
 const appRoutes: Routes = [
@@ -36,23 +37,23 @@ const appRoutes: Routes = [
 
 
 @NgModule({
-    imports:      [
+    imports: [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        SelectModule,
         HttpModule,
         JsonpModule,
 
         ModalModule,
         PaginationModule,
         TypeaheadModule,
+        SelectModule,
 
         // Initiate application routing configuration.
         RouterModule.forRoot(appRoutes)
     ],
     declarations: [
-        MainApplicationComponent ,
+        MainApplicationComponent,
         NavigationBarComponent,
         SidebarComponent,
 
@@ -66,10 +67,10 @@ const appRoutes: Routes = [
         CategoryDetailBoxComponent,
         CategoryFindBoxComponent,
         CategoryInitiateBoxComponent
-
     ],
-    bootstrap:    [
+    bootstrap: [
         MainApplicationComponent
     ]
 })
-export class MainApplicationModule { }
+export class MainApplicationModule {
+}

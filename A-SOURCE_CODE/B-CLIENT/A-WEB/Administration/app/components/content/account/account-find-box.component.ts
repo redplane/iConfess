@@ -1,10 +1,10 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ClientConfigurationService} from "../../../services/ClientConfigurationService";
-import {IClientAccountService} from "../../../interfaces/services/IClientAccountService";
 import {ClientAccountService} from "../../../services/clients/ClientAccountService";
 import {FindAccountsViewModel} from "../../../viewmodels/accounts/FindAccountsViewModel";
 import {ClientApiService} from "../../../services/ClientApiService";
+import {AccountStatuses} from "../../../enumerations/AccountStatuses";
 
 @Component({
     selector: 'account-find-box',
@@ -19,7 +19,7 @@ import {ClientApiService} from "../../../services/ClientApiService";
     ]
 })
 
-export class AccountFindBoxComponent {
+export class AccountFindBoxComponent implements OnInit {
 
     // Whether records are being loaded from server or not.
     public isLoading: boolean;
@@ -30,22 +30,15 @@ export class AccountFindBoxComponent {
     // Form contains controls which are for searching accounts.
     private findAccountBox: FormGroup;
 
-    // Service which provides function to access application configuration.
-    private _clientConfigurationService: ClientConfigurationService;
-
     // Collection of conditions which are used for searching categories.
     private conditions: FindAccountsViewModel;
 
-    // Service which handles client accounts api to service.
-    private _clientAccountService: IClientAccountService;
+    private selected: any;
 
     // Initiate component with default dependency injection.
-    public constructor(private formBuilder: FormBuilder, clientConfigurationService: ClientConfigurationService,
-                       clientAccountService: ClientAccountService) {
-
-        // Find configuration service from IoC.
-        this._clientConfigurationService = clientConfigurationService;
-        this._clientAccountService = clientAccountService;
+    public constructor(private formBuilder: FormBuilder,
+                       private clientConfigurationService: ClientConfigurationService,
+                       private clientAccountService: ClientAccountService) {
 
         // Form control of find category box.
         this.findAccountBox = formBuilder.group({
@@ -69,6 +62,9 @@ export class AccountFindBoxComponent {
 
         // Initiate event emitters.
         this.search = new EventEmitter();
+
+        // Initiate search conditions.
+        this.conditions = new FindAccountsViewModel();
     }
 
     // Callback which is fired when search button is clicked.
@@ -107,5 +103,11 @@ export class AccountFindBoxComponent {
         //     .catch((response: any) => {
         //
         //     });
+    }
+
+    /*
+    * Callback which is fired when component has been loaded successfully.
+    * */
+    public ngOnInit(): void {
     }
 }

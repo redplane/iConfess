@@ -69,7 +69,7 @@ export class ClientCategoryService implements IClientCategoryService {
     // Initiate category into system.
     public initiateCategory(category: any) : any {
         // Request to api to obtain list of available categories in system.
-        return this._clientApiService.put(this._clientAuthenticationService.findClientAuthenticationToken(),
+        return this._clientApiService.post(this._clientAuthenticationService.findClientAuthenticationToken(),
             this._clientApiService.apiInitiateCategory, null, category)
             .toPromise();
     }

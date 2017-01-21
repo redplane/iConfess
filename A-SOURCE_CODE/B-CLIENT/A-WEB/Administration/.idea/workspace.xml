@@ -22,7 +22,102 @@
     <favorites_list name="SharingThought" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="account-find-box.component.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="629">
+              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account-find-box.component.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/content/account/account-find-box.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="35" column="20" lean-forward="false" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#62#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClientConfigurationService.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/services/ClientConfigurationService.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="188">
+              <caret line="79" column="86" lean-forward="false" selection-start-line="79" selection-start-column="86" selection-end-line="79" selection-end-column="86" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountStatuses.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/enumerations/AccountStatuses.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main-application.module.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/modules/main-application.module.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="systemjs.config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/systemjs.config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="799">
+              <caret line="47" column="26" lean-forward="false" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tsconfig.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tsconfig.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -37,37 +132,44 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>_loginResponseMessage</find>
+      <find>clickSe</find>
+      <find>clientCategoryService</find>
+      <find>_timeService</find>
+      <find>clientConfigurationService</find>
+      <find>clientAuthenticationService</find>
+      <find>ngPaginationSettings</find>
+      <find>clientConfiguration</find>
+      <find>_clientConfigurationService</find>
+      <find>hasEr</find>
+      <find>clickInitiateCategory</find>
+      <find>haser</find>
+      <find>redi</find>
+      <find>client</find>
+      <find>clickSear</find>
+      <find>clientAuthenticationS</find>
+      <find>SelectM</find>
+      <find>_client</find>
+      <find>_isLo</find>
+      <find>findMaxPageRecords</find>
+      <find>_findAccountsResult</find>
+      <find>html</find>
+      <find>options</find>
     </findStrings>
+    <replaceStrings>
+      <replace>clientConfigurationService</replace>
+    </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/viewmodels/category/CategorySearchViewModel.ts" />
-        <option value="$PROJECT_DIR$/app/components/navigation-bar.component.ts" />
-        <option value="$PROJECT_DIR$/app/components/reported-post-management.component.ts" />
-        <option value="$PROJECT_DIR$/app/components/sidebar.component.ts" />
-        <option value="$PROJECT_DIR$/app/components/content/category/category-detail-box.component.ts" />
-        <option value="$PROJECT_DIR$/app/components/content/category/category-edit-box.component.ts" />
-        <option value="$PROJECT_DIR$/app/enumerations/order/AccountSortProperty.ts" />
-        <option value="$PROJECT_DIR$/app/viewmodels/Pagination.ts" />
-        <option value="$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsViewModel.ts" />
-        <option value="$PROJECT_DIR$/app/views/contents/category/category-delete-box.component.html" />
         <option value="$PROJECT_DIR$/app/components/content/category/category-delete-box.component.ts" />
         <option value="$PROJECT_DIR$/app/viewmodels/category/FindCategoriesViewModel.ts" />
         <option value="$PROJECT_DIR$/app/views/contents/category/category-edit-box.component.html" />
         <option value="$PROJECT_DIR$/app/viewmodels/category/ChangeCategoryDetailViewModel.ts" />
         <option value="$PROJECT_DIR$/app/services/HyperlinkService.ts" />
-        <option value="$PROJECT_DIR$/app/components/content/category/category-initiate-box.component.ts" />
-        <option value="$PROJECT_DIR$/app/views/pages/category-management.component.html" />
-        <option value="$PROJECT_DIR$/app/views/contents/category/category-initiate-box.component.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/app/models/ClientAuthenticationToken.ts" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/LoginViewModel.ts" />
-        <option value="$PROJECT_DIR$/app/interfaces/services/IClientAuthenticationService.ts" />
-        <option value="$PROJECT_DIR$/app/interfaces/services/IClientAccountService.ts" />
-        <option value="$PROJECT_DIR$/app/services/ClientProceedResponseService.ts" />
         <option value="$PROJECT_DIR$/app/services/ParameterValidationService.ts" />
-        <option value="$PROJECT_DIR$/app/services/clients/ClientAccountService.ts" />
         <option value="$PROJECT_DIR$/app/services/ClientValidationService.ts" />
         <option value="$PROJECT_DIR$/app/components/main-application.component.ts" />
         <option value="$PROJECT_DIR$/app/views/main-application.html" />
@@ -76,23 +178,41 @@
         <option value="$PROJECT_DIR$/app/components/content/account/account-detail-box.component.ts" />
         <option value="$PROJECT_DIR$/app/views/contents/account/account-detail-box.component.html" />
         <option value="$PROJECT_DIR$/app/views/sidebar.component.html" />
-        <option value="$PROJECT_DIR$/app/modules/main-application.module.ts" />
-        <option value="$PROJECT_DIR$/app/views/pages/account-management.component.html" />
-        <option value="$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html" />
-        <option value="$PROJECT_DIR$/app/components/content/account/account-find-box.component.ts" />
-        <option value="$PROJECT_DIR$/app/components/account-management.component.ts" />
-        <option value="$PROJECT_DIR$/app/services/ClientConfigurationService.ts" />
         <option value="$PROJECT_DIR$/app/services/ClientDataContraintService.ts" />
-        <option value="$PROJECT_DIR$/app/services/ClientDataConstraintService.ts" />
         <option value="$PROJECT_DIR$/app/components/content/category/category-find-box.component.ts" />
         <option value="$PROJECT_DIR$/app/views/contents/category/category-find-box.component.html" />
         <option value="$PROJECT_DIR$/app/interfaces/services/IClientCategoryService.ts" />
-        <option value="$PROJECT_DIR$/app/services/clients/ClientCategoryService.ts" />
-        <option value="$PROJECT_DIR$/app/services/clients/ClientAuthenticationService.ts" />
-        <option value="$PROJECT_DIR$/app/services/ClientApiService.ts" />
-        <option value="$PROJECT_DIR$/app/components/category-management.component.ts" />
         <option value="$PROJECT_DIR$/app/views/pages/login.component.html" />
+        <option value="$PROJECT_DIR$/app/services/ClientNotificationService.ts" />
+        <option value="$PROJECT_DIR$/app/components/content/category/category-initiate-box.component.ts" />
+        <option value="$PROJECT_DIR$/app/views/contents/category/category-initiate-box.component.html" />
+        <option value="$PROJECT_DIR$/app/services/ClientProceedResponseService.ts" />
+        <option value="$PROJECT_DIR$/app/interfaces/services/IClientAuthenticationService.ts" />
+        <option value="$PROJECT_DIR$/app/services/ClientApiService.ts" />
+        <option value="$PROJECT_DIR$/app/views/pages/category-management.component.html" />
+        <option value="$PROJECT_DIR$/app/services/clients/ClientAuthenticationService.ts" />
+        <option value="$PROJECT_DIR$/app/services/ClientDataConstraintService.ts" />
+        <option value="$PROJECT_DIR$/app/services/clients/ClientCategoryService.ts" />
+        <option value="$PROJECT_DIR$/app/interfaces/services/IClientAccountService.ts" />
+        <option value="$PROJECT_DIR$/app/services/clients/ClientAccountService.ts" />
         <option value="$PROJECT_DIR$/app/components/login.component.ts" />
+        <option value="$PROJECT_DIR$/app/viewmodels/accounts/AccountStatusSelectionViewModel.ts" />
+        <option value="$PROJECT_DIR$/app/viewmodels/accounts/SelectionItem.ts" />
+        <option value="$PROJECT_DIR$/app/viewmodels/SelectionItem.ts" />
+        <option value="$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsViewModel.ts" />
+        <option value="$PROJECT_DIR$/app/views/pages/account-management.component.html" />
+        <option value="$PROJECT_DIR$/app/components/category-management.component.ts" />
+        <option value="$PROJECT_DIR$/app/components/account-management.component.ts" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/tsconfig.json" />
+        <option value="$PROJECT_DIR$/app/models/SelectionItem.ts" />
+        <option value="$PROJECT_DIR$/node_modules/angular-2-dropdown-multiselect/src/multiselect-dropdown.ts" />
+        <option value="$PROJECT_DIR$/app/modules/main-application.module.ts" />
+        <option value="$PROJECT_DIR$/systemjs.config.js" />
+        <option value="$PROJECT_DIR$/app/components/content/account/account-find-box.component.ts" />
+        <option value="$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html" />
+        <option value="$PROJECT_DIR$/app/enumerations/AccountStatuses.ts" />
+        <option value="$PROJECT_DIR$/app/services/ClientConfigurationService.ts" />
       </list>
     </option>
   </component>
@@ -112,7 +232,7 @@
     <option name="height" value="744" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -125,7 +245,128 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iConfess.Admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Administration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iConfess.Admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Administration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iConfess.Admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Administration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ng2-select" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iConfess.Admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Administration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iConfess.Admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Administration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="viewmodels" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iConfess.Admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Administration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="viewmodels" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="accounts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iConfess.Admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Administration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
@@ -134,22 +375,22 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login.component.ts&#10;login&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/login.component.html&#10;login.com&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login.component.ts&#10;category-m&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;Pagination&#9;null&#9;null&#10;ClientApi&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;Client&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAuthenticationService.ts&#10;ClientApiService.ts&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;ClientApiSer&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;ClientAu&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAuthenticationService.ts&#10;ClientCatego&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientCategoryService.ts&#10;catego&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;category-mana&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;ClientAuthen&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAuthenticationService.ts&#10;ClientAuthent&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAuthenticationService.ts&#10;ClientCategory&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientCategoryService.ts&#10;category-ma&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;login.&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/login.component.html&#10;login.comp&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login.component.ts&#10;category-find&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/category/category-find-box.component.ts&#10;category-management.com&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;category&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;account-find&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-find-box.component.ts&#10;account-man&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;account&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/account-management.component.html&#10;account-deta&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-detail-box.component.html&#10;category-fin&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/category/category-find-box.component.ts&#10;category-f&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/category/category-find-box.component.html&#10;main&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;account-manage&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;ClientConfigu&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientConfigurationService.ts&#10;main-app&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;account-ma&#9;null&#9;null&#10;main-application&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;main-&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/main-application.component.ts&#10;account-bo&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-detail-box.component.ts&#10;account-detail-b&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-detail-box.component.html&#10;account-management.com&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/account-management.component.html&#10;ClientValida&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientValidationService.ts&#10;ClientAccount&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAccountService.ts&#10;ClientAccountS&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAccountService.ts&#10;category-findbox&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/category/category-find-box.component.html" />
+    <property name="SearchEverywhereHistoryKey" value="Select&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/models/SelectionItem.ts&#10;main&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;account&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-find-box.component.html&#10;account-findbox&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-find-box.component.ts&#10;main-applic&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;clientcon&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientConfigurationService.ts&#10;accoun&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-find-box.component.html&#10;SelectIte&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/models/SelectionItem.ts&#10;index&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/index.html&#10;syst&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/systemjs.config.js&#10;main-application&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;main-appli&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;main-application.&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;account-m&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;category-&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;account-man&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;category-m&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;account-&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/account-management.component.html&#10;account-find&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-find-box.component.ts&#10;account-findbo&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-find-box.component.ts&#10;Clientconfigura&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientConfigurationService.ts&#10;ClientConfiguration&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientConfigurationService.ts&#10;main-app&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;login.co&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login.component.ts&#10;IClientAccoun&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAccountService.ts&#10;ClientAccount&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAccountService.ts&#10;category-ma&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;category&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;Client&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;categoryser&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientCategoryService.ts&#10;ClientData&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientDataConstraintService.ts&#10;account-management.&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;LoginCom&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login.component.ts&#10;ClientApiS&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;clientAuth&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAuthenticationService.ts&#10;category-man&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;ClientAuthenti&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAuthenticationService.ts&#10;ClientAuth&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAuthenticationService.ts&#10;ClientApi&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;login&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login.component.ts&#10;ini&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/category/category-initiate-box.component.html&#10;init&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/category/category-initiate-box.component.html&#10;category-initi&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/category/category-initiate-box.component.html&#10;clickIni&#9;null&#9;null&#10;clientnoti&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientNotificationService.ts&#10;client&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientConfigurationService.ts&#10;catego&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/category-management.component.ts&#10;main-&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;index.&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/index.html&#10;login.com&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login.component.ts" />
     <property name="js.eslint.eslintPackage" value="" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\enumerations\order" />
-      <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\services\clients" />
-      <recent name="E:\Programming\Net Framework\Web\.Net Framework\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\services" />
-      <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\Confession\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\components\content\category" />
-      <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\Confession\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\html\content\category" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Programming\Net Framework\Web\.Net Framework\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\views\contents\account" />
       <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\views\contents\category" />
       <recent name="E:\Programming\Net Framework\Web\.Net Framework\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\components\content\category" />
       <recent name="E:\Programming\Net Framework\Web\.Net Framework\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\html\content\category" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\models" />
+      <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\viewmodels" />
+      <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\enumerations\order" />
+      <recent name="F:\Programming\DotNet\Web\Fullstack\ASP.NET Core\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\services\clients" />
+      <recent name="E:\Programming\Net Framework\Web\.Net Framework\iConfess\A-SOURCE_CODE\B-CLIENT\A-WEB\Administration\app\services" />
     </key>
   </component>
   <component name="RunManager">
@@ -314,12 +555,21 @@
       <workItem from="1484385652741" duration="12941000" />
       <workItem from="1484451202768" duration="1499000" />
       <workItem from="1484452867245" duration="1188000" />
-      <workItem from="1484462355569" duration="1340000" />
+      <workItem from="1484462355569" duration="10861000" />
+      <workItem from="1484543457633" duration="6295000" />
+      <workItem from="1484582676313" duration="1317000" />
+      <workItem from="1484670914886" duration="494000" />
+      <workItem from="1484716358066" duration="2262000" />
+      <workItem from="1484751798776" duration="8800000" />
+      <workItem from="1484804569810" duration="2679000" />
+      <workItem from="1484807479863" duration="2038000" />
+      <workItem from="1484834956974" duration="9605000" />
+      <workItem from="1485010974303" duration="119000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="364676000" />
+    <option name="totallyTimeSpent" value="407806000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -335,7 +585,7 @@
     <editor active="false" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28921932" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28921932" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32626426" sideWeight="0.5055762" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -348,7 +598,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32369298" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32300162" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -365,7 +615,7 @@
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28921932" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32369298" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32300162" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -398,8 +648,6 @@
         <option value="$PROJECT_DIR$/app/modules/main-application.module.js.map" />
         <option value="$PROJECT_DIR$/app/services/TimeService.js" />
         <option value="$PROJECT_DIR$/app/services/TimeService.js.map" />
-        <option value="$PROJECT_DIR$/app/services/ClientProceedResponseService.js" />
-        <option value="$PROJECT_DIR$/app/services/ClientProceedResponseService.js.map" />
         <option value="$PROJECT_DIR$/app/services/ClientConfigurationService.js" />
         <option value="$PROJECT_DIR$/app/services/ClientConfigurationService.js.map" />
         <option value="$PROJECT_DIR$/app/services/ClientValidationService.js" />
@@ -474,6 +722,8 @@
         <option value="$PROJECT_DIR$/app/services/ClientDataConstraintService.js.map" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/AccountSearchDetailViewModel.js" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/AccountSearchDetailViewModel.js.map" />
+        <option value="$PROJECT_DIR$/app/services/ClientNotificationService.js" />
+        <option value="$PROJECT_DIR$/app/services/ClientNotificationService.js.map" />
       </list>
     </option>
   </component>
@@ -495,62 +745,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/components/reported-post-management.component.ts" />
-    <entry file="file://$PROJECT_DIR$/app/components/content/category/category-edit-box.component.ts" />
-    <entry file="file://$PROJECT_DIR$/app/views/contents/category/category-edit-box.component.html" />
-    <entry file="file://$PROJECT_DIR$/app/viewmodels/category/ChangeCategoryDetailViewModel.ts" />
-    <entry file="file://$PROJECT_DIR$/app/views/contents/category/category-initiate-box.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="26" lean-forward="false" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/content/category/category-initiate-box.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/viewmodels/category/CategoryDetailViewModel.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="32" lean-forward="false" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="68" column="7" lean-forward="false" selection-start-line="68" selection-start-column="7" selection-end-line="68" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/main.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/ClientAuthenticationToken.ts" />
-    <entry file="file://$PROJECT_DIR$/app/viewmodels/accounts/LoginViewModel.ts" />
-    <entry file="file://$PROJECT_DIR$/app/services/ClientProceedResponseService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="19" lean-forward="false" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/ClientValidationService.ts" />
-    <entry file="file://$PROJECT_DIR$/app/interfaces/services/IClientAccountService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/contents/category/category-detail-box.component.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -580,18 +774,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/viewmodels/accounts/AccountSearchDetailViewModel.ts" />
     <entry file="file://$PROJECT_DIR$/app/models/Account.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="14" lean-forward="false" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/main-application.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="22" lean-forward="false" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -610,27 +796,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/main-application.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsViewModel.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="10" column="16" lean-forward="false" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/pages/account-management.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-detail-box.component.html" />
     <entry file="file://$PROJECT_DIR$/app/enumerations/order/AccountSortProperty.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -639,23 +804,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html" />
-    <entry file="file://$PROJECT_DIR$/app/components/account-management.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-493">
-          <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/content/account/account-find-box.component.ts" />
-    <entry file="file://$PROJECT_DIR$/app/services/ClientConfigurationService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/ClientDataConstraintService.ts" />
     <entry file="file://$PROJECT_DIR$/app/components/content/category/category-find-box.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
@@ -670,46 +818,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/systemjs.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="25" column="62" lean-forward="false" selection-start-line="25" selection-start-column="62" selection-end-line="25" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/interfaces/services/IClientCategoryService.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAccountService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/pages/category-management.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="42" lean-forward="false" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/clients/ClientCategoryService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="687">
-          <caret line="51" column="18" lean-forward="false" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAuthenticationService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="71" column="60" lean-forward="false" selection-start-line="71" selection-start-column="60" selection-end-line="71" selection-end-column="60" />
         </state>
       </provider>
     </entry>
@@ -720,35 +832,140 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/viewmodels/Pagination.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/main-application.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="19" column="22" lean-forward="false" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/ClientNotificationService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="122" column="5" lean-forward="true" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/pages/login.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="56" lean-forward="false" selection-start-line="28" selection-start-column="56" selection-end-line="28" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/content/category/category-initiate-box.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="14" column="36" lean-forward="false" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/contents/category/category-initiate-box.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="37" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/ClientProceedResponseService.ts" />
     <entry file="file://$PROJECT_DIR$/app/interfaces/services/IClientAuthenticationService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="51">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/clients/ClientCategoryService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1071">
+          <caret line="71" column="42" lean-forward="false" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/services/ClientApiService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
-          <folding />
+        <state relative-caret-position="1241">
+          <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/viewmodels/Pagination.ts">
+    <entry file="file://$PROJECT_DIR$/app/interfaces/services/IClientAccountService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="340">
+          <caret line="22" column="65" lean-forward="false" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAccountService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="816">
+          <caret line="73" column="1" lean-forward="false" selection-start-line="73" selection-start-column="1" selection-end-line="73" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAuthenticationService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="71" column="57" lean-forward="false" selection-start-line="71" selection-start-column="57" selection-end-line="71" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/login.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="65" column="18" lean-forward="false" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/ClientDataConstraintService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/angular2-select/LICENCE.txt" />
+    <entry file="file://$PROJECT_DIR$/app/viewmodels/accounts/AccountStatusSelectionViewModel.ts" />
+    <entry file="file://$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsViewModel.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/viewmodels/accounts/AccountSearchDetailViewModel.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/pages/category-management.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="40" column="12" lean-forward="false" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/components/category-management.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3791">
-          <caret line="238" column="1" lean-forward="false" selection-start-line="238" selection-start-column="1" selection-end-line="238" selection-end-column="1" />
-          <folding />
+        <state relative-caret-position="1853">
+          <caret line="212" column="5" lean-forward="false" selection-start-line="185" selection-start-column="4" selection-end-line="212" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/ng2-select/README.md" />
+    <entry file="file://$PROJECT_DIR$/app/components/account-management.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="42" lean-forward="false" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -760,18 +977,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/pages/login.component.html">
+    <entry file="file://$PROJECT_DIR$/node_modules/angular2-select/README.md" />
+    <entry file="file://$PROJECT_DIR$/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="41" lean-forward="false" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="41" />
+        <state relative-caret-position="221">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/login.component.ts">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="74" column="54" lean-forward="false" selection-start-line="74" selection-start-column="54" selection-end-line="74" selection-end-column="54" />
+        <state relative-caret-position="85">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/pages/account-management.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="12" column="57" lean-forward="false" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/angular-2-dropdown-multiselect/src/multiselect-dropdown.ts" />
+    <entry file="file://$PROJECT_DIR$/app/modules/main-application.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/systemjs.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="47" column="26" lean-forward="false" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/SelectionItem.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="5" column="39" lean-forward="false" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/content/account/account-find-box.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="35" column="20" lean-forward="false" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/enumerations/AccountStatuses.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/ClientConfigurationService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="79" column="86" lean-forward="false" selection-start-line="79" selection-start-column="86" selection-end-line="79" selection-end-column="86" />
           <folding />
         </state>
       </provider>

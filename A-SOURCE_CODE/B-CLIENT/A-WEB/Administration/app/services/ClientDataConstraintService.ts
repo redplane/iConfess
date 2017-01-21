@@ -14,6 +14,6 @@ export class ClientDataConstraintService{
 
         // Category section.
         this.minLengthCategoryName = 6;
-        this.maxLengthCategoryName = 10;
+        this.maxLengthCategoryName = 64;
     }
 }

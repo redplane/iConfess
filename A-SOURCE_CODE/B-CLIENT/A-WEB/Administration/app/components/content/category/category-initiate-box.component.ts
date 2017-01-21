@@ -2,6 +2,7 @@ import {Component, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../../services/ClientConfigurationService";
 import {ClientAccountService} from "../../../services/clients/ClientAccountService";
+import {ClientDataConstraintService} from "../../../services/ClientDataConstraintService";
 
 @Component({
     selector: 'category-initiate-box',
@@ -10,6 +11,8 @@ import {ClientAccountService} from "../../../services/clients/ClientAccountServi
     outputs:['initiateCategory'],
     providers: [
         FormBuilder,
+
+        ClientDataConstraintService,
         ClientConfigurationService,
         ClientAccountService
     ]
@@ -26,14 +29,9 @@ export class CategoryInitiateBoxComponent {
     // Category find box which contains category.
     private initiateCategoryBox: FormGroup;
 
-    // Service which provides function to access application configuration.
-    private _clientConfigurationService: ClientConfigurationService;
-
     // Initiate component with default dependency injection.
-    public constructor(private formBuilder: FormBuilder, clientConfigurationService: ClientConfigurationService) {
-
-        // Find configuration service from IoC.
-        this._clientConfigurationService = clientConfigurationService;
+    public constructor(private formBuilder: FormBuilder,
+                       public clientDataConstraintService: ClientDataConstraintService) {
 
         // Form control of find category box.
         this.initiateCategoryBox = this.formBuilder.group({
@@ -46,8 +44,8 @@ export class CategoryInitiateBoxComponent {
         this.isLoading = false;
     }
 
-    // Callback which is fired when search button is clicked.
-    public clickInitiateCategory(): void {
-        this.initiateCategory.emit(this.initiateCategoryBox.value);
+    // Callback which is fired when confirm button is clicked.
+    public clickInitiateCategory(category: any): void {
+        this.initiateCategory.emit(category);
     }
 }
