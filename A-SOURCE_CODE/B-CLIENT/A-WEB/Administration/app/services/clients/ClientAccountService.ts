@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {ClientApiService} from "../ClientApiService";
-import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {IClientAccountService} from "../../interfaces/services/IClientAccountService";
 import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
 import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
-import {AccountStatuses} from "../../enumerations/AccountStatuses";
+import {ClientAuthenticationService} from "./ClientAuthenticationService";
+import {Account} from "../../models/Account";
 
 /*
  * Service which handles category business.
@@ -13,22 +13,13 @@ import {AccountStatuses} from "../../enumerations/AccountStatuses";
 @Injectable()
 export class ClientAccountService implements IClientAccountService {
 
-    // Service which handles hyperlink.
-    private _clientApiService: ClientApiService;
-
-    // HttpClient which is used for handling request to web api service.
-    private _httpClient: Http;
-
     // Initiate instance of category service.
-    public constructor(clientApiService: ClientApiService, httpClient: Http){
-
-        this._clientApiService = clientApiService;
-        this._httpClient = httpClient;
+    public constructor(private clientApiService: ClientApiService,
+                       public clientAuthenticationService: ClientAuthenticationService){
     }
 
     // Find categories by using specific conditions.
     public findAccounts(findAccountsViewModel: FindAccountsViewModel) {
-
         // Page index should be decrease by one.
         let conditions = Object.assign({}, findAccountsViewModel);
         conditions['pagination'] = Object.assign({}, findAccountsViewModel.pagination);
@@ -36,39 +27,29 @@ export class ClientAccountService implements IClientAccountService {
         if (conditions.pagination.index < 0)
             conditions.pagination.index = 0;
 
-        let requestOptions = new RequestOptions({
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-
         // Request to api to obtain list of available categories in system.
-        return this._httpClient.post(this._clientApiService.apiFindAccount, conditions, requestOptions)
-            .toPromise();
+        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientApiService.apiFindAccount,
+            null,
+            conditions).toPromise();
     }
 
     // Sign an account into system.
     public login(loginViewModel: LoginViewModel): any {
-        return this._httpClient.post(this._clientApiService.apiLogin, loginViewModel).toPromise();
+        return this.clientApiService.post(null, this.clientApiService.apiLogin, null, loginViewModel)
+            .toPromise();
     }
 
-    // Send request to service to obtain token to change password
-    public initiatePasswordChangeRequest(email: string): any{
-        throw 'Not implemented exception';
-    }
+    // Change account information in service.
+    public changeAccountInformation(index: number, information: Account) : any{
 
-    // From the token which has been sent to mail to change password of account.
-    public initiatePasswordChange(email: string, password: string, token: string): any {
-        throw 'Not implemented exception';
-    }
+        // Build a complete url of account information change.
+        let urlParameters = {
+            id: index
+        };
 
-    // Up to account information to forbid account access to system.
-    public forbidAccountAccess(id: number): any{
-        throw 'Not implemented exception';
-    }
-
-
-    public changeAccountInformation(id: number, status: AccountStatuses) : any {
-        throw 'Not implemented exception';
+        return this.clientApiService.put(this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientApiService.apiChangeAccountInfo, urlParameters, information)
+            .toPromise();
     }
 }

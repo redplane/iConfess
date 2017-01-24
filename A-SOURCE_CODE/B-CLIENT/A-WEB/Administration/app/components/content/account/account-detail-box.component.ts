@@ -40,7 +40,7 @@ export class AccountDetailBoxComponent{
     }
 
     // Fired when a account is clicked to be changed.
-    public changeAccountInfo(category: CategoryDetailViewModel): void{
-        this.clickChangeAccountInfo.emit(category);
+    public changeAccountInfo(account: Account): void{
+        this.clickChangeAccountInfo.emit(account);
     }
 }

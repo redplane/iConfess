@@ -8,13 +8,16 @@ import {TextSearch} from "../../../viewmodels/TextSearch";
 import {ClientAccountService} from "../../../services/clients/ClientAccountService";
 import {Pagination} from "../../../viewmodels/Pagination";
 import {TextSearchMode} from "../../../enumerations/TextSearchMode";
+import {ClientApiService} from "../../../services/ClientApiService";
 
 @Component({
     selector: 'comment-report-find-box',
     templateUrl: './app/views/contents/comment-report/comment-report-find-box.component.html',
     inputs:['conditions'],
     providers:[
-        ClientConfigurationService
+        ClientConfigurationService,
+        ClientAccountService,
+        ClientApiService
     ]
 })
 

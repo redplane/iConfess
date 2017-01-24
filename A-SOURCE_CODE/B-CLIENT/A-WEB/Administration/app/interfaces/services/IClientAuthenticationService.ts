@@ -7,13 +7,10 @@ export interface IClientAuthenticationService{
     findAuthenticationStorageKey(): string;
 
     // Find client authentication token information from local storage.
-    findClientAuthenticationToken(): ClientAuthenticationToken;
-
-    // Check whether authentication information is valid or not.
-    isAuthenticationSolid(clientAuthenticationToken: ClientAuthenticationToken): boolean;
+    findClientAuthenticationToken(): string;
 
     // Save authentication token information into local storage for future use.
-    saveAuthenticationToken(clientAuthenticationToken: ClientAuthenticationToken): void;
+    initiateLocalAuthenticationToken(clientAuthenticationToken: ClientAuthenticationToken): void;
 
     // Clear authentication token from local storage.
     clearAuthenticationToken(): void;

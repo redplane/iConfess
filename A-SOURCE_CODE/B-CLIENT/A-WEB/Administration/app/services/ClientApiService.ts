@@ -13,7 +13,7 @@ export class ClientApiService{
 
     // Api which web application will consume the service.
     private apiUrl = "http://confession.azurewebsites.net";
-    //private apiUrl = "http://localhost:2101";
+    // private apiUrl = "http://localhost:2101";
 
     // Hyperlink which is used for searching for categories.
     public apiFindCategory : string;
@@ -32,6 +32,9 @@ export class ClientApiService{
 
     // Hyperlink which is used for logging an user into system.
     public apiLogin : string;
+
+    // Url which is used for changing account information.
+    public apiChangeAccountInfo: string;
 
     // Key in local storage which access token should be stored.
     public accessTokenStorage: string;
@@ -53,13 +56,14 @@ export class ClientApiService{
 
         // Initiate api which is used for logging into system.
         this.apiLogin = `${this.apiUrl}/api/account/login`;
+        this.apiChangeAccountInfo = `${this.apiUrl}/api/account`;
 
         // Key of local storage in which access token should be stored.
         this.accessTokenStorage = 'iConfess';
     }
 
     // Send 'GET' to service.
-    public get(clientAuthenticationToken: TokenViewModel, url: string, parameters: any) : any {
+    public get(clientAuthenticationToken: string, url: string, parameters: any) : any {
 
         // Parameters are specified. Reconstruct 'em.
         if (parameters != null)
@@ -68,7 +72,9 @@ export class ClientApiService{
         // Initiate headers.
         let clientRequestHeaders = new Headers();
         clientRequestHeaders.append('Content-Type', 'application/json');
-        clientRequestHeaders.append('Authorization', `Bearer ${clientAuthenticationToken.token}`);
+
+        if (clientAuthenticationToken != null && clientAuthenticationToken.length > 0)
+            clientRequestHeaders.append('Authorization', `Bearer ${clientAuthenticationToken}`);
 
         // Initiate request options.
         let clientRequestOptions = new RequestOptions({
@@ -80,7 +86,7 @@ export class ClientApiService{
     }
 
     // Send 'POST' to service.
-    public post(clientAuthenticationToken: TokenViewModel, url: string, parameters: any, body: any) : any {
+    public post(clientAuthenticationToken: string, url: string, parameters: any, body: any) : any {
 
         // Parameters are specified. Reconstruct 'em.
         if (parameters != null)
@@ -89,7 +95,9 @@ export class ClientApiService{
         // Initiate headers.
         let clientRequestHeaders = new Headers();
         clientRequestHeaders.append('Content-Type', 'application/json');
-        clientRequestHeaders.append('Authorization', `Bearer ${clientAuthenticationToken.token}`);
+
+        if (clientAuthenticationToken != null && clientAuthenticationToken.length > 0)
+            clientRequestHeaders.append('Authorization', `Bearer ${clientAuthenticationToken}`);
 
         // Initiate request options.
         let clientRequestOptions = new RequestOptions({
@@ -102,7 +110,7 @@ export class ClientApiService{
     }
 
     // Send 'PUT' to service.
-    public put(clientAuthenticationToken: TokenViewModel, url: string, parameters: any, body: any) : any {
+    public put(clientAuthenticationToken: string, url: string, parameters: any, body: any) : any {
 
         // Parameters are specified. Reconstruct 'em.
         if (parameters != null)
@@ -111,7 +119,8 @@ export class ClientApiService{
         // Initiate headers.
         let clientRequestHeaders = new Headers();
         clientRequestHeaders.append('Content-Type', 'application/json');
-        clientRequestHeaders.append('Authorization', `Bearer ${clientAuthenticationToken.token}`);
+        if (clientAuthenticationToken != null && clientAuthenticationToken.length > 0)
+            clientRequestHeaders.append('Authorization', `Bearer ${clientAuthenticationToken}`);
 
         // Initiate request options.
         let clientRequestOptions = new RequestOptions({
@@ -124,7 +133,7 @@ export class ClientApiService{
     }
 
     // Send 'PUT' to service.
-    public delete(clientAuthenticationToken: TokenViewModel, url: string, parameters: any, body: any) : any {
+    public delete(clientAuthenticationToken: string, url: string, parameters: any, body: any) : any {
 
         // Parameters are specified. Reconstruct 'em.
         if (parameters != null)
@@ -133,7 +142,8 @@ export class ClientApiService{
         // Initiate headers.
         let clientRequestHeaders = new Headers();
         clientRequestHeaders.append('Content-Type', 'application/json');
-        clientRequestHeaders.append('Authorization', `Bearer ${clientAuthenticationToken.token}`);
+        if (clientAuthenticationToken != null)
+            clientRequestHeaders.append('Authorization', `Bearer ${clientAuthenticationToken}`);
 
         // Initiate request options.
         let clientRequestOptions = new RequestOptions({

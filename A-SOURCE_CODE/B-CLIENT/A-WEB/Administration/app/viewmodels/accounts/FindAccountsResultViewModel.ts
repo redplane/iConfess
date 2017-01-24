@@ -3,7 +3,7 @@ import {Account} from "../../models/Account";
 /*
  * Result instance of category search.
  * */
-export class AccountSearchDetailViewModel{
+export class FindAccountsResultViewModel{
 
     // List of detailed accounts responded from service.
     public accounts: Account[];

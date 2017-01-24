@@ -5,13 +5,15 @@ import {CategorySortProperty} from "../enumerations/order/CategorySortProperty";
 import {AccountSortProperty} from "../enumerations/order/AccountSortProperty";
 import {Account} from "../models/Account";
 import {AccountStatuses} from "../enumerations/AccountStatuses";
-import {SelectionItem} from "../models/SelectionItem";import {CommentReportSortProperty} from "../enumerations/order/CommentReportSortProperty";
+import {SelectionItem} from "../models/SelectionItem";
+import {CommentReportSortProperty} from "../enumerations/order/CommentReportSortProperty";
 import {TextSearchMode} from "../enumerations/TextSearchMode";
+
 @Injectable()
-export class ClientConfigurationService{
+export class ClientConfigurationService {
 
     // List of page record number which can be selected on the screen.
-    public pageRecords : number[];
+    public pageRecords: number[];
 
     // Modes of text search.
     public textSearchModes: Dictionary<TextSearchMode>;
@@ -28,11 +30,13 @@ export class ClientConfigurationService{
     // List of properties which can be used for categories sorting.
     public categorySortProperties: Dictionary<CategorySortProperty>;
 
-// List of properties which can be used for comments sorting.
+    // List of properties which can be used for comments sorting.
     public commentReportSortProperties: Dictionary<CommentReportSortProperty>;// List of items which can be selected in accounts list.
-    public accountStatusSelections: Array<SelectionItem>;
-    // Initiate instance of service with default settings.    public constructor(){
 
+    public accountStatusSelections: Dictionary<AccountStatuses>;
+
+    // Initiate instance of service with default settings.
+    public constructor() {
         // Amount of records which can be displayed on the screen.
         this.pageRecords = [5, 10, 15, 20];
 
@@ -78,33 +82,34 @@ export class ClientConfigurationService{
     }
 
     // Maximum number of records which can be displayed on page.
-    public findMaxPageRecords(): number{
+    public findMaxPageRecords(): number {
         return this.pageRecords[this.pageRecords.length - 1];
     }
-    // Initiate list of account statuses selection.
-    private initializeAccountSelections(): any{
-        let accountStatusItems = new Array<SelectionItem>();
 
-        accountStatusItems.push(new SelectionItem('Inactive', AccountStatuses.Disabled));
-        accountStatusItems.push(new SelectionItem('Pending', AccountStatuses.Pending));
-        accountStatusItems.push(new SelectionItem('Active', AccountStatuses.Active));
+    // Initiate list of account statuses selection.
+    private initializeAccountSelections(): Dictionary<AccountStatuses> {
+        let accountStatusItems = new Dictionary<AccountStatuses>();
+
+        accountStatusItems.insert('Inactive', AccountStatuses.Disabled);
+        accountStatusItems.insert('Pending', AccountStatuses.Pending);
+        accountStatusItems.insert('Active', AccountStatuses.Active);
 
         return accountStatusItems;
     }
 
     // Initiate comment report sort properties list.
-    private initiateCommentReportSortProperties(): Dictionary<CommentReportSortProperty>{
+    private initiateCommentReportSortProperties(): Dictionary<CommentReportSortProperty> {
 
         // Initiate properties list.
         let commentReportSortProperties = new Dictionary<CommentReportSortProperty>();
-        commentReportSortProperties.insert( 'Index', CommentReportSortProperty.Index);
+        commentReportSortProperties.insert('Index', CommentReportSortProperty.Index);
         commentReportSortProperties.insert('Created', CommentReportSortProperty.Index);
 
         return commentReportSortProperties;
     }
 
     // Initiate text search modes list.
-    private initiateTextSearchModes() : Dictionary<TextSearchMode>{
+    private initiateTextSearchModes(): Dictionary<TextSearchMode> {
 
         // Initiate text search modes.
         let textSearchModes = new Dictionary<TextSearchMode>();

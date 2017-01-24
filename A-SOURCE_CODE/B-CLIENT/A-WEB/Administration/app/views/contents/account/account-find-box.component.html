@@ -1,5 +1,6 @@
-<div [formGroup]="findAccountBox"
-     class="box box-default">
+<form [formGroup]="findAccountBox"
+      class="box box-default"
+      (submit)="clickSearch()">
 
     <!-- Overlay which is used for blocking box. -->
     <div class="overlay"
@@ -33,14 +34,26 @@
 
                 </div>
 
+                <!-- Account statuses -->
                 <div class="form-group">
                     <label>Statuses</label>
 
-                    <ng-select [items]="clientConfigurationService.accountStatusSelections"
-                               [active]="clientConfigurationService.accountStatusSelections"
-                               [multiple]="true"
-                               [allowClear]="true">
-                    </ng-select>
+                    <div class="btn-group btn-group-justified"
+                         role="group"
+                         aria-label="...">
+
+                        <div *ngFor="let key of clientConfigurationService.accountStatusSelections.keys();"
+                             class="btn-group"
+                             role="group">
+                            <button type="button"
+                                    class="btn btn-default"
+                                    [class.btn-default]="conditions.statuses.indexOf(clientConfigurationService.accountStatusSelections.item(key)) == -1"
+                                    [class.btn-primary]="conditions.statuses.indexOf(clientConfigurationService.accountStatusSelections.item(key)) != -1"
+                                    (click)="toggleStatuses(clientConfigurationService.accountStatusSelections.item(key))">
+                                <span>{{key}}</span>
+                            </button>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -189,4 +202,4 @@
             <span>Search</span>
         </button>
     </div>
-</div>
+</form>

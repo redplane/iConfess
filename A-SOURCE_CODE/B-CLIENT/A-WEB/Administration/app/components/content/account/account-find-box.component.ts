@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../../services/ClientConfigurationService";
 import {ClientAccountService} from "../../../services/clients/ClientAccountService";
 import {FindAccountsViewModel} from "../../../viewmodels/accounts/FindAccountsViewModel";
@@ -33,8 +33,6 @@ export class AccountFindBoxComponent implements OnInit {
     // Collection of conditions which are used for searching categories.
     private conditions: FindAccountsViewModel;
 
-    private selected: any;
-
     // Initiate component with default dependency injection.
     public constructor(private formBuilder: FormBuilder,
                        private clientConfigurationService: ClientConfigurationService,
@@ -65,6 +63,26 @@ export class AccountFindBoxComponent implements OnInit {
 
         // Initiate search conditions.
         this.conditions = new FindAccountsViewModel();
+    }
+
+    // Callback which is fired when status button is toggled.
+    public toggleStatuses(status: AccountStatuses): void{
+
+        // Statuses list hasn't been initialized.
+        if (this.conditions.statuses == null) {
+            this.conditions.statuses = new Array<AccountStatuses>();
+            this.conditions.statuses.push(status);
+            return;
+        }
+
+        // Find status in the list.
+        let index = this.conditions.statuses.indexOf(status);
+        if (index == -1){
+            this.conditions.statuses.push(status);
+            return;
+        }
+
+        this.conditions.statuses.splice(index, 1);
     }
 
     // Callback which is fired when search button is clicked.

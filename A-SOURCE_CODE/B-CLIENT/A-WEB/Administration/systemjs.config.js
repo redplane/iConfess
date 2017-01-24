@@ -28,7 +28,8 @@
             // Angular select plugin.
             'moment': 'node_modules/moment/moment.js',
             'ng2-bootstrap/ng2-bootstrap': 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
-            'ng2-select': 'node_modules/ng2-select'
+            'ng2-select': 'node_modules/ng2-select',
+            "ng2-radio-group": "node_modules/ng2-radio-group"
 
         },
         // packages tells the System loader how to load when no filename and/or no extension
@@ -47,6 +48,10 @@
             'ng2-select':{
                 main: 'ng2-select',
                 defaultExtension: 'js'
+            },
+            "ng2-radio-group": {
+                "main": "index.js",
+                "defaultExtension": "js"
             }
         }
     });

@@ -12,7 +12,7 @@ import {CategoryFindBoxComponent} from "../components/content/category/category-
 import {HttpModule, JsonpModule} from '@angular/http';
 import {ModalModule, PaginationModule, TypeaheadModule} from 'ng2-bootstrap/ng2-bootstrap';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from "../components/login.component";
+import {LoginComponent} from "../components/login-box.component";
 import {AccountDetailBoxComponent} from "../components/content/account/account-detail-box.component";
 import {AccountFindBoxComponent} from "../components/content/account/account-find-box.component";
 import {SelectModule} from 'ng2-select';import {CommentReportManagementComponent} from "../components/comment-report-management.component";
