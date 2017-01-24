@@ -15,6 +15,7 @@ using iConfess.Admin.ViewModels.ApiAccount;
 using iConfess.Database.Enumerations;
 using JWT;
 using log4net;
+using Newtonsoft.Json;
 using Shared.Constants;
 using Shared.Interfaces.Services;
 using Shared.Resources;
@@ -34,17 +35,20 @@ namespace iConfess.Admin.Controllers
         /// <param name="bearerTokenAuthenticationProvider"></param>
         /// <param name="timeService"></param>
         /// <param name="encryptionService"></param>
+        /// <param name="identityService"></param>
         /// <param name="unitOfWork"></param>
         /// <param name="log"></param>
         public ApiAccountController(
             IBearerAuthenticationProvider bearerTokenAuthenticationProvider,
             ITimeService timeService,
             IEncryptionService encryptionService,
+            IIdentityService identityService,
             IUnitOfWork unitOfWork, ILog log) : base(unitOfWork)
         {
             _bearerAuthenticationProvider = bearerTokenAuthenticationProvider;
             _timeService = timeService;
             _encryptionService = encryptionService;
+            _identityService = identityService;
             _log = log;
         }
 
@@ -66,6 +70,11 @@ namespace iConfess.Admin.Controllers
         ///     Service which is for encryption purpose.
         /// </summary>
         private readonly IEncryptionService _encryptionService;
+
+        /// <summary>
+        /// Service which is for identity handling.
+        /// </summary>
+        private readonly IIdentityService _identityService;
 
         /// <summary>
         ///     Instance which is used for log writing.
@@ -232,6 +241,7 @@ namespace iConfess.Admin.Controllers
 
                 await UnitOfWork.Context.SaveChangesAsync();
 
+                // TODO: Send activation mail.
                 return Request.CreateResponse(HttpStatusCode.OK, jwtResponse);
             }
             catch (Exception exception)
@@ -356,8 +366,11 @@ namespace iConfess.Admin.Controllers
             }
 
             if (!ModelState.IsValid)
+            {
+                _log.Error($"Parameters are invalid. Submitted: {JsonConvert.SerializeObject(conditions)}");
                 return Request.CreateResponse(HttpStatusCode.BadRequest,
                     FindValidationMessage(ModelState, nameof(conditions)));
+            }
 
             #endregion
 
@@ -373,11 +386,94 @@ namespace iConfess.Admin.Controllers
         ///     Permanantly or temporarily ban accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        [Route("forbid")]
+        [Route("")]
         [HttpPut]
-        public HttpResponseMessage ForbidAccountAccess()
+        public async Task<HttpResponseMessage> ChangeAccountInformation([FromUri] int id,
+            [FromBody] ChangeAccountInfoViewModel parameters)
         {
-            throw new NotImplementedException();
+            #region Parameters validation
+
+            // Parameters haven't been initialized.
+            if (parameters == null)
+            {
+                parameters = new ChangeAccountInfoViewModel();
+                Validate(parameters);
+            }
+
+            // Model is not valid.
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest,
+                    FindValidationMessage(ModelState, nameof(parameters)));
+
+            #endregion
+
+            #region Requester identity find
+
+            // Find account which sent the current request.
+            var account = _identityService.FindAccount(Request.Properties);
+
+            // Account is invalid.
+            if (account == null)
+            {
+                _log.Error("Cannot find authentication information in the current request. Please try again");
+                return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, HttpMessages.RequestIsUnauthenticated);
+            }
+
+            #endregion
+
+            #region Find account
+
+            var conditions = new FindAccountsViewModel();
+            conditions.Id = id;
+
+            // Find the target account by using specific conditions.
+            var findAccountsResult = await UnitOfWork.RepositoryAccounts.FindAccountsAsync(conditions);
+
+            // Target is invalid.
+            if ((findAccountsResult == null) || (findAccountsResult.Accounts == null) || (findAccountsResult.Total != 1))
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
+
+            // Find the first account.
+            var target = await findAccountsResult.Accounts.FirstOrDefaultAsync();
+            if (target == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
+
+            #endregion
+
+            #region Change account information.
+
+            // Whether information has been changed or not.
+            var isInformationPristine = true;
+
+            // Nickname is specified.
+            if (!string.IsNullOrEmpty(target.Nickname))
+            {
+                target.Nickname = parameters.Nickname;
+                isInformationPristine = false;
+            }
+
+            // Status is specified.
+            if (parameters.Status != null)
+            {
+                target.Status = parameters.Status.Value;
+                isInformationPristine = false;
+            }
+
+            // No content should be updated.
+            if (isInformationPristine)
+            {
+                _log.Warn($"No information has been specified for account (index: {target.Id})");
+                return Request.CreateErrorResponse(HttpStatusCode.NotModified,
+                    HttpMessages.AccountInformationNotModified);
+            }
+
+            #endregion
+
+            // Save changes into database.
+            await UnitOfWork.Context.SaveChangesAsync();
+
+            // Tell the client about account whose information has been modified.
+            return Request.CreateResponse(HttpStatusCode.OK, target);
         }
 
         #endregion

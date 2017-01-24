@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using iConfess.Database.Enumerations;
@@ -8,6 +8,16 @@ namespace iConfess.Database.Models.Tables
 {
     public class Token
     {
+        #region Relationships
+
+        /// <summary>
+        ///     One category have one owner.
+        /// </summary>
+        [JsonIgnore]
+        public Account Owner { get; set; }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -35,17 +45,7 @@ namespace iConfess.Database.Models.Tables
         /// <summary>
         ///     When the token expires.
         /// </summary>
-        public System.DateTime Expire { get; set; }
-
-        #endregion
-
-        #region Relationships
-
-        /// <summary>
-        ///     One category have one owner.
-        /// </summary>
-        [JsonIgnore]
-        public Account Owner { get; set; }
+        public DateTime Expire { get; set; }
 
         #endregion
     }

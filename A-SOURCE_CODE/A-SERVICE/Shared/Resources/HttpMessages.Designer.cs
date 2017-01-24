@@ -61,6 +61,15 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ACCOUNT_NOT_MODIFIED.
+        /// </summary>
+        public static string AccountInformationNotModified {
+            get {
+                return ResourceManager.GetString("AccountInformationNotModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ACCOUNT_FORBIDDEN.
         /// </summary>
         public static string AccountIsForbidden {
@@ -192,6 +201,15 @@ namespace Shared.Resources {
         public static string PostReportNotFound {
             get {
                 return ResourceManager.GetString("PostReportNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REQUEST_UNAUTHENTICATED.
+        /// </summary>
+        public static string RequestIsUnauthenticated {
+            get {
+                return ResourceManager.GetString("RequestIsUnauthenticated", resourceCulture);
             }
         }
         

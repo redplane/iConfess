@@ -57,6 +57,10 @@
     <Compile Include="Enumerations\AccountStatus.cs" />
     <Compile Include="Enumerations\NotificationType.cs" />
     <Compile Include="Enumerations\TokenType.cs" />
+    <Compile Include="Migrations\201701221617474_20170122001.cs" />
+    <Compile Include="Migrations\201701221617474_20170122001.Designer.cs">
+      <DependentUpon>201701221617474_20170122001.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Tables\Account.cs" />
     <Compile Include="Models\Tables\Category.cs" />
@@ -78,6 +82,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701221617474_20170122001.resx">
+      <DependentUpon>201701221617474_20170122001.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccountInformationNotModified" xml:space="preserve">
+    <value>ACCOUNT_NOT_MODIFIED</value>
+  </data>
   <data name="AccountIsForbidden" xml:space="preserve">
     <value>ACCOUNT_FORBIDDEN</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="PostReportNotFound" xml:space="preserve">
     <value>POST_REPORT_NOT_FOUND</value>
+  </data>
+  <data name="RequestIsUnauthenticated" xml:space="preserve">
+    <value>REQUEST_UNAUTHENTICATED</value>
   </data>
   <data name="TokenExpired" xml:space="preserve">
     <value>TOEKN_EXPIRED</value>

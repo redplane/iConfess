@@ -12,6 +12,6 @@ namespace iConfess.Admin.ViewModels.ApiAccount
         /// <summary>
         /// Status of account.
         /// </summary>
-        public AccountStatus Status { get; set; }
+        public AccountStatus? Status { get; set; }
     }
 }
