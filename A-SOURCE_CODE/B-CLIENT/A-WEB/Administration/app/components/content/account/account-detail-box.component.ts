@@ -3,6 +3,7 @@ import {TimeService} from "../../../services/TimeService";
 import {ITimeService} from "../../../interfaces/services/ITimeService";
 import {CategoryDetailViewModel} from "../../../viewmodels/category/CategoryDetailViewModel";
 import {Account} from "../../../models/Account";
+import {AccountStatuses} from "../../../enumerations/AccountStatuses";
 
 @Component({
     selector: 'account-detail-box',
@@ -16,18 +17,17 @@ import {Account} from "../../../models/Account";
 
 export class AccountDetailBoxComponent{
 
-    // Service which handles time functions.
-    private _timeService: ITimeService;
-
     // Event emitter which is fired when a category is clicked to be removed.
     private clickRemoveAccount: EventEmitter<any>;
 
     // Event emitter which is fired when a category is clicked to be changed.
     private clickChangeAccountInfo: EventEmitter<any>;
 
+    // List of statuses which client can have.
+    private clientAccountStatuses = AccountStatuses;
+
     // Initiate category detail box with dependency injections.
-    public constructor(timeService: TimeService){
-        this._timeService = timeService;
+    public constructor(public clientTimeService: TimeService){
 
         // Event handler initialization.
         this.clickRemoveAccount = new EventEmitter();

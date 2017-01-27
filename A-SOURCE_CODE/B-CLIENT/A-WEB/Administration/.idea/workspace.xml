@@ -23,32 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="account-management.component.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/pages/account-management.component.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="104" column="68" lean-forward="false" selection-start-line="104" selection-start-column="37" selection-end-line="104" selection-end-column="68" />
-              <folding>
-                <element signature="n#div#3;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Account.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/Account.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="22" lean-forward="false" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main-application.module.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/modules/main-application.module.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="612">
               <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding />
             </state>
@@ -65,24 +43,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientApiService.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/services/ClientApiService.ts">
+      <file leaf-file-name="ClientAuthenticationService.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAuthenticationService.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="174" column="49" lean-forward="false" selection-start-line="174" selection-start-column="49" selection-end-line="174" selection-end-column="49" />
-              <folding>
-                <element signature="n#!!block;n#get#0;n#ClientApiService#0" expanded="false" />
-                <element signature="n#!!block;n#post#0;n#ClientApiService#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="527">
+              <caret line="36" column="30" lean-forward="false" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientAuthenticationService.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAuthenticationService.ts">
+      <file leaf-file-name="account-find-box.component.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+            <state relative-caret-position="985">
+              <caret line="202" column="10" lean-forward="false" selection-start-line="202" selection-start-column="10" selection-end-line="202" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account-detail-box.component.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-detail-box.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="36" column="42" lean-forward="true" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account-detail-box.component.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/content/account/account-detail-box.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="26" column="33" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -91,7 +86,7 @@
       <file leaf-file-name="ClientAccountService.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAccountService.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
+            <state relative-caret-position="391">
               <caret line="30" column="81" lean-forward="false" selection-start-line="30" selection-start-column="81" selection-end-line="30" selection-end-column="81" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
@@ -103,8 +98,8 @@
       <file leaf-file-name="account-management.component.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/components/account-management.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+            <state relative-caret-position="1428">
+              <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
                 <element signature="n#!!block;n#isAccountSearchResultAvailable#0;n#AccountManagementComponent#0" expanded="false" />
@@ -185,7 +180,6 @@
         <option value="$PROJECT_DIR$/app/components/main-application.component.ts" />
         <option value="$PROJECT_DIR$/app/views/main-application.html" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/AccountSearchViewModel.ts" />
-        <option value="$PROJECT_DIR$/app/views/contents/account/account-detail-box.component.html" />
         <option value="$PROJECT_DIR$/app/views/sidebar.component.html" />
         <option value="$PROJECT_DIR$/app/services/ClientDataContraintService.ts" />
         <option value="$PROJECT_DIR$/app/components/content/category/category-find-box.component.ts" />
@@ -219,7 +213,6 @@
         <option value="$PROJECT_DIR$/app/services/ClientConfigurationService.ts" />
         <option value="$PROJECT_DIR$/app/components/content/account/account-find-box.component.ts" />
         <option value="$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html" />
-        <option value="$PROJECT_DIR$/app/components/content/account/account-detail-box.component.ts" />
         <option value="$PROJECT_DIR$/app/modules/main-application.module.ts" />
         <option value="$PROJECT_DIR$/app/views/pages/account-management.component.html" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/ChangeAccountInfoViewModel.ts" />
@@ -230,6 +223,8 @@
         <option value="$PROJECT_DIR$/app/components/account-management.component.ts" />
         <option value="$PROJECT_DIR$/app/services/clients/ClientAuthenticationService.ts" />
         <option value="$PROJECT_DIR$/app/interfaces/services/IClientAuthenticationService.ts" />
+        <option value="$PROJECT_DIR$/app/components/content/account/account-detail-box.component.ts" />
+        <option value="$PROJECT_DIR$/app/views/contents/account/account-detail-box.component.html" />
       </list>
     </option>
   </component>
@@ -263,6 +258,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -543,7 +539,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -554,7 +549,7 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SearchEverywhereHistoryKey" value="clientacc&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAccountService.ts&#10;clientau&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAuthenticationService.ts&#10;clientAuthentic&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAuthenticationService.ts&#10;login-box&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login-box.component.ts&#10;save&#9;null&#9;null&#10;ClientApi&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;ClientApiSer&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;clientauth&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAuthenticationService.ts&#10;clientapi&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;IClient&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAccountService.ts&#10;ClientApiS&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;clientaccount&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAccountService.ts&#10;account&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;Account.ts&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/models/Account.ts&#10;main-appl&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;account-&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/account-management.component.html&#10;category-management&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;ca&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/category/category-detail-box.component.ts&#10;cate&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;category-de&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/category/category-detail-box.component.ts&#10;category&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;account-detai&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-detail-box.component.html&#10;category-man&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;account-management&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/account-management.component.html&#10;account-man&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;account-ma&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;Dictiona&#9;null&#9;null&#10;account-fin&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-find-box.component.ts&#10;account-find&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-find-box.component.ts&#10;main-app&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;acc&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-find-box.component.html&#10;clienta&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;clientcon&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientConfigurationService.ts&#10;account-find-box&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-find-box.component.html&#10;ClientCate&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientCategoryService.ts&#10;ClientCatego&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientCategoryService.ts&#10;ClientAccountS&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAccountService.ts&#10;l&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login-box.component.ts&#10;login-box.com&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login-box.component.ts&#10;login-&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/login-box.component.html&#10;LoginC&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login-box.component.ts&#10;tsconfig&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/tsconfig.json&#10;login&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/login-box.component.html&#10;account-mana&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;AccountStat&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/enumerations/AccountStatuses.ts&#10;main-ap&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;system&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/systemjs.config.js&#10;account-m&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/account-management.component.html&#10;comment-mana&#9;null&#9;null&#10;comment-report&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="account-detail&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-detail-box.component.html&#10;account-detailB&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-detail-box.component.ts&#10;account-de&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-detail-box.component.html&#10;account-find&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-find-box.component.html&#10;clientacc&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAccountService.ts&#10;clientau&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAuthenticationService.ts&#10;clientAuthentic&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAuthenticationService.ts&#10;login-box&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login-box.component.ts&#10;save&#9;null&#9;null&#10;ClientApi&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;ClientApiSer&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;clientauth&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAuthenticationService.ts&#10;clientapi&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;IClient&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/interfaces/services/IClientAccountService.ts&#10;ClientApiS&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;clientaccount&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAccountService.ts&#10;account&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;Account.ts&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/models/Account.ts&#10;main-appl&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;account-&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/account-management.component.html&#10;category-management&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;ca&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/category/category-detail-box.component.ts&#10;cate&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;category-de&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/category/category-detail-box.component.ts&#10;category&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;account-detai&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-detail-box.component.html&#10;category-man&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/category-management.component.html&#10;account-management&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/account-management.component.html&#10;account-man&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;account-ma&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;Dictiona&#9;null&#9;null&#10;account-fin&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/content/account/account-find-box.component.ts&#10;main-app&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;acc&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-find-box.component.html&#10;clienta&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientApiService.ts&#10;clientcon&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/ClientConfigurationService.ts&#10;account-find-box&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/contents/account/account-find-box.component.html&#10;ClientCate&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientCategoryService.ts&#10;ClientCatego&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientCategoryService.ts&#10;ClientAccountS&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/services/clients/ClientAccountService.ts&#10;l&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login-box.component.ts&#10;login-box.com&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login-box.component.ts&#10;login-&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/login-box.component.html&#10;LoginC&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/login-box.component.ts&#10;tsconfig&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/tsconfig.json&#10;login&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/views/pages/login-box.component.html&#10;account-mana&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/components/account-management.component.ts&#10;AccountStat&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/enumerations/AccountStatuses.ts&#10;main-ap&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/app/modules/main-application.module.ts&#10;system&#9;FILE&#9;file://F:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/systemjs.config.js" />
     <property name="js.eslint.eslintPackage" value="" />
   </component>
   <component name="RecentsManager">
@@ -750,12 +745,15 @@
       <workItem from="1485150539058" duration="660000" />
       <workItem from="1485178878983" duration="12276000" />
       <workItem from="1485246274770" duration="2939000" />
-      <workItem from="1485277373141" duration="6421000" />
+      <workItem from="1485277373141" duration="7015000" />
+      <workItem from="1485453165746" duration="48000" />
+      <workItem from="1485454334449" duration="1406000" />
+      <workItem from="1485484306979" duration="1242000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="438804000" />
+    <option name="totallyTimeSpent" value="442094000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -774,19 +772,19 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28921932" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32626426" sideWeight="0.5055762" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32300162" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31810766" sideWeight="0.44535315" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31810766" sideWeight="0.44535315" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32300162" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -846,6 +844,7 @@
         <option value="$PROJECT_DIR$/app/services/ClientConfigurationService.js.map" />
         <option value="$PROJECT_DIR$/app/components/category-management.component.js.map" />
         <option value="$PROJECT_DIR$/app/components/sidebar.component.js.map" />
+        <option value="$PROJECT_DIR$/app/components/login-box.component.js" />
         <option value="$PROJECT_DIR$/app/components/navigation-bar.component.js.map" />
         <option value="$PROJECT_DIR$/app/components/main-application.component.js.map" />
         <option value="$PROJECT_DIR$/app/components/account-management.component.js" />
@@ -855,6 +854,7 @@
         <option value="$PROJECT_DIR$/app/components/account-management.component.js.map" />
         <option value="$PROJECT_DIR$/app/components/comment-report-management.component.js" />
         <option value="$PROJECT_DIR$/app/components/main-application.component.js" />
+        <option value="$PROJECT_DIR$/app/components/login-box.component.js.map" />
         <option value="$PROJECT_DIR$/app/components/category-management.component.js" />
         <option value="$PROJECT_DIR$/app/interfaces/IDictionary.js.map" />
         <option value="$PROJECT_DIR$/app/interfaces/IDictionary.js" />
@@ -889,11 +889,13 @@
         <option value="$PROJECT_DIR$/app/interfaces/services/IClientCategoryService.js" />
         <option value="$PROJECT_DIR$/app/interfaces/services/IClientAccountService.js.map" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/LoginViewModel.js" />
-        <option value="$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsViewModel.js.map" />
+        <option value="$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsResultViewModel.js.map" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/TokenViewModel.js" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/TokenViewModel.js.map" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsViewModel.js" />
+        <option value="$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsResultViewModel.js" />
         <option value="$PROJECT_DIR$/app/viewmodels/accounts/LoginViewModel.js.map" />
+        <option value="$PROJECT_DIR$/app/viewmodels/accounts/FindAccountsViewModel.js.map" />
         <option value="$PROJECT_DIR$/app/viewmodels/category/FindCategoriesViewModel.js" />
         <option value="$PROJECT_DIR$/app/viewmodels/category/FindCategoriesViewModel.js.map" />
         <option value="$PROJECT_DIR$/app/viewmodels/category/CategoryDetailViewModel.js.map" />
@@ -983,13 +985,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/ClientApiService.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="53" column="18" lean-forward="false" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/ClientApiService.js" />
     <entry file="file://$PROJECT_DIR$/app/viewmodels/Pagination.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1077,7 +1073,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="34" lean-forward="false" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1099,7 +1094,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="333">
           <caret line="56" column="37" lean-forward="false" selection-start-line="56" selection-start-column="37" selection-end-line="56" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1114,15 +1108,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
           <caret line="89" column="39" lean-forward="false" selection-start-line="89" selection-start-column="12" selection-end-line="89" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="203" column="10" lean-forward="true" selection-start-line="203" selection-start-column="10" selection-end-line="203" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1130,7 +1115,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1138,17 +1122,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="284">
           <caret line="71" column="47" lean-forward="true" selection-start-line="71" selection-start-column="47" selection-end-line="71" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#62#0" expanded="false" />
-            <element signature="n#!!block;n#constructor#0;n#AccountFindBoxComponent#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-detail-box.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="37" column="38" lean-forward="true" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -1166,19 +1139,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/content/account/account-detail-box.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="42" column="47" lean-forward="false" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/pages/category-management.component.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2414">
           <caret line="142" column="93" lean-forward="false" selection-start-line="142" selection-start-column="70" selection-end-line="142" selection-end-column="93" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1186,11 +1150,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="122">
           <caret line="122" column="11" lean-forward="false" selection-start-line="122" selection-start-column="11" selection-end-line="122" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#47#0" expanded="false" />
-            <element signature="n#!!block;n#clickConfirmDeleteCategory#0;n#CategoryManagementComponent#0" expanded="false" />
-            <element signature="n#!!block;n#clickInitiateCategory#0;n#CategoryManagementComponent#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1198,17 +1157,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
           <caret line="42" column="1" lean-forward="false" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/pages/account-management.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
+        <state relative-caret-position="1496">
           <caret line="104" column="68" lean-forward="false" selection-start-line="104" selection-start-column="37" selection-end-line="104" selection-end-column="68" />
-          <folding>
-            <element signature="n#div#3;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1220,57 +1175,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/viewmodels/accounts/ChangeAccountInfoViewModel.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/interfaces/services/IClientAccountService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="17" column="72" lean-forward="false" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/viewmodels/accounts/ChangeAccountInfoViewModel.ts" />
     <entry file="file://$PROJECT_DIR$/app/components/login-box.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
           <caret line="71" column="0" lean-forward="true" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/account-management.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-            <element signature="n#!!block;n#isAccountSearchResultAvailable#0;n#AccountManagementComponent#0" expanded="false" />
-            <element signature="n#!!block;n#ngOnInit#0;n#AccountManagementComponent#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/modules/main-application.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
+        <state relative-caret-position="612">
           <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAccountService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="30" column="81" lean-forward="false" selection-start-line="30" selection-start-column="81" selection-end-line="30" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1284,7 +1201,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/services/ClientApiService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
+        <state relative-caret-position="2176">
           <caret line="174" column="49" lean-forward="false" selection-start-line="174" selection-start-column="49" selection-end-line="174" selection-end-column="49" />
           <folding>
             <element signature="n#!!block;n#get#0;n#ClientApiService#0" expanded="false" />
@@ -1295,8 +1212,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAuthenticationService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+        <state relative-caret-position="527">
+          <caret line="36" column="30" lean-forward="false" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/clients/ClientAccountService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="30" column="81" lean-forward="false" selection-start-line="30" selection-start-column="81" selection-end-line="30" selection-end-column="81" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/account-management.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+            <element signature="n#!!block;n#isAccountSearchResultAvailable#0;n#AccountManagementComponent#0" expanded="false" />
+            <element signature="n#!!block;n#ngOnInit#0;n#AccountManagementComponent#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/interfaces/services/IClientAccountService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="17" column="72" lean-forward="false" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/content/account/account-detail-box.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="26" column="33" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-find-box.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="985">
+          <caret line="202" column="10" lean-forward="false" selection-start-line="202" selection-start-column="10" selection-end-line="202" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/contents/account/account-detail-box.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="36" column="42" lean-forward="true" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
           <folding />
         </state>
       </provider>
