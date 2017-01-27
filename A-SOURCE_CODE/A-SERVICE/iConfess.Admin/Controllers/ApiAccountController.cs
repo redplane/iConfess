@@ -446,7 +446,7 @@ namespace iConfess.Admin.Controllers
             var isInformationPristine = true;
 
             // Nickname is specified.
-            if (!string.IsNullOrEmpty(target.Nickname))
+            if (!string.IsNullOrEmpty(parameters.Nickname))
             {
                 target.Nickname = parameters.Nickname;
                 isInformationPristine = false;

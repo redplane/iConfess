@@ -154,7 +154,7 @@ namespace Shared.Repositories
         {
             // Index has been identified.
             if (conditions.Id != null)
-                accounts = accounts.Where(x => x.Id != conditions.Id.Value);
+                accounts = accounts.Where(x => x.Id == conditions.Id.Value);
 
             // Email has been identified.
             if ((conditions.Email != null) && !string.IsNullOrWhiteSpace(conditions.Email.Value))
