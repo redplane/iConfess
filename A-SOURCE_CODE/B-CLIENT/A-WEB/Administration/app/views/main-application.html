@@ -1,15 +1,15 @@
 <div class="wrapper">
     <!-- Top horizontal navigation bar -->
-    <navigation-bar *ngIf = "getLocation() != '/'"></navigation-bar>
+    <navigation-bar *ngIf = "shouldNavigationBarsBeAvailable()"></navigation-bar>
 
     <!-- Sidebar -->
-    <sidebar *ngIf = "getLocation() != '/'"></sidebar>
+    <sidebar *ngIf = "shouldNavigationBarsBeAvailable()"></sidebar>
 
     <!-- Main page content -->
     <div class="content-wrapper">
         <!-- Content header -->
         <section class="content-header"
-                 *ngIf = "getLocation() != '/'">
+                 *ngIf = "shouldNavigationBarsBeAvailable()">
         </section>
 
         <!-- Application main content -->

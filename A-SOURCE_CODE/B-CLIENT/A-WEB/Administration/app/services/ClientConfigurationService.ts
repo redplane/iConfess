@@ -45,7 +45,7 @@ export class ClientConfigurationService {
 
         // Initate default settings of ng2-bootstrap pagination control.
         this.ngPaginationSettings = {
-            rotate: true, //if true current page will in the middle of pages list
+            rotate: true, //if true current page will in the middle of views list
             firstText: '<<',
             previousText: '<',
             nextText: '>',

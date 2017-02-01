@@ -26,10 +26,11 @@
             'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
 
             // Angular select plugin.
-            'moment': 'node_modules/moment/moment.js',
+            'moment': 'node_modules/moment',
             'ng2-bootstrap/ng2-bootstrap': 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
             'ng2-select': 'node_modules/ng2-select',
-            "ng2-radio-group": "node_modules/ng2-radio-group"
+            "ng2-radio-group": "node_modules/ng2-radio-group",
+            'angular2-moment': 'node_modules/angular2-moment'
 
         },
         // packages tells the System loader how to load when no filename and/or no extension
@@ -52,6 +53,14 @@
             "ng2-radio-group": {
                 "main": "index.js",
                 "defaultExtension": "js"
+            },
+            'moment': {
+                main: './moment.js',
+                defaultExtension: 'js'
+            },
+            'angular2-moment': {
+                main: './index.js',
+                defaultExtension: 'js'
             }
         }
     });

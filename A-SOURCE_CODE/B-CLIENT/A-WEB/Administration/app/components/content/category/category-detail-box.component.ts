@@ -1,5 +1,5 @@
 import {Component, EventEmitter} from '@angular/core';
-import {TimeService} from "../../../services/TimeService";
+import {TimeService} from "../../../services/ClientTimeService";
 import {ITimeService} from "../../../interfaces/services/ITimeService";
 import {CategoryDetailViewModel} from "../../../viewmodels/category/CategoryDetailViewModel";
 

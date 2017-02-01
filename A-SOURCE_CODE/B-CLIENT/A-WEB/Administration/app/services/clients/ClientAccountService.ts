@@ -52,4 +52,16 @@ export class ClientAccountService implements IClientAccountService {
             this.clientApiService.apiChangeAccountInfo, urlParameters, information)
             .toPromise();
     }
+
+    // Request service to send an email which is for changing account password.
+    public requestPasswordChange(email: string): any{
+        // Parameter construction.
+        let urlParameters = {
+            email: email
+        };
+
+        return this.clientApiService.get(this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientApiService.apiRequestChangePassword, urlParameters)
+            .toPromise();
+    }
 }

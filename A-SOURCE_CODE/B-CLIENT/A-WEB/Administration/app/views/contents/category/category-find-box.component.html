@@ -1,5 +1,6 @@
-<div [formGroup]="findCategoryBox"
-     class="box box-default">
+<form [formGroup]="findCategoryBox"
+      class="box box-default"
+      (submit)="clickSearch()">
 
     <!-- Overlay which is used for blocking box. -->
     <div class="overlay"
@@ -189,10 +190,9 @@
     </div>
 
     <div class="box-footer">
-        <button class="btn btn-primary btn-flat"
-                (click)="clickSearch()">
+        <button class="btn btn-primary btn-flat">
             <span class="glyphicon glyphicon-search"></span>
             <span>Search</span>
         </button>
     </div>
-</div>
+</form>

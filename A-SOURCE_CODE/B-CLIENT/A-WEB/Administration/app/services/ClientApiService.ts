@@ -15,6 +15,7 @@ export class ClientApiService{
     private apiUrl = "http://confession.azurewebsites.net";
     // private apiUrl = "http://localhost:2101";
 
+    //////////////////////////////////////////////////////////////////////////////////////
     // Hyperlink which is used for searching for categories.
     public apiFindCategory : string;
 
@@ -27,6 +28,7 @@ export class ClientApiService{
     // Hyperlink which is used for initiating category information.
     public apiInitiateCategory: string;
 
+    //////////////////////////////////////////////////////////////////////////////////////
     // Hyperlink which is used for searching for accounts.
     public apiFindAccount : string;
 
@@ -36,6 +38,10 @@ export class ClientApiService{
     // Url which is used for changing account information.
     public apiChangeAccountInfo: string;
 
+    // Url which is used for requesting password change
+    public apiRequestChangePassword: string;
+
+    //////////////////////////////////////////////////////////////////////////////////////
     // Key in local storage which access token should be stored.
     public accessTokenStorage: string;
 
@@ -51,12 +57,11 @@ export class ClientApiService{
         this.apiChangeCategoryDetail = `${this.apiUrl}/api/category`;
         this.apiInitiateCategory = `${this.apiUrl}/api/category`;
 
-        // Find category account api url.
+        // Account api.
         this.apiFindAccount = `${this.apiUrl}/api/account/find`;
-
-        // Initiate api which is used for logging into system.
         this.apiLogin = `${this.apiUrl}/api/account/login`;
         this.apiChangeAccountInfo = `${this.apiUrl}/api/account`;
+        this.apiRequestChangePassword = `${this.apiUrl}/api/account/lost_password`;
 
         // Key of local storage in which access token should be stored.
         this.accessTokenStorage = 'iConfess';
@@ -179,6 +184,7 @@ export class ClientApiService{
 
                 // Redirect user back to login page.
                 this.clientRoutingService.navigate(['/']);
+
                 break;
 
             // This status is about request doesn't have enough permission to access service function.

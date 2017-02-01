@@ -1,24 +1,43 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {Dictionary} from "../viewmodels/Dictionary";
 
 @Component({
     selector: 'main-application',
     templateUrl: './app/views/main-application.html'
 })
 
-export class MainApplicationComponent {
+export class MainApplicationComponent implements OnInit{
 
-    // Router service which is used for routing.
-    private _router: Router;
+    // List of url where navigation bars should not be displayed.
+    private unauthenticatedUrls: Dictionary<boolean>;
 
     // Initiate component with IoC.
-    public constructor(router: Router){
-        this._router = router;
+    public constructor(public clientRoutingService: Router){
+        this.unauthenticatedUrls = new Dictionary<boolean>();
     }
 
     // Find location of the current page.
     public getLocation(): string{
-        return this._router.url;
+        return this.clientRoutingService.url;
     }
 
+    // Check whether navigation bar should be displayed or not.
+    public shouldNavigationBarsBeAvailable(): boolean{
+
+        // Find the current page location.
+        let location = this.getLocation();
+
+        // If location is the prohibited list, navigation bars should not be displayed.
+        if (this.unauthenticatedUrls.containsKey(location))
+            return false;
+
+        return true;
+    }
+
+    // Callback which is fired when component has been loaded successfully.
+    public ngOnInit(): void {
+        this.unauthenticatedUrls.insert("/", true);
+        this.unauthenticatedUrls.insert("/forgot-password", true);
+    }
 }
