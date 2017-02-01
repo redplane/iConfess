@@ -7,6 +7,7 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using iConfess.Admin.Interfaces.Providers;
+using iConfess.Admin.Interfaces.Services;
 using iConfess.Admin.Module;
 using iConfess.Admin.Providers;
 using iConfess.Admin.Services;
@@ -63,6 +64,9 @@ namespace iConfess.Admin.Configs
 
             // Handle businesses related to identity.
             containerBuilder.RegisterType<IdentityService>().As<IIdentityService>().SingleInstance();
+
+            // Handle businesses related to system configuration.
+            containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>().SingleInstance();
 
             // System email service.
             var systemEmailService = new SendGridService();

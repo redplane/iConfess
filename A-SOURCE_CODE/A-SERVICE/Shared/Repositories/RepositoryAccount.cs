@@ -43,14 +43,14 @@ namespace Shared.Repositories
         /// </summary>
         /// <returns></returns>
         /// <param name="conditions"></param>
-        public Task<int> DeleteAccountsAsync(FindAccountsViewModel conditions)
+        public void Delete(FindAccountsViewModel conditions)
         {
             // Find all accounts in database.
             var accounts = _iConfessDbContext.Accounts.AsQueryable();
 
             // Find accounts by using conditions.
             accounts = FindAccounts(accounts, conditions);
-
+            
             throw new NotImplementedException();
         }
 
@@ -206,14 +206,11 @@ namespace Shared.Repositories
         ///     Initiate / update an account asynchronously.
         /// </summary>
         /// <returns></returns>
-        public async Task<Account> InitiateAccountAsync(Account account)
+        public Account Initiate(Account account)
         {
             // Add / update account.
             _iConfessDbContext.Accounts.AddOrUpdate(account);
-
-            // Save change into database.
-            await _iConfessDbContext.SaveChangesAsync();
-
+            
             return account;
         }
 

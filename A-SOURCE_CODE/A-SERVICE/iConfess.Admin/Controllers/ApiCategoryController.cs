@@ -34,7 +34,6 @@ namespace iConfess.Admin.Controllers
             ITimeService timeService, IIdentityService identityService,
             ILog log) : base(unitOfWork)
         {
-            _unitOfWork = unitOfWork;
             _timeService = timeService;
             _identityService = identityService;
             _log = log;
@@ -43,12 +42,7 @@ namespace iConfess.Admin.Controllers
         #endregion
 
         #region Properties
-
-        /// <summary>
-        ///     Unit of work which provides database context and repositories to handle business of application.
-        /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
-
+        
         /// <summary>
         ///     Service which handles time calculation.
         /// </summary>
@@ -96,16 +90,8 @@ namespace iConfess.Admin.Controllers
                 #region Account validate
 
                 // Find account information attached in the current request.
-                Account account = null;
-
-#if UNAUTHENTICATION_ALLOW
-                account =
-                    await _unitOfWork.Context.Accounts.Where(
-                        x => x.Status == AccountStatus.Active && x.Role == AccountRole.Admin).FirstOrDefaultAsync();
-#else
-                account = _identityService.FindAccount(Request.Properties);
-#endif
-
+                var account = _identityService.FindAccount(Request.Properties);
+                
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
 
@@ -119,7 +105,7 @@ namespace iConfess.Admin.Controllers
                 findCategoryConditions.Name.Mode = TextComparision.EqualIgnoreCase;
 
                 // Category has been created before.
-                var category = await _unitOfWork.RepositoryCategories.FindFirstCategoryAsync(findCategoryConditions);
+                var category = await UnitOfWork.RepositoryCategories.FindCategoryAsync(findCategoryConditions);
                 if (category != null)
                 {
                     _log.Error($"Category with name : {parameters.Name} has been created before.");
@@ -136,22 +122,15 @@ namespace iConfess.Admin.Controllers
                 // Find the id of requester.
                 //Initiate new category
                 category = new Category();
-
-#if UNAUTHENTICATED_DEBUG
-
-                account = await _unitOfWork.Context.Accounts.FirstOrDefaultAsync();
-                if (account == null)
-                    throw new Exception("No account has been found");
-                
                 category.CreatorIndex = account.Id;
-#else
-                category.CreatorIndex = account.Id;
-#endif
                 category.Created = systemTime;
                 category.Name = parameters.Name;
 
                 //Add category record
-                await _unitOfWork.RepositoryCategories.InitiateCategoryAsync(category);
+                UnitOfWork.RepositoryCategories.Initiate(category);
+
+                // Save changes.
+                await UnitOfWork.CommitAsync();
 
                 #endregion
 
@@ -175,6 +154,8 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameters validation
+
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
@@ -184,35 +165,42 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(parameters)));
+
+                #endregion
+
+                #region Category search
+
                 // Find the category
                 var findCategoryViewModel = new FindCategoriesViewModel();
                 findCategoryViewModel.Id = index;
-
-                // Find categories by using specific conditions.
-                var response = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(findCategoryViewModel);
-
-                // No record has been found
-                if (response.Total < 1)
+                
+                // Find the category.
+                var category = await UnitOfWork.RepositoryCategories.FindCategoryAsync(findCategoryViewModel);
+                if (category == null)
+                {
+                    _log.Error($"Category (Id: {index}) is not found in database.");
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+                }
+
+                #endregion
+
+                #region Information update
 
                 // Begin transaction.
-                using (var transaction = _unitOfWork.Context.Database.BeginTransaction())
+                using (var transaction = UnitOfWork.Context.Database.BeginTransaction())
                 {
                     try
                     {
                         // Find unix system time.
                         var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
-
-                        // Update all categories.
-                        foreach (var category in response.Categories)
-                        {
-                            category.Name = parameters.Name;
-                            category.LastModified = unixSystemTime;
-                        }
-
+                        
+                        // Modify information.
+                        category.Name = parameters.Name;
+                        category.LastModified = unixSystemTime;
+                        
                         // Save changes into database.
-                        await UnitOfWork.Context.SaveChangesAsync();
+                        await UnitOfWork.CommitAsync();
 
                         // Save changes into database.
                         transaction.Commit();
@@ -224,6 +212,8 @@ namespace iConfess.Admin.Controllers
                         throw;
                     }
                 }
+
+                #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -244,6 +234,8 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameter validate
+
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
@@ -253,13 +245,24 @@ namespace iConfess.Admin.Controllers
 
                 //Request parameters are invalid
                 if (!ModelState.IsValid)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(conditions)));
+
+                #endregion
+
+                #region Record delete
+
                 // Delete categories by using specific conditions.
-                var totalRecords = await _unitOfWork.RepositoryCategories.DeleteCategoriesAsync(conditions);
+                UnitOfWork.RepositoryCategories.Delete(conditions);
+
+                // Save changes into database.
+                var totalRecords = await UnitOfWork.CommitAsync();
 
                 // No record has been deleted.
                 if (totalRecords < 1)
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+                
+                #endregion
+
                 // Tell the client , deletion is successful.
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -296,11 +299,13 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
+                #region Records search
+
                 // Find all categories.
-                var findCategoriesResult = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
+                var findCategoriesResult = await UnitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
 
                 // Find all accounts in the database.
-                var accounts = _unitOfWork.Context.Accounts.AsQueryable();
+                var accounts = UnitOfWork.RepositoryAccounts.FindAccounts();
 
                 var apiCategories = from account in accounts
                     from category in findCategoriesResult.Categories
@@ -320,6 +325,8 @@ namespace iConfess.Admin.Controllers
                         Created = category.Created,
                         LastModified = category.LastModified
                     };
+
+                #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK, new ResponseApiCategoriesViewModel
                 {

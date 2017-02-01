@@ -3,7 +3,7 @@ namespace iConfess.Database.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class _20170122001 : DbMigration
+    public partial class _20170201001 : DbMigration
     {
         public override void Up()
         {
@@ -204,13 +204,13 @@ namespace iConfess.Database.Migrations
                 "dbo.Token",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
                         OwnerIndex = c.Int(nullable: false),
-                        Code = c.String(),
                         Type = c.Int(nullable: false),
-                        Expire = c.DateTime(nullable: false),
+                        Code = c.String(),
+                        Issued = c.Double(nullable: false),
+                        Expired = c.Double(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => new { t.OwnerIndex, t.Type })
                 .ForeignKey("dbo.Account", t => t.OwnerIndex)
                 .Index(t => t.OwnerIndex);
             

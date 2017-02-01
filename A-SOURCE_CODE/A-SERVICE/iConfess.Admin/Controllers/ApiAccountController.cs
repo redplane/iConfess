@@ -235,7 +235,7 @@ namespace iConfess.Admin.Controllers
                     Mode = TextComparision.Equal,
                     Value = parameter.Email
                 };
-                findAccountsCondition.Statuses = new[] { AccountStatus.Pending };
+                findAccountsCondition.Statuses = new[] { AccountStatus.Active };
 
                 // Find account information from database.
                 var account = await UnitOfWork.RepositoryAccounts.FindAccountAsync(findAccountsCondition);
@@ -265,8 +265,9 @@ namespace iConfess.Admin.Controllers
                         token.Issued =
                             _timeService.DateTimeUtcToUnix(
                                 DateTime.UtcNow.AddSeconds(_configurationService.ForgotPasswordTokenExpiration));
-
-                        UnitOfWork.Context.Tokens.AddOrUpdate(token);
+                        
+                        // Save token into database.
+                        UnitOfWork.RepositoryTokens.Initiate(token);
 
                         // Contruct data to fill into email which will be sent to client.
                         var data = new
@@ -284,8 +285,8 @@ namespace iConfess.Admin.Controllers
                         _systemEmailService.Send(new[] { account.Email },
                             HttpMessages.TitleEmailForgotPassword, htmlEmailContent);
 
-                        //// Save changes into database.
-                        await UnitOfWork.Context.SaveChangesAsync();
+                        // Save changes into database.
+                        await UnitOfWork.CommitAsync();
 
                         // Commit the transaction.
                         transaction.Commit();
@@ -387,6 +388,7 @@ namespace iConfess.Admin.Controllers
                         // Delete the tokens.
                         UnitOfWork.RepositoryTokens.Delete(findTokensSearchConditions);
 
+                        // Save changes into database.
                         await UnitOfWork.CommitAsync();
 
                         // Commit transaction.
@@ -488,16 +490,9 @@ namespace iConfess.Admin.Controllers
 
             var conditions = new FindAccountsViewModel();
             conditions.Id = id;
-
-            // Find the target account by using specific conditions.
-            var findAccountsResult = await UnitOfWork.RepositoryAccounts.FindAccountsAsync(conditions);
-
-            // Target is invalid.
-            if ((findAccountsResult == null) || (findAccountsResult.Accounts == null) || (findAccountsResult.Total != 1))
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
-
+            
             // Find the first account.
-            var target = await findAccountsResult.Accounts.FirstOrDefaultAsync();
+            var target = await UnitOfWork.RepositoryAccounts.FindAccountAsync(conditions);
             if (target == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
 
@@ -530,14 +525,15 @@ namespace iConfess.Admin.Controllers
                     HttpMessages.AccountInformationNotModified);
             }
 
-            #endregion
-
             // Update last modified time.
             target.LastModified = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
             // Save changes into database.
             await UnitOfWork.Context.SaveChangesAsync();
 
+
+            #endregion
+            
             // Tell the client about account whose information has been modified.
             return Request.CreateResponse(HttpStatusCode.OK, target);
         }

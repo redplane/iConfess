@@ -12,7 +12,7 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         /// <param name="category">Category which should be updated/created in database.</param>
-        Task<Category> InitiateCategoryAsync(Category category);
+        Category Initiate(Category category);
 
         /// <summary>
         ///     Find categories asynchronously with specific conditions.
@@ -25,7 +25,7 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        Task<Category> FindFirstCategoryAsync(FindCategoriesViewModel conditions);
+        Task<Category> FindCategoryAsync(FindCategoriesViewModel conditions);
 
         /// <summary>
         ///     Find categories by using specific conditions.
@@ -36,9 +36,15 @@ namespace Shared.Interfaces.Repositories
         IQueryable<Category> FindCategories(IQueryable<Category> categories, FindCategoriesViewModel conditions);
 
         /// <summary>
+        /// Get all categories from database.
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Category> FindCategories();
+
+        /// <summary>
         ///     Delete category by using specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task<int> DeleteCategoriesAsync(FindCategoriesViewModel conditions);
+        void Delete(FindCategoriesViewModel conditions);
     }
 }

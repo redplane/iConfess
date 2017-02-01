@@ -22,15 +22,9 @@ namespace iConfess.Admin.Services
         /// </summary>
         public int ForgotPasswordTokenExpiration
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _forgotPasswordTokenExpiration; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { _forgotPasswordTokenExpiration = value; }
         }
 
         /// <summary>

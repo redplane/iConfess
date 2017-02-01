@@ -43,7 +43,7 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public async Task<int> DeleteCategoriesAsync(FindCategoriesViewModel conditions)
+        public void Delete(FindCategoriesViewModel conditions)
         {
             // Find all categories.
             var categories = _iConfessDbContext.Categories;
@@ -53,9 +53,6 @@ namespace Shared.Repositories
 
             // Remove all records which are filtered.
             _iConfessDbContext.Categories.RemoveRange(result);
-
-            // Save changes in database.
-            return await _iConfessDbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -160,7 +157,7 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public async Task<Category> FindFirstCategoryAsync(FindCategoriesViewModel conditions)
+        public async Task<Category> FindCategoryAsync(FindCategoriesViewModel conditions)
         {
             // Find all categories.
             var categories = _iConfessDbContext.Categories;
@@ -174,14 +171,10 @@ namespace Shared.Repositories
         /// </summary>
         /// <returns></returns>
         /// <param name="category">Category which should be added/updated in database.</param>
-        public async Task<Category> InitiateCategoryAsync(Category category)
+        public Category Initiate(Category category)
         {
             // Add or update a category.
             _iConfessDbContext.Categories.AddOrUpdate(category);
-
-            // Save change in database.
-            await _iConfessDbContext.SaveChangesAsync();
-
             return category;
         }
 
@@ -249,6 +242,15 @@ namespace Shared.Repositories
             }
 
             return categories;
+        }
+
+        /// <summary>
+        /// Find all categories from database.
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Category> FindCategories()
+        {
+            return _iConfessDbContext.Categories.AsQueryable();
         }
 
         #endregion

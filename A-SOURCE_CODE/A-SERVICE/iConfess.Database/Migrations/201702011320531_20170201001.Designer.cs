@@ -7,13 +7,13 @@ namespace iConfess.Database.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class _20170122001 : IMigrationMetadata
+    public sealed partial class _20170201001 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_20170122001));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_20170201001));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701221617474_20170122001"; }
+            get { return "201702011320531_20170201001"; }
         }
         
         string IMigrationMetadata.Source

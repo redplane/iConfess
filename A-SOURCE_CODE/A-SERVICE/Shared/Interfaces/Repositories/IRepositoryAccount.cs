@@ -12,7 +12,7 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         /// <param name="account"></param>
-        Task<Account> InitiateAccountAsync(Account account);
+        Account Initiate(Account account);
 
         /// <summary>
         ///     Find accounts by using specific conditions.
@@ -26,7 +26,7 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         /// <param name="conditions"></param>
-        Task<int> DeleteAccountsAsync(FindAccountsViewModel conditions);
+        void Delete(FindAccountsViewModel conditions);
 
         /// <summary>
         /// Find account by using specific conditions.
