@@ -1,25 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
 using iConfess.Admin.Interfaces.Providers;
+using iConfess.Admin.Interfaces.Services;
 using iConfess.Admin.Models;
 using iConfess.Admin.ViewModels.ApiAccount;
 using iConfess.Database.Enumerations;
+using iConfess.Database.Models.Tables;
 using JWT;
 using log4net;
 using Newtonsoft.Json;
-using Shared.Constants;
+using Shared.Enumerations;
 using Shared.Interfaces.Services;
+using Shared.Models;
 using Shared.Resources;
 using Shared.ViewModels.Accounts;
+using Shared.ViewModels.Token;
 
 namespace iConfess.Admin.Controllers
 {
@@ -36,6 +40,9 @@ namespace iConfess.Admin.Controllers
         /// <param name="timeService"></param>
         /// <param name="encryptionService"></param>
         /// <param name="identityService"></param>
+        /// <param name="systemEmailService"></param>
+        /// <param name="templateService"></param>
+        /// <param name="configurationService"></param>
         /// <param name="unitOfWork"></param>
         /// <param name="log"></param>
         public ApiAccountController(
@@ -43,12 +50,18 @@ namespace iConfess.Admin.Controllers
             ITimeService timeService,
             IEncryptionService encryptionService,
             IIdentityService identityService,
+            ISystemEmailService systemEmailService,
+            ITemplateService templateService,
+            IConfigurationService configurationService,
             IUnitOfWork unitOfWork, ILog log) : base(unitOfWork)
         {
             _bearerAuthenticationProvider = bearerTokenAuthenticationProvider;
             _timeService = timeService;
             _encryptionService = encryptionService;
             _identityService = identityService;
+            _systemEmailService = systemEmailService;
+            _templateService = templateService;
+            _configurationService = configurationService;
             _log = log;
         }
 
@@ -72,9 +85,24 @@ namespace iConfess.Admin.Controllers
         private readonly IEncryptionService _encryptionService;
 
         /// <summary>
-        /// Service which is for identity handling.
+        ///     Service which is for identity handling.
         /// </summary>
         private readonly IIdentityService _identityService;
+
+        /// <summary>
+        ///     Service which handling email send operation.
+        /// </summary>
+        private readonly ISystemEmailService _systemEmailService;
+
+        /// <summary>
+        /// Service which handling template operations.
+        /// </summary>
+        private readonly ITemplateService _templateService;
+
+        /// <summary>
+        /// Service which handles configurations.
+        /// </summary>
+        private readonly IConfigurationService _configurationService;
 
         /// <summary>
         ///     Instance which is used for log writing.
@@ -199,13 +227,18 @@ namespace iConfess.Admin.Controllers
 
             try
             {
+                #region Account check
+
+                var findAccountsCondition = new FindAccountsViewModel();
+                findAccountsCondition.Email = new TextSearch
+                {
+                    Mode = TextComparision.Equal,
+                    Value = parameter.Email
+                };
+                findAccountsCondition.Statuses = new[] { AccountStatus.Pending };
+
                 // Find account information from database.
-                var account = await
-                    UnitOfWork.Context.Accounts.Where(
-                            x =>
-                                x.Email.Equals(parameter.Email)
-                                && (x.Status == AccountStatus.Active))
-                        .FirstOrDefaultAsync();
+                var account = await UnitOfWork.RepositoryAccounts.FindAccountAsync(findAccountsCondition);
 
                 // Account is not found.
                 if (account == null)
@@ -215,34 +248,58 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
                 }
 
-                // Calculate token expiration time.
-                var tokenExpirationTime = DateTime.UtcNow.AddSeconds(_bearerAuthenticationProvider.Duration);
-                var unixTokenExpirationTime = _timeService.DateTimeUtcToUnix(tokenExpirationTime);
+                #endregion
 
-                // Claim identity initialization.
-                var claimsIdentity = new Dictionary<string, object>();
-                claimsIdentity.Add(ClaimTypes.Email, account.Email);
-                claimsIdentity.Add(ClaimTypes.Expiration, unixTokenExpirationTime.ToString("N"));
+                // Begin a transaction.
+                // Transaction is used for rolling data back if any errors failed.
+                using (var transaction = UnitOfWork.Context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Token initialization
+                        var token = new Token();
+                        token.Code = Guid.NewGuid().ToString("N");
+                        token.OwnerIndex = account.Id;
+                        token.Type = TokenType.Forgot;
+                        token.Issued = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
+                        token.Issued =
+                            _timeService.DateTimeUtcToUnix(
+                                DateTime.UtcNow.AddSeconds(_configurationService.ForgotPasswordTokenExpiration));
 
-                // Initiate token response.
-                var jwtResponse = new JwtResponse();
-                jwtResponse.Expire = unixTokenExpirationTime;
-                jwtResponse.Type = "Bearer";
-                jwtResponse.Token = JsonWebToken.Encode(claimsIdentity, _bearerAuthenticationProvider.Key,
-                    JwtHashAlgorithm.HS256);
+                        UnitOfWork.Context.Tokens.AddOrUpdate(token);
 
-                // Save token to database
-                var token = UnitOfWork.Context.Tokens.Create();
-                token.OwnerIndex = account.Id;
-                token.Code = jwtResponse.Token;
-                token.Type = TokenType.Forgot;
-                token.Expire = tokenExpirationTime;
-                UnitOfWork.Context.Tokens.Add(token);
+                        // Contruct data to fill into email which will be sent to client.
+                        var data = new
+                        {
+                            nickname = account.Nickname,
+                            token = token.Code,
 
-                await UnitOfWork.Context.SaveChangesAsync();
+                        };
 
-                // TODO: Send activation mail.
-                return Request.CreateResponse(HttpStatusCode.OK, jwtResponse);
+                        // Find email raw content.
+                        var emailRawContent = _systemEmailService.LoadEmailContent(SystemEmail.ForgotPassword);
+                        var htmlEmailContent = _templateService.Render(emailRawContent, data);
+
+                        // Send an email to recipient about the token.
+                        _systemEmailService.Send(new[] { account.Email },
+                            HttpMessages.TitleEmailForgotPassword, htmlEmailContent);
+
+                        //// Save changes into database.
+                        await UnitOfWork.Context.SaveChangesAsync();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+                    catch
+                    {
+                        // Rollback the transaction.
+                        transaction.Rollback();
+
+                        throw;
+                    }
+                }
             }
             catch (Exception exception)
             {
@@ -276,70 +333,76 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest,
                         FindValidationMessage(ModelState, nameof(parameters)));
 
-                // Find account information from database.
-                var account = await
-                    UnitOfWork.Context.Accounts.Where(
-                            x =>
-                                    x.Email.Equals(parameters.Email))
-                        .FirstOrDefaultAsync();
-
-                // Account is not found.
-                if (account == null)
-                {
-                    _log.Info(
-                        $"Account [Email : {parameters.Email}] is not found in database");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
-                }
-
-                // Find token imfomation from database
-                var token = await UnitOfWork.Context.Tokens.
-                    FirstOrDefaultAsync(tk => tk.Code.Equals(parameters.Token));
-
-                // Toke not found
-                if (token == null)
-                {
-                    _log.Info(
-                        $"Token [Code : {parameters.Token}] is not found in database");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
-                }
-
-                // Token expire
-                if (token.Expire < DateTime.UtcNow)
-                {
-                    _log.Info(
-                        $"Token [Code : {parameters.Token}] is expired");
-                    return Request.CreateErrorResponse(HttpStatusCode.Gone, HttpMessages.TokenExpired);
-                }
-
-                // Token not belong to email
-                if (token.OwnerIndex != account.Id)
-                {
-                    _log.Info(
-                        $"Token [Code : {parameters.Token}] is not belong to Account [Email : {parameters.Email}]");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
-                }
-
-                // Validate new password here
-                if ((parameters.NewPassword.Length < DataConstraints.MinLengthPassword)
-                    || (parameters.NewPassword.Length > DataConstraints.MaxLengthPassword)
-                    || (new Regex(Regexes.Password).IsMatch(parameters.NewPassword) == false))
-                {
-                    _log.Info(
-                        $"New Password [{parameters.NewPassword}] is not match constraints");
-                    return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, HttpMessages.PasswordInvalid);
-                }
-
                 #endregion
 
-                // Update password
-                account.Password = _encryptionService.Md5Hash(parameters.NewPassword);
+                using (var transaction = UnitOfWork.Context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        #region Information search
 
-                // Expire token
-                token.Expire = DateTime.UtcNow;
+                        // Account search condition construction.
+                        var findAccountsConditions = new FindAccountsViewModel();
+                        findAccountsConditions.Email = new TextSearch();
+                        findAccountsConditions.Email.Value = parameters.Email;
+                        findAccountsConditions.Email.Mode = TextComparision.Equal;
 
-                await UnitOfWork.Context.SaveChangesAsync();
+                        // Find all accounts in database.
+                        var accounts = UnitOfWork.RepositoryAccounts.FindAccounts();
+                        accounts = UnitOfWork.RepositoryAccounts.FindAccounts(accounts, findAccountsConditions);
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                        // Token search.
+                        var findTokensSearchConditions = new FindTokensViewModel();
+                        findTokensSearchConditions.Code = new TextSearch
+                        {
+                            Mode = TextComparision.Equal,
+                            Value = parameters.Token
+                        };
+                        findTokensSearchConditions.Types = new[] {TokenType.Forgot};
+
+                        // Find all tokens from database.
+                        var tokens = UnitOfWork.RepositoryTokens.FindTokens();
+                        tokens = UnitOfWork.RepositoryTokens.FindTokens(tokens, findTokensSearchConditions);
+
+                        // Information join & search.
+                        var findResult = await (from token in tokens
+                            from account in accounts
+                            where (account.Id == token.OwnerIndex)
+                            select account).FirstOrDefaultAsync();
+
+                        // No result has been found.
+                        if (findResult == null)
+                        {
+                            _log.Error("Token doesn't belong to any accounts or it doesn't exist.");
+                            return Request.CreateResponse(HttpStatusCode.NotFound, HttpMessages.TokenNotFound);
+                        }
+
+                        #endregion
+
+                        #region Information handling
+
+                        // Update password
+                        findResult.Password = _encryptionService.Md5Hash(parameters.NewPassword);
+
+                        // Delete the tokens.
+                        UnitOfWork.RepositoryTokens.Delete(findTokensSearchConditions);
+
+                        await UnitOfWork.CommitAsync();
+
+                        // Commit transaction.
+                        transaction.Commit();
+
+                        #endregion
+
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+                    catch
+                    {
+                        // Rollback transaction.
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
             }
             catch (Exception exception)
             {
@@ -468,6 +531,9 @@ namespace iConfess.Admin.Controllers
             }
 
             #endregion
+
+            // Update last modified time.
+            target.LastModified = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
             // Save changes into database.
             await UnitOfWork.Context.SaveChangesAsync();

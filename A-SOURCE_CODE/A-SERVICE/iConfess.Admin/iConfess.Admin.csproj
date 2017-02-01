@@ -260,6 +260,7 @@
     <Compile Include="Controllers\ApiParentController.cs" />
     <Compile Include="Controllers\ApiPostReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Interfaces\Services\IConfigurationService.cs" />
     <Compile Include="Interfaces\Services\INotificationService.cs" />
     <Compile Include="Middlewares\BearerAuthenticationMiddleware.cs" />
     <Compile Include="Models\JwtResponse.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\Providers\IBearerAuthenticationProvider.cs" />
     <Compile Include="Providers\BearerAuthenticationProvider.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Startup.cs" />
@@ -304,7 +306,9 @@
       <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Data\Emails\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

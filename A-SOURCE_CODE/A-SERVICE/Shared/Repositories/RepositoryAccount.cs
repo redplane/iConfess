@@ -19,7 +19,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Database context which provides access to database.
         /// </summary>
-        private readonly ConfessionDbContext _iConfessDbContext;
+        private readonly ConfessDbContext _iConfessDbContext;
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace Shared.Repositories
         ///     Initiate repository with dependency injection.
         /// </summary>
         /// <param name="iConfessDbContext"></param>
-        public RepositoryAccount(ConfessionDbContext iConfessDbContext)
+        public RepositoryAccount(ConfessDbContext iConfessDbContext)
         {
             _iConfessDbContext = iConfessDbContext;
         }
@@ -136,6 +136,73 @@ namespace Shared.Repositories
         }
 
         /// <summary>
+        ///  Find account by using specific conditions.
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public async Task<Account> FindAccountAsync(FindAccountsViewModel conditions)
+        {
+            // Find all accounts in database.
+            var accounts = _iConfessDbContext.Accounts.AsQueryable();
+
+            // Find accounts with conditions.
+            accounts = FindAccounts(accounts, conditions);
+
+            // Results sorting.
+            switch (conditions.Direction)
+            {
+                case SortDirection.Decending:
+                    switch (conditions.Sort)
+                    {
+                        case AccountsSort.Email:
+                            accounts = accounts.OrderByDescending(x => x.Email);
+                            break;
+                        case AccountsSort.Nickname:
+                            accounts = accounts.OrderByDescending(x => x.Nickname);
+                            break;
+                        case AccountsSort.Status:
+                            accounts = accounts.OrderByDescending(x => x.Status);
+                            break;
+                        case AccountsSort.Joined:
+                            accounts = accounts.OrderByDescending(x => x.Joined);
+                            break;
+                        case AccountsSort.LastModified:
+                            accounts = accounts.OrderByDescending(x => x.LastModified);
+                            break;
+                        default:
+                            accounts = accounts.OrderByDescending(x => x.Id);
+                            break;
+                    }
+                    break;
+                default:
+                    switch (conditions.Sort)
+                    {
+                        case AccountsSort.Email:
+                            accounts = accounts.OrderBy(x => x.Email);
+                            break;
+                        case AccountsSort.Nickname:
+                            accounts = accounts.OrderBy(x => x.Nickname);
+                            break;
+                        case AccountsSort.Status:
+                            accounts = accounts.OrderBy(x => x.Status);
+                            break;
+                        case AccountsSort.Joined:
+                            accounts = accounts.OrderBy(x => x.Joined);
+                            break;
+                        case AccountsSort.LastModified:
+                            accounts = accounts.OrderBy(x => x.LastModified);
+                            break;
+                        default:
+                            accounts = accounts.OrderBy(x => x.Id);
+                            break;
+                    }
+                    break;
+            }
+            
+            return await accounts.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
         ///     Initiate / update an account asynchronously.
         /// </summary>
         /// <returns></returns>
@@ -150,7 +217,13 @@ namespace Shared.Repositories
             return account;
         }
 
-        private IQueryable<Account> FindAccounts(IQueryable<Account> accounts, FindAccountsViewModel conditions)
+        /// <summary>
+        /// Find accounts using specific conditions.
+        /// </summary>
+        /// <param name="accounts"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public IQueryable<Account> FindAccounts(IQueryable<Account> accounts, FindAccountsViewModel conditions)
         {
             // Index has been identified.
             if (conditions.Id != null)
@@ -230,6 +303,15 @@ namespace Shared.Repositories
             }
 
             return accounts;
+        }
+
+        /// <summary>
+        /// Find all accounts in database.
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Account> FindAccounts()
+        {
+            return _iConfessDbContext.Accounts.AsQueryable();
         }
 
         #endregion

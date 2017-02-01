@@ -61,11 +61,15 @@
     <Compile Include="Migrations\201701221617474_20170122001.Designer.cs">
       <DependentUpon>201701221617474_20170122001.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702010326135_20170201001.cs" />
+    <Compile Include="Migrations\201702010326135_20170201001.Designer.cs">
+      <DependentUpon>201702010326135_20170201001.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Tables\Account.cs" />
     <Compile Include="Models\Tables\Category.cs" />
     <Compile Include="Models\Tables\Comment.cs" />
-    <Compile Include="Models\ConfessionDbContext.cs" />
+    <Compile Include="Models\ConfessDbContext.cs" />
     <Compile Include="Models\Tables\FollowCategory.cs" />
     <Compile Include="Models\Tables\FollowPost.cs" />
     <Compile Include="Models\Tables\NotificationComment.cs" />
@@ -86,6 +90,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701221617474_20170122001.resx">
       <DependentUpon>201701221617474_20170122001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702010326135_20170201001.resx">
+      <DependentUpon>201702010326135_20170201001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

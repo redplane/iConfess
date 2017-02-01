@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using Autofac;
 using iConfess.Database.Enumerations;
 using Shared.Interfaces.Services;
 using Shared.Resources;
@@ -20,14 +21,9 @@ namespace iConfess.Admin.Attributes
         #region Properties
         
         /// <summary>
-        ///     Unit of work which handles business of application.
+        /// Autofac lifetime scope.
         /// </summary>
-        public IUnitOfWork UnitOfWork { get; set; }
-
-        /// <summary>
-        ///     Service which is for handling time calculation.
-        /// </summary>
-        public ITimeService TimeService { get; set; }
+        public ILifetimeScope LifetimeScope { get; set; }
 
         #endregion
 
@@ -37,115 +33,118 @@ namespace iConfess.Admin.Attributes
         ///     Override this function for checking whether user is allowed to access function.
         /// </summary>
         /// <param name="httpActionContext"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task OnAuthorizationAsync(HttpActionContext httpActionContext,
-            CancellationToken cancellationToken)
+        public override void OnAuthorization(HttpActionContext httpActionContext)
         {
             try
             {
-                #region Principle validation
-
-                // Find the principle of request.
-                var principle = httpActionContext.RequestContext.Principal;
-
-                // Principal is invalid.
-                if (principle == null)
+                using (var lifetimeScope = LifetimeScope.BeginLifetimeScope())
                 {
-                    // Anonymous request is allowed.
-                    if (IsAllowAnonymousRequest(httpActionContext))
+                    // Find the instance of unit of work.
+                    var unitOfWork = lifetimeScope.Resolve<IUnitOfWork>();
+
+                    #region Principle validation
+
+                    // Find the principle of request.
+                    var principle = httpActionContext.RequestContext.Principal;
+
+                    // Principal is invalid.
+                    if (principle == null)
+                    {
+                        // Anonymous request is allowed.
+                        if (IsAllowAnonymousRequest(httpActionContext))
+                            return;
+
+                        httpActionContext.Response =
+                            httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                                HttpMessages.InvalidAuthenticationToken);
                         return;
+                    }
+                    // Find the identity set in principle.
+                    var identity = principle.Identity;
+                    if (identity == null)
+                    {
+                        // Anonymous request is allowed.
+                        if (IsAllowAnonymousRequest(httpActionContext))
+                            return;
 
-                    httpActionContext.Response =
-                        httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                            HttpMessages.InvalidAuthenticationToken);
-                    return;
-                }
-                // Find the identity set in principle.
-                var identity = principle.Identity;
-                if (identity == null)
-                {
-                    // Anonymous request is allowed.
-                    if (IsAllowAnonymousRequest(httpActionContext))
+                        httpActionContext.Response =
+                            httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                                HttpMessages.InvalidAuthenticationToken);
                         return;
+                    }
 
-                    httpActionContext.Response =
-                        httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                            HttpMessages.InvalidAuthenticationToken);
-                    return;
-                }
+                    #endregion
 
-                #endregion
+                    #region Claim identity
 
-                #region Claim identity
+                    // Find the claim identity.
+                    var claimIdentity = (ClaimsIdentity)identity;
 
-                // Find the claim identity.
-                var claimIdentity = (ClaimsIdentity) identity;
+                    // Claim doesn't contain email.
+                    var claimEmail = claimIdentity.FindFirst(ClaimTypes.Email);
+                    if ((claimEmail == null) || string.IsNullOrEmpty(claimEmail.Value))
+                    {
+                        // Anonymous request is allowed.
+                        if (IsAllowAnonymousRequest(httpActionContext))
+                            return;
 
-                // Claim doesn't contain email.
-                var claimEmail = claimIdentity.FindFirst(ClaimTypes.Email);
-                if ((claimEmail == null) || string.IsNullOrEmpty(claimEmail.Value))
-                {
-                    // Anonymous request is allowed.
-                    if (IsAllowAnonymousRequest(httpActionContext))
+                        httpActionContext.Response =
+                            httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                                HttpMessages.InvalidAuthenticationToken);
                         return;
+                    }
 
-                    httpActionContext.Response =
-                        httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                            HttpMessages.InvalidAuthenticationToken);
-                    return;
-                }
+                    // Find email in the database.
+                    var account = unitOfWork.Context.Accounts
+                        .FirstOrDefault(x => x.Email.Equals(claimEmail.Value, StringComparison.InvariantCultureIgnoreCase));
 
-                // Find email in the database.
-                var account = await UnitOfWork.Context.Accounts
-                    .Where(x => x.Email.Equals(claimEmail.Value, StringComparison.InvariantCultureIgnoreCase))
-                    .FirstOrDefaultAsync(cancellationToken);
+                    // Account is not found.
+                    if (account == null)
+                    {
+                        // Anonymous request is allowed.
+                        if (IsAllowAnonymousRequest(httpActionContext))
+                            return;
 
-                // Account is not found.
-                if (account == null)
-                {
-                    // Anonymous request is allowed.
-                    if (IsAllowAnonymousRequest(httpActionContext))
+                        httpActionContext.Response =
+                            httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                                HttpMessages.InvalidAuthenticationInfo);
                         return;
+                    }
 
-                    httpActionContext.Response =
-                        httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                            HttpMessages.InvalidAuthenticationInfo);
-                    return;
-                }
+                    // Account is waiting for confirmation.
+                    if (account.Status == AccountStatus.Pending)
+                    {
+                        // Anonymous request is allowed.
+                        if (IsAllowAnonymousRequest(httpActionContext))
+                            return;
 
-                // Account is waiting for confirmation.
-                if (account.Status == AccountStatus.Pending)
-                {
-                    // Anonymous request is allowed.
-                    if (IsAllowAnonymousRequest(httpActionContext))
+                        httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(
+                            HttpStatusCode.Forbidden, HttpMessages.AccountIsPending);
                         return;
+                    }
 
-                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(
-                        HttpStatusCode.Forbidden, HttpMessages.AccountIsPending);
-                    return;
-                }
+                    // Account is forbidden to access function.
+                    if (account.Status == AccountStatus.Disabled)
+                    {
+                        // Anonymous request is allowed.
+                        if (IsAllowAnonymousRequest(httpActionContext))
+                            return;
 
-                // Account is forbidden to access function.
-                if (account.Status == AccountStatus.Disabled)
-                {
-                    // Anonymous request is allowed.
-                    if (IsAllowAnonymousRequest(httpActionContext))
+                        httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(
+                            HttpStatusCode.Forbidden, HttpMessages.AccountIsDisabled);
                         return;
+                    }
 
-                    httpActionContext.Response = httpActionContext.Request.CreateErrorResponse(
-                        HttpStatusCode.Forbidden, HttpMessages.AccountIsForbidden);
-                    return;
+                    // Insert account information into HttpItem for later use.
+                    var properties = httpActionContext.Request.Properties;
+                    if (properties.ContainsKey(ClaimTypes.Actor))
+                        properties[ClaimTypes.Actor] = account;
+                    else
+                        properties.Add(ClaimTypes.Actor, account);
+
+                    #endregion
                 }
-
-                // Insert account information into HttpItem for later use.
-                var properties = httpActionContext.Request.Properties;
-                if (properties.ContainsKey(ClaimTypes.Actor))
-                    properties[ClaimTypes.Actor] = account;
-                else
-                    properties.Add(ClaimTypes.Actor, account);
-
-                #endregion
             }
             catch
             {
@@ -174,6 +173,6 @@ namespace iConfess.Admin.Attributes
                        ().Any();
         }
 
-#endregion
+        #endregion
     }
 }

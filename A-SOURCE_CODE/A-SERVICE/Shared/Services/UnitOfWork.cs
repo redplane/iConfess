@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using iConfess.Database.Models;
 using Shared.Interfaces.Repositories;
 using Shared.Interfaces.Services;
@@ -14,7 +15,7 @@ namespace Shared.Services
         ///     Initiate unit of work with database context provided by Entity Framework.
         /// </summary>
         /// <param name="iConfessDbContext"></param>
-        public UnitOfWork(ConfessionDbContext iConfessDbContext)
+        public UnitOfWork(ConfessDbContext iConfessDbContext)
         {
             _iConfessDbContext = iConfessDbContext;
         }
@@ -31,7 +32,7 @@ namespace Shared.Services
         /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
-        private readonly ConfessionDbContext _iConfessDbContext;
+        private readonly ConfessDbContext _iConfessDbContext;
 
         #endregion
 
@@ -67,11 +68,15 @@ namespace Shared.Services
         /// </summary>
         private IRepositoryPost _repositoryPost;
 
+        /// <summary>
+        /// Provide access to token database.
+        /// </summary>
+        private IRepositoryToken _repositoryToken;
 
         /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
-        public ConfessionDbContext Context
+        public ConfessDbContext Context
         {
             get { return _iConfessDbContext; }
         }
@@ -133,9 +138,34 @@ namespace Shared.Services
                                                                         new RepositoryCommentReport(_iConfessDbContext))
             ;
 
+        /// <summary>
+        /// Provides function to access token database.
+        /// </summary>
+        public IRepositoryToken RepositoryTokens
+        {
+            get { return _repositoryToken ?? (_repositoryToken = new RepositoryToken(_iConfessDbContext)); }
+        }
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Save changes into database.
+        /// </summary>
+        /// <returns></returns>
+        public int Commit()
+        {
+            return _iConfessDbContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Save changes into database asynchronously.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> CommitAsync()
+        {
+            return await _iConfessDbContext.SaveChangesAsync();
+        }
 
         /// <summary>
         ///     Dispose the instance and free it from memory.

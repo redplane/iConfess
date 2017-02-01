@@ -120,6 +120,9 @@
   <data name="AccountInformationNotModified" xml:space="preserve">
     <value>ACCOUNT_NOT_MODIFIED</value>
   </data>
+  <data name="AccountIsDisabled" xml:space="preserve">
+    <value>ACCOUNT_DISABLED</value>
+  </data>
   <data name="AccountIsForbidden" xml:space="preserve">
     <value>ACCOUNT_FORBIDDEN</value>
   </data>
@@ -150,8 +153,17 @@
   <data name="InvalidAuthenticationToken" xml:space="preserve">
     <value>TOKEN_INVALID</value>
   </data>
+  <data name="PasswordFormatInvalid" xml:space="preserve">
+    <value>PASSWORD_FORMAT_INVALID</value>
+  </data>
   <data name="PasswordInvalid" xml:space="preserve">
     <value>PASSWORD_INVALID</value>
+  </data>
+  <data name="PasswordMaxLengthInvalid" xml:space="preserve">
+    <value>PASSWORD_MAX_LENGTH_INVALID</value>
+  </data>
+  <data name="PasswordMinLengthInvalid" xml:space="preserve">
+    <value>PASSWORD_MIN_LENGTH_INVALID</value>
   </data>
   <data name="PasswordNotMatch" xml:space="preserve">
     <value>PASSWORD_NOT_MATCH</value>
@@ -167,6 +179,9 @@
   </data>
   <data name="RequestIsUnauthenticated" xml:space="preserve">
     <value>REQUEST_UNAUTHENTICATED</value>
+  </data>
+  <data name="TitleEmailForgotPassword" xml:space="preserve">
+    <value>[iConfess] Find lost password</value>
   </data>
   <data name="TokenExpired" xml:space="preserve">
     <value>TOEKN_EXPIRED</value>

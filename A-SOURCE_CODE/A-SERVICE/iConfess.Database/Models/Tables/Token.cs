@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using iConfess.Database.Enumerations;
+﻿using iConfess.Database.Enumerations;
 using Newtonsoft.Json;
 
 namespace iConfess.Database.Models.Tables
@@ -21,21 +18,9 @@ namespace iConfess.Database.Models.Tables
         #region Properties
 
         /// <summary>
-        ///     Id of token.
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        /// <summary>
         ///     Who this token belongs to.
         /// </summary>
         public int OwnerIndex { get; set; }
-
-        /// <summary>
-        ///     Code of token
-        /// </summary>
-        public string Code { get; set; }
 
         /// <summary>
         ///     Type of Token.
@@ -43,9 +28,19 @@ namespace iConfess.Database.Models.Tables
         public TokenType Type { get; set; }
 
         /// <summary>
-        ///     When the token expires.
+        ///     Code of token
         /// </summary>
-        public DateTime Expire { get; set; }
+        public string Code { get; set; }
+
+        /// <summary>
+        ///     Time when the token was issued.
+        /// </summary>
+        public double Issued { get; set; }
+
+        /// <summary>
+        ///     Time when the token should be expired.
+        /// </summary>
+        public double Expired { get; set; }
 
         #endregion
     }

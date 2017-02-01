@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
@@ -11,6 +13,7 @@ using iConfess.Admin.Services;
 using iConfess.Database.Models;
 using log4net.Config;
 using Microsoft.AspNet.SignalR;
+using Shared.Enumerations;
 using Shared.Interfaces.Services;
 using Shared.Services;
 using RegistrationExtensions = Autofac.Integration.SignalR.RegistrationExtensions;
@@ -19,6 +22,11 @@ namespace iConfess.Admin.Configs
 {
     public class InversionOfControlConfig
     {
+        #region Methods
+
+        /// <summary>
+        ///     Register list of inversion of controls.
+        /// </summary>
         public static void Register()
         {
             // Initiate container builder to register dependency injection.
@@ -38,7 +46,7 @@ namespace iConfess.Admin.Configs
             #region Unit of work & Database context
 
             // Database context initialization.
-            containerBuilder.RegisterType<ConfessionDbContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<ConfessDbContext>().InstancePerLifetimeScope();
 
             // Unit of work registration.
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
@@ -55,6 +63,17 @@ namespace iConfess.Admin.Configs
 
             // Handle businesses related to identity.
             containerBuilder.RegisterType<IdentityService>().As<IIdentityService>().SingleInstance();
+
+            // System email service.
+            var systemEmailService = new SendGridService();
+            LoadSystemEmails(systemEmailService);
+            containerBuilder.RegisterType<SendGridService>()
+                .As<ISystemEmailService>()
+                .OnActivating(x => x.ReplaceInstance(systemEmailService))
+                .SingleInstance();
+
+            // Template service.
+            containerBuilder.RegisterType<TemplateService>().As<ITemplateService>().SingleInstance();
 
             #endregion
 
@@ -105,5 +124,42 @@ namespace iConfess.Admin.Configs
 
             return bearerAuthenticationProvider;
         }
+
+        /// <summary>
+        ///     Read settings from configuration files and bind to static list for future use.
+        /// </summary>
+        /// <param name="systemEmailService"></param>
+        private static void LoadSystemEmails(ISystemEmailService systemEmailService)
+        {
+            // Load api key
+            var apiKey = ConfigurationManager.AppSettings["EmailApiKey"];
+            if (string.IsNullOrEmpty(apiKey))
+                throw new Exception("API key is required");
+            systemEmailService.ApiKey = apiKey;
+
+            #region Load emails list 
+
+            // Find emails list.
+            var emailsList = Enum.GetValues(typeof(SystemEmail));
+
+            // Find and load email list defined in the enumerations.
+            for (var index = 0; index < emailsList.Length; index++)
+            {
+                // Key of email configuration.
+                var key = $"{nameof(SystemEmail)}.{emailsList.GetValue(index)}";
+
+                // Key doesn't exist.
+                var value = ConfigurationManager.AppSettings[key];
+                if (string.IsNullOrEmpty(value))
+                    continue;
+
+                var fileName = HttpContext.Current.Server.MapPath(value);
+                systemEmailService.LoadEmail((SystemEmail) index, fileName);
+            }
+
+            #endregion
+        }
+
+        #endregion
     }
 }

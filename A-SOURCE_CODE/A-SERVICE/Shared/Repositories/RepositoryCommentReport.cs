@@ -18,7 +18,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Provides access to database.
         /// </summary>
-        private readonly ConfessionDbContext _iConfessDbContext;
+        private readonly ConfessDbContext _iConfessDbContext;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace Shared.Repositories
         ///     Initiate repository of comment reports.
         /// </summary>
         /// <param name="iConfessDbContext"></param>
-        public RepositoryCommentReport(ConfessionDbContext iConfessDbContext)
+        public RepositoryCommentReport(ConfessDbContext iConfessDbContext)
         {
             _iConfessDbContext = iConfessDbContext;
         }

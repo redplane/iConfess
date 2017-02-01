@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Shared.Constants;
 using Shared.Resources;
 
 namespace iConfess.Admin.ViewModels.ApiAccount
@@ -24,6 +25,9 @@ namespace iConfess.Admin.ViewModels.ApiAccount
         /// </summary>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(HttpValidationMessages),
              ErrorMessageResourceName = "InformationRequired")]
+        [MinLength(DataConstraints.MinLengthPassword, ErrorMessageResourceType = typeof(HttpMessages), ErrorMessageResourceName = "PasswordMinLengthInvalid")]
+        [MaxLength(DataConstraints.MaxLengthPassword, ErrorMessageResourceType = typeof(HttpMessages), ErrorMessageResourceName = "PasswordMaxLengthInvalid")]
+        [RegularExpression(Regexes.Password, ErrorMessageResourceType = typeof(HttpMessages), ErrorMessageResourceName = "PasswordFormatInvalid")]
         public string NewPassword { get; set; }
     }
 }

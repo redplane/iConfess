@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using iConfess.Database.Models.Tables;
 using Shared.ViewModels.Accounts;
 
@@ -26,5 +27,26 @@ namespace Shared.Interfaces.Repositories
         /// <returns></returns>
         /// <param name="conditions"></param>
         Task<int> DeleteAccountsAsync(FindAccountsViewModel conditions);
+
+        /// <summary>
+        /// Find account by using specific conditions.
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        Task<Account> FindAccountAsync(FindAccountsViewModel conditions);
+
+        /// <summary>
+        /// Find accounts using specific conditions.
+        /// </summary>
+        /// <param name="accounts"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        IQueryable<Account> FindAccounts(IQueryable<Account> accounts, FindAccountsViewModel conditions);
+
+        /// <summary>
+        /// Find all accounts in database.
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Account> FindAccounts();
     }
 }

@@ -18,7 +18,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Instance which is used for accessing database context.
         /// </summary>
-        private readonly ConfessionDbContext _iConfessDbContext;
+        private readonly ConfessDbContext _iConfessDbContext;
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with inversion of control.
         /// </summary>
-        public RepositoryPost(ConfessionDbContext iConfessionDbContext)
+        public RepositoryPost(ConfessDbContext iConfessionDbContext)
         {
             _iConfessDbContext = iConfessionDbContext;
         }

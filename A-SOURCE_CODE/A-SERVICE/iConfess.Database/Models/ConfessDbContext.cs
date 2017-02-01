@@ -4,14 +4,14 @@ using iConfess.Database.Models.Tables;
 
 namespace iConfess.Database.Models
 {
-    public class ConfessionDbContext : DbContext
+    public class ConfessDbContext : DbContext
     {
         #region Constructor
 
         /// <summary>
         ///     Initiate database context with connection string.
         /// </summary>
-        public ConfessionDbContext() : base("iConfess")
+        public ConfessDbContext() : base("iConfess")
         {
         }
 
@@ -422,6 +422,13 @@ namespace iConfess.Database.Models
             token.HasRequired(x => x.Owner)
                 .WithMany(x => x.Tokens)
                 .HasForeignKey(x => x.OwnerIndex);
+
+            // Token primary keys initialization.
+            token.HasKey(x => new
+            {
+                x.OwnerIndex,
+                x.Type
+            });
         }
 
         #endregion

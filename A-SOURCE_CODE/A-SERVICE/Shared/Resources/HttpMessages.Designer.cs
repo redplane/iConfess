@@ -70,6 +70,15 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ACCOUNT_DISABLED.
+        /// </summary>
+        public static string AccountIsDisabled {
+            get {
+                return ResourceManager.GetString("AccountIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ACCOUNT_FORBIDDEN.
         /// </summary>
         public static string AccountIsForbidden {
@@ -160,11 +169,38 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PASSWORD_FORMAT_INVALID.
+        /// </summary>
+        public static string PasswordFormatInvalid {
+            get {
+                return ResourceManager.GetString("PasswordFormatInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PASSWORD_INVALID.
         /// </summary>
         public static string PasswordInvalid {
             get {
                 return ResourceManager.GetString("PasswordInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PASSWORD_MAX_LENGTH_INVALID.
+        /// </summary>
+        public static string PasswordMaxLengthInvalid {
+            get {
+                return ResourceManager.GetString("PasswordMaxLengthInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PASSWORD_MIN_LENGTH_INVALID.
+        /// </summary>
+        public static string PasswordMinLengthInvalid {
+            get {
+                return ResourceManager.GetString("PasswordMinLengthInvalid", resourceCulture);
             }
         }
         
@@ -210,6 +246,15 @@ namespace Shared.Resources {
         public static string RequestIsUnauthenticated {
             get {
                 return ResourceManager.GetString("RequestIsUnauthenticated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [iConfess] Find lost password.
+        /// </summary>
+        public static string TitleEmailForgotPassword {
+            get {
+                return ResourceManager.GetString("TitleEmailForgotPassword", resourceCulture);
             }
         }
         

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Filters;
 using iConfess.Admin.Interfaces.Providers;
 using JWT;
+using log4net;
 
 namespace iConfess.Admin.Middlewares
 {
@@ -23,6 +24,23 @@ namespace iConfess.Admin.Middlewares
         ///     Provider which provides functions to analyze and validate token.
         /// </summary>
         public IBearerAuthenticationProvider BearerAuthenticationProvider { get; set; }
+
+        /// <summary>
+        /// Instance which serves logging process of log4net.
+        /// </summary>
+        public ILog Log { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initiate middleware instance with default logging.
+        /// </summary>
+        public BearerAuthenticationMiddleware()
+        {
+            Log = LogManager.GetLogger(typeof(BearerAuthenticationMiddleware));
+        }
 
         #endregion
 
@@ -78,9 +96,10 @@ namespace iConfess.Admin.Middlewares
                 // Authenticate the request.
                 httpAuthenticationContext.Principal = new ClaimsPrincipal(claimIdentity);
             }
-            catch
+            catch (Exception exception)
             {
                 // Suppress error.
+                Log.Error(exception.Message, exception);
             }
 
             return Task.FromResult(0);
