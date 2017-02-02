@@ -42,6 +42,10 @@ export class ClientApiService{
     public apiRequestChangePassword: string;
 
     //////////////////////////////////////////////////////////////////////////////////////
+    // Hyperlink which is used for searching for tokens.
+    public apiRequestSubmitPassword: string;
+
+    //////////////////////////////////////////////////////////////////////////////////////
     // Key in local storage which access token should be stored.
     public accessTokenStorage: string;
 
@@ -62,6 +66,7 @@ export class ClientApiService{
         this.apiLogin = `${this.apiUrl}/api/account/login`;
         this.apiChangeAccountInfo = `${this.apiUrl}/api/account`;
         this.apiRequestChangePassword = `${this.apiUrl}/api/account/lost_password`;
+        this.apiRequestSubmitPassword = `${this.apiUrl}/api/account/lost_password`;
 
         // Key of local storage in which access token should be stored.
         this.accessTokenStorage = 'iConfess';

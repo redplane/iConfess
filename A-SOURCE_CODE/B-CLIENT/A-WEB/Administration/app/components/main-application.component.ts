@@ -39,5 +39,6 @@ export class MainApplicationComponent implements OnInit{
     public ngOnInit(): void {
         this.unauthenticatedUrls.insert("/", true);
         this.unauthenticatedUrls.insert("/forgot-password", true);
+        this.unauthenticatedUrls.insert("/submit-password", true);
     }
 }

@@ -6,6 +6,8 @@ import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewM
 import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
 import {ClientAuthenticationService} from "./ClientAuthenticationService";
 import {Account} from "../../models/Account";
+import {AccountSubmitPasswordComponent} from "../../components/views/account-management/account-submit-password.component";
+import {SubmitPasswordViewModel} from "../../viewmodels/accounts/SubmitPasswordViewModel";
 
 /*
  * Service which handles category business.
@@ -62,6 +64,13 @@ export class ClientAccountService implements IClientAccountService {
 
         return this.clientApiService.get(this.clientAuthenticationService.findClientAuthenticationToken(),
             this.clientApiService.apiRequestChangePassword, urlParameters)
+            .toPromise();
+    }
+
+    // Request service to change password by using specific token.
+    public submitPasswordRequest(submitPasswordViewModel: SubmitPasswordViewModel){
+        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(),
+        this.clientApiService.apiRequestSubmitPassword, null, submitPasswordViewModel)
             .toPromise();
     }
 }

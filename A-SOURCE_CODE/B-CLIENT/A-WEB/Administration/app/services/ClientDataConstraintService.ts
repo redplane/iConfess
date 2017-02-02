@@ -16,6 +16,9 @@ export class ClientDataConstraintService{
     public patternEmail: RegExp; // Regular expression of email.
     public patternAccountPassword: RegExp; // Regular expression of email password.
 
+    /* Token section */
+    public patternTokenCode: RegExp; // Regular epxression of token code.
+
     public constructor(){
 
         // Category section.
@@ -27,5 +30,8 @@ export class ClientDataConstraintService{
         this.maxLengthEmail = 128;
         this.patternEmail = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
         this.patternAccountPassword = new RegExp(/^[a-zA-Z0-9_!@#$%^&*()]*$/);
+
+        /* Token section */
+        this.patternTokenCode = new RegExp(/^[0-9a-f]{32}$/);
     }
 }
