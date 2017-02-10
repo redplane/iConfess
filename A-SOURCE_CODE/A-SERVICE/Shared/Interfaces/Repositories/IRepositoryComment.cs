@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using iConfess.Database.Models.Tables;
 using Shared.ViewModels.Comments;
 
@@ -10,7 +11,7 @@ namespace Shared.Interfaces.Repositories
         ///     Create a comment asynchronously by using specific information.
         /// </summary>
         /// <returns></returns>
-        Task<Comment> InitiateCommentAsync(Comment comment);
+        void Initiate(Comment comment);
 
         /// <summary>
         ///     Find comments by using specific conditions.
@@ -22,6 +23,20 @@ namespace Shared.Interfaces.Repositories
         ///     Delete comments asychronously.
         /// </summary>
         /// <returns></returns>
-        Task<int> DeleteCommentsAsync(FindCommentsViewModel conditions);
+        void Delete(FindCommentsViewModel conditions);
+
+        /// <summary>
+        ///     Find comments by using specific conditions.
+        /// </summary>
+        /// <param name="comments"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        IQueryable<Comment> FindComments(IQueryable<Comment> comments, FindCommentsViewModel conditions);
+
+        /// <summary>
+        /// Find all comments from database.
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Comment> FindComments();
     }
 }

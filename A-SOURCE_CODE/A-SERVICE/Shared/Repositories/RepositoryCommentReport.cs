@@ -42,7 +42,7 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public async Task<int> DeleteCommentReportsAsync(FindCommentReportsViewModel parameters)
+        public void Delete(FindCommentReportsViewModel parameters)
         {
             // Find all comment reports first.
             var commentReports = _iConfessDbContext.CommentReports.AsQueryable();
@@ -52,11 +52,6 @@ namespace Shared.Repositories
 
             // Delete all found comment reports.
             _iConfessDbContext.CommentReports.RemoveRange(commentReports);
-
-            // Save changes into database and count the number of affected records.
-            var totalRecords = await _iConfessDbContext.SaveChangesAsync();
-
-            return totalRecords;
         }
 
         /// <summary>
@@ -103,6 +98,15 @@ namespace Shared.Repositories
             await _iConfessDbContext.SaveChangesAsync();
 
             return commentReport;
+        }
+
+        /// <summary>
+        /// Find all comment reports in database.
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<CommentReport> FindCommentReports()
+        {
+            return _iConfessDbContext.CommentReports.AsQueryable();
         }
 
         /// <summary>

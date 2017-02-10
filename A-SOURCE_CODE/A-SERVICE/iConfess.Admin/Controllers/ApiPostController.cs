@@ -3,7 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using iConfess.Admin.Attributes;
 using iConfess.Database.Models.Tables;
+using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.ViewModels.Categories;
@@ -12,6 +14,7 @@ using Shared.ViewModels.Posts;
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/post")]
+    [ApiAuthorize]
     public class ApiPostController : ApiController
     {
         #region Controllers
@@ -21,10 +24,17 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
-        public ApiPostController(IUnitOfWork unitOfWork, ITimeService timeService)
+        /// <param name="identityService"></param>
+        /// <param name="log"></param>
+        public ApiPostController(IUnitOfWork unitOfWork,
+            ITimeService timeService,
+            IIdentityService identityService,
+            ILog log)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
+            _identityService = identityService;
+            _log = log;
         }
 
         #endregion
@@ -40,6 +50,16 @@ namespace iConfess.Admin.Controllers
         ///     Service which handles time calculation.
         /// </summary>
         private readonly ITimeService _timeService;
+
+        /// <summary>
+        ///     Identity service which handles analyze identity from request.
+        /// </summary>
+        private readonly IIdentityService _identityService;
+
+        /// <summary>
+        ///     Service which handles log writing.
+        /// </summary>
+        private readonly ILog _log;
 
         #endregion
 
@@ -71,38 +91,53 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                #region Information availability check
+                #region Account identity search
 
-                // TODO: Find owner index from request.
-                var ownerIndex = 1;
-
-                // Find category from database.
-                var findCategory = new FindCategoriesViewModel();
-                findCategory.Id = parameters.CategoryIndex;
-
-                // Find the category which matches with the index.
-                var findCategoriesResult = await _unitOfWork.RepositoryCategories.FindCategoriesAsync(findCategory);
-                if ((findCategoriesResult == null) || (findCategoriesResult.Total != 1))
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+                // Find account from request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account has attached to request");
 
                 #endregion
 
+                #region Category search
+
+                // Search condition build.
+                var findCategoryConditions = new FindCategoriesViewModel();
+                findCategoryConditions.Id = parameters.CategoryIndex;
+
+                // Find the first match category in the database.
+                var category = await _unitOfWork.RepositoryCategories.FindCategoryAsync(findCategoryConditions);
+                if (category == null)
+                {
+                    _log.Error($"No category (Id: {parameters.CategoryIndex}) is found in database.");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+                }
+
+                #endregion
+
+                #region Post initialization
+
                 // Initiate new post.
                 var post = new Post();
-                post.OwnerIndex = ownerIndex;
+                post.OwnerIndex = account.Id;
                 post.CategoryIndex = parameters.CategoryIndex;
                 post.Title = parameters.Title;
                 post.Body = parameters.Body;
                 post.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 //Add category record
-                post = await _unitOfWork.RepositoryPosts.InitiatePostAsync(post);
+                _unitOfWork.RepositoryPosts.Initiate(post);
 
+                #endregion
+
+                // Save changes into database.
+                await _unitOfWork.CommitAsync();
                 return Request.CreateResponse(HttpStatusCode.Created, post);
             }
             catch (Exception exception)
             {
-                // TODO: Write log.
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -183,6 +218,8 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameters validation
+
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
@@ -194,19 +231,31 @@ namespace iConfess.Admin.Controllers
                 if (!ModelState.IsValid)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
 
+                #endregion
+
+                #region Records delete
+
                 // Delete categories by using specific conditions.
-                var totalRecords = await _unitOfWork.RepositoryPosts.DeletePostsAsync(conditions);
+                _unitOfWork.RepositoryPosts.Delete(conditions);
+
+                // Save changes and count the number of deleted records.
+                var totalRecords = await _unitOfWork.CommitAsync();
 
                 // No record has been deleted.
                 if (totalRecords < 1)
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CategoryNotFound);
+                {
+                    _log.Error("No post with specific conditions is found");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostNotFound);
+                }
+
+                #endregion
 
                 // Tell the client , deletion is successful.
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception exception)
             {
-                // TODO: Add log
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -221,6 +270,8 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameters validation
+
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
@@ -232,14 +283,16 @@ namespace iConfess.Admin.Controllers
                 if (!ModelState.IsValid)
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
 
-                // Find categories by using specific conditions.
-                var response = await _unitOfWork.RepositoryPosts.DeletePostsAsync(conditions);
+                #endregion
+
+                // Find posts by using specific conditions.
+                var response = await _unitOfWork.RepositoryPosts.FindPostsAsync(conditions);
 
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception exception)
             {
-                // TODO: Add log
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }

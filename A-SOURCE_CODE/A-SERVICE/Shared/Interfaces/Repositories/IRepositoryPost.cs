@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using iConfess.Database.Models.Tables;
 using Shared.ViewModels.Posts;
 
@@ -13,7 +14,7 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         /// <param name="post">Post which needs to be updated / created.</param>
-        Task<Post> InitiatePostAsync(Post post);
+        void Initiate(Post post);
 
         /// <summary>
         ///     Find posts by using specific conditions.
@@ -27,7 +28,21 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         /// <param name="conditions"></param>
-        Task<int> DeletePostsAsync(FindPostViewModel conditions);
+        void Delete(FindPostViewModel conditions);
+
+        /// <summary>
+        /// Find posts by using specific conditions.
+        /// </summary>
+        /// <param name="posts"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        IQueryable<Post> FindPosts(IQueryable<Post> posts, FindPostViewModel conditions);
+
+        /// <summary>
+        /// Find all posts in database.
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Post> FindPosts();
 
         #endregion
     }

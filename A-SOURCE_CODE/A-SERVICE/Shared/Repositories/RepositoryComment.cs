@@ -42,41 +42,21 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public async Task<int> DeleteCommentsAsync(FindCommentsViewModel conditions)
+        public void Delete(FindCommentsViewModel conditions)
         {
-            using (var transaction = _iConfessDbContext.Database.BeginTransaction())
+            // Find comments which match with conditions.
+            var comments = FindComments(_iConfessDbContext.Comments.AsQueryable(), conditions);
+
+            foreach (var comment in comments)
             {
-                try
-                {
-                    // Find comments which match with conditions.
-                    var comments = FindComments(_iConfessDbContext.Comments.AsQueryable(), conditions);
-
-                    foreach (var comment in comments)
-                    {
-                        // Find all comment reports.
-                        var commentReports = _iConfessDbContext.CommentReports.AsQueryable();
-                        commentReports = commentReports.Where(x => x.CommentIndex == comment.Id);
-                        _iConfessDbContext.CommentReports.RemoveRange(commentReports);
-                    }
-
-                    // Delete all found comments.
-                    _iConfessDbContext.Comments.RemoveRange(comments);
-
-                    // Save changes into database asynchronously.
-                    var totalRecords = await _iConfessDbContext.SaveChangesAsync();
-
-                    // Commit the transaction.
-                    transaction.Commit();
-
-                    return totalRecords;
-                }
-                catch (Exception)
-                {
-                    // Rollback the transaction.
-                    transaction.Rollback();
-                    throw;
-                }
+                // Find all comment reports.
+                var commentReports = _iConfessDbContext.CommentReports.AsQueryable();
+                commentReports = commentReports.Where(x => x.CommentIndex == comment.Id);
+                _iConfessDbContext.CommentReports.RemoveRange(commentReports);
             }
+
+            // Delete all found comments.
+            _iConfessDbContext.Comments.RemoveRange(comments);
         }
 
         /// <summary>
@@ -111,15 +91,10 @@ namespace Shared.Repositories
         ///     Initiate / update a comment information.
         /// </summary>
         /// <returns></returns>
-        public async Task<Comment> InitiateCommentAsync(Comment comment)
+        public void Initiate(Comment comment)
         {
             // Initiate / update comment into database.
             _iConfessDbContext.Comments.AddOrUpdate(comment);
-
-            // Save change into database asynchronously.
-            await _iConfessDbContext.SaveChangesAsync();
-
-            return comment;
         }
 
         /// <summary>
@@ -196,6 +171,15 @@ namespace Shared.Repositories
             }
 
             return comments;
+        }
+
+        /// <summary>
+        /// Find comments from database.
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Comment> FindComments()
+        {
+            return _iConfessDbContext.Comments.AsQueryable();
         }
 
         #endregion

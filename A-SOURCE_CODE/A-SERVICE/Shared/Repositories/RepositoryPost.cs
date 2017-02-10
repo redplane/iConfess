@@ -41,15 +41,10 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="post"></param>
         /// <returns></returns>
-        public async Task<Post> InitiatePostAsync(Post post)
+        public void Initiate(Post post)
         {
             // Add or update the record.
             _iConfessDbContext.Posts.AddOrUpdate(post);
-
-            // Save changes into database.
-            await _iConfessDbContext.SaveChangesAsync();
-
-            return post;
         }
 
         /// <summary>
@@ -74,7 +69,7 @@ namespace Shared.Repositories
                 // Find pagination.
                 var pagination = conditions.Pagination;
 
-                responsePostsViewModel.Posts = responsePostsViewModel.Posts.Skip(pagination.Index*pagination.Records)
+                responsePostsViewModel.Posts = responsePostsViewModel.Posts.Skip(pagination.Index * pagination.Records)
                     .Take(pagination.Records);
             }
 
@@ -86,54 +81,33 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public async Task<int> DeletePostsAsync(FindPostViewModel conditions)
+        public void Delete(FindPostViewModel conditions)
         {
             // Find posts by using specific conditions.
             var posts = FindPosts(_iConfessDbContext.Posts.AsQueryable(), conditions);
-
-            // Begin a transaction.
-            using (var transaction = _iConfessDbContext.Database.BeginTransaction())
+            
+            foreach (var post in posts)
             {
-                try
-                {
-                    foreach (var post in posts)
-                    {
-                        // Delete all comments related to the post.
-                        var comments = _iConfessDbContext.Comments.Where(x => x.PostIndex == post.Id);
-                        _iConfessDbContext.Comments.RemoveRange(comments);
+                // Delete all comments related to the post.
+                var comments = _iConfessDbContext.Comments.Where(x => x.PostIndex == post.Id);
+                _iConfessDbContext.Comments.RemoveRange(comments);
 
-                        // Delete all reports related to post.
-                        var postReports = _iConfessDbContext.PostReports.Where(x => x.PostIndex == post.Id);
-                        _iConfessDbContext.PostReports.RemoveRange(postReports);
+                // Delete all reports related to post.
+                var postReports = _iConfessDbContext.PostReports.Where(x => x.PostIndex == post.Id);
+                _iConfessDbContext.PostReports.RemoveRange(postReports);
 
-                        // Delete all comment reports.
-                        var commentReports = _iConfessDbContext.CommentReports.Where(x => x.PostIndex == post.Id);
-                        _iConfessDbContext.CommentReports.RemoveRange(commentReports);
+                // Delete all comment reports.
+                var commentReports = _iConfessDbContext.CommentReports.Where(x => x.PostIndex == post.Id);
+                _iConfessDbContext.CommentReports.RemoveRange(commentReports);
 
-                        // Delete all post notifications.
-                        var postNotifications = _iConfessDbContext.NotificationPosts.Where(x => x.PostIndex == post.Id);
-                        _iConfessDbContext.NotificationPosts.RemoveRange(postNotifications);
+                // Delete all post notifications.
+                var postNotifications = _iConfessDbContext.NotificationPosts.Where(x => x.PostIndex == post.Id);
+                _iConfessDbContext.NotificationPosts.RemoveRange(postNotifications);
 
-                        // Delete all comment notifications.
-                        var commentNotifications =
-                            _iConfessDbContext.NotificationComments.Where(x => x.PostIndex == post.Id);
-                        _iConfessDbContext.NotificationComments.RemoveRange(commentNotifications);
-                    }
-
-                    // Save changes asynchronously.
-                    var totalRecords = await _iConfessDbContext.SaveChangesAsync();
-
-                    // Commit the transaction.
-                    transaction.Commit();
-
-                    return totalRecords;
-                }
-                catch
-                {
-                    // Rollback the transaction.
-                    transaction.Rollback();
-                    throw;
-                }
+                // Delete all comment notifications.
+                var commentNotifications =
+                    _iConfessDbContext.NotificationComments.Where(x => x.PostIndex == post.Id);
+                _iConfessDbContext.NotificationComments.RemoveRange(commentNotifications);
             }
         }
 
@@ -143,7 +117,7 @@ namespace Shared.Repositories
         /// <param name="posts"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        private IQueryable<Post> FindPosts(IQueryable<Post> posts, FindPostViewModel conditions)
+        public IQueryable<Post> FindPosts(IQueryable<Post> posts, FindPostViewModel conditions)
         {
             // Id is specified.
             if (conditions.Id != null)
@@ -220,6 +194,15 @@ namespace Shared.Repositories
             }
 
             return posts;
+        }
+
+        /// <summary>
+        /// Find all posts in database.
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Post> FindPosts()
+        {
+            return _iConfessDbContext.Posts.AsQueryable();
         }
 
         #endregion

@@ -4,8 +4,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Database.Models.Tables;
+using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
+using Shared.ViewModels.CommentReports;
 using Shared.ViewModels.Comments;
 
 namespace iConfess.Admin.Controllers
@@ -20,10 +22,18 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
-        public ApiCommentController(IUnitOfWork unitOfWork, ITimeService timeService)
+        /// <param name="identityService"></param>
+        /// <param name="log"></param>
+        public ApiCommentController(
+            IUnitOfWork unitOfWork, 
+            ITimeService timeService, 
+            IIdentityService identityService,
+            ILog log)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
+            _identityService = identityService;
+            _log = log;
         }
 
         #endregion
@@ -39,6 +49,16 @@ namespace iConfess.Admin.Controllers
         ///     Service which handles time calculation.
         /// </summary>
         private readonly ITimeService _timeService;
+
+        /// <summary>
+        /// Service which handles identity in request.
+        /// </summary>
+        private readonly IIdentityService _identityService;
+
+        /// <summary>
+        /// Service which is for handling log.
+        /// </summary>
+        private readonly ILog _log;
 
         #endregion
 
@@ -69,22 +89,36 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                // TODO : Find owner index of request.
-                var ownerIndex = 1;
+                #region Request identity search
+
+                // Find account which sends the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
+
+                #endregion
+
+                #region Comment initialization
+
                 var comment = new Comment();
-                comment.OwnerIndex = ownerIndex;
+                comment.OwnerIndex = account.Id;
                 comment.PostIndex = parameters.PostIndex;
                 comment.Content = parameters.Content;
                 comment.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 //Add category record
-                comment = await _unitOfWork.RepositoryComments.InitiateCommentAsync(comment);
+                _unitOfWork.RepositoryComments.Initiate(comment);
+
+                #endregion
+
+                // Save changes into database.
+                await _unitOfWork.CommitAsync();
 
                 return Request.CreateResponse(HttpStatusCode.Created, comment);
             }
             catch (Exception exception)
             {
-                // TODO: Write log.
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -164,7 +198,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
-                // TODO: Add log
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -196,12 +230,32 @@ namespace iConfess.Admin.Controllers
 
                 #region Find & delete records
 
-                // Delete categories by using specific conditions.
-                var totalRecords = await _unitOfWork.RepositoryComments.DeleteCommentsAsync(conditions);
+                // Find all comments in database.
+                var comments = _unitOfWork.RepositoryComments.FindComments();
+                comments = _unitOfWork.RepositoryComments.FindComments(comments, conditions);
+
+                // Loop through every found comments.
+                foreach (var comment in comments)
+                {
+                    var findCommentReportConditions = new FindCommentReportsViewModel();
+                    findCommentReportConditions.CommentIndex = comment.Id;
+
+                    // Delete all comment report.
+                    _unitOfWork.RepositoryCommentReports.Delete(findCommentReportConditions);
+                }
+
+                // Delete all found comments.
+                _unitOfWork.RepositoryComments.Delete(conditions);
+
+                // Save changes.
+                var totalRecords = await _unitOfWork.CommitAsync();
 
                 // No record has been deleted.
                 if (totalRecords < 1)
+                {
+                    _log.Error($"There is no comment (Id: {conditions.Id}) from database.");
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
+                }
 
                 #endregion
 
@@ -210,7 +264,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
-                // TODO: Add log
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -225,6 +279,8 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
+                #region Parameter validation
+
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
@@ -236,6 +292,8 @@ namespace iConfess.Admin.Controllers
                 if (!ModelState.IsValid)
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
 
+                #endregion
+                
                 // Find categories by using specific conditions.
                 var response = await _unitOfWork.RepositoryComments.FindCommentsAsync(conditions);
 
@@ -243,7 +301,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
-                // TODO: Add log
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }

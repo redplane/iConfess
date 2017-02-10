@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using iConfess.Database.Models.Tables;
 using Shared.ViewModels.PostReports;
 
@@ -19,9 +20,18 @@ namespace Shared.Interfaces.Repositories
         Task<ResponsePostReportsViewModel> FindPostReportsAsync(FindPostReportsViewModel conditions);
 
         /// <summary>
+        /// Find post reports by using specific conditions.
+        /// </summary>
+        /// <param name="postReports"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        IQueryable<PostReport> FindPostReports(IQueryable<PostReport> postReports,
+            FindPostReportsViewModel conditions);
+
+        /// <summary>
         ///     Delete post reports asynchronously by searching specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task<int> DeletePostsAsync(FindPostReportsViewModel conditions);
+        void Delete(FindPostReportsViewModel conditions);
     }
 }

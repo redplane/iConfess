@@ -262,7 +262,7 @@ namespace iConfess.Admin.Controllers
                         token.OwnerIndex = account.Id;
                         token.Type = TokenType.Forgot;
                         token.Issued = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
-                        token.Issued =
+                        token.Expired =
                             _timeService.DateTimeUtcToUnix(
                                 DateTime.UtcNow.AddSeconds(_configurationService.ForgotPasswordTokenExpiration));
                         

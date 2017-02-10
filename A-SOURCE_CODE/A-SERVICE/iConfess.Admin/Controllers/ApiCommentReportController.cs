@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Database.Models.Tables;
+using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.ViewModels.CommentReports;
@@ -22,10 +23,14 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
-        public ApiCommentReportController(IUnitOfWork unitOfWork, ITimeService timeService)
+        /// <param name="log"></param>
+        public ApiCommentReportController(IUnitOfWork unitOfWork,
+            ITimeService timeService,
+            ILog log)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
+            _log = log;
         }
 
         #endregion
@@ -41,6 +46,11 @@ namespace iConfess.Admin.Controllers
         ///     Service which is used for time calculation.
         /// </summary>
         private readonly ITimeService _timeService;
+
+        /// <summary>
+        ///     Service which handles logging operation.
+        /// </summary>
+        private readonly ILog _log;
 
         #endregion
 
@@ -146,16 +156,43 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                // Delete found comment reports and count the total affected number.
-                var totalRecords = await _unitOfWork.RepositoryCommentReports.DeleteCommentReportsAsync(parameters);
+                #region Record delete
 
-                if (totalRecords < 1)
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentReportNotFound);
+                using (var transaction = _unitOfWork.Context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Find comments and delete 'em all.
+                        _unitOfWork.RepositoryCommentReports.Delete(parameters);
+
+                        // Save changes.
+                        var totalRecords = await _unitOfWork.CommitAsync();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+
+                        // Nothing is changed.
+                        if (totalRecords < 1)
+                        {
+                            _log.Error($"No comment (ID: {parameters.Id}) is found");
+                            return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                                HttpMessages.CommentReportNotFound);
+                        }
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+
+                #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception exception)
             {
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -192,7 +229,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
-                // TODO: Add log.
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }

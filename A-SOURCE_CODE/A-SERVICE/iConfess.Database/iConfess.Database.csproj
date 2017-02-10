@@ -61,6 +61,10 @@
     <Compile Include="Migrations\201702011320531_20170201001.Designer.cs">
       <DependentUpon>201702011320531_20170201001.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702031726039_20170204001.cs" />
+    <Compile Include="Migrations\201702031726039_20170204001.Designer.cs">
+      <DependentUpon>201702031726039_20170204001.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Tables\Account.cs" />
     <Compile Include="Models\Tables\Category.cs" />
@@ -86,6 +90,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702011320531_20170201001.resx">
       <DependentUpon>201702011320531_20170201001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702031726039_20170204001.resx">
+      <DependentUpon>201702031726039_20170204001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

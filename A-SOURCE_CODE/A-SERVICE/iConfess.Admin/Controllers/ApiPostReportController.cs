@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Database.Models.Tables;
+using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.ViewModels.PostReports;
@@ -22,10 +23,16 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
-        public ApiPostReportController(IUnitOfWork unitOfWork, ITimeService timeService)
+        /// <param name="identityService"></param>
+        /// <param name="log"></param>
+        public ApiPostReportController(IUnitOfWork unitOfWork,
+            ITimeService timeService, IIdentityService identityService,
+            ILog log)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
+            _identityService = identityService;
+            _log = log;
         }
 
         #endregion
@@ -54,38 +61,48 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                #region Find post
+                #region Find post report
 
+                // Find all posts.
+                var posts = _unitOfWork.RepositoryPosts.FindPosts();
+
+                // Conditions construction.
                 var findPostViewModel = new FindPostViewModel();
                 findPostViewModel.Id = parameters.PostIndex;
 
-                // Find the specific post in database.
-                var findPostsResult = await _unitOfWork.RepositoryPosts.FindPostsAsync(findPostViewModel);
-
-                // No record has been found.
-                if ((findPostsResult == null) || (findPostsResult.Total < 0))
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostNotFound);
-
-                // Not only one record has been found.
-                if (findPostsResult.Total != 1)
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostIsNotUnique);
-
                 // Find the post information.
-                var post = await findPostsResult.Posts.FirstOrDefaultAsync();
+                var post = await _unitOfWork.RepositoryPosts.FindPosts(posts, findPostViewModel).FirstOrDefaultAsync();
+
+                // Post is not found.
                 if (post == null)
+                {
+                    _log.Error($"There is no post (ID: {parameters.PostIndex}) has been found in database");
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostNotFound);
+                }
+
+                #endregion
+
+                #region Requester search.
+
+                // Find the request sender.
+                var requester = _identityService.FindAccount(Request.Properties);
+
+                // Requester is not found.
+                if (requester == null)
+                {
+                    _log.Error("No requester is found in the request.");
+                    return Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                        HttpMessages.RequestIsUnauthenticated);
+                }
 
                 #endregion
 
                 #region Report initialization.
 
-                // TODO: Find reporter index from request.
-                var reporterIndex = 1;
-
                 var postReport = new PostReport();
                 postReport.PostIndex = post.Id;
                 postReport.PostOwnerIndex = post.OwnerIndex;
-                postReport.PostReporterIndex = reporterIndex;
+                postReport.PostReporterIndex = requester.Id;
                 postReport.Body = post.Body;
                 postReport.Reason = parameters.Reason;
                 postReport.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
@@ -100,7 +117,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
-                // TODO: Add log.
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -131,18 +148,28 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
+                #region Record delete
+
                 // Delete post reports by using specific conditions.
-                var totalRecords = await _unitOfWork.RepositoryPostReports.DeletePostsAsync(parameters);
+                _unitOfWork.RepositoryPostReports.Delete(parameters);
+
+                // Commit the change.
+                var totalRecord = await _unitOfWork.CommitAsync();
 
                 // No record has been affected.
-                if (totalRecords < 1)
+                if (totalRecord < 1)
+                {
+                    _log.Error($"No post report (ID: {parameters.Id}) is found in database");
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostReportNotFound);
+                }
 
+                #endregion
+                
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception exception)
             {
-                // TODO: Add log.
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -172,15 +199,15 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
 
                 #endregion
-
-                // Delete post reports by using specific conditions.
+                
+                // Find post reports with specific conditions.
                 var findResult = await _unitOfWork.RepositoryPostReports.FindPostReportsAsync(parameters);
 
                 return Request.CreateResponse(HttpStatusCode.OK, findResult);
             }
             catch (Exception exception)
             {
-                // TODO: Add log.
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -196,6 +223,16 @@ namespace iConfess.Admin.Controllers
         ///     Provides function for time calculation.
         /// </summary>
         private readonly ITimeService _timeService;
+
+        /// <summary>
+        ///     Service which handles identity operations.
+        /// </summary>
+        private readonly IIdentityService _identityService;
+
+        /// <summary>
+        ///     Service which handles logging process.
+        /// </summary>
+        private readonly ILog _log;
 
         #endregion
     }

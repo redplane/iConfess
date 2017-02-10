@@ -88,18 +88,13 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public async Task<int> DeletePostsAsync(FindPostReportsViewModel conditions)
+        public void Delete(FindPostReportsViewModel conditions)
         {
             // Find posts by using specific conditions.
             var postReports = FindPostReports(_iConfessDbContext.PostReports.AsQueryable(), conditions);
 
             // Delete all searched records.
             _iConfessDbContext.PostReports.RemoveRange(postReports);
-
-            // Submit changes and count total affected records.
-            var totalRecords = await _iConfessDbContext.SaveChangesAsync();
-
-            return totalRecords;
         }
 
         /// <summary>
@@ -108,7 +103,7 @@ namespace Shared.Repositories
         /// <param name="postReports"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        private IQueryable<PostReport> FindPostReports(IQueryable<PostReport> postReports,
+        public IQueryable<PostReport> FindPostReports(IQueryable<PostReport> postReports,
             FindPostReportsViewModel conditions)
         {
             // Id is specified.
@@ -184,7 +179,7 @@ namespace Shared.Repositories
 
             return postReports;
         }
-
+        
         #endregion
     }
 }
