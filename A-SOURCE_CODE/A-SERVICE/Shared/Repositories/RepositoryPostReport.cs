@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iConfess.Database.Models;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.PostReports;
 
@@ -58,13 +59,66 @@ namespace Shared.Repositories
         /// <returns></returns>
         public async Task<ResponsePostReportsViewModel> FindPostReportsAsync(FindPostReportsViewModel conditions)
         {
+            // Find all reports from database.
+            var postReports = FindPostReports();
+
             // Response initialization.
             var responsePostReportsViewModel = new ResponsePostReportsViewModel();
-            responsePostReportsViewModel.PostReports = _iConfessDbContext.PostReports.AsQueryable();
 
             // Find posts by using specific conditions.
-            responsePostReportsViewModel.PostReports = FindPostReports(responsePostReportsViewModel.PostReports,
+            responsePostReportsViewModel.PostReports = FindPostReports(postReports,
                 conditions);
+
+            #region Result order 
+
+            switch (conditions.Direction)
+            {
+                case SortDirection.Decending:
+                    switch (conditions.Sort)
+                    {
+                        case PostReportSort.PostIndex:
+                            postReports = postReports.OrderByDescending(x => x.PostIndex);
+                            break;
+                        case PostReportSort.PostOwnerIndex:
+                            postReports = postReports.OrderByDescending(x => x.PostOwnerIndex);
+                            break;
+                        case PostReportSort.PostReporterIndex:
+                            postReports = postReports.OrderByDescending(x => x.PostReporterIndex);
+                            break;
+                        case PostReportSort.Created:
+                            postReports = postReports.OrderByDescending(x => x.Created);
+                            break;
+                        default:
+                            postReports = postReports.OrderByDescending(x => x.Id);
+                            break;
+                    }
+                    break;
+                default:
+                    switch (conditions.Sort)
+                    {
+                        case PostReportSort.PostIndex:
+                            postReports = postReports.OrderBy(x => x.PostIndex);
+                            break;
+                        case PostReportSort.PostOwnerIndex:
+                            postReports = postReports.OrderBy(x => x.PostOwnerIndex);
+                            break;
+                        case PostReportSort.PostReporterIndex:
+                            postReports = postReports.OrderBy(x => x.PostReporterIndex);
+                            break;
+                        case PostReportSort.Created:
+                            postReports = postReports.OrderBy(x => x.Created);
+                            break;
+                        default:
+                            postReports = postReports.OrderBy(x => x.Id);
+                            break;
+                    }
+                    break;
+            }
+
+            #endregion
+
+            // Bind the filtered list to model.
+            responsePostReportsViewModel.PostReports = postReports;
 
             // Find total records which match with specific conditions.
             responsePostReportsViewModel.Total = await responsePostReportsViewModel.PostReports.CountAsync();
@@ -76,7 +130,7 @@ namespace Shared.Repositories
                 var pagination = conditions.Pagination;
 
                 responsePostReportsViewModel.PostReports = responsePostReportsViewModel.PostReports.Skip(
-                        pagination.Index*pagination.Records)
+                        pagination.Index * pagination.Records)
                     .Take(pagination.Records);
             }
 
@@ -95,6 +149,15 @@ namespace Shared.Repositories
 
             // Delete all searched records.
             _iConfessDbContext.PostReports.RemoveRange(postReports);
+        }
+
+        /// <summary>
+        /// Find post reports from database.
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<PostReport> FindPostReports()
+        {
+            return _iConfessDbContext.PostReports.AsQueryable();
         }
 
         /// <summary>
@@ -179,7 +242,7 @@ namespace Shared.Repositories
 
             return postReports;
         }
-        
+
         #endregion
     }
 }

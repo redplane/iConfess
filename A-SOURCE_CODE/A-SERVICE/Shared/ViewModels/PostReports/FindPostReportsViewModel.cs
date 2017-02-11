@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using Shared.Enumerations.Order;
+using Shared.Models;
 
 namespace Shared.ViewModels.PostReports
 {
@@ -38,6 +39,16 @@ namespace Shared.ViewModels.PostReports
         ///     When the report was created.
         /// </summary>
         public UnixDateRange Created { get; set; }
+
+        /// <summary>
+        /// Direction of result sorting.
+        /// </summary>
+        public SortDirection Direction { get; set; }
+
+        /// <summary>
+        /// Which property should be used for sorting.
+        /// </summary>
+        public PostReportSort Sort { get; set; }
 
         /// <summary>
         ///     Result pagination.

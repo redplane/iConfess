@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using iConfess.Admin.Attributes;
 using iConfess.Database.Models.Tables;
 using log4net;
 using Shared.Interfaces.Services;
@@ -14,6 +15,7 @@ using Shared.ViewModels.Posts;
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/report/post")]
+    [ApiAuthorize]
     public class ApiPostReportController : ApiController
     {
         #region Constructors
@@ -200,6 +202,7 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
                 
+
                 // Find post reports with specific conditions.
                 var findResult = await _unitOfWork.RepositoryPostReports.FindPostReportsAsync(parameters);
 
