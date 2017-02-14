@@ -277,6 +277,8 @@
     <Compile Include="ViewModels\ApiAccount\LoginViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\ApiCategory\InitiateCategoryViewModel.cs" />
+    <Compile Include="ViewModels\ApiPostReport\PostReportViewModel.cs" />
+    <Compile Include="ViewModels\ApiPostReport\ResponseFindPostReportViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

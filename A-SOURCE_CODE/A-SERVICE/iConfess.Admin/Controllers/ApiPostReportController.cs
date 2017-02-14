@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
+using iConfess.Admin.ViewModels.ApiPostReport;
 using iConfess.Database.Models.Tables;
 using log4net;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.ViewModels.PostReports;
@@ -201,12 +204,113 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
 
                 #endregion
+
+                #region Find post reports
+
+                // Find all post reports.
+                var postReports = _unitOfWork.RepositoryPostReports.FindPostReports();
+                postReports = _unitOfWork.RepositoryPostReports.FindPostReports(postReports, parameters);
                 
+                // Find posts from database.
+                var posts = _unitOfWork.RepositoryPosts.FindPosts();
+                
+                // Find all accounts.
+                var accounts = _unitOfWork.RepositoryAccounts.FindAccounts();
 
-                // Find post reports with specific conditions.
-                var findResult = await _unitOfWork.RepositoryPostReports.FindPostReportsAsync(parameters);
+                // Find post report by using specific conditions.
+                var result = from postReport in postReports
+                    from post in posts
+                    from owner in accounts
+                    from reporter in accounts
+                    where postReport.PostIndex == post.Id
+                          && postReport.PostOwnerIndex == owner.Id
+                          && postReport.PostReporterIndex == reporter.Id
+                    select new PostReportViewModel
+                    {
+                        Id = postReport.Id,
+                        Post = post,
+                        Owner = owner,
+                        Reporter = reporter,
+                        Body = postReport.Body,
+                        Reason = postReport.Reason,
+                        Created = postReport.Created
+                    };
 
-                return Request.CreateResponse(HttpStatusCode.OK, findResult);
+                #endregion
+
+                #region Result order 
+
+                switch (parameters.Direction)
+                {
+                    case SortDirection.Decending:
+                        switch (parameters.Sort)
+                        {
+                            case PostReportSort.PostIndex:
+                                result = result.OrderByDescending(x => x.Post.Id);
+                                break;
+                            case PostReportSort.PostOwnerIndex:
+                                result = result.OrderByDescending(x => x.Owner.Id);
+                                break;
+                            case PostReportSort.PostReporterIndex:
+                                result = result.OrderByDescending(x => x.Reporter.Id);
+                                break;
+                            case PostReportSort.Created:
+                                result = result.OrderByDescending(x => x.Created);
+                                break;
+                            default:
+                                result = result.OrderByDescending(x => x.Id);
+                                break;
+                        }
+                        break;
+                    default:
+                        switch (parameters.Sort)
+                        {
+                            case PostReportSort.PostIndex:
+                                result = result.OrderBy(x => x.Post.Id);
+                                break;
+                            case PostReportSort.PostOwnerIndex:
+                                result = result.OrderBy(x => x.Owner.Id);
+                                break;
+                            case PostReportSort.PostReporterIndex:
+                                result = result.OrderBy(x => x.Reporter.Id);
+                                break;
+                            case PostReportSort.Created:
+                                result = result.OrderBy(x => x.Created);
+                                break;
+                            default:
+                                result = result.OrderBy(x => x.Id);
+                                break;
+                        }
+                        break;
+                }
+
+                #endregion
+
+                #region Pagination
+
+                // Count the total records.
+                var total = await result.CountAsync();
+
+                // Find pagination information.
+                var pagination = parameters.Pagination;
+                
+                // Pagination specified.
+                if (pagination != null)
+                {
+                    // Do pagination.
+                    result = result
+                        .Skip(pagination.Index*pagination.Records)
+                        .Take(pagination.Records);
+                }
+                
+                // Initiate response.
+                var responseFindPostReport = new ResponseFindPostReportViewModel();
+                responseFindPostReport.PostReports = result;
+                responseFindPostReport.Total = total;
+
+                #endregion
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseFindPostReport);
             }
             catch (Exception exception)
             {

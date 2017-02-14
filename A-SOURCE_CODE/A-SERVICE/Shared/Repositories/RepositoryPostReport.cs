@@ -68,55 +68,7 @@ namespace Shared.Repositories
             // Find posts by using specific conditions.
             responsePostReportsViewModel.PostReports = FindPostReports(postReports,
                 conditions);
-
-            #region Result order 
-
-            switch (conditions.Direction)
-            {
-                case SortDirection.Decending:
-                    switch (conditions.Sort)
-                    {
-                        case PostReportSort.PostIndex:
-                            postReports = postReports.OrderByDescending(x => x.PostIndex);
-                            break;
-                        case PostReportSort.PostOwnerIndex:
-                            postReports = postReports.OrderByDescending(x => x.PostOwnerIndex);
-                            break;
-                        case PostReportSort.PostReporterIndex:
-                            postReports = postReports.OrderByDescending(x => x.PostReporterIndex);
-                            break;
-                        case PostReportSort.Created:
-                            postReports = postReports.OrderByDescending(x => x.Created);
-                            break;
-                        default:
-                            postReports = postReports.OrderByDescending(x => x.Id);
-                            break;
-                    }
-                    break;
-                default:
-                    switch (conditions.Sort)
-                    {
-                        case PostReportSort.PostIndex:
-                            postReports = postReports.OrderBy(x => x.PostIndex);
-                            break;
-                        case PostReportSort.PostOwnerIndex:
-                            postReports = postReports.OrderBy(x => x.PostOwnerIndex);
-                            break;
-                        case PostReportSort.PostReporterIndex:
-                            postReports = postReports.OrderBy(x => x.PostReporterIndex);
-                            break;
-                        case PostReportSort.Created:
-                            postReports = postReports.OrderBy(x => x.Created);
-                            break;
-                        default:
-                            postReports = postReports.OrderBy(x => x.Id);
-                            break;
-                    }
-                    break;
-            }
-
-            #endregion
-
+            
             // Bind the filtered list to model.
             responsePostReportsViewModel.PostReports = postReports;
 
@@ -238,8 +190,7 @@ namespace Shared.Repositories
                 if (created.To != null)
                     postReports = postReports.Where(x => x.Created <= created.To.Value);
             }
-
-
+            
             return postReports;
         }
 

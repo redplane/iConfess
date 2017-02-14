@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using Shared.Enumerations.Order;
+using Shared.Models;
 
 namespace Shared.ViewModels.Posts
 {
@@ -33,6 +34,16 @@ namespace Shared.ViewModels.Posts
         ///     When the post was created.
         /// </summary>
         public UnixDateRange Created { get; set; }
+
+        /// <summary>
+        /// Record sort direction.
+        /// </summary>
+        public SortDirection Direction { get; set; }
+
+        /// <summary>
+        /// Which property should be used for sorting.
+        /// </summary>
+        public PostSort Sort { get; set; }
 
         /// <summary>
         ///     When the post was lastly modified.

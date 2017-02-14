@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iConfess.Database.Models;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Posts;
 
@@ -53,12 +54,59 @@ namespace Shared.Repositories
         /// <returns></returns>
         public async Task<ResponsePostsViewModel> FindPostsAsync(FindPostViewModel conditions)
         {
+            // Find all posts from database.
+            var posts = FindPosts();
+
             // Response initialization.
             var responsePostsViewModel = new ResponsePostsViewModel();
-            responsePostsViewModel.Posts = _iConfessDbContext.Posts.AsQueryable();
 
             // Find posts by using specific conditions.
-            responsePostsViewModel.Posts = FindPosts(responsePostsViewModel.Posts, conditions);
+            posts = FindPosts(posts, conditions);
+
+            #region Post order
+
+            switch (conditions.Direction)
+            {
+                case SortDirection.Decending:
+                    switch (conditions.Sort)
+                    {
+                        case PostSort.OwnerIndex:
+                            posts = posts.OrderByDescending(x => x.OwnerIndex);
+                            break;
+                        case PostSort.CategoryIndex:
+                            posts = posts.OrderByDescending(x => x.CategoryIndex);
+                            break;
+                        case PostSort.Created:
+                            posts = posts.OrderByDescending(x => x.Created);
+                            break;
+                        default:
+                            posts = posts.OrderByDescending(x => x.Id);
+                            break;
+                    }
+                    break;
+                default:
+                    switch (conditions.Sort)
+                    {
+                        case PostSort.OwnerIndex:
+                            posts = posts.OrderBy(x => x.OwnerIndex);
+                            break;
+                        case PostSort.CategoryIndex:
+                            posts = posts.OrderBy(x => x.CategoryIndex);
+                            break;
+                        case PostSort.Created:
+                            posts = posts.OrderBy(x => x.Created);
+                            break;
+                        default:
+                            posts = posts.OrderBy(x => x.Id);
+                            break;
+                    }
+                    break;
+            }
+
+            #endregion
+
+            // Bind posts.
+            responsePostsViewModel.Posts = posts;
 
             // Find total records which match with specific conditions.
             responsePostsViewModel.Total = await responsePostsViewModel.Posts.CountAsync();
@@ -85,7 +133,7 @@ namespace Shared.Repositories
         {
             // Find posts by using specific conditions.
             var posts = FindPosts(_iConfessDbContext.Posts.AsQueryable(), conditions);
-            
+
             foreach (var post in posts)
             {
                 // Delete all comments related to the post.

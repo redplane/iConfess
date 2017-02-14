@@ -33,5 +33,11 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         void Delete(FindPostReportsViewModel conditions);
+
+        /// <summary>
+        /// Find all post reports.
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<PostReport> FindPostReports();
     }
 }

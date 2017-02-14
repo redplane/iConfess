@@ -96,6 +96,7 @@
     <Compile Include="Enumerations\Order\CategoriesSort.cs" />
     <Compile Include="Enumerations\Order\CommentReportSort.cs" />
     <Compile Include="Enumerations\Order\PostReportSort.cs" />
+    <Compile Include="Enumerations\Order\PostSort.cs" />
     <Compile Include="Enumerations\Order\SortDirection.cs" />
     <Compile Include="Constants\Regexes.cs" />
     <Compile Include="Enumerations\NumericComparision.cs" />
