@@ -8,6 +8,8 @@ import {AccountStatuses} from "../enumerations/AccountStatuses";
 import {SelectionItem} from "../models/SelectionItem";
 import {CommentReportSortProperty} from "../enumerations/order/CommentReportSortProperty";
 import {TextSearchMode} from "../enumerations/TextSearchMode";
+import {PostSortProperty} from "../enumerations/order/PostSortProperty";
+import {PostReportSortProperty} from "../enumerations/order/PostReportSortProperty";
 
 @Injectable()
 export class ClientConfigurationService {
@@ -30,9 +32,16 @@ export class ClientConfigurationService {
     // List of properties which can be used for categories sorting.
     public categorySortProperties: Dictionary<CategorySortProperty>;
 
+    // List of properties which are used for sorting.
+    public postSortProperties: Dictionary<PostSortProperty>;
+
+    // List of properties which are used for sorting.
+    public postReportSortProperties: Dictionary<PostReportSortProperty>;
+
     // List of properties which can be used for comments sorting.
     public commentReportSortProperties: Dictionary<CommentReportSortProperty>;// List of items which can be selected in accounts list.
 
+    // List of account statuses which can be selected.
     public accountStatusSelections: Dictionary<AccountStatuses>;
 
     // Initiate instance of service with default settings.
@@ -76,6 +85,21 @@ export class ClientConfigurationService {
         this.categorySortProperties.insert('Name', CategorySortProperty.name);
         this.categorySortProperties.insert('Created', CategorySortProperty.created);
         this.categorySortProperties.insert('Last modified', CategorySortProperty.lastModified);
+
+        // Initiate post sort properties.
+        this.postSortProperties = new Dictionary<PostSortProperty>();
+        this.postSortProperties.insert('Index', PostSortProperty.id);
+        this.postSortProperties.insert('Owner', PostSortProperty.ownerIndex);
+        this.postSortProperties.insert('Category', PostSortProperty.categoryIndex);
+        this.postSortProperties.insert('Created', PostSortProperty.created);
+
+        // Initiate post report sort properties list.
+        this.postReportSortProperties = new Dictionary<PostReportSortProperty>();
+        this.postReportSortProperties.insert('Index', PostReportSortProperty.id);
+        this.postReportSortProperties.insert('Post', PostReportSortProperty.postIndex);
+        this.postReportSortProperties.insert('Post owner', PostReportSortProperty.postOwnerIndex);
+        this.postReportSortProperties.insert('Post reporter', PostReportSortProperty.postReporterIndex);
+        this.postReportSortProperties.insert('Created', PostReportSortProperty.created);
 
         // Initiate list of comment report sort properties.
         this.commentReportSortProperties = this.initiateCommentReportSortProperties();

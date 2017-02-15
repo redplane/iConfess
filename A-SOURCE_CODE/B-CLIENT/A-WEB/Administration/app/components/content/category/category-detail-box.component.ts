@@ -1,6 +1,6 @@
 import {Component, EventEmitter} from '@angular/core';
-import {TimeService} from "../../../services/ClientTimeService";
-import {ITimeService} from "../../../interfaces/services/ITimeService";
+import {ClientTimeService} from "../../../services/ClientTimeService";
+import {IClientTimeService} from "../../../interfaces/services/ITimeService";
 import {CategoryDetailViewModel} from "../../../viewmodels/category/CategoryDetailViewModel";
 
 @Component({
@@ -9,14 +9,14 @@ import {CategoryDetailViewModel} from "../../../viewmodels/category/CategoryDeta
     outputs: ['clickRemoveCategory', 'clickChangeCategoryInfo'],
     templateUrl: './app/views/contents/category/category-detail-box.component.html',
     providers:[
-        TimeService
+        ClientTimeService
     ]
 })
 
 export class CategoryDetailBoxComponent{
 
     // Service which handles time functions.
-    private _timeService: ITimeService;
+    private _timeService: IClientTimeService;
 
     // Event emitter which is fired when a category is clicked to be removed.
     private clickRemoveCategory: EventEmitter<any>;
@@ -25,7 +25,7 @@ export class CategoryDetailBoxComponent{
     private clickChangeCategoryInfo: EventEmitter<any>;
 
     // Initiate category detail box with dependency injections.
-    public constructor(timeService: TimeService){
+    public constructor(timeService: ClientTimeService){
         this._timeService = timeService;
         this.clickRemoveCategory = new EventEmitter();
         this.clickChangeCategoryInfo = new EventEmitter();

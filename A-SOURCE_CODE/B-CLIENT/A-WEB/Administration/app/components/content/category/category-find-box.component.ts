@@ -43,28 +43,14 @@ export class CategoryFindBoxComponent {
     // List of accounts which are used for typeahead binding.
     private _accounts: Array<Account>;
 
-    // Service which handles client accounts api to service.
-    private _clientAccountService: IClientAccountService;
-
-    // Service which provides function to access application configuration.
-    private _clientConfigurationService: ClientConfigurationService;
-
-    // Service which handles data constraint of application.
-    private _clientDataConstraintService: ClientDataConstraintService;
-
     // Initiate component with default dependency injection.
     public constructor(private formBuilder: FormBuilder,
-                       clientConfigurationService: ClientConfigurationService,
-                       clientAccountService: ClientAccountService,
-                       clientDataConstraintService: ClientDataConstraintService) {
+                       public clientConfigurationService: ClientConfigurationService,
+                       public clientAccountService: ClientAccountService,
+                       public clientDataConstraintService: ClientDataConstraintService) {
 
         // Initiate account typeahead data.
         this._accounts = new Array<Account>();
-
-        // Find configuration service from IoC.
-        this._clientConfigurationService = clientConfigurationService;
-        this._clientAccountService = clientAccountService;
-        this._clientDataConstraintService = clientDataConstraintService;
 
         // Form control of find category box.
         this.findCategoryBox = this.formBuilder.group({
@@ -126,12 +112,13 @@ export class CategoryFindBoxComponent {
         // Initiate pagination.
         let pagination = new Pagination();
         pagination.index = 0;
-        pagination.records = this._clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.findMaxPageRecords();
 
         // Pagination update.
         findAccountsViewModel.pagination = pagination;
 
-        this._clientAccountService.findAccounts(findAccountsViewModel)
+        // Find accounts with specific conditions.
+        this.clientAccountService.findAccounts(findAccountsViewModel)
             .then((response: Response | any) => {
 
                 // Analyze find account response view model.
@@ -141,7 +128,7 @@ export class CategoryFindBoxComponent {
                 this._accounts = findAccountResult.accounts;
             })
             .catch((response: any) => {
-
+            // TODO:
             });
     }
 }

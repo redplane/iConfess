@@ -7,22 +7,22 @@ import {AccountManagementComponent} from "../components/views/account-management
 import {CategoryManagementComponent} from "../components/views/category-management/category-management.component";
 import {CategoryDetailBoxComponent} from '../components/content/category/category-detail-box.component';
 import {CategoryInitiateBoxComponent} from '../components/content/category/category-initiate-box.component';
-import {AccountForgotPasswordBoxComponent} from '../components/content/account/account-forgot-password-box';
+import {AccountForgotPasswordComponent} from '../components/views/account-management/account-forgot-password.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CategoryFindBoxComponent} from "../components/content/category/category-find-box.component";
 import {HttpModule, JsonpModule} from '@angular/http';
 import {ModalModule, PaginationModule, TypeaheadModule} from 'ng2-bootstrap/ng2-bootstrap';
 import {RouterModule, Routes} from '@angular/router';
-import {AccountLoginBoxComponent} from "../components/content/account/account-login-box.component";
 import {AccountFindBoxComponent} from "../components/content/account/account-find-box.component";
 import {SelectModule} from 'ng2-select';
 import {CommentReportManagementComponent} from "../components/views/comment-report-management/comment-report-management.component";
 import {CommentReportFindBoxComponent} from "../components/content/comment-report/comment-report-find-box.component";
 import {AccountLoginComponent} from "../components/views/account-management/account-login.component";
 import {MomentModule} from "angular2-moment";
-import {AccountForgotPasswordComponent} from "../components/views/account-management/account-forgot-password.component";
 import {AccountSubmitPasswordComponent} from "../components/views/account-management/account-submit-password.component";
 import {TextPropertyComparisionValidator} from "../validators/TextPropertyComparisionValidator";
+import {PostReportManagementComponent} from "../components/views/post-report-management/post-report-management.component";
+import {PostReportFindBoxComponent} from "../components/content/post-report/post-report-find-box.component";
 
 // Routing configuration.
 const appRoutes: Routes = [
@@ -42,6 +42,10 @@ const appRoutes: Routes = [
     {
         path: 'comment-report-management',
         component: CommentReportManagementComponent
+    },
+    {
+        path: 'post-report-management',
+        component: PostReportManagementComponent
     },
     {
         path: 'forgot-password',
@@ -80,16 +84,17 @@ const appRoutes: Routes = [
 
         AccountManagementComponent,
         AccountFindBoxComponent,
-        AccountLoginBoxComponent,
-        AccountForgotPasswordBoxComponent,
-        AccountLoginComponent,
         AccountForgotPasswordComponent,
+        AccountLoginComponent,
         AccountSubmitPasswordComponent,
 
         CategoryManagementComponent,
         CategoryDetailBoxComponent,
         CategoryFindBoxComponent,
         CategoryInitiateBoxComponent,
+
+        PostReportManagementComponent,
+        PostReportFindBoxComponent,
 
         CommentReportManagementComponent,
         CommentReportFindBoxComponent,
