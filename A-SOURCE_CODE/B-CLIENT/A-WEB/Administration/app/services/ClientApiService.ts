@@ -53,6 +53,9 @@ export class ClientApiService{
     // Hyperlink which is used for searching for post reports.
     public apiFindPostReport: string;
 
+    // Hyperlink which is used for deleting post reports.
+    public apiDeletePostReport: string;
+
     //////////////////////////////////////////////////////////////////////////////////////
     // Key in local storage which access token should be stored.
     public accessTokenStorage: string;
@@ -81,6 +84,7 @@ export class ClientApiService{
 
         // Post report api.
         this.apiFindPostReport = `${this.apiUrl}/api/report/post/find`;
+        this.apiDeletePostReport = `${this.apiUrl}/api/report/post`;
 
         // Key of local storage in which access token should be stored.
         this.accessTokenStorage = 'iConfess';

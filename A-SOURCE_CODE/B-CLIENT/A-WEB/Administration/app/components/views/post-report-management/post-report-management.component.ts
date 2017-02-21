@@ -13,6 +13,8 @@ import {Response} from "@angular/http";
 import {ClientApiService} from "../../../services/ClientApiService";
 import {ClientNotificationService} from "../../../services/ClientNotificationService";
 import {ClientAuthenticationService} from "../../../services/clients/ClientAuthenticationService";
+import {PostReport} from "../../../models/PostReport";
+import {ModalDirective} from "ng2-bootstrap";
 
 @Component({
     selector: 'post-report-management',
@@ -35,6 +37,9 @@ export class PostReportManagementComponent implements OnInit{
 
     // Find post reports search result
     public postReportsSearchResult: FindPostReportSearchResultViewModel;
+
+    // Post report which is selected to be deleted.
+    public selectPostReport: PostReport;
 
     // Whether component is being loaded or not.
     public isLoading: boolean;
@@ -99,6 +104,61 @@ export class PostReportManagementComponent implements OnInit{
 
                 // Handle common business.
                 this.clientApiService.proceedHttpNonSolidResponse(response);
+            });
+    }
+
+    // Delete post report by searching for specific index.
+    public clickDeletePostReport(postReport: PostReport, deletePostReportConfirmModal: ModalDirective){
+
+        // Invalid index.
+        if (postReport == null)
+            return;
+
+        // Update the selected post report.
+        this.selectPostReport = postReport;
+
+        // Display confirmation dialog first.
+        deletePostReportConfirmModal.show();
+
+    }
+
+    // This callback is fired when post report is confirmed to be deleted.
+    public clickConfirmDeletePostReport(deletePostReportConfirmModal: ModalDirective){
+
+        // Post report is invalid.
+        if (this.selectPostReport == null)
+            return;
+
+
+
+        let conditions = new FindPostReportViewModel();
+        conditions.id = this.selectPostReport.id;
+
+        // Make components be loaded.
+        this.isLoading = true;
+
+        // Close the modal first.
+        if (deletePostReportConfirmModal != null)
+            deletePostReportConfirmModal.hide();
+
+        // Reset the selected item to null.
+        this.selectPostReport = null;
+
+        this.clientPostReportService.deletePostReports(conditions)
+            .then((response: Response) =>{
+
+
+
+                // Reload the list.
+                this.clickSearch(this.findPostReportConditions);
+            })
+            .catch((response: Response) => {
+
+                // Proceed common business handling.
+                this.clientApiService.proceedHttpNonSolidResponse(response);
+
+                // Cancel the loading state.
+                this.isLoading = false;
             });
     }
 }

@@ -4,6 +4,7 @@
 
         <!-- Category information find box -->
         <post-report-find-box #postReportFindBox
+                              [isLoading]="isLoading"
                               [conditions]="findPostReportConditions"
                               (search)="clickSearch($event)"></post-report-find-box>
     </div>
@@ -63,7 +64,8 @@
                         <td class="text-center">{{postReport.reason}}</td>
                         <td class="text-center">{{clientTimeService.findUnixTime(postReport.created).toUTCString()}}</td>
                         <td>
-                            <button class="btn btn-danger btn-flat">
+                            <button class="btn btn-danger btn-flat"
+                                    (click)="clickDeletePostReport(postReport, deletePostReportModal)">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
                         </td>
@@ -96,27 +98,45 @@
 
 <!-- Delete post report confirm box -->
 <div bsModal
-     #deleteCategoryConfirmModal="bs-modal"
+     #deletePostReportModal="bs-modal"
      class="modal fade"
      tabindex="-1"
      role="dialog"
      aria-hidden="true"
-     (onHide)="_selectCategoryDetail = null">
+     (onHide)="selectPostReport = null">
 
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="text-center">
-                    <span *ngIf="_selectCategoryDetail != null">
-                        Are you sure to delete <b class="text-danger">{{_selectCategoryDetail.name}}</b>  ?
+                    <span *ngIf="selectPostReport != null">
+                        <b class="text-danger">Are you sure to delete this report ? </b>
                     </span>
+
+                    <table class="table table-condensed table-responsive"
+                           *ngIf="selectPostReport != null">
+                        <tbody>
+                        <tr>
+                            <th>Title</th>
+                            <td>{{selectPostReport.post.title}}</td>
+                        </tr>
+                        <tr>
+                            <th>Reporter</th>
+                            <td>{{selectPostReport.reporter.nickname}}</td>
+                        </tr>
+                        <tr>
+                            <th>Owner</th>
+                            <td>{{selectPostReport.owner.nickname}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="text-center">
                     <button class="btn btn-flat btn-danger"
-                            (click)="clickConfirmDeleteCategory(deleteCategoryConfirmModal)">
-                        <span class="glyphicon glyphicon-trash"></span>
+                            (click)="clickConfirmDeletePostReport(deletePostReportModal)">
+                        <b>OK</b>
                     </button>
                 </div>
             </div>
