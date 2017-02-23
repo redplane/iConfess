@@ -1,0 +1,198 @@
+<form [formGroup]="findCategoryBox"
+      class="box box-default"
+      (submit)="clickSearch()">
+
+    <!-- Overlay which is used for blocking box. -->
+    <div class="overlay"
+         *ngIf="isLoading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+
+    <div class="box-header">
+        <span class="glyphicon glyphicon-search"></span>
+        <span> Category search</span>
+
+        <button type="button"
+                class="btn btn-box-tool pull-right"
+                data-widget="collapse">
+            <i class="fa fa-minus"></i>
+        </button>
+    </div>
+
+    <div class="box-body">
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <!-- Creator -->
+                <div class="form-group">
+                    <label>Creator</label>
+
+                    <template #accountTypeaheadTemplate
+                              let-model="item"
+                              let-index="index">
+                        <h5>{{model.email}}</h5>
+                    </template>
+                    <input formControlName="categoryCreatorEmail"
+                           [typeahead]="_accounts"
+                           [typeaheadOptionField]="'email'"
+                           [typeaheadItemTemplate]="accountTypeaheadTemplate"
+                           [typeaheadWaitMs]="400"
+                           (typeaheadOnSelect)="selectCategoryCreator($event)"
+                           (typeaheadLoading)="loadAccounts()"
+                           class="form-control">
+
+                </div>
+
+                <!-- Category name -->
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control"
+                           placeholder="Category name"
+                           formControlName="name"
+                           [(ngModel)]="conditions.name.value"
+
+                           [minlength]="clientDataConstraintService.minLengthCategoryName"
+                           [maxlength]="clientDataConstraintService.maxLengthCategoryName"/>
+
+                    <ul class="validation-summary-errors">
+                        <li *ngIf="findCategoryBox.controls.name.hasError('minlength')">Category name must contain at least {{clientDataConstraintService.minLengthCategoryName}} characters</li>
+                    </ul>
+                </div>
+
+                <!-- Pagination -->
+                <div class="form-group"
+                     formGroupName="pagination">
+                    <label>Records</label>
+                    <select class="form-control"
+                            formControlName="records"
+                            [(ngModel)]="conditions.pagination.records">
+                        <option *ngFor="let item of clientConfigurationService.pageRecords; let i = index"
+                                [value]="clientConfigurationService.pageRecords[i]">
+                            {{clientConfigurationService.pageRecords[i]}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+
+                <!-- Created -->
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label>Created</label>
+                    </div>
+
+                    <div class="col-lg-6"
+                         formGroupName="created">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                                </span>
+                            <input class="form-control"
+                                   type="date"
+                                   formControlName="from"
+                                   [(ngModel)]="conditions.created.from"/>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6"
+                         formGroupName="created">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-hourglass-end"
+                                       aria-hidden="true"></i>
+                                </span>
+                            <input class="form-control"
+                                   type="date"
+                                   formControlName="to"
+                                   [(ngModel)]="conditions.created.to"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Last modified -->
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label>Last modified</label>
+                    </div>
+
+                    <div class="col-lg-6"
+                         formGroupName="lastModified">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                                </span>
+                            <input class="form-control"
+                                   type="date"
+                                   formControlName="from"
+                                   [(ngModel)]="conditions.lastModified.from"/>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6"
+                         formGroupName="lastModified">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                                </span>
+                            <input class="form-control"
+                                   type="date"
+                                   formControlName="to"
+                                   [(ngModel)]="conditions.lastModified.to"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sorting -->
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label>Sorting</label>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-folder" aria-hidden="true"></i>
+                                </span>
+
+                            <select class="form-control"
+                                    formControlName="sort"
+                                    [(ngModel)]="conditions.sort">
+                                <option *ngFor="let key of clientConfigurationService.categorySortProperties.keys()"
+                                        [value]="clientConfigurationService.categorySortProperties.item(key)">
+                                    {{key}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </span>
+
+                            <select class="form-control"
+                                    formControlName="direction"
+                                    [(ngModel)]="conditions.direction">
+                                <option *ngFor="let key of clientConfigurationService.sortDirections.keys()"
+                                        [value]="clientConfigurationService.sortDirections.item(key)">
+                                    {{key}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button class="btn btn-primary btn-flat">
+            <span class="glyphicon glyphicon-search"></span>
+            <span>Search</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="./src/styles/shared.css"/>
+
+<div class="account-login-box-container col-lg-6 col-md-10 col-sm-10 col-xs-12 col-lg-push-3 col-md-push-1 col-sm-push-1 col-xs-push-0">
+    <form [formGroup]="loginBox"
+          class="box box-primary"
+          #clientLoginBox="ngForm"
+          novalidate
+
+          (submit)="clickLogin()">
+
+        <!-- Title -->
+        <div class="box-header">
+            <span class="fa fa-sign-in"></span>
+            <b>Login</b>
+        </div>
+
+        <!-- Body -->
+        <div class="box-body">
+            <!-- Email -->
+            <div class="form-group has-feedback">
+                <input [(ngModel)]="loginViewModel.email"
+                       formControlName="email"
+                       type="email"
+                       class="form-control"
+                       placeholder="Email"
+                       autofocus="true"
+                       [readonly]="isLoading"
+
+                       required="required"
+                       maxlength="128"
+                       pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+
+                <!-- Email validation messages -->
+                <div class="validation-summary"
+                     *ngIf="!loginBox.controls.email.valid && loginBox.controls.email.dirty">
+                    <ul>
+                        <li *ngIf="loginBox.controls.email.hasError('required')">Email is required.</li>
+                        <li *ngIf="loginBox.controls.email.hasError('pattern')">Email format is invalid.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group has-feedback">
+                <input [(ngModel)]="loginViewModel.password"
+                       formControlName="password"
+                       type="password"
+                       class="form-control"
+                       placeholder="Password"
+                       [readonly]="isLoading"
+
+                       required="required"
+                       minlength="6"
+                       maxlength="16"
+                       pattern="^[A-Za-z0-9!@#$%^&*]*$">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                <div class="validation-summary"
+                     *ngIf="!loginBox.controls.password.valid && loginBox.controls.password.dirty">
+                    <ul>
+                        <li *ngIf="loginBox.controls.password.hasError('required')">Password is required.</li>
+                        <li *ngIf="loginBox.controls.password.hasError('pattern')">Password format is invalid.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Forgot password -->
+            <div class="form-group">
+                <a href="/forgot-password">I forgot my password</a><br>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="box-footer">
+            <!-- Login button -->
+            <button type="submit"
+                    class="btn btn-primary btn-block btn-flat"
+                    [disabled]="!loginBox.valid || isLoading">
+                <span>Sign In</span>
+            </button>
+        </div>
+    </form>
+</div>
