@@ -6,3 +6,5 @@ PublishProfiles
 logs
 *.log
 /A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/npm-debug.log.154988417
+npm-debug.log.*
+dist
