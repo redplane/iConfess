@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,11 +11,13 @@ using iConfess.Admin.Attributes;
 using iConfess.Admin.Interfaces.Providers;
 using iConfess.Admin.Interfaces.Services;
 using iConfess.Admin.Models;
+using iConfess.Admin.SignalrHubs;
 using iConfess.Admin.ViewModels.ApiAccount;
 using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using JWT;
 using log4net;
+using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using Shared.Enumerations;
 using Shared.Interfaces.Services;
@@ -95,12 +96,12 @@ namespace iConfess.Admin.Controllers
         private readonly ISystemEmailService _systemEmailService;
 
         /// <summary>
-        /// Service which handling template operations.
+        ///     Service which handling template operations.
         /// </summary>
         private readonly ITemplateService _templateService;
 
         /// <summary>
-        /// Service which handles configurations.
+        ///     Service which handles configurations.
         /// </summary>
         private readonly IConfigurationService _configurationService;
 
@@ -235,7 +236,7 @@ namespace iConfess.Admin.Controllers
                     Mode = TextComparision.Equal,
                     Value = parameter.Email
                 };
-                findAccountsCondition.Statuses = new[] { AccountStatus.Active };
+                findAccountsCondition.Statuses = new[] {AccountStatus.Active};
 
                 // Find account information from database.
                 var account = await UnitOfWork.RepositoryAccounts.FindAccountAsync(findAccountsCondition);
@@ -265,7 +266,7 @@ namespace iConfess.Admin.Controllers
                         token.Expired =
                             _timeService.DateTimeUtcToUnix(
                                 DateTime.UtcNow.AddSeconds(_configurationService.ForgotPasswordTokenExpiration));
-                        
+
                         // Save token into database.
                         UnitOfWork.RepositoryTokens.Initiate(token);
 
@@ -273,8 +274,7 @@ namespace iConfess.Admin.Controllers
                         var data = new
                         {
                             nickname = account.Nickname,
-                            token = token.Code,
-
+                            token = token.Code
                         };
 
                         // Find email raw content.
@@ -282,7 +282,7 @@ namespace iConfess.Admin.Controllers
                         var htmlEmailContent = _templateService.Render(emailRawContent, data);
 
                         // Send an email to recipient about the token.
-                        _systemEmailService.Send(new[] { account.Email },
+                        _systemEmailService.Send(new[] {account.Email},
                             HttpMessages.TitleEmailForgotPassword, htmlEmailContent);
 
                         // Save changes into database.
@@ -368,7 +368,7 @@ namespace iConfess.Admin.Controllers
                         // Information join & search.
                         var findResult = await (from token in tokens
                             from account in accounts
-                            where (account.Id == token.OwnerIndex)
+                            where account.Id == token.OwnerIndex
                             select account).FirstOrDefaultAsync();
 
                         // No result has been found.
@@ -448,6 +448,32 @@ namespace iConfess.Admin.Controllers
             #endregion
         }
 
+#if SIGNALR_SAMPLE
+        [Route("register")]
+        [ApiRole(AccountRole.Ordinary)]
+        [HttpPost]
+        public async Task<HttpResponseMessage> RegisterAccount()
+        {
+            // Find system message hub from connection manager.
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<SystemMessageHub>();
+            
+            // Find all connection indexes of online administrators.
+            var accounts = UnitOfWork.RepositoryAccounts.FindAccounts();
+            var signalrConnections = UnitOfWork.RepositorySignalrConnections.Find();
+
+            // Find connection indexes of online administrators.
+            var connectionIndexes = await (from account in accounts
+                from signalrConnection in signalrConnections
+                where
+                account.Role == AccountRole.Admin && account.Status == AccountStatus.Active &&
+                account.Id == signalrConnection.OwnerIndex
+                select signalrConnection.Index).ToListAsync();
+
+            hubContext.Clients.Clients(connectionIndexes).obtainAccountRegistrationMessage("Hello world");
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+#endif
+
         /// <summary>
         ///     Permanantly or temporarily ban accounts by using specific conditions.
         /// </summary>
@@ -491,7 +517,7 @@ namespace iConfess.Admin.Controllers
 
             var conditions = new FindAccountsViewModel();
             conditions.Id = id;
-            
+
             // Find the first account.
             var target = await UnitOfWork.RepositoryAccounts.FindAccountAsync(conditions);
             if (target == null)
@@ -532,9 +558,8 @@ namespace iConfess.Admin.Controllers
             // Save changes into database.
             await UnitOfWork.Context.SaveChangesAsync();
 
-
             #endregion
-            
+
             // Tell the client about account whose information has been modified.
             return Request.CreateResponse(HttpStatusCode.OK, target);
         }
