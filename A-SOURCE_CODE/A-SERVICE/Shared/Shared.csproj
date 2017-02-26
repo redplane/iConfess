@@ -122,6 +122,7 @@
     <Compile Include="Repositories\RepositoryCommentReport.cs" />
     <Compile Include="Repositories\RepositoryPostReport.cs" />
     <Compile Include="Repositories\RepositoryPost.cs" />
+    <Compile Include="Repositories\RepositorySignalrConnection.cs" />
     <Compile Include="Repositories\RepositoryToken.cs" />
     <Compile Include="Services\EncryptionService.cs" />
     <Compile Include="Services\SendGridService.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="ViewModels\Posts\FindPostViewModel.cs" />
     <Compile Include="ViewModels\Posts\InitiatePostViewModel.cs" />
     <Compile Include="ViewModels\Posts\ResponsePostsViewModel.cs" />
+    <Compile Include="ViewModels\SignalrConnections\FindSignalrConnectionViewModel.cs" />
     <Compile Include="ViewModels\Token\FindTokensResultViewModel.cs" />
     <Compile Include="ViewModels\Token\FindTokensViewModel.cs" />
   </ItemGroup>

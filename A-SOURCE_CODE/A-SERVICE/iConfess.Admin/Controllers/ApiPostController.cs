@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
+using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
 using Shared.Interfaces.Services;
@@ -15,6 +16,7 @@ namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/post")]
     [ApiAuthorize]
+    [ApiRole(AccountRole.Admin)]
     public class ApiPostController : ApiController
     {
         #region Controllers
@@ -129,10 +131,11 @@ namespace iConfess.Admin.Controllers
                 //Add category record
                 _unitOfWork.RepositoryPosts.Initiate(post);
 
-                #endregion
-
                 // Save changes into database.
                 await _unitOfWork.CommitAsync();
+
+                #endregion
+                
                 return Request.CreateResponse(HttpStatusCode.Created, post);
             }
             catch (Exception exception)
@@ -168,17 +171,29 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
+                #region Account identity search
+
+                // Find account from request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account has attached to request");
+
+                #endregion
+
                 #region Information available check
 
                 // Find the post by index.
-                var findPost = new FindPostViewModel();
-                findPost.Id = index;
-                var findPostResult = await _unitOfWork.RepositoryPosts.FindPostsAsync(findPost);
+                var condition = new FindPostViewModel();
+                condition.Id = index;
 
-                // Result availability validate
-                if ((findPostResult == null) || (findPostResult.Total != 1))
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.PostNotFound);
+                // If account is not admin. It can only change its own posts.
+                if (account.Role != AccountRole.Admin)
+                    condition.OwnerIndex = account.Id;
 
+                // Find all posts in database.
+                var posts = _unitOfWork.RepositoryPosts.FindPosts();
+                posts = _unitOfWork.RepositoryPosts.FindPosts(posts, condition);
+                
                 #endregion
 
                 #region Update post
@@ -186,7 +201,7 @@ namespace iConfess.Admin.Controllers
                 // Find the current time on the system.
                 var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
-                foreach (var post in findPostResult.Posts)
+                foreach (var post in posts)
                 {
                     post.CategoryIndex = parameters.CategoryIndex;
                     post.Title = parameters.Title;
@@ -201,10 +216,11 @@ namespace iConfess.Admin.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
+                _log.Error(exception.Message, exception);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                    "Error occured while executing category");
+                    "Error occured while executing post update");
             }
         }
 
@@ -214,6 +230,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpDelete]
+        [ApiRole(AccountRole.Admin)]
         public async Task<HttpResponseMessage> DeletePosts([FromBody] FindPostViewModel conditions)
         {
             try
@@ -266,6 +283,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
+        [ApiRole(AccountRole.Admin)]
         public async Task<HttpResponseMessage> FindPosts([FromBody] FindPostViewModel conditions)
         {
             try

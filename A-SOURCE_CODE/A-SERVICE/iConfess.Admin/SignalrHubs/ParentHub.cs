@@ -1,0 +1,110 @@
+﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Autofac;
+using iConfess.Admin.Attributes;
+using iConfess.Database.Models.Tables;
+using log4net;
+using Microsoft.AspNet.SignalR;
+using Shared.Enumerations;
+using Shared.Interfaces.Services;
+using Shared.Models;
+using Shared.ViewModels.SignalrConnections;
+
+namespace iConfess.Admin.SignalrHubs
+{
+    public class ParentHub : Hub
+    {
+        #region Properties
+
+        /// <summary>
+        ///     Autofac lifetime scope.
+        /// </summary>
+        public ILifetimeScope LifetimeScope { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Callback which is fired when a client connected
+        /// </summary>
+        /// <returns></returns>
+        public override async Task OnConnected()
+        {
+            // Find account from request.
+            var httpContext = Context.Request.GetHttpContext();
+
+            // Http context is invalid.
+            if (httpContext == null)
+                return;
+
+            // Find account from request.
+            var account = (Account) httpContext.Items[ClaimTypes.Actor];
+            if (account == null)
+                return;
+
+            // Begin new life time scope.
+            using (var lifeTimeScope = LifetimeScope.BeginLifetimeScope())
+            {
+                // Find unit of work of life time scope.
+                var unitOfWork = lifeTimeScope.Resolve<IUnitOfWork>();
+                var timeService = lifeTimeScope.Resolve<ITimeService>();
+                var log = lifeTimeScope.Resolve<ILog>();
+
+                try
+                {
+                    // Find and update connection to the account.
+                    var signalrConnection = new SignalrConnection();
+                    signalrConnection.OwnerIndex = account.Id;
+                    signalrConnection.Index = Context.ConnectionId;
+                    signalrConnection.Created = timeService.DateTimeUtcToUnix(DateTime.UtcNow);
+
+                    unitOfWork.RepositorySignalrConnections.Initiate(signalrConnection);
+                    await unitOfWork.CommitAsync();
+
+                    log.Info(
+                        $"Connection (Id: {Context.ConnectionId}) has been established from account (Email: {account.Email})");
+                }
+                catch (Exception exception)
+                {
+                    log.Error(exception.Message, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Callback which is fired when a client disconnected from
+        /// </summary>
+        /// <param name="stopCalled"></param>
+        /// <returns></returns>
+        public override async Task OnDisconnected(bool stopCalled)
+        {
+            using (var lifeTimeScope = LifetimeScope.BeginLifetimeScope())
+            {
+                // Find unit of work from life time scope.
+                var unitOfWork = lifeTimeScope.Resolve<IUnitOfWork>();
+
+                // Search for record whose index is the same as connection index.
+                var condition = new FindSignalrConnectionViewModel();
+                condition.Index = new TextSearch();
+                condition.Index.Mode = TextComparision.EqualIgnoreCase;
+                condition.Index.Value = Context.ConnectionId;
+
+                unitOfWork.RepositorySignalrConnections.Delete(condition);
+                await unitOfWork.CommitAsync();
+            }
+        }
+
+        /// <summary>
+        ///     Callback which is fired when a client reconnected to server.
+        /// </summary>
+        /// <returns></returns>
+        public override async Task OnReconnected()
+        {
+            await OnConnected();
+        }
+
+        #endregion
+    }
+}

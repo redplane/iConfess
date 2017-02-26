@@ -250,6 +250,15 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ROLE_INSUFFICIENT.
+        /// </summary>
+        public static string RoleIsInsufficient {
+            get {
+                return ResourceManager.GetString("RoleIsInsufficient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [iConfess] Find lost password.
         /// </summary>
         public static string TitleEmailForgotPassword {

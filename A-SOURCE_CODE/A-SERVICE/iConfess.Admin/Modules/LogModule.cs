@@ -3,7 +3,7 @@ using System.Reflection;
 using Autofac.Core;
 using log4net;
 
-namespace iConfess.Admin.Module
+namespace iConfess.Admin.Modules
 {
     /// <summary>
     ///     This module is for attaching with Autofact.

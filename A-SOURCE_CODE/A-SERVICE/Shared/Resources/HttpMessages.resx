@@ -180,6 +180,9 @@
   <data name="RequestIsUnauthenticated" xml:space="preserve">
     <value>REQUEST_UNAUTHENTICATED</value>
   </data>
+  <data name="RoleIsInsufficient" xml:space="preserve">
+    <value>ROLE_INSUFFICIENT</value>
+  </data>
   <data name="TitleEmailForgotPassword" xml:space="preserve">
     <value>[iConfess] Find lost password</value>
   </data>

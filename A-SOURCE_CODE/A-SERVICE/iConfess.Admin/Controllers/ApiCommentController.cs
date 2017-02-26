@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using iConfess.Admin.Attributes;
+using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
 using Shared.Interfaces.Services;
@@ -13,6 +15,7 @@ using Shared.ViewModels.Comments;
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/comment")]
+    [ApiAuthorize]
     public class ApiCommentController : ApiController
     {
         #region Controllers
@@ -109,12 +112,12 @@ namespace iConfess.Admin.Controllers
                 //Add category record
                 _unitOfWork.RepositoryComments.Initiate(comment);
 
-                #endregion
-
                 // Save changes into database.
                 await _unitOfWork.CommitAsync();
 
-                return Request.CreateResponse(HttpStatusCode.Created, comment);
+                #endregion
+                
+                return Request.CreateResponse(HttpStatusCode.OK, comment);
             }
             catch (Exception exception)
             {
@@ -149,48 +152,45 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                #region Record find
+                #region Request identity search
 
-                // Find the category
-                var findComment = new FindCommentsViewModel();
-                findComment.Id = index;
-
-                // Find categories by using specific conditions.
-                var response = await _unitOfWork.RepositoryComments.FindCommentsAsync(findComment);
-
-                // No record has been found
-                if (response.Total < 1)
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
+                // Find account which sends the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
 
                 #endregion
 
+                #region Record find
+
+                // Find the category
+                var condition = new FindCommentsViewModel();
+                condition.Id = index;
+
+                // Account can only change its comment as it is not an administrator.
+                if (account.Role != AccountRole.Admin)
+                    condition.OwnerIndex = account.Id;
+
+                // Find categories by using specific conditions.
+                var comments = _unitOfWork.RepositoryComments.FindComments();
+                comments = _unitOfWork.RepositoryComments.FindComments(comments, condition);
+                
+                #endregion
+
                 #region Record update
+                
+                // Calculate the system time.
+                var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
-                // Begin transaction.
-                using (var transaction = _unitOfWork.Context.Database.BeginTransaction())
+                // Update all categories.
+                foreach (var comment in comments)
                 {
-                    try
-                    {
-                        // Calculate the system time.
-                        var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
-
-                        // Update all categories.
-                        foreach (var comment in response.Comments)
-                        {
-                            comment.Content = parameters.Content;
-                            comment.LastModified = unixSystemTime;
-                        }
-
-                        // Save changes into database.
-                        transaction.Commit();
-                    }
-                    catch
-                    {
-                        // Rollback transaction.
-                        transaction.Rollback();
-                        throw;
-                    }
+                    comment.Content = parameters.Content;
+                    comment.LastModified = unixSystemTime;
                 }
+
+                // Save changes into database.
+                await _unitOfWork.CommitAsync();
 
                 #endregion
 
@@ -228,7 +228,20 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
+                #region Request identity search
+
+                // Find account which sends the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
+
+                #endregion
+
                 #region Find & delete records
+
+                // Account can only delete its own comment as it is not an administrator.
+                if (account.Role != AccountRole.Admin)
+                    conditions.OwnerIndex = account.Id;
 
                 // Find all comments in database.
                 var comments = _unitOfWork.RepositoryComments.FindComments();
@@ -293,11 +306,28 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
 
                 #endregion
-                
-                // Find categories by using specific conditions.
-                var response = await _unitOfWork.RepositoryComments.FindCommentsAsync(conditions);
 
-                return Request.CreateResponse(HttpStatusCode.OK, response);
+                #region Request identity search
+
+                // Find account which sends the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
+
+                #endregion
+
+                #region Find comments
+
+                // Account can only find its comments as it isn't administrator.
+                if (account.Role != AccountRole.Admin)
+                    conditions.OwnerIndex = account.Id;
+
+                // Find categories by using specific conditions.
+                var findCommentsResult = await _unitOfWork.RepositoryComments.FindCommentsAsync(conditions);
+
+                #endregion
+
+                return Request.CreateResponse(HttpStatusCode.OK, findCommentsResult);
             }
             catch (Exception exception)
             {

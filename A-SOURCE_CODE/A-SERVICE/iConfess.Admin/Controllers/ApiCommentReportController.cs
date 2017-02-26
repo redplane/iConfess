@@ -4,6 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using iConfess.Admin.Attributes;
+using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
 using Shared.Interfaces.Services;
@@ -14,6 +16,8 @@ using Shared.ViewModels.Comments;
 namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/report/comment")]
+    [ApiAuthorize]
+    [ApiRole(AccountRole.Admin)]
     public class ApiCommentReportController : ApiController
     {
         #region Constructors
@@ -23,9 +27,11 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
+        /// <param name="identityService"></param>
         /// <param name="log"></param>
         public ApiCommentReportController(IUnitOfWork unitOfWork,
             ITimeService timeService,
+            IIdentityService identityService,
             ILog log)
         {
             _unitOfWork = unitOfWork;
@@ -48,6 +54,11 @@ namespace iConfess.Admin.Controllers
         private readonly ITimeService _timeService;
 
         /// <summary>
+        /// Service which handles identity in request.
+        /// </summary>
+        private readonly IIdentityService _identityService;
+
+        /// <summary>
         ///     Service which handles logging operation.
         /// </summary>
         private readonly ILog _log;
@@ -66,6 +77,7 @@ namespace iConfess.Admin.Controllers
         public async Task<HttpResponseMessage> InitiateCommentReport(
             [FromBody] InitiateCommentReportViewModel parameters)
         {
+            throw new NotImplementedException();
             try
             {
                 #region Parameters validation
@@ -89,31 +101,32 @@ namespace iConfess.Admin.Controllers
                 var findCommentViewModel = new FindCommentsViewModel();
                 findCommentViewModel.Id = parameters.CommentIndex;
 
-                // Find the comment with specific conditions.
-                var findCommentResult = await _unitOfWork.RepositoryComments.FindCommentsAsync(findCommentViewModel);
-                if ((findCommentResult == null) || (findCommentResult.Total < 1))
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
-
-                // Result is not unique.
-                if (findCommentResult.Total != 1)
-                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, HttpMessages.CommentReportNotUnique);
-
-                // Result cannot be retrieved.
-                var comment = await findCommentResult.Comments.FirstOrDefaultAsync();
+                // Find all comments from database.
+                var comments = _unitOfWork.RepositoryComments.FindComments();
+                comments = _unitOfWork.RepositoryComments.FindComments(comments, findCommentViewModel);
+                
+                // Find the first matched comment.
+                var comment = await comments.FirstOrDefaultAsync();
                 if (comment == null)
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
 
                 #endregion
 
-                #region Record initialization
+                #region Request identity search
 
-                // TODO: Obtain the reporter index.
-                var reporter = 1;
+                // Find account which sends the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
+
+                #endregion
+
+                #region Record initialization
 
                 var commentReport = new CommentReport();
                 commentReport.CommentIndex = comment.Id;
                 commentReport.CommentOwnerIndex = comment.OwnerIndex;
-                commentReport.CommentReporterIndex = reporter;
+                commentReport.CommentReporterIndex = account.Id;
                 commentReport.Body = comment.Content;
                 commentReport.Reason = parameters.Reason;
                 commentReport.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
@@ -155,35 +168,34 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
 
                 #endregion
+                
+                #region Request identity search
 
+                // Find account which sends the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
+
+                #endregion
+                
                 #region Record delete
 
-                using (var transaction = _unitOfWork.Context.Database.BeginTransaction())
+                // Account can only delete the reports whose reporter is it.
+                if (account.Role != AccountRole.Admin)
+                    parameters.CommentReporterIndex = account.Id;
+                
+                // Find comments and delete 'em all.
+                _unitOfWork.RepositoryCommentReports.Delete(parameters);
+
+                // Save changes.
+                var totalRecords = await _unitOfWork.CommitAsync();
+                
+                // Nothing is changed.
+                if (totalRecords < 1)
                 {
-                    try
-                    {
-                        // Find comments and delete 'em all.
-                        _unitOfWork.RepositoryCommentReports.Delete(parameters);
-
-                        // Save changes.
-                        var totalRecords = await _unitOfWork.CommitAsync();
-
-                        // Commit the transaction.
-                        transaction.Commit();
-
-                        // Nothing is changed.
-                        if (totalRecords < 1)
-                        {
-                            _log.Error($"No comment (ID: {parameters.Id}) is found");
-                            return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                                HttpMessages.CommentReportNotFound);
-                        }
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
+                    _log.Error($"No comment (ID: {parameters.Id}) is found");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        HttpMessages.CommentReportNotFound);
                 }
 
                 #endregion
@@ -222,8 +234,26 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
+
+                #region Request identity search
+
+                // Find account which sends the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
+
+                #endregion
+
+                #region Comment report search
+
+                // Account can only see the comments which it is their reporter.
+                if (account.Role != AccountRole.Admin)
+                    parameters.CommentReporterIndex = account.Id;
+                
                 // Find comment reports with specific conditions.
                 var findResult = _unitOfWork.RepositoryCommentReports.FindCommentReportsAsync(parameters);
+
+                #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK, findResult);
             }

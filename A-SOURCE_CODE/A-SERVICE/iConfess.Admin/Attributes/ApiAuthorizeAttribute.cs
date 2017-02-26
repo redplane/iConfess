@@ -4,8 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
@@ -112,6 +110,12 @@ namespace iConfess.Admin.Attributes
                         return;
                     }
 
+                    // TODO: Implement claim of password.
+
+                    #endregion
+
+                    #region Account status validation
+
                     // Account is waiting for confirmation.
                     if (account.Status == AccountStatus.Pending)
                     {
@@ -136,6 +140,8 @@ namespace iConfess.Admin.Attributes
                         return;
                     }
 
+                    #endregion
+
                     // Insert account information into HttpItem for later use.
                     var properties = httpActionContext.Request.Properties;
                     if (properties.ContainsKey(ClaimTypes.Actor))
@@ -143,7 +149,7 @@ namespace iConfess.Admin.Attributes
                     else
                         properties.Add(ClaimTypes.Actor, account);
 
-                    #endregion
+                    
                 }
             }
             catch

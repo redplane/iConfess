@@ -1,26 +1,39 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
 using iConfess.Database.Models.Tables;
+using Shared.ViewModels.SignalrConnections;
 
 namespace Shared.Interfaces.Repositories
 {
     public interface IRepositorySignalrConnection
     {
+        #region Properties
+
         /// <summary>
         ///     Create / update a connection into database.
         /// </summary>
         /// <returns></returns>
-        Task<SignalrConnection> InitiateSignalrConnectionAsync();
+        void Initiate(SignalrConnection signalrConnection);
 
         /// <summary>
         ///     Find signalr connection by using specific conditions asychronously.
         /// </summary>
         /// <returns></returns>
-        Task<SignalrConnection> FindSignalrConnectionsAsync();
+        void Delete(FindSignalrConnectionViewModel conditions);
 
         /// <summary>
-        ///     Delete signalr connection by using specific conditions asychronously.
+        /// Find list of signalr connections.
         /// </summary>
         /// <returns></returns>
-        Task<SignalrConnection> DeleteSignalrConnectionsAsync();
+        IQueryable<SignalrConnection> Find();
+
+        /// <summary>
+        /// Find accounts with specific conditions.
+        /// </summary>
+        /// <param name="connections"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        IQueryable<SignalrConnection> Find(IQueryable<SignalrConnection> connections, FindSignalrConnectionViewModel conditions);
+
+        #endregion
     }
 }

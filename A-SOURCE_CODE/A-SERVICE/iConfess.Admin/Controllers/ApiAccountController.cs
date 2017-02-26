@@ -418,6 +418,7 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("find")]
+        [ApiRole(AccountRole.Admin)]
         [HttpPost]
         public async Task<HttpResponseMessage> FindAccounts([FromBody] FindAccountsViewModel conditions)
         {

@@ -8,7 +8,7 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using iConfess.Admin.Interfaces.Providers;
 using iConfess.Admin.Interfaces.Services;
-using iConfess.Admin.Module;
+using iConfess.Admin.Modules;
 using iConfess.Admin.Providers;
 using iConfess.Admin.Services;
 using iConfess.Database.Models;
