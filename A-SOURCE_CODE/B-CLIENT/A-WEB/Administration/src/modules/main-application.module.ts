@@ -23,6 +23,8 @@ import {PostReportManagementComponent} from "../components/post-report-managemen
 import {PostReportFindBoxComponent} from "../components/post-report-management/post-report-find-box.component";
 import {SelectModule} from "ng2-select";
 import {MomentModule} from "angular2-moment";
+import {AccountProfileBoxComponent} from "../components/account-management/account-profile-box.component";
+import {PostDetailBoxComponent} from "../components/post-management/post-detail-box.component";
 
 // Routing configuration.
 const appRoutes: Routes = [
@@ -87,6 +89,7 @@ const appRoutes: Routes = [
         AccountForgotPasswordComponent,
         AccountLoginComponent,
         AccountSubmitPasswordComponent,
+        AccountProfileBoxComponent,
 
         CategoryManagementComponent,
         CategoryDetailBoxComponent,
@@ -95,6 +98,8 @@ const appRoutes: Routes = [
 
         PostReportManagementComponent,
         PostReportFindBoxComponent,
+
+        PostDetailBoxComponent,
 
         CommentReportManagementComponent,
         CommentReportFindBoxComponent,

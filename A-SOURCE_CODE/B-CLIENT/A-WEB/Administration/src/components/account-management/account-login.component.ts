@@ -49,6 +49,10 @@ export class AccountLoginComponent{
 
     // Callback is fired when login button is clicked.
     public clickLogin(){
+
+        // Make component be loaded.
+        this.isLoading = true;
+
         // Call service api to authenticate do authentication.
         this.clientAccountService.login(this.loginViewModel)
             .then((response: Response) => {

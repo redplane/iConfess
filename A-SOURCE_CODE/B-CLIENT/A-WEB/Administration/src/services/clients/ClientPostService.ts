@@ -28,4 +28,14 @@ export class ClientPostService{
             conditions).toPromise();
     }
 
+    // Find post details.
+    public findPostDetails(index: number){
+        // Build full url.
+        let url = `${this.clientApiService.apiFindPostDetails}?index=${index}`;
+
+        // Request to api to obtain list of available categories in system.
+        return this.clientApiService.get(this.clientAuthenticationService.findClientAuthenticationToken(),
+            url,
+            null).toPromise();
+    }
 }

@@ -75,6 +75,10 @@ var ClientConfigurationService = (function () {
     ClientConfigurationService.prototype.findMaxPageRecords = function () {
         return this.pageRecords[this.pageRecords.length - 1];
     };
+    // Get minimum number of records can be displayed per page.
+    ClientConfigurationService.prototype.getMinPageRecords = function () {
+        return this.pageRecords[0];
+    };
     // Initiate list of account statuses selection.
     ClientConfigurationService.prototype.initializeAccountSelections = function () {
         var accountStatusItems = new Dictionary_1.Dictionary();

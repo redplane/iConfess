@@ -29,6 +29,13 @@ var ClientPostService = (function () {
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(), this.clientApiService.apiFindPost, null, conditions).toPromise();
     };
+    // Find post details.
+    ClientPostService.prototype.findPostDetails = function (index) {
+        // Build full url.
+        var url = this.clientApiService.apiFindPostDetails + "?index=" + index;
+        // Request to api to obtain list of available categories in system.
+        return this.clientApiService.get(this.clientAuthenticationService.findClientAuthenticationToken(), url, null).toPromise();
+    };
     return ClientPostService;
 }());
 ClientPostService = __decorate([

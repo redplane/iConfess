@@ -22,7 +22,14 @@
     <div class="box-body">
 
         <!-- Template of account search -->
-        <template #accountTypeaheadTemplate
+        <template #reporterTypeaheadTemplate
+                  let-model="item"
+                  let-index="index">
+            <h5>{{model.email}}</h5>
+        </template>
+
+        <!-- Template of account search -->
+        <template #ownerTypeaheadTemplate
                   let-model="item"
                   let-index="index">
             <h5>{{model.email}}</h5>
@@ -45,7 +52,7 @@
                     <input formControlName="postReporterIndex"
                            [typeahead]="reporters"
                            [typeaheadOptionField]="'email'"
-                           [typeaheadItemTemplate]="accountTypeaheadTemplate"
+                           [typeaheadItemTemplate]="reporterTypeaheadTemplate"
                            [typeaheadWaitMs]="400"
                            (typeaheadOnSelect)="selectPostReporter($event)"
                            (typeaheadLoading)="loadPostReporters()"
@@ -60,7 +67,7 @@
                     <input formControlName="postOwnerIndex"
                            [typeahead]="owners"
                            [typeaheadOptionField]="'email'"
-                           [typeaheadItemTemplate]="accountTypeaheadTemplate"
+                           [typeaheadItemTemplate]="ownerTypeaheadTemplate"
                            [typeaheadWaitMs]="400"
                            (typeaheadOnSelect)="selectPostOwner($event)"
                            (typeaheadLoading)="loadPostOwners()"

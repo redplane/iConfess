@@ -15,6 +15,13 @@ import {Pagination} from "../../viewmodels/Pagination";
 import {SortDirection} from "../../enumerations/SortDirection";
 import {UnixDateRange} from "../../viewmodels/UnixDateRange";
 import {Response} from "@angular/http";
+import {AccountProfileBoxComponent} from "../account-management/account-profile-box.component";
+import {Account} from "../../models/Account";
+import {Post} from "../../models/Post";
+import {ClientPostService} from "../../services/clients/ClientPostService";
+import {FindCommentResultViewModel} from "../../viewmodels/comment/FindCommentResultViewModel";
+import {CommentSearchViewModel} from "../../viewmodels/comment/CommentSearchViewModel";
+import {ClientCommentService} from "../../services/clients/ClientCommentService";
 
 @Component({
     selector: 'post-report-management',
@@ -26,7 +33,11 @@ import {Response} from "@angular/http";
         ClientApiService,
         ClientNotificationService,
         ClientAuthenticationService,
-        ClientPostReportService
+        ClientPostReportService,
+        ClientPostService,
+        ClientCommentService,
+
+        AccountProfileBoxComponent
     ]
 })
 
@@ -38,18 +49,35 @@ export class PostReportManagementComponent implements OnInit{
     // Find post reports search result
     public postReportsSearchResult: FindPostReportSearchResultViewModel;
 
+    // Result of finding comments of a specific post.
+    public searchCommentsResult: FindCommentResultViewModel;
+
     // Post report which is selected to be deleted.
     public selectPostReport: PostReport;
 
     // Whether component is being loaded or not.
     public isLoading: boolean;
 
+    // Whether application is searching for comments related to a specific post.
+    public isSearchingComments: boolean;
+
+    // Whether application is searching for a specific post's information.
+    public isSearchingPost: boolean;
+
+    // Which account profile is being monitored.
+    public monitoringAccountProfile: Account;
+
+    // Which post is being monitored.
+    public monitoringPostDetail: Post;
+
     // Initiate instance of component.
     public constructor(public clientConfigurationService: ClientConfigurationService,
                        public clientCommonService: ClientCommonService,
                        public clientApiService: ClientApiService,
                        public clientTimeService: ClientTimeService,
-                       public clientPostReportService: ClientPostReportService ){
+                       public clientPostReportService: ClientPostReportService,
+                       public clientPostService: ClientPostService,
+                       public clientCommentService: ClientCommentService){
         // Initiate post reports search result.
         this.postReportsSearchResult = new FindPostReportSearchResultViewModel();
     }
@@ -73,6 +101,7 @@ export class PostReportManagementComponent implements OnInit{
         // Update unix created.
         let unixCreated = new UnixDateRange();
         this.findPostReportConditions.created = unixCreated;
+
     }
 
     // Callback is fired when search button is clicked.
@@ -160,5 +189,92 @@ export class PostReportManagementComponent implements OnInit{
                 // Cancel the loading state.
                 this.isLoading = false;
             });
+    }
+
+    // Pick an account and monitor its profile.
+    public monitorAccountProfile(account: Account, accountProfileModal: ModalDirective): void{
+        // Pick the account.
+        this.monitoringAccountProfile = account;
+        console.log(this.monitoringAccountProfile);
+
+        console.log(accountProfileModal);
+
+        // Display profile modal.
+        accountProfileModal.show();
+    }
+
+    // Find post with its detail.
+    public clickOpenPostDetailBox(index: number, postDetailBox: ModalDirective): void{
+
+        // Make application understand that a post is being searched.
+        this.isSearchingPost = true;
+
+        // Reset the search comments result.
+        this.searchCommentsResult = new FindCommentResultViewModel();
+
+        // Find details of the specific post.
+        this.clientPostService.findPostDetails(index)
+            .then((response: Response) =>{
+
+                // Cancel the search progress.
+                this.isSearchingPost = false;
+
+                // Get the details.
+                let details = response.json();
+                this.monitoringPostDetail = details;
+
+                // Display post detail box.
+                postDetailBox.show();
+            })
+            .catch((response: Response) =>{
+                // Cancel the search progress.
+                this.isSearchingPost = false;
+
+                // Handle the common errors.
+                this.clientApiService.proceedHttpNonSolidResponse(response);
+            });
+    }
+
+    // This callback is fired when a comment button is searched.
+    public clickSearchComment(page: number): void{
+
+        // Page is not correct.
+        if (page == null)
+            return;
+
+        // Post is incorrect.
+        if (this.monitoringPostDetail == null)
+            return;
+
+        let pagination = new Pagination();
+        pagination.index = page;
+        pagination.records = this.clientConfigurationService.getMinPageRecords();
+
+        let commentsSearchCondition = new CommentSearchViewModel();
+        commentsSearchCondition.postIndex = this.monitoringPostDetail.id;
+        commentsSearchCondition.pagination = pagination;
+
+        // Make component understand comments are loading.
+        this.isSearchingComments = true;
+
+        // Search for comments.
+        this.clientCommentService.searchComments(commentsSearchCondition)
+            .then((response: Response) => {
+
+                // Cancel comment loading status.
+                this.isSearchingComments = false;
+
+                // Get the comments search result.
+                let commentSearchResult = response.json();
+                console.log(commentSearchResult);
+                this.searchCommentsResult = commentSearchResult;
+            })
+            .catch((response: Response) => {
+                // Cancel comment loading status.
+                this.isSearchingComments = false;
+
+                // Proceed common handling process.
+                this.clientApiService.proceedHttpNonSolidResponse(response);
+            })
     }
 }

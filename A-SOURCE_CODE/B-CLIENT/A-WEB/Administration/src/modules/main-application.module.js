@@ -31,6 +31,8 @@ var post_report_management_component_1 = require("../components/post-report-mana
 var post_report_find_box_component_1 = require("../components/post-report-management/post-report-find-box.component");
 var ng2_select_1 = require("ng2-select");
 var angular2_moment_1 = require("angular2-moment");
+var account_profile_box_component_1 = require("../components/account-management/account-profile-box.component");
+var post_detail_box_component_1 = require("../components/post-management/post-detail-box.component");
 // Routing configuration.
 var appRoutes = [
     {
@@ -93,12 +95,14 @@ MainApplicationModule = __decorate([
             account_forgot_password_component_1.AccountForgotPasswordComponent,
             account_login_component_1.AccountLoginComponent,
             account_submit_password_component_1.AccountSubmitPasswordComponent,
+            account_profile_box_component_1.AccountProfileBoxComponent,
             category_management_component_1.CategoryManagementComponent,
             category_detail_box_component_1.CategoryDetailBoxComponent,
             category_find_box_component_1.CategoryFindBoxComponent,
             category_initiate_box_component_1.CategoryInitiateBoxComponent,
             post_report_management_component_1.PostReportManagementComponent,
             post_report_find_box_component_1.PostReportFindBoxComponent,
+            post_detail_box_component_1.PostDetailBoxComponent,
             comment_report_management_component_1.CommentReportManagementComponent,
             comment_report_find_box_component_1.CommentReportFindBoxComponent,
             TextPropertyComparisionValidator_1.TextPropertyComparisionValidator

@@ -110,6 +110,11 @@ export class ClientConfigurationService {
         return this.pageRecords[this.pageRecords.length - 1];
     }
 
+    // Get minimum number of records can be displayed per page.
+    public getMinPageRecords(): number{
+        return this.pageRecords[0];
+    }
+
     // Initiate list of account statuses selection.
     private initializeAccountSelections(): Dictionary<AccountStatuses> {
         let accountStatusItems = new Dictionary<AccountStatuses>();

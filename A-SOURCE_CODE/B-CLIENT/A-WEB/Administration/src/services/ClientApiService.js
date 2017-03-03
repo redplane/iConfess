@@ -39,6 +39,10 @@ var ClientApiService = (function () {
         this.apiRequestSubmitPassword = this.apiUrl + "/api/account/lost_password";
         // Post api.
         this.apiFindPost = this.apiUrl + "/api/post/find";
+        this.apiFindPostDetails = this.apiUrl + "/api/post/details";
+        // Comment api.
+        this.apiSearchComment = this.apiUrl + "/api/comment/find";
+        this.apiSearchCommentDetails = this.apiUrl + "/api/comment/details";
         // Post report api.
         this.apiFindPostReport = this.apiUrl + "/api/report/post/find";
         this.apiDeletePostReport = this.apiUrl + "/api/report/post";

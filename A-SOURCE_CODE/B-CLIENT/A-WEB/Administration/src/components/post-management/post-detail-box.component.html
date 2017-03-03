@@ -1,0 +1,75 @@
+<div class="box box-widget"
+     *ngIf="postDetails != null">
+
+    <div class="box-body">
+        <div class="overlay"
+             *ngIf="isComponentBusy()">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+
+        <div class="info-box">
+            <span class="info-box-icon">
+                <img class="img-responsive"
+                     [src]="postDetails.owner.photoRelativeUrl"
+                     alt="Post owner profile image">
+            </span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">{{postDetails.title}}</span>
+                <span class="info-box-number">{{postDetails.body}}</span>
+            </div>
+        </div>
+
+        <span class="pull-right text-muted"
+              *ngIf="hasComments() && !isComponentBusy()">
+            {{searchCommentsResult.total}} comments
+        </span>
+    </div>
+    <div class="box-footer box-comments"
+         *ngIf="hasComments() && !isComponentBusy()">
+        <div class="box-comment"
+             *ngFor="let comment of searchCommentsResult.comments">
+
+            <!--<img class="img-responsive img-thumbnail"-->
+                 <!--[src]="comment.owner.photoRelativeUrl"-->
+                 <!--alt="Comment owner profile picture">-->
+
+            <div class="comment-text">
+                <span class="username">
+                      {{comment.owner.nickname}}
+                    <span class="text-muted pull-right">
+                        {{clientTimeService.findUnixTime(comment.created) | amDateFormat: 'YYYY-MM-DD'}}
+                    </span>
+                </span>
+                <span>{{comment.content}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer text-center">
+        <div class="col-lg-12">
+            <div class="text-center"
+                 *ngIf="hasComments()">
+                <pagination [totalItems]="searchCommentsResult.total"
+                            [itemsPerPage]="clientConfigurationService.getMinPageRecords()"
+                            [(ngModel)]="searchPostDetailCondition.pagination.index"
+                            [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
+                            [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
+                            [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
+                            [nextText]="clientConfigurationService.ngPaginationSettings.nextText"
+                            [lastText]="clientConfigurationService.ngPaginationSettings.lastText"
+                            [boundaryLinks]="true"
+                            [directionLinks]="false"
+                            [maxSize]="3"
+                            [disabled]="isComponentBusy()"
+                            (pageChanged)="clickSearchComments($event)"></pagination>
+            </div>
+
+            <button class="btn btn-primary btn-block btn-flat"
+                    *ngIf="!hasComments()"
+                    [attr.disabled]="isComponentBusy()"
+                    (click)="clickSearchComments(null)">
+                <span>Load comments</span>
+            </button>
+        </div>
+    </div>
+</div>

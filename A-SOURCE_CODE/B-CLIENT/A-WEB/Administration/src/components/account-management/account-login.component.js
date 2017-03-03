@@ -35,6 +35,8 @@ var AccountLoginComponent = (function () {
     // Callback is fired when login button is clicked.
     AccountLoginComponent.prototype.clickLogin = function () {
         var _this = this;
+        // Make component be loaded.
+        this.isLoading = true;
         // Call service api to authenticate do authentication.
         this.clientAccountService.login(this.loginViewModel)
             .then(function (response) {

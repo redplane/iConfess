@@ -57,9 +57,23 @@
                     <tbody>
                     <tr *ngFor="let postReport of postReportsSearchResult.postReports; let i = index">
                         <td class="text-center">{{clientCommonService.findRecordStartIndexFromPagination(findPostReportConditions.pagination) + i + 1}}</td>
-                        <td class="text-center">{{postReport.post.title}}</td>
-                        <td class="text-center">{{postReport.owner.nickname}}</td>
-                        <td class="text-center">{{postReport.reporter.nickname}}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);" (click)="clickOpenPostDetailBox(postReport.post.id, postDetailBox)">
+                                {{postReport.post.title}}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);"
+                               (click)="monitorAccountProfile(postReport.owner, accountProfileBox)">
+                                {{postReport.owner.nickname}}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);"
+                               (click)="monitorAccountProfile(postReport.reporter, accountProfileBox)">
+                                {{postReport.reporter.nickname}}
+                            </a>
+                        </td>
                         <td class="text-center">{{postReport.body}}</td>
                         <td class="text-center">{{postReport.reason}}</td>
                         <td class="text-center">{{clientTimeService.findUnixTime(postReport.created).toUTCString()}}</td>
@@ -105,7 +119,7 @@
      aria-hidden="true"
      (onHide)="selectPostReport = null">
 
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="text-center">
@@ -140,6 +154,45 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Account profile box -->
+<div bsModal
+     #accountProfileBox="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+     (onHide)="monitoringAccountProfile = null;">
+
+    <div class="modal-dialog"
+         *ngIf="monitoringAccountProfile != null">
+        <div class="modal-content">
+            <account-profile-box [account]="monitoringAccountProfile"></account-profile-box>
+        </div>
+    </div>
+</div>
+
+<!-- Post detail box -->
+<div bsModal
+     #postDetailBox="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+
+     (onHide)="monitoringPostDetail = null">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <post-detail-box [postDetails]="monitoringPostDetail"
+                             [searchCommentsResult]="searchCommentsResult"
+                             [isSearchingComments]="isSearchingComments"
+                             [isSearchingPost]="isSearchingPost"
+                             (changeCommentsPage)="clickSearchComment($event)">
+            </post-detail-box>
         </div>
     </div>
 </div>

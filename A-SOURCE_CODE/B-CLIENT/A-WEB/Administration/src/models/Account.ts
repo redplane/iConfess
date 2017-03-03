@@ -17,6 +17,9 @@ export class Account{
     // Status of account.
     public status: AccountStatuses;
 
+    // Photo of account.
+    public photoRelativeUrl: string;
+
     // Time when account was created on server.
     public joined: number;
 

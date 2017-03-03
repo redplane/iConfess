@@ -23,14 +23,21 @@ var PostReportSortProperty_1 = require("../../enumerations/order/PostReportSortP
 var Pagination_1 = require("../../viewmodels/Pagination");
 var SortDirection_1 = require("../../enumerations/SortDirection");
 var UnixDateRange_1 = require("../../viewmodels/UnixDateRange");
+var account_profile_box_component_1 = require("../account-management/account-profile-box.component");
+var ClientPostService_1 = require("../../services/clients/ClientPostService");
+var FindCommentResultViewModel_1 = require("../../viewmodels/comment/FindCommentResultViewModel");
+var CommentSearchViewModel_1 = require("../../viewmodels/comment/CommentSearchViewModel");
+var ClientCommentService_1 = require("../../services/clients/ClientCommentService");
 var PostReportManagementComponent = (function () {
     // Initiate instance of component.
-    function PostReportManagementComponent(clientConfigurationService, clientCommonService, clientApiService, clientTimeService, clientPostReportService) {
+    function PostReportManagementComponent(clientConfigurationService, clientCommonService, clientApiService, clientTimeService, clientPostReportService, clientPostService, clientCommentService) {
         this.clientConfigurationService = clientConfigurationService;
         this.clientCommonService = clientCommonService;
         this.clientApiService = clientApiService;
         this.clientTimeService = clientTimeService;
         this.clientPostReportService = clientPostReportService;
+        this.clientPostService = clientPostService;
+        this.clientCommentService = clientCommentService;
         // Initiate post reports search result.
         this.postReportsSearchResult = new FindPostReportSearchResultViewModel_1.FindPostReportSearchResultViewModel();
     }
@@ -113,6 +120,74 @@ var PostReportManagementComponent = (function () {
             _this.isLoading = false;
         });
     };
+    // Pick an account and monitor its profile.
+    PostReportManagementComponent.prototype.monitorAccountProfile = function (account, accountProfileModal) {
+        // Pick the account.
+        this.monitoringAccountProfile = account;
+        console.log(this.monitoringAccountProfile);
+        console.log(accountProfileModal);
+        // Display profile modal.
+        accountProfileModal.show();
+    };
+    // Find post with its detail.
+    PostReportManagementComponent.prototype.clickOpenPostDetailBox = function (index, postDetailBox) {
+        var _this = this;
+        // Make application understand that a post is being searched.
+        this.isSearchingPost = true;
+        // Reset the search comments result.
+        this.searchCommentsResult = new FindCommentResultViewModel_1.FindCommentResultViewModel();
+        // Find details of the specific post.
+        this.clientPostService.findPostDetails(index)
+            .then(function (response) {
+            // Cancel the search progress.
+            _this.isSearchingPost = false;
+            // Get the details.
+            var details = response.json();
+            _this.monitoringPostDetail = details;
+            // Display post detail box.
+            postDetailBox.show();
+        })
+            .catch(function (response) {
+            // Cancel the search progress.
+            _this.isSearchingPost = false;
+            // Handle the common errors.
+            _this.clientApiService.proceedHttpNonSolidResponse(response);
+        });
+    };
+    // This callback is fired when a comment button is searched.
+    PostReportManagementComponent.prototype.clickSearchComment = function (page) {
+        var _this = this;
+        // Page is not correct.
+        if (page == null)
+            return;
+        // Post is incorrect.
+        if (this.monitoringPostDetail == null)
+            return;
+        var pagination = new Pagination_1.Pagination();
+        pagination.index = page;
+        pagination.records = this.clientConfigurationService.getMinPageRecords();
+        var commentsSearchCondition = new CommentSearchViewModel_1.CommentSearchViewModel();
+        commentsSearchCondition.postIndex = this.monitoringPostDetail.id;
+        commentsSearchCondition.pagination = pagination;
+        // Make component understand comments are loading.
+        this.isSearchingComments = true;
+        // Search for comments.
+        this.clientCommentService.searchComments(commentsSearchCondition)
+            .then(function (response) {
+            // Cancel comment loading status.
+            _this.isSearchingComments = false;
+            // Get the comments search result.
+            var commentSearchResult = response.json();
+            console.log(commentSearchResult);
+            _this.searchCommentsResult = commentSearchResult;
+        })
+            .catch(function (response) {
+            // Cancel comment loading status.
+            _this.isSearchingComments = false;
+            // Proceed common handling process.
+            _this.clientApiService.proceedHttpNonSolidResponse(response);
+        });
+    };
     return PostReportManagementComponent;
 }());
 PostReportManagementComponent = __decorate([
@@ -126,14 +201,19 @@ PostReportManagementComponent = __decorate([
             ClientApiService_1.ClientApiService,
             ClientNotificationService_1.ClientNotificationService,
             ClientAuthenticationService_1.ClientAuthenticationService,
-            ClientPostReportService_1.ClientPostReportService
+            ClientPostReportService_1.ClientPostReportService,
+            ClientPostService_1.ClientPostService,
+            ClientCommentService_1.ClientCommentService,
+            account_profile_box_component_1.AccountProfileBoxComponent
         ]
     }),
     __metadata("design:paramtypes", [ClientConfigurationService_1.ClientConfigurationService,
         ClientCommonService_1.ClientCommonService,
         ClientApiService_1.ClientApiService,
         ClientTimeService_1.ClientTimeService,
-        ClientPostReportService_1.ClientPostReportService])
+        ClientPostReportService_1.ClientPostReportService,
+        ClientPostService_1.ClientPostService,
+        ClientCommentService_1.ClientCommentService])
 ], PostReportManagementComponent);
 exports.PostReportManagementComponent = PostReportManagementComponent;
 //# sourceMappingURL=post-report-management.component.js.map

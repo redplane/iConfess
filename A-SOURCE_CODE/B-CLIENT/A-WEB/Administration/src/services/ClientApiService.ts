@@ -49,6 +49,9 @@ export class ClientApiService{
     // Hyperlink which is used for searching for posts.
     public apiFindPost: string;
 
+    // Hyperlink which is used for searching post details.
+    public apiFindPostDetails: string;
+
     //////////////////////////////////////////////////////////////////////////////////////
     // Hyperlink which is used for searching for post reports.
     public apiFindPostReport: string;
@@ -56,6 +59,12 @@ export class ClientApiService{
     // Hyperlink which is used for deleting post reports.
     public apiDeletePostReport: string;
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    // Hyperlink which is used for searching for post reports.
+    public apiSearchComment: string;
+
+    // Hyperlink which is used for searching for comment details.
+    public apiSearchCommentDetails: string;
     //////////////////////////////////////////////////////////////////////////////////////
     // Key in local storage which access token should be stored.
     public accessTokenStorage: string;
@@ -81,6 +90,11 @@ export class ClientApiService{
 
         // Post api.
         this.apiFindPost = `${this.apiUrl}/api/post/find`;
+        this.apiFindPostDetails = `${this.apiUrl}/api/post/details`;
+
+        // Comment api.
+        this.apiSearchComment = `${this.apiUrl}/api/comment/find`;
+        this.apiSearchCommentDetails = `${this.apiUrl}/api/comment/details`;
 
         // Post report api.
         this.apiFindPostReport = `${this.apiUrl}/api/report/post/find`;
