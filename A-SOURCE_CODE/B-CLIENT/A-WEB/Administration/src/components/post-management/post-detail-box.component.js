@@ -33,13 +33,13 @@ var PostDetailBoxComponent = (function () {
     // Check whether post contains any comments or not.
     PostDetailBoxComponent.prototype.hasComments = function () {
         // Result is blank.
-        if (this.searchCommentsResult == null)
+        if (this.searchCommentsDetailsResult == null)
             return false;
         // Comments list is empty.
-        var comments = this.searchCommentsResult.comments;
+        var comments = this.searchCommentsDetailsResult.commentsDetails;
         if (comments == null || comments.length < 1)
             return false;
-        if (this.searchCommentsResult.total < 1)
+        if (this.searchCommentsDetailsResult.total < 1)
             return false;
         return true;
     };
@@ -55,6 +55,9 @@ var PostDetailBoxComponent = (function () {
             return;
         }
         var page = parameter['page'];
+        page--;
+        if (page < 0)
+            page = 0;
         this.changeCommentsPage.emit(page);
     };
     return PostDetailBoxComponent;
@@ -63,7 +66,7 @@ PostDetailBoxComponent = __decorate([
     core_1.Component({
         selector: 'post-detail-box',
         templateUrl: 'post-detail-box.component.html',
-        inputs: ['maxComments', 'postDetails', 'searchCommentsResult', 'isSearchingPost', 'isSearchingComments'],
+        inputs: ['maxComments', 'postDetails', 'searchCommentsDetailsResult', 'isSearchingPost', 'isSearchingComments'],
         outputs: ['changeCommentsPage'],
         providers: [
             ClientTimeService_1.ClientTimeService,

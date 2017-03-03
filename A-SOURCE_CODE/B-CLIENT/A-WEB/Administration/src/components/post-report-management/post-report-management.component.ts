@@ -22,6 +22,8 @@ import {ClientPostService} from "../../services/clients/ClientPostService";
 import {FindCommentResultViewModel} from "../../viewmodels/comment/FindCommentResultViewModel";
 import {CommentSearchViewModel} from "../../viewmodels/comment/CommentSearchViewModel";
 import {ClientCommentService} from "../../services/clients/ClientCommentService";
+import {SearchCommentsDetailsViewModel} from "../../viewmodels/comment/SearchCommentsDetailsViewModel";
+import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/SearchCommentsDetailsResultViewModel";
 
 @Component({
     selector: 'post-report-management',
@@ -50,7 +52,7 @@ export class PostReportManagementComponent implements OnInit{
     public postReportsSearchResult: FindPostReportSearchResultViewModel;
 
     // Result of finding comments of a specific post.
-    public searchCommentsResult: FindCommentResultViewModel;
+    public searchCommentsDetailsResult: SearchCommentsDetailsResultViewModel;
 
     // Post report which is selected to be deleted.
     public selectPostReport: PostReport;
@@ -210,7 +212,7 @@ export class PostReportManagementComponent implements OnInit{
         this.isSearchingPost = true;
 
         // Reset the search comments result.
-        this.searchCommentsResult = new FindCommentResultViewModel();
+        this.searchCommentsDetailsResult = new SearchCommentsDetailsResultViewModel();
 
         // Find details of the specific post.
         this.clientPostService.findPostDetails(index)
@@ -237,7 +239,6 @@ export class PostReportManagementComponent implements OnInit{
 
     // This callback is fired when a comment button is searched.
     public clickSearchComment(page: number): void{
-
         // Page is not correct.
         if (page == null)
             return;
@@ -250,24 +251,23 @@ export class PostReportManagementComponent implements OnInit{
         pagination.index = page;
         pagination.records = this.clientConfigurationService.getMinPageRecords();
 
-        let commentsSearchCondition = new CommentSearchViewModel();
-        commentsSearchCondition.postIndex = this.monitoringPostDetail.id;
-        commentsSearchCondition.pagination = pagination;
+        let searchCommentsDetailsCondition = new SearchCommentsDetailsViewModel();
+        searchCommentsDetailsCondition.postIndex = this.monitoringPostDetail.id;
+        searchCommentsDetailsCondition.pagination = pagination;
 
         // Make component understand comments are loading.
         this.isSearchingComments = true;
 
         // Search for comments.
-        this.clientCommentService.searchComments(commentsSearchCondition)
+        this.clientCommentService.searchCommentDetails(searchCommentsDetailsCondition)
             .then((response: Response) => {
 
                 // Cancel comment loading status.
                 this.isSearchingComments = false;
 
                 // Get the comments search result.
-                let commentSearchResult = response.json();
-                console.log(commentSearchResult);
-                this.searchCommentsResult = commentSearchResult;
+                let commentsDetailsSearchResult = response.json();
+                this.searchCommentsDetailsResult = commentsDetailsSearchResult;
             })
             .catch((response: Response) => {
                 // Cancel comment loading status.

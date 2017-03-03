@@ -183,12 +183,12 @@
      role="dialog"
      aria-hidden="true"
 
-     (onHide)="monitoringPostDetail = null">
+     (onHide)="monitoringPostDetail = null; isSearchingComments = false; isSearchingPost = false;">
 
     <div class="modal-dialog">
         <div class="modal-content">
             <post-detail-box [postDetails]="monitoringPostDetail"
-                             [searchCommentsResult]="searchCommentsResult"
+                             [searchCommentsDetailsResult]="searchCommentsDetailsResult"
                              [isSearchingComments]="isSearchingComments"
                              [isSearchingPost]="isSearchingPost"
                              (changeCommentsPage)="clickSearchComment($event)">

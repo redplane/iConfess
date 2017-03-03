@@ -24,10 +24,8 @@ var ClientCommentService = (function () {
             .toPromise();
     };
     // Search for a specific comment's detail.
-    ClientCommentService.prototype.searchCommentDetails = function (index) {
-        return this.clientApiService.get(this.clientAuthenticationService.findClientAuthenticationToken(), this.clientApiService.apiSearchCommentDetails, {
-            index: index
-        }).toPromise();
+    ClientCommentService.prototype.searchCommentDetails = function (conditions) {
+        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(), this.clientApiService.apiSearchCommentDetails, null, conditions).toPromise();
     };
     return ClientCommentService;
 }());

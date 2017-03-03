@@ -7,11 +7,12 @@ import {ClientTimeService} from "../../services/ClientTimeService";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {FindPostViewModel} from "../../viewmodels/post/FindPostViewModel";
 import {Pagination} from "../../viewmodels/Pagination";
+import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/SearchCommentsDetailsResultViewModel";
 
 @Component({
     selector: 'post-detail-box',
     templateUrl: 'post-detail-box.component.html',
-    inputs:['maxComments', 'postDetails', 'searchCommentsResult', 'isSearchingPost', 'isSearchingComments'],
+    inputs:['maxComments', 'postDetails', 'searchCommentsDetailsResult', 'isSearchingPost', 'isSearchingComments'],
     outputs:['changeCommentsPage'],
     providers: [
         ClientTimeService,
@@ -28,7 +29,7 @@ export class PostDetailBoxComponent implements OnInit{
     private isSearchingComments: boolean;
 
     // List of comments search result.
-    public searchCommentsResult: FindCommentResultViewModel;
+    public searchCommentsDetailsResult: SearchCommentsDetailsResultViewModel;
 
     // Condition of post detail searching.
     public searchPostDetailCondition: FindPostViewModel;
@@ -60,14 +61,14 @@ export class PostDetailBoxComponent implements OnInit{
     // Check whether post contains any comments or not.
     private hasComments(): boolean {
         // Result is blank.
-        if (this.searchCommentsResult == null)
+        if (this.searchCommentsDetailsResult == null)
             return false;
 
         // Comments list is empty.
-        let comments = this.searchCommentsResult.comments;
+        let comments = this.searchCommentsDetailsResult.commentsDetails;
         if (comments == null || comments.length < 1)
             return false;
-        if (this.searchCommentsResult.total < 1)
+        if (this.searchCommentsDetailsResult.total < 1)
             return false;
         return true;
     }
@@ -86,6 +87,9 @@ export class PostDetailBoxComponent implements OnInit{
         }
 
         let page = parameter['page'];
+        page--;
+        if (page < 0)
+            page = 0;
         this.changeCommentsPage.emit(page);
     }
 }

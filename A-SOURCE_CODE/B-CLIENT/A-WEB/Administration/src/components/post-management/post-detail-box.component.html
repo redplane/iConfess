@@ -22,26 +22,26 @@
 
         <span class="pull-right text-muted"
               *ngIf="hasComments() && !isComponentBusy()">
-            {{searchCommentsResult.total}} comments
+            {{searchCommentsDetailsResult.total}} comments
         </span>
     </div>
     <div class="box-footer box-comments"
          *ngIf="hasComments() && !isComponentBusy()">
         <div class="box-comment"
-             *ngFor="let comment of searchCommentsResult.comments">
+             *ngFor="let commentDetails of searchCommentsDetailsResult.commentsDetails">
 
-            <!--<img class="img-responsive img-thumbnail"-->
-                 <!--[src]="comment.owner.photoRelativeUrl"-->
-                 <!--alt="Comment owner profile picture">-->
+            <img class="img-responsive img-thumbnail"
+                 [src]="commentDetails.owner.photoRelativeUrl"
+                 alt="Comment owner profile picture">
 
             <div class="comment-text">
                 <span class="username">
-                      {{comment.owner.nickname}}
+                      {{commentDetails.owner.nickname}}
                     <span class="text-muted pull-right">
-                        {{clientTimeService.findUnixTime(comment.created) | amDateFormat: 'YYYY-MM-DD'}}
+                        {{clientTimeService.findUnixTime(commentDetails.created) | amDateFormat: 'YYYY-MM-DD'}}
                     </span>
                 </span>
-                <span>{{comment.content}}</span>
+                <span>{{commentDetails.content}}</span>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
         <div class="col-lg-12">
             <div class="text-center"
                  *ngIf="hasComments()">
-                <pagination [totalItems]="searchCommentsResult.total"
+                <pagination [totalItems]="searchCommentsDetailsResult.total"
                             [itemsPerPage]="clientConfigurationService.getMinPageRecords()"
                             [(ngModel)]="searchPostDetailCondition.pagination.index"
                             [rotate]="clientConfigurationService.ngPaginationSettings.rotate"

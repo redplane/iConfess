@@ -94,7 +94,7 @@ export class ClientApiService{
 
         // Comment api.
         this.apiSearchComment = `${this.apiUrl}/api/comment/find`;
-        this.apiSearchCommentDetails = `${this.apiUrl}/api/comment/details`;
+        this.apiSearchCommentDetails = `${this.apiUrl}/api/comments/details`;
 
         // Post report api.
         this.apiFindPostReport = `${this.apiUrl}/api/report/post/find`;

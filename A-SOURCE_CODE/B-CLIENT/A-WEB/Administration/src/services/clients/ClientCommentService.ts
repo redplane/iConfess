@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {ClientApiService} from "../ClientApiService";
 import {ClientAuthenticationService} from "./ClientAuthenticationService";
 import {CommentSearchViewModel} from "../../viewmodels/comment/CommentSearchViewModel";
+import {SearchCommentsDetailsViewModel} from "../../viewmodels/comment/SearchCommentsDetailsViewModel";
 
 @Injectable()
 export class ClientCommentService{
@@ -20,10 +21,8 @@ export class ClientCommentService{
     }
 
     // Search for a specific comment's detail.
-    public searchCommentDetails(index: number){
-        return this.clientApiService.get(
-            this.clientAuthenticationService.findClientAuthenticationToken(),this.clientApiService.apiSearchCommentDetails, {
-                index: index
-            }).toPromise();
+    public searchCommentDetails(conditions: SearchCommentsDetailsViewModel){
+        return this.clientApiService.post(
+            this.clientAuthenticationService.findClientAuthenticationToken(),this.clientApiService.apiSearchCommentDetails, null, conditions).toPromise();
     }
 }
