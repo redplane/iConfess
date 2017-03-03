@@ -16,7 +16,9 @@ using iConfess.Database.Models;
 using log4net.Config;
 using Microsoft.AspNet.SignalR;
 using Shared.Enumerations;
+using Shared.Interfaces.Repositories;
 using Shared.Interfaces.Services;
+using Shared.Repositories;
 using Shared.Services;
 using RegistrationExtensions = Autofac.Integration.SignalR.RegistrationExtensions;
 
@@ -52,6 +54,7 @@ namespace iConfess.Admin.Configs
 
             // Unit of work registration.
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<CommonRepositoryService>().As<ICommonRepositoryService>().SingleInstance();
 
             #endregion
 

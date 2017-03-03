@@ -263,6 +263,7 @@
     <Compile Include="Controllers\ApiParentController.cs" />
     <Compile Include="Controllers\ApiPostReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Enumerations\CommentsDetailsSort.cs" />
     <Compile Include="Interfaces\Services\IConfigurationService.cs" />
     <Compile Include="Interfaces\Services\INotificationService.cs" />
     <Compile Include="Middlewares\BearerAuthenticationMiddleware.cs" />
@@ -286,6 +287,8 @@
     <Compile Include="ViewModels\ApiAccount\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\ApiCategory\InitiateCategoryViewModel.cs" />
     <Compile Include="ViewModels\ApiComment\CommentDetailViewModel.cs" />
+    <Compile Include="ViewModels\ApiComment\FindCommentsDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ApiComment\ResponseCommentsDetailsViewModel.cs" />
     <Compile Include="ViewModels\ApiPostReport\PostReportViewModel.cs" />
     <Compile Include="ViewModels\ApiPostReport\ResponseFindPostReportViewModel.cs" />
     <Compile Include="ViewModels\ApiPost\PostDetailViewModel.cs" />

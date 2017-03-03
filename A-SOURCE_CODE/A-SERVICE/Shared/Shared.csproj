@@ -104,6 +104,7 @@
     <Compile Include="Enumerations\Order\TokenSort.cs" />
     <Compile Include="Enumerations\SystemEmail.cs" />
     <Compile Include="Enumerations\TextComparision.cs" />
+    <Compile Include="Interfaces\Services\ICommonRepositoryService.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryToken.cs" />
     <Compile Include="Interfaces\Services\IEncryptionService.cs" />
     <Compile Include="Interfaces\Services\IIdentityService.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Interfaces\Services\ITimeService.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\TextSearch.cs" />
+    <Compile Include="Services\CommonRepositoryService.cs" />
     <Compile Include="Repositories\RepositoryCommentReport.cs" />
     <Compile Include="Repositories\RepositoryPostReport.cs" />
     <Compile Include="Repositories\RepositoryPost.cs" />

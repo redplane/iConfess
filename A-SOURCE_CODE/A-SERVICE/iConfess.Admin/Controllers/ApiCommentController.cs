@@ -6,10 +6,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
+using iConfess.Admin.Enumerations;
 using iConfess.Admin.ViewModels.ApiComment;
 using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
+using Microsoft.Ajax.Utilities;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 using Shared.ViewModels.CommentReports;
@@ -30,16 +33,19 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
+        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
         public ApiCommentController(
             IUnitOfWork unitOfWork, 
             ITimeService timeService, 
             IIdentityService identityService,
+            ICommonRepositoryService commonRepositoryService,
             ILog log)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
             _identityService = identityService;
+            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
@@ -51,6 +57,11 @@ namespace iConfess.Admin.Controllers
         ///     Unit of work which provides database context and repositories to handle business of application.
         /// </summary>
         private readonly IUnitOfWork _unitOfWork;
+
+        /// <summary>
+        /// Service which handles common business of repositories.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         /// <summary>
         ///     Service which handles time calculation.
@@ -335,6 +346,7 @@ namespace iConfess.Admin.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+        
         /// <summary>
         ///     Filter categories by using specific conditions.
         /// </summary>
@@ -345,15 +357,6 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
-                #region Request identity search
-
-                // Find account which sends the current request.
-                var account = _identityService.FindAccount(Request.Properties);
-                if (account == null)
-                    throw new Exception("No account information is attached into current request.");
-
-                #endregion
-
                 #region Find comments
 
                 // Find all comment in database.
@@ -378,6 +381,124 @@ namespace iConfess.Admin.Controllers
                 #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK, commentDetails);
+            }
+            catch (Exception exception)
+            {
+                _log.Error(exception.Message, exception);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        /// <summary>
+        ///     Filter categories by using specific conditions.
+        /// </summary>
+        /// <returns></returns>
+        [Route("~/api/comments/details")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> FindCommentsDetails([FromBody] FindCommentsDetailsViewModel searchCommentsDetailsCondition)
+        {
+            try
+            {
+                #region Parameter validation
+
+                // Conditions haven't been initialized.
+                if (searchCommentsDetailsCondition == null)
+                {
+                    searchCommentsDetailsCondition = new FindCommentsDetailsViewModel();
+                    Validate(searchCommentsDetailsCondition);
+                }
+
+                // Parameters are invalid.
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                #endregion
+                
+                #region Find comments
+
+                // Find categories by using specific conditions.
+                var conditions = new FindCommentsViewModel();
+                conditions.Id = searchCommentsDetailsCondition.Id;
+                conditions.OwnerIndex = searchCommentsDetailsCondition.OwnerIndex;
+                conditions.PostIndex = searchCommentsDetailsCondition.PostIndex;
+                conditions.Content = searchCommentsDetailsCondition.Content;
+                conditions.Created = searchCommentsDetailsCondition.Created;
+                conditions.Direction = searchCommentsDetailsCondition.Direction;
+                conditions.LastModified = searchCommentsDetailsCondition.LastModified;
+                conditions.Pagination = searchCommentsDetailsCondition.Pagination;
+
+                var comments = _unitOfWork.RepositoryComments.FindComments();
+                comments = _unitOfWork.RepositoryComments.FindComments(comments, conditions);
+
+                // Find accounts from database.
+                var accounts = _unitOfWork.RepositoryAccounts.FindAccounts();
+
+                // Find comments details
+                var commentsDetails = from comment in comments
+                    from account in accounts
+                    where comment.OwnerIndex == account.Id
+                    select new CommentDetailViewModel
+                    {
+                        Id = comment.Id,
+                        Owner = account,
+                        Content = comment.Content,
+                        Created = comment.Created,
+                        LastModified = comment.LastModified
+                    };
+
+                #endregion
+
+                #region Comments Details sort
+
+                commentsDetails = _commonRepositoryService.Sort(commentsDetails,
+                    searchCommentsDetailsCondition.Direction, searchCommentsDetailsCondition.Sort);
+
+                //switch (conditions.Direction)
+                //{
+                //    case SortDirection.Decending:
+                //        switch (searchCommentsDetailsCondition.Sort)
+                //        {
+                //            case CommentsDetailsSort.Created:
+                //                commentsDetails = commentsDetails.OrderByDescending(x => x.Created);
+                //                break;
+                //                case CommentsDetailsSort.LastModified:
+                //                commentsDetails = commentsDetails.OrderByDescending(x => x.LastModified);
+                //                break;
+                //            default:
+                //                commentsDetails = commentsDetails.OrderByDescending(x => x.Id);
+                //                break;
+                //        }
+                //        break;
+                //    default:
+                //        switch (searchCommentsDetailsCondition.Sort)
+                //        {
+                //            case CommentsDetailsSort.Created:
+                //                commentsDetails = commentsDetails.OrderBy(x => x.Created);
+                //                break;
+                //            case CommentsDetailsSort.LastModified:
+                //                commentsDetails = commentsDetails.OrderBy(x => x.LastModified);
+                //                break;
+                //            default:
+                //                commentsDetails = commentsDetails.OrderBy(x => x.Id);
+                //                break;
+                //        }
+                //        break;
+                //}
+
+                #endregion
+
+                #region Pagination
+
+                // Do pagination.
+                var pagination = conditions.Pagination;
+                var searchResult = new ResponseCommentsDetailsViewModel();
+
+                searchResult.Total = await commentsDetails.CountAsync();
+                searchResult.CommentsDetails = _commonRepositoryService.Paginate(commentsDetails, pagination);
+
+                #endregion
+
+                return Request.CreateResponse(HttpStatusCode.OK, searchResult);
             }
             catch (Exception exception)
             {

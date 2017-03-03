@@ -69,10 +69,14 @@ namespace Shared.Repositories
         {
             // Find all comments first.
             var comments = _iConfessDbContext.Comments.AsQueryable();
+            comments = FindComments(comments, conditions);
+            comments = SortComments(comments, conditions);
 
             // Response initialization.
             var responseComment = new ResponseCommentsViewModel();
-            responseComment.Comments = FindComments(comments, conditions);
+            responseComment.Comments = comments;
+
+            // Sort comments by using specific conditions.
 
             // Count total of comments which match with the conditions.
             responseComment.Total = await responseComment.Comments.CountAsync();
@@ -170,7 +174,18 @@ namespace Shared.Repositories
                 if (lastModified.To != null)
                     comments = comments.Where(x => x.LastModified <= lastModified.To.Value);
             }
+            
+            return comments;
+        }
 
+        /// <summary>
+        /// Sort comments by using specific conditions.
+        /// </summary>
+        /// <param name="comments"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public IQueryable<Comment> SortComments(IQueryable<Comment> comments, FindCommentsViewModel conditions)
+        {
             // Result sorting.
             switch (conditions.Direction)
             {
@@ -180,13 +195,13 @@ namespace Shared.Repositories
                         case CommentSort.Post:
                             comments = comments.OrderByDescending(x => x.PostIndex);
                             break;
-                            case CommentSort.Owner:
+                        case CommentSort.Owner:
                             comments = comments.OrderByDescending(x => x.OwnerIndex);
                             break;
-                            case CommentSort.Created:
+                        case CommentSort.Created:
                             comments = comments.OrderByDescending(x => x.Created);
                             break;
-                            case CommentSort.LastModified:
+                        case CommentSort.LastModified:
                             comments = comments.OrderByDescending(x => x.LastModified);
                             break;
                         default:
