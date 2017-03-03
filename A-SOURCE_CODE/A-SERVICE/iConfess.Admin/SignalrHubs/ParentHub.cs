@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Autofac;
-using iConfess.Admin.Attributes;
 using iConfess.Database.Models.Tables;
 using log4net;
 using Microsoft.AspNet.SignalR;
@@ -20,10 +19,43 @@ namespace iConfess.Admin.SignalrHubs
         /// <summary>
         ///     Autofac lifetime scope.
         /// </summary>
-        public ILifetimeScope LifetimeScope { get; set; }
+        private ILifetimeScope _lifetimeScope;
+
+        /// <summary>
+        /// Logging service.
+        /// </summary>
+        private ILog _log;
+
+        /// <summary>
+        ///     Autofac lifetime scope.
+        /// </summary>
+        public ILifetimeScope LifetimeScope
+        {
+            get
+            {
+                if (_lifetimeScope == null)
+                    _lifetimeScope = GlobalHost.DependencyResolver.Resolve<ILifetimeScope>();
+                return _lifetimeScope;
+            }
+            set { _lifetimeScope = value; }
+        }
+
+        /// <summary>
+        /// Logging service.
+        /// </summary>
+        public ILog Log
+        {
+            get
+            {
+                if (_log == null)
+                    _log = LogManager.GetLogger(typeof(ParentHub));
+                return _log;
+            }
+            set { _log = value; }
+        }
 
         #endregion
-
+        
         #region Methods
 
         /// <summary>
@@ -50,7 +82,6 @@ namespace iConfess.Admin.SignalrHubs
                 // Find unit of work of life time scope.
                 var unitOfWork = lifeTimeScope.Resolve<IUnitOfWork>();
                 var timeService = lifeTimeScope.Resolve<ITimeService>();
-                var log = lifeTimeScope.Resolve<ILog>();
 
                 try
                 {
@@ -63,12 +94,12 @@ namespace iConfess.Admin.SignalrHubs
                     unitOfWork.RepositorySignalrConnections.Initiate(signalrConnection);
                     await unitOfWork.CommitAsync();
 
-                    log.Info(
+                    Log.Info(
                         $"Connection (Id: {Context.ConnectionId}) has been established from account (Email: {account.Email})");
                 }
                 catch (Exception exception)
                 {
-                    log.Error(exception.Message, exception);
+                    Log.Error(exception.Message, exception);
                 }
             }
         }

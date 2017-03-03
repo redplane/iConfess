@@ -74,6 +74,11 @@ namespace Shared.Services
         private IRepositoryToken _repositoryToken;
 
         /// <summary>
+        /// Provide access to signalr connection database.
+        /// </summary>
+        private IRepositorySignalrConnection _repositorySignalrConnection;
+
+        /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
         public ConfessDbContext Context
@@ -123,11 +128,16 @@ namespace Shared.Services
             get { return _repositoryPost ?? (_repositoryPost = new RepositoryPost(_iConfessDbContext)); }
         }
 
+        /// <summary>
+        /// Provides functions to access realtime connection database.
+        /// </summary>
         public IRepositorySignalrConnection RepositorySignalrConnections
         {
-            get { throw new NotImplementedException(); }
-
-            set { throw new NotImplementedException(); }
+           get
+           {
+               return _repositorySignalrConnection ??
+                      (_repositorySignalrConnection = new RepositorySignalrConnection(_iConfessDbContext));
+           }
         }
 
         /// <summary>

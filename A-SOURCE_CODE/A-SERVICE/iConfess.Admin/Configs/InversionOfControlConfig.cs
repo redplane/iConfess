@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using iConfess.Admin.Attributes;
 using iConfess.Admin.Interfaces.Providers;
 using iConfess.Admin.Interfaces.Services;
 using iConfess.Admin.Modules;
@@ -78,6 +79,8 @@ namespace iConfess.Admin.Configs
 
             // Template service.
             containerBuilder.RegisterType<TemplateService>().As<ITemplateService>().SingleInstance();
+
+            containerBuilder.RegisterType<SignalrAuthorizeAttribute>().InstancePerLifetimeScope();
 
             #endregion
 

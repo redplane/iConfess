@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using Shared.Enumerations.Order;
+using Shared.Models;
 
 namespace Shared.ViewModels.Comments
 {
@@ -28,6 +29,16 @@ namespace Shared.ViewModels.Comments
         ///     Time range when comment was created.
         /// </summary>
         public UnixDateRange Created { get; set; }
+
+        /// <summary>
+        /// Which property should be used for sorting.
+        /// </summary>
+        public CommentSort Sort { get; set; }
+
+        /// <summary>
+        /// Whether results are sorted ascending or descending.
+        /// </summary>
+        public SortDirection Direction { get; set; }
 
         /// <summary>
         ///     Time range when comment was lastly modified.

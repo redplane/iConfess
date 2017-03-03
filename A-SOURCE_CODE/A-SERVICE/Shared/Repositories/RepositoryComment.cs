@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iConfess.Database.Models;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Comments;
 
@@ -168,6 +169,51 @@ namespace Shared.Repositories
                 // To is specified.
                 if (lastModified.To != null)
                     comments = comments.Where(x => x.LastModified <= lastModified.To.Value);
+            }
+
+            // Result sorting.
+            switch (conditions.Direction)
+            {
+                case SortDirection.Decending:
+                    switch (conditions.Sort)
+                    {
+                        case CommentSort.Post:
+                            comments = comments.OrderByDescending(x => x.PostIndex);
+                            break;
+                            case CommentSort.Owner:
+                            comments = comments.OrderByDescending(x => x.OwnerIndex);
+                            break;
+                            case CommentSort.Created:
+                            comments = comments.OrderByDescending(x => x.Created);
+                            break;
+                            case CommentSort.LastModified:
+                            comments = comments.OrderByDescending(x => x.LastModified);
+                            break;
+                        default:
+                            comments = comments.OrderByDescending(x => x.Id);
+                            break;
+                    }
+                    break;
+                default:
+                    switch (conditions.Sort)
+                    {
+                        case CommentSort.Post:
+                            comments = comments.OrderBy(x => x.PostIndex);
+                            break;
+                        case CommentSort.Owner:
+                            comments = comments.OrderBy(x => x.OwnerIndex);
+                            break;
+                        case CommentSort.Created:
+                            comments = comments.OrderBy(x => x.Created);
+                            break;
+                        case CommentSort.LastModified:
+                            comments = comments.OrderBy(x => x.LastModified);
+                            break;
+                        default:
+                            comments = comments.OrderBy(x => x.Id);
+                            break;
+                    }
+                    break;
             }
 
             return comments;

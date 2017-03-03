@@ -47,7 +47,9 @@ namespace iConfess.Database.Models.Tables
 
         /// <summary>
         ///     Physical path of photo on the server.
+        /// This parameter should be ignored when data is sent back to client.
         /// </summary>
+        [JsonIgnore]
         public string PhotoAbsoluteUrl { get; set; }
 
         /// <summary>

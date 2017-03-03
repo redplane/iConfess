@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
+using iConfess.Admin.ViewModels.ApiPost;
 using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
@@ -315,6 +318,50 @@ namespace iConfess.Admin.Controllers
             }
         }
 
+        /// <summary>
+        ///     Filter posts by using specific conditions.
+        /// </summary>
+        /// <returns></returns>
+        [Route("details")]
+        [HttpGet]
+        [ApiRole(AccountRole.Admin)]
+        public async Task<HttpResponseMessage> FindPostDetails([FromUri] int index)
+        {
+            try
+            {
+                // Find all posts from database.
+                var posts = _unitOfWork.RepositoryPosts.FindPosts();
+                posts = posts.Where(x => x.Id == index);
+
+                // Find all accounts from database.
+                var accounts = _unitOfWork.RepositoryAccounts.FindAccounts();
+
+                // Find all category from database.
+                var categories = _unitOfWork.RepositoryCategories.FindCategories();
+                
+                // Search and select the first result.
+                var detail = await (from post in posts
+                    from account in accounts
+                    from category in categories
+                    select new PostDetailViewModel
+                    {
+                        Id = post.Id,
+                        Title = post.Title,
+                        Body = post.Body,
+                        Owner = account,
+                        Category = category,
+                        Created = post.Created,
+                        LastModified = post.LastModified
+                    }).FirstOrDefaultAsync();
+                
+                return Request.CreateResponse(HttpStatusCode.OK, detail);
+            }
+            catch (Exception exception)
+            {
+                _log.Error(exception.Message, exception);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
         #endregion
     }
 }

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
+using iConfess.Admin.ViewModels.ApiComment;
 using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
@@ -16,6 +19,7 @@ namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/comment")]
     [ApiAuthorize]
+    [ApiRole(AccountRole.Admin)]
     public class ApiCommentController : ApiController
     {
         #region Controllers
@@ -317,17 +321,63 @@ namespace iConfess.Admin.Controllers
                 #endregion
 
                 #region Find comments
-
-                // Account can only find its comments as it isn't administrator.
-                if (account.Role != AccountRole.Admin)
-                    conditions.OwnerIndex = account.Id;
-
+                
                 // Find categories by using specific conditions.
                 var findCommentsResult = await _unitOfWork.RepositoryComments.FindCommentsAsync(conditions);
 
                 #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK, findCommentsResult);
+            }
+            catch (Exception exception)
+            {
+                _log.Error(exception.Message, exception);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+        /// <summary>
+        ///     Filter categories by using specific conditions.
+        /// </summary>
+        /// <returns></returns>
+        [Route("details")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> FindCommentDetails([FromUri] int index)
+        {
+            try
+            {
+                #region Request identity search
+
+                // Find account which sends the current request.
+                var account = _identityService.FindAccount(Request.Properties);
+                if (account == null)
+                    throw new Exception("No account information is attached into current request.");
+
+                #endregion
+
+                #region Find comments
+
+                // Find all comment in database.
+                var comments = _unitOfWork.RepositoryComments.FindComments();
+                comments = comments.Where(x => x.Id == index);
+
+                // Find all account in database.
+                var accounts = _unitOfWork.RepositoryAccounts.FindAccounts();
+
+                var commentDetails = await (from comment in comments
+                    from owner in accounts
+                    where owner.Id == comment.OwnerIndex
+                    select new CommentDetailViewModel
+                    {
+                        Id = comment.Id,
+                        Owner = owner,
+                        Content = comment.Content,
+                        Created = comment.Created,
+                        LastModified = comment.LastModified
+                    }).FirstOrDefaultAsync();
+
+                #endregion
+
+                return Request.CreateResponse(HttpStatusCode.OK, commentDetails);
             }
             catch (Exception exception)
             {

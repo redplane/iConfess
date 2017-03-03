@@ -20,9 +20,43 @@ namespace iConfess.Admin.Attributes
         #region Properties
 
         /// <summary>
+        /// Life time scope of autofac.
+        /// </summary>
+        private ILifetimeScope _lifetimeScope;
+
+        /// <summary>
+        /// Instance of logging service.
+        /// </summary>
+        private ILog _log;
+
+        /// <summary>
         ///     Autofac life time scope.
         /// </summary>
-        public ILifetimeScope LifetimeScope { get; set; }
+        public ILifetimeScope LifetimeScope
+        {
+            get
+            {
+                if (_lifetimeScope == null)
+                    _lifetimeScope = GlobalHost.DependencyResolver.Resolve<ILifetimeScope>();
+                return _lifetimeScope;
+            }
+            set { _lifetimeScope = value; }
+        }
+
+        /// <summary>
+        /// Logging instance.
+        /// </summary>
+        public ILog Log
+        {
+            get
+            {
+                if (_log == null)
+                    _log = LogManager.GetLogger(typeof(SignalrAuthorizeAttribute));
+
+                return _log;
+            }
+            set { _log = value; }
+        }
 
         /// <summary>
         ///     Roles which can access to controller/method.
@@ -130,8 +164,8 @@ namespace iConfess.Admin.Attributes
         private bool IsAccessible(ILifetimeScope lifeTimeScope, IRequest request)
         {
             // Find logging service.
-            var log = lifeTimeScope.Resolve<ILog>();
             var unitOfWork = lifeTimeScope.Resolve<IUnitOfWork>();
+            var httpContext = request.GetHttpContext();
 
             #region Identity check.
 
@@ -158,7 +192,7 @@ namespace iConfess.Admin.Attributes
             var bearerAuthenticationProvider = lifeTimeScope.Resolve<IBearerAuthenticationProvider>();
             if (bearerAuthenticationProvider == null)
             {
-                InitiateErrorMessage(log, "No bearer provider has been installed into signalr hub.");
+                InitiateErrorMessage(Log, "No bearer provider has been installed into signalr hub.");
                 return false;
             }
 
@@ -200,14 +234,14 @@ namespace iConfess.Admin.Attributes
             // Account is waiting for confirmation.
             if (account.Status == AccountStatus.Pending)
             {
-                InitiateErrorMessage(log, "(SignalR) Account is pending");
+                InitiateErrorMessage(Log, "(SignalR) Account is pending");
                 return false;
             }
 
             // Account is forbidden to access function.
             if (account.Status == AccountStatus.Disabled)
             {
-                InitiateErrorMessage(log, "(SignalR) Account is disabled");
+                InitiateErrorMessage(Log, "(SignalR) Account is disabled");
                 return false;
             }
 
@@ -219,16 +253,13 @@ namespace iConfess.Admin.Attributes
             {
                 if (!Roles.Any(x => x == account.Role))
                 {
-                    InitiateErrorMessage(log, "(SignalR) Role is invalid");
+                    InitiateErrorMessage(Log, "(SignalR) Role is invalid");
                     return false;
                 }
             }
 
             #endregion
-
-            // Find http context of request.
-            var httpContext = request.GetHttpContext();
-
+            
             // Insert account information into HttpItem for later use.
             var properties = httpContext.Items;
             if (properties.Contains(ClaimTypes.Actor))
