@@ -7,14 +7,14 @@ import {ClientApiService} from "../../services/ClientApiService";
 import {ClientPostService} from "../../services/clients/ClientPostService";
 import {ClientNotificationService} from "../../services/ClientNotificationService";
 import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
-import {FindPostReportViewModel} from "../../viewmodels/post-report/FindPostReportViewModel";
+import {SearchPostReportsViewModel} from "../../viewmodels/post-report/SearchPostReportsViewModel";
 import {Account} from "../../models/Account";
 import {Post} from "../../models/Post";
 import {TextSearch} from "../../viewmodels/TextSearch";
 import {TextSearchMode} from "../../enumerations/TextSearchMode";
-import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
+import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {Pagination} from "../../viewmodels/Pagination";
-import {FindPostViewModel} from "../../viewmodels/post/FindPostViewModel";
+import {SearchPostsViewModel} from "../../viewmodels/post/SearchPostsViewModel";
 
 @Component({
     selector: 'post-report-find-box',
@@ -34,7 +34,7 @@ import {FindPostViewModel} from "../../viewmodels/post/FindPostViewModel";
 export class PostReportFindBoxComponent {
 
     // Conditions which are used for finding post report.
-    public conditions: FindPostReportViewModel;
+    public conditions: SearchPostReportsViewModel;
 
     // Find post report control group.
     public findPostReportBox: FormGroup;
@@ -49,7 +49,7 @@ export class PostReportFindBoxComponent {
     private posts: Array<Post>;
 
     // Find post report emitter
-    private search: EventEmitter<FindPostReportViewModel>;
+    private search: EventEmitter<SearchPostReportsViewModel>;
 
     // Initiate post report component.
     public constructor(public clientConfigurationService: ClientConfigurationService,
@@ -76,7 +76,7 @@ export class PostReportFindBoxComponent {
         });
 
         // Initiate emitter.
-        this.search = new EventEmitter<FindPostReportViewModel>();
+        this.search = new EventEmitter<SearchPostReportsViewModel>();
     }
 
     // Callback which is fired when control is starting to load data of accounts from service.
@@ -86,7 +86,7 @@ export class PostReportFindBoxComponent {
         email.value = this.findPostReportBox.controls['postReporterIndex'].value;
 
         // Initiate find account conditions.
-        let findAccountsViewModel = new FindAccountsViewModel();
+        let findAccountsViewModel = new SearchAccountsViewModel();
 
         // Update account which should be searched for.
         findAccountsViewModel.email = email;
@@ -125,7 +125,7 @@ export class PostReportFindBoxComponent {
         email.value = this.findPostReportBox.controls['postOwnerIndex'].value;
 
         // Initiate find account conditions.
-        let findAccountsViewModel = new FindAccountsViewModel();
+        let findAccountsViewModel = new SearchAccountsViewModel();
 
         // Update account which should be searched for.
         findAccountsViewModel.email = email;
@@ -161,7 +161,7 @@ export class PostReportFindBoxComponent {
     public loadPostTitles(): void {
 
         // Initiate find account conditions.
-        let findPostsViewModel = new FindPostViewModel();
+        let findPostsViewModel = new SearchPostsViewModel();
 
         // Update title search.
         let title = new TextSearch();

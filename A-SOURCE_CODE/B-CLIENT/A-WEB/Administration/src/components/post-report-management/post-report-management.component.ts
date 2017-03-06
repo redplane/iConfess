@@ -7,8 +7,8 @@ import {ClientApiService} from "../../services/ClientApiService";
 import {ClientNotificationService} from "../../services/ClientNotificationService";
 import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
 import {ClientPostReportService} from "../../services/clients/ClientPostReportService";
-import {FindPostReportViewModel} from "../../viewmodels/post-report/FindPostReportViewModel";
-import {FindPostReportSearchResultViewModel} from "../../viewmodels/post-report/FindPostReportSearchResultViewModel";
+import {SearchPostReportsViewModel} from "../../viewmodels/post-report/SearchPostReportsViewModel";
+import {SearchPostReportsResultViewModel} from "../../viewmodels/post-report/SearchPostReportsResultViewModel";
 import {PostReport} from "../../models/PostReport";
 import {PostReportSortProperty} from "../../enumerations/order/PostReportSortProperty";
 import {Pagination} from "../../viewmodels/Pagination";
@@ -19,8 +19,8 @@ import {AccountProfileBoxComponent} from "../account-management/account-profile-
 import {Account} from "../../models/Account";
 import {Post} from "../../models/Post";
 import {ClientPostService} from "../../services/clients/ClientPostService";
-import {FindCommentResultViewModel} from "../../viewmodels/comment/FindCommentResultViewModel";
-import {CommentSearchViewModel} from "../../viewmodels/comment/CommentSearchViewModel";
+import {SearchCommentsResultViewModel} from "../../viewmodels/comment/SearchCommentsResultViewModel";
+import {SearchCommentsViewModel} from "../../viewmodels/comment/SearchCommentsViewModel";
 import {ClientCommentService} from "../../services/clients/ClientCommentService";
 import {SearchCommentsDetailsViewModel} from "../../viewmodels/comment/SearchCommentsDetailsViewModel";
 import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/SearchCommentsDetailsResultViewModel";
@@ -46,10 +46,10 @@ import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/Sea
 export class PostReportManagementComponent implements OnInit{
 
     // Conditions which are used for finding post reports.
-    public findPostReportConditions: FindPostReportViewModel;
+    public findPostReportConditions: SearchPostReportsViewModel;
 
     // Find post reports search result
-    public postReportsSearchResult: FindPostReportSearchResultViewModel;
+    public postReportsSearchResult: SearchPostReportsResultViewModel;
 
     // Result of finding comments of a specific post.
     public searchCommentsDetailsResult: SearchCommentsDetailsResultViewModel;
@@ -81,12 +81,12 @@ export class PostReportManagementComponent implements OnInit{
                        public clientPostService: ClientPostService,
                        public clientCommentService: ClientCommentService){
         // Initiate post reports search result.
-        this.postReportsSearchResult = new FindPostReportSearchResultViewModel();
+        this.postReportsSearchResult = new SearchPostReportsResultViewModel();
     }
 
     // Callback which is fired when component has been initiated successfully.
     public ngOnInit(): void {
-        this.findPostReportConditions = new FindPostReportViewModel();
+        this.findPostReportConditions = new SearchPostReportsViewModel();
 
         // Update sort.
         this.findPostReportConditions.direction = SortDirection.Ascending;
@@ -107,7 +107,7 @@ export class PostReportManagementComponent implements OnInit{
     }
 
     // Callback is fired when search button is clicked.
-    public clickSearch(condition: FindPostReportViewModel): void{
+    public clickSearch(condition: SearchPostReportsViewModel): void{
 
         // Make the component be loading.
         this.isLoading = true;
@@ -162,7 +162,7 @@ export class PostReportManagementComponent implements OnInit{
 
 
 
-        let conditions = new FindPostReportViewModel();
+        let conditions = new SearchPostReportsViewModel();
         conditions.id = this.selectPostReport.id;
 
         // Make components be loaded.

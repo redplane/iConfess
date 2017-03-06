@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ClientApiService} from "../ClientApiService";
 import 'rxjs/add/operator/toPromise';
 import {IClientAccountService} from "../../interfaces/services/IClientAccountService";
-import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
+import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
 import {ClientAuthenticationService} from "./ClientAuthenticationService";
 import {Account} from "../../models/Account";
@@ -21,7 +21,7 @@ export class ClientAccountService implements IClientAccountService {
     }
 
     // Find categories by using specific conditions.
-    public findAccounts(findAccountsViewModel: FindAccountsViewModel) {
+    public findAccounts(findAccountsViewModel: SearchAccountsViewModel) {
         // Page index should be decrease by one.
         let conditions = Object.assign({}, findAccountsViewModel);
         conditions['pagination'] = Object.assign({}, findAccountsViewModel.pagination);

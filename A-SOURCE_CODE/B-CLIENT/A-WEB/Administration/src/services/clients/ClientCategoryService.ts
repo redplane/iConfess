@@ -1,6 +1,6 @@
 import {IClientCategoryService} from "../../interfaces/services/IClientCategoryService";
 import {Injectable} from '@angular/core';
-import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
+import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
 import {ClientApiService} from "../ClientApiService";
 import 'rxjs/add/operator/toPromise';
 import {UnixDateRange} from "../../viewmodels/UnixDateRange";
@@ -30,7 +30,7 @@ export class ClientCategoryService implements IClientCategoryService {
     }
 
     // Find categories by using specific conditions.
-    public findCategories(categorySearch: FindCategoriesViewModel) {
+    public findCategories(categorySearch: SearchCategoriesViewModel) {
 
         // Page index should be decrease by one.
         let conditions = Object.assign({}, categorySearch);
@@ -48,7 +48,7 @@ export class ClientCategoryService implements IClientCategoryService {
     }
 
     // Find categories by using specific conditions and delete 'em.
-    public deleteCategories(findCategoriesConditions: FindCategoriesViewModel){
+    public deleteCategories(findCategoriesConditions: SearchCategoriesViewModel){
         // Request to api to obtain list of available categories in system.
         return this._clientApiService.delete(
             this._clientAuthenticationService.findClientAuthenticationToken(),
@@ -74,13 +74,13 @@ export class ClientCategoryService implements IClientCategoryService {
             .toPromise();
     }
     // Reset categories search conditions.
-    public resetFindCategoriesConditions(): FindCategoriesViewModel{
+    public resetFindCategoriesConditions(): SearchCategoriesViewModel{
 
         // Initiate find categories conditions.
-        let conditions = new FindCategoriesViewModel();
+        let conditions = new SearchCategoriesViewModel();
 
         if (conditions == null)
-            conditions = new FindCategoriesViewModel();
+            conditions = new SearchCategoriesViewModel();
 
         conditions.creatorIndex = null;
         conditions.name = null;

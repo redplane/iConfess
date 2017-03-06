@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ClientConfigurationService_1 = require("../../services/ClientConfigurationService");
 var forms_1 = require("@angular/forms");
-var FindCommentReportsViewModel_1 = require("../../viewmodels/comment-report/FindCommentReportsViewModel");
-var FindAccountsViewModel_1 = require("../../viewmodels/accounts/FindAccountsViewModel");
+var SearchCommentReportsViewModel_1 = require("../../viewmodels/comment-report/SearchCommentReportsViewModel");
+var SearchAccountsViewModel_1 = require("../../viewmodels/accounts/SearchAccountsViewModel");
 var TextSearch_1 = require("../../viewmodels/TextSearch");
 var ClientAccountService_1 = require("../../services/clients/ClientAccountService");
 var Pagination_1 = require("../../viewmodels/Pagination");
@@ -47,7 +47,7 @@ var CommentReportFindBoxComponent = (function () {
             sort: [''],
             direction: ['']
         });
-        this.conditions = new FindCommentReportsViewModel_1.FindCommentReportsViewModel();
+        this.conditions = new SearchCommentReportsViewModel_1.SearchCommentReportsViewModel();
     }
     // Callback which is fired when component has been rendered successfully.
     CommentReportFindBoxComponent.prototype.ngOnInit = function () {
@@ -56,7 +56,7 @@ var CommentReportFindBoxComponent = (function () {
     // Callback which is fired when control is starting to load data of accounts from service.
     CommentReportFindBoxComponent.prototype.loadAccounts = function (email) {
         // Initiate find account conditions.
-        var findAccountsViewModel = new FindAccountsViewModel_1.FindAccountsViewModel();
+        var findAccountsViewModel = new SearchAccountsViewModel_1.SearchAccountsViewModel();
         // Update account which should be searched for.
         if (findAccountsViewModel.email == null)
             findAccountsViewModel.email = new TextSearch_1.TextSearch();

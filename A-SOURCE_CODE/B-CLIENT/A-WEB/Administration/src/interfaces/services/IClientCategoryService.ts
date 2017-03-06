@@ -1,4 +1,4 @@
-import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
+import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
 import 'rxjs/add/operator/toPromise';
 import {Response} from "@angular/http";
 import {Category} from "../../models/Category";
@@ -6,10 +6,10 @@ import {Category} from "../../models/Category";
 export interface IClientCategoryService{
 
     // Find categories by using specific conditions.
-    findCategories(categorySearch: FindCategoriesViewModel): any;
+    findCategories(categorySearch: SearchCategoriesViewModel): any;
 
     // Find categories by using specific conditions and delete 'em all.
-    deleteCategories(findCategoriesConditions: FindCategoriesViewModel): any;
+    deleteCategories(findCategoriesConditions: SearchCategoriesViewModel): any;
 
     // Find categories by using index and update their information.
     changeCategoryDetails(id: number, category: Category): any;
@@ -18,5 +18,5 @@ export interface IClientCategoryService{
     initiateCategory(category:any) : any;
 
     // Reset categories search conditions.
-    resetFindCategoriesConditions(): FindCategoriesViewModel;
+    resetFindCategoriesConditions(): SearchCategoriesViewModel;
 }

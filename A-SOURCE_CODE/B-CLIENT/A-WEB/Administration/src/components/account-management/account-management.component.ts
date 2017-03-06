@@ -7,9 +7,9 @@ import {ClientAuthenticationService} from "../../services/clients/ClientAuthenti
 import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {ClientApiService} from "../../services/ClientApiService";
 import {ClientCommonService} from "../../services/ClientCommonService";
-import {FindAccountsResultViewModel} from "../../viewmodels/accounts/FindAccountsResultViewModel";
+import {SearchAccountsResultViewModel} from "../../viewmodels/accounts/SearchAccountsResultViewModel";
 import {Account} from "../../models/Account";
-import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
+import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {Pagination} from "../../viewmodels/Pagination";
 
@@ -29,13 +29,13 @@ import {Pagination} from "../../viewmodels/Pagination";
 export class AccountManagementComponent implements OnInit{
 
     // List of accounts.
-    private findAccountsResult : FindAccountsResultViewModel;
+    private findAccountsResult : SearchAccountsResultViewModel;
 
     // Account which is being selected for editing.
     private selectedAccount: Account;
 
     // List of conditions to search for accounts.
-    private conditions: FindAccountsViewModel;
+    private conditions: SearchAccountsViewModel;
 
     // Whether components are busy or not.
     private isLoading: boolean;
@@ -50,10 +50,10 @@ export class AccountManagementComponent implements OnInit{
                        private clientApiService: ClientApiService){
 
         // Initiate search conditions.
-        this.conditions = new FindAccountsViewModel();
+        this.conditions = new SearchAccountsViewModel();
 
         // Initiate find accounts result.
-        this.findAccountsResult = new FindAccountsResultViewModel();
+        this.findAccountsResult = new SearchAccountsResultViewModel();
     }
 
     // Callback which is fired when search button of category search box is clicked.
@@ -66,7 +66,7 @@ export class AccountManagementComponent implements OnInit{
 
                 // Find list of accounts which has been found from service.
                 let findAccountsResult = response.json();
-                this.findAccountsResult = <FindAccountsResultViewModel> findAccountsResult;
+                this.findAccountsResult = <SearchAccountsResultViewModel> findAccountsResult;
 
                 // Cancel loading.
                 this.isLoading = false;
@@ -158,7 +158,7 @@ export class AccountManagementComponent implements OnInit{
         this.isLoading = false;
 
         // Initiate category search conditions.
-        this.conditions = new FindAccountsViewModel();
+        this.conditions = new SearchAccountsViewModel();
 
         // Initiate pagination.
         let pagination = new Pagination();

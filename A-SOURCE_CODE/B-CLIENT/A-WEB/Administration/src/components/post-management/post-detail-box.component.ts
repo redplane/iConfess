@@ -1,11 +1,11 @@
 import {Component, OnInit, EventEmitter} from "@angular/core";
 import {Post} from "../../models/Post";
-import {FindCommentResultViewModel} from "../../viewmodels/comment/FindCommentResultViewModel";
+import {SearchCommentsResultViewModel} from "../../viewmodels/comment/SearchCommentsResultViewModel";
 import {Category} from "../../models/Category";
 import {Account} from "../../models/Account";
 import {ClientTimeService} from "../../services/ClientTimeService";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {FindPostViewModel} from "../../viewmodels/post/FindPostViewModel";
+import {SearchPostsViewModel} from "../../viewmodels/post/SearchPostsViewModel";
 import {Pagination} from "../../viewmodels/Pagination";
 import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/SearchCommentsDetailsResultViewModel";
 
@@ -32,7 +32,7 @@ export class PostDetailBoxComponent implements OnInit{
     public searchCommentsDetailsResult: SearchCommentsDetailsResultViewModel;
 
     // Condition of post detail searching.
-    public searchPostDetailCondition: FindPostViewModel;
+    public searchPostDetailCondition: SearchPostsViewModel;
 
     // Emitter which is used for emitting event when comments page is changed.
     private changeCommentsPage: EventEmitter<number>;
@@ -48,7 +48,7 @@ export class PostDetailBoxComponent implements OnInit{
     // Callback which is fired when component has been initiated.
     public ngOnInit(): void {
 
-        let condition = new FindPostViewModel();
+        let condition = new SearchPostsViewModel();
         let pagination = new Pagination();
 
         pagination.index = 0;

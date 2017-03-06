@@ -6,9 +6,9 @@ import {ClientApiService} from "../../services/ClientApiService";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
 import {ClientNotificationService} from "../../services/ClientNotificationService";
-import {CategorySearchDetailViewModel} from "../../viewmodels/category/CategorySearchDetailViewModel";
-import {CategoryDetailViewModel} from "../../viewmodels/category/CategoryDetailViewModel";
-import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
+import {SearchCategoriesResultViewModel} from "../../viewmodels/category/SearchCategoriesResultViewModel";
+import {CategoryDetailsViewModel} from "../../viewmodels/category/CategoryDetailsViewModel";
+import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
 import {Category} from "../../models/Category";
 import {Pagination} from "../../viewmodels/Pagination";
 import {ModalDirective} from "ng2-bootstrap";
@@ -31,16 +31,16 @@ import {ModalDirective} from "ng2-bootstrap";
 export class CategoryManagementComponent implements OnInit {
 
     // List of categories responded from service.
-    private categorySearchResult: CategorySearchDetailViewModel;
+    private categorySearchResult: SearchCategoriesResultViewModel;
 
     // Whether records are being searched or not.
     private isLoading: boolean;
 
     // Conditions which are used for searching categories.
-    private findCategoriesViewModel: FindCategoriesViewModel;
+    private findCategoriesViewModel: SearchCategoriesViewModel;
 
     // Category which is currently selected to be edited/deleted.
-    private selectCategoryDetail : CategoryDetailViewModel;
+    private selectCategoryDetail : CategoryDetailsViewModel;
 
     // Initiate component with dependency injections.
     public constructor(public clientCategoryService: ClientCategoryService,
@@ -50,11 +50,11 @@ export class CategoryManagementComponent implements OnInit {
                        public clientTimeService: ClientTimeService) {
 
         // Initiate categories search result.
-        this.categorySearchResult = new CategorySearchDetailViewModel();
+        this.categorySearchResult = new SearchCategoriesResultViewModel();
     }
 
     // Callback is fired when a category is created to be removed.
-    public clickRemoveCategory(categoryDetail: CategoryDetailViewModel, deleteCategoryConfirmModal: any): void {
+    public clickRemoveCategory(categoryDetail: CategoryDetailsViewModel, deleteCategoryConfirmModal: any): void {
 
         // Category detail is not valid.
         if (categoryDetail == null)
@@ -71,7 +71,7 @@ export class CategoryManagementComponent implements OnInit {
     public clickConfirmDeleteCategory(deleteCategoryConfirmModal: ModalDirective ){
 
         // Find category by using specific conditions.
-        let findCategoriesConditions = new FindCategoriesViewModel();
+        let findCategoriesConditions = new SearchCategoriesViewModel();
         findCategoriesConditions.id = this.selectCategoryDetail.id;
 
         // No category detail is selected.
@@ -105,7 +105,7 @@ export class CategoryManagementComponent implements OnInit {
     }
 
     // Callback which is fired when change category detail button is clicked.
-    public clickChangeCategoryDetail(categoryDetail: CategoryDetailViewModel, changeCategoryDetailModal: ModalDirective){
+    public clickChangeCategoryDetail(categoryDetail: CategoryDetailsViewModel, changeCategoryDetailModal: ModalDirective){
 
         // Category detail is invalid.
         if (categoryDetail == null)
@@ -223,7 +223,7 @@ export class CategoryManagementComponent implements OnInit {
     // This callback is fired when category management component is initiated.
     public ngOnInit() {
         // Initiate category search conditions.
-        this.findCategoriesViewModel = new FindCategoriesViewModel();
+        this.findCategoriesViewModel = new SearchCategoriesViewModel();
 
         // Refactoring pagination.
         let pagination = new Pagination();

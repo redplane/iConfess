@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ClientTimeService_1 = require("../../services/ClientTimeService");
 var ClientConfigurationService_1 = require("../../services/ClientConfigurationService");
-var FindPostViewModel_1 = require("../../viewmodels/post/FindPostViewModel");
+var SearchPostsViewModel_1 = require("../../viewmodels/post/SearchPostsViewModel");
 var Pagination_1 = require("../../viewmodels/Pagination");
 var PostDetailBoxComponent = (function () {
     function PostDetailBoxComponent(clientTimeService, clientConfigurationService) {
@@ -23,7 +23,7 @@ var PostDetailBoxComponent = (function () {
     }
     // Callback which is fired when component has been initiated.
     PostDetailBoxComponent.prototype.ngOnInit = function () {
-        var condition = new FindPostViewModel_1.FindPostViewModel();
+        var condition = new SearchPostsViewModel_1.SearchPostsViewModel();
         var pagination = new Pagination_1.Pagination();
         pagination.index = 0;
         pagination.records = this.clientConfigurationService.getMinPageRecords();

@@ -17,8 +17,8 @@ var ClientApiService_1 = require("../../services/ClientApiService");
 var ClientNotificationService_1 = require("../../services/ClientNotificationService");
 var ClientAuthenticationService_1 = require("../../services/clients/ClientAuthenticationService");
 var ClientPostReportService_1 = require("../../services/clients/ClientPostReportService");
-var FindPostReportViewModel_1 = require("../../viewmodels/post-report/FindPostReportViewModel");
-var FindPostReportSearchResultViewModel_1 = require("../../viewmodels/post-report/FindPostReportSearchResultViewModel");
+var SearchPostReportsViewModel_1 = require("../../viewmodels/post-report/SearchPostReportsViewModel");
+var SearchPostReportsResultViewModel_1 = require("../../viewmodels/post-report/SearchPostReportsResultViewModel");
 var PostReportSortProperty_1 = require("../../enumerations/order/PostReportSortProperty");
 var Pagination_1 = require("../../viewmodels/Pagination");
 var SortDirection_1 = require("../../enumerations/SortDirection");
@@ -39,11 +39,11 @@ var PostReportManagementComponent = (function () {
         this.clientPostService = clientPostService;
         this.clientCommentService = clientCommentService;
         // Initiate post reports search result.
-        this.postReportsSearchResult = new FindPostReportSearchResultViewModel_1.FindPostReportSearchResultViewModel();
+        this.postReportsSearchResult = new SearchPostReportsResultViewModel_1.SearchPostReportsResultViewModel();
     }
     // Callback which is fired when component has been initiated successfully.
     PostReportManagementComponent.prototype.ngOnInit = function () {
-        this.findPostReportConditions = new FindPostReportViewModel_1.FindPostReportViewModel();
+        this.findPostReportConditions = new SearchPostReportsViewModel_1.SearchPostReportsViewModel();
         // Update sort.
         this.findPostReportConditions.direction = SortDirection_1.SortDirection.Ascending;
         // Update pagination.
@@ -99,7 +99,7 @@ var PostReportManagementComponent = (function () {
         // Post report is invalid.
         if (this.selectPostReport == null)
             return;
-        var conditions = new FindPostReportViewModel_1.FindPostReportViewModel();
+        var conditions = new SearchPostReportsViewModel_1.SearchPostReportsViewModel();
         conditions.id = this.selectPostReport.id;
         // Make components be loaded.
         this.isLoading = true;

@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientAccountService} from "../../services/clients/ClientAccountService";
-import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
+import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {ClientApiService} from "../../services/ClientApiService";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 
@@ -31,7 +31,7 @@ export class AccountFindBoxComponent implements OnInit {
     private findAccountBox: FormGroup;
 
     // Collection of conditions which are used for searching categories.
-    private conditions: FindAccountsViewModel;
+    private conditions: SearchAccountsViewModel;
 
     // Initiate component with default dependency injection.
     public constructor(private formBuilder: FormBuilder,
@@ -62,7 +62,7 @@ export class AccountFindBoxComponent implements OnInit {
         this.search = new EventEmitter();
 
         // Initiate search conditions.
-        this.conditions = new FindAccountsViewModel();
+        this.conditions = new SearchAccountsViewModel();
     }
 
     // Callback which is fired when status button is toggled.
@@ -94,7 +94,7 @@ export class AccountFindBoxComponent implements OnInit {
     public loadAccounts(): void {
 
         // // Initiate find account conditions.
-        // let findAccountsViewModel = new FindAccountsViewModel();
+        // let findAccountsViewModel = new SearchAccountsViewModel();
         //
         // // Update account which should be searched for.
         // if (findAccountsViewModel.email == null)

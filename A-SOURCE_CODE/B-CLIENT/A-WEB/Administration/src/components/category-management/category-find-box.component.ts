@@ -1,14 +1,14 @@
 import {Component, EventEmitter} from '@angular/core';
 import {Response} from "@angular/http";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {FindCategoriesViewModel} from "../../viewmodels/category/FindCategoriesViewModel";
+import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {ClientDataConstraintService} from "../../services/ClientDataConstraintService";
 import {Account} from "../../models/Account";
 import {Pagination} from "../../viewmodels/Pagination";
 import {TextSearch} from "../../viewmodels/TextSearch";
-import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
+import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 
 @Component({
     selector: 'category-find-box',
@@ -17,7 +17,7 @@ import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewM
     outputs: ['search'],
     providers: [
         FormBuilder,
-        FindCategoriesViewModel,
+        SearchCategoriesViewModel,
 
         ClientConfigurationService,
         ClientAccountService,
@@ -37,7 +37,7 @@ export class CategoryFindBoxComponent {
     private findCategoryBox: FormGroup;
 
     // Collection of conditions which are used for searching categories.
-    private conditions: FindCategoriesViewModel;
+    private conditions: SearchCategoriesViewModel;
 
     // List of accounts which are used for typeahead binding.
     private _accounts: Array<Account>;
@@ -101,7 +101,7 @@ export class CategoryFindBoxComponent {
     public loadAccounts(): void {
 
         // Initiate find account conditions.
-        let findAccountsViewModel = new FindAccountsViewModel();
+        let findAccountsViewModel = new SearchAccountsViewModel();
 
         // Update account which should be searched for.
         if (findAccountsViewModel.email == null)

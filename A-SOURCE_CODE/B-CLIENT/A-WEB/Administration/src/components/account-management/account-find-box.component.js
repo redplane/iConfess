@@ -13,7 +13,7 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var ClientConfigurationService_1 = require("../../services/ClientConfigurationService");
 var ClientAccountService_1 = require("../../services/clients/ClientAccountService");
-var FindAccountsViewModel_1 = require("../../viewmodels/accounts/FindAccountsViewModel");
+var SearchAccountsViewModel_1 = require("../../viewmodels/accounts/SearchAccountsViewModel");
 var ClientApiService_1 = require("../../services/ClientApiService");
 var AccountFindBoxComponent = (function () {
     // Initiate component with default dependency injection.
@@ -43,7 +43,7 @@ var AccountFindBoxComponent = (function () {
         // Initiate event emitters.
         this.search = new core_1.EventEmitter();
         // Initiate search conditions.
-        this.conditions = new FindAccountsViewModel_1.FindAccountsViewModel();
+        this.conditions = new SearchAccountsViewModel_1.SearchAccountsViewModel();
     }
     // Callback which is fired when status button is toggled.
     AccountFindBoxComponent.prototype.toggleStatuses = function (status) {
@@ -68,7 +68,7 @@ var AccountFindBoxComponent = (function () {
     // Callback which is fired when control is starting to load data of accounts from service.
     AccountFindBoxComponent.prototype.loadAccounts = function () {
         // // Initiate find account conditions.
-        // let findAccountsViewModel = new FindAccountsViewModel();
+        // let findAccountsViewModel = new SearchAccountsViewModel();
         //
         // // Update account which should be searched for.
         // if (findAccountsViewModel.email == null)

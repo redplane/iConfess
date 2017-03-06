@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ClientApiService} from "../ClientApiService";
 import {ClientAuthenticationService} from "./ClientAuthenticationService";
-import {CommentSearchViewModel} from "../../viewmodels/comment/CommentSearchViewModel";
+import {SearchCommentsViewModel} from "../../viewmodels/comment/SearchCommentsViewModel";
 import {SearchCommentsDetailsViewModel} from "../../viewmodels/comment/SearchCommentsDetailsViewModel";
 
 @Injectable()
@@ -13,7 +13,7 @@ export class ClientCommentService{
     }
 
     // Search for comments by using specific conditions.
-    public searchComments(conditions: CommentSearchViewModel): any{
+    public searchComments(conditions: SearchCommentsViewModel): any{
         return this.clientApiService.post(
             this.clientAuthenticationService.findClientAuthenticationToken(),
             this.clientApiService.apiSearchComment, null, conditions)

@@ -19,9 +19,9 @@ var ClientNotificationService_1 = require("../../services/ClientNotificationServ
 var ClientAuthenticationService_1 = require("../../services/clients/ClientAuthenticationService");
 var TextSearch_1 = require("../../viewmodels/TextSearch");
 var TextSearchMode_1 = require("../../enumerations/TextSearchMode");
-var FindAccountsViewModel_1 = require("../../viewmodels/accounts/FindAccountsViewModel");
+var SearchAccountsViewModel_1 = require("../../viewmodels/accounts/SearchAccountsViewModel");
 var Pagination_1 = require("../../viewmodels/Pagination");
-var FindPostViewModel_1 = require("../../viewmodels/post/FindPostViewModel");
+var SearchPostsViewModel_1 = require("../../viewmodels/post/SearchPostsViewModel");
 var PostReportFindBoxComponent = (function () {
     // Initiate post report component.
     function PostReportFindBoxComponent(clientConfigurationService, clientAccountService, clientPostService, clientApiService, formBuilder) {
@@ -56,7 +56,7 @@ var PostReportFindBoxComponent = (function () {
         email.mode = TextSearchMode_1.TextSearchMode.contains;
         email.value = this.findPostReportBox.controls['postReporterIndex'].value;
         // Initiate find account conditions.
-        var findAccountsViewModel = new FindAccountsViewModel_1.FindAccountsViewModel();
+        var findAccountsViewModel = new SearchAccountsViewModel_1.SearchAccountsViewModel();
         // Update account which should be searched for.
         findAccountsViewModel.email = email;
         // All statuses can be found.
@@ -87,7 +87,7 @@ var PostReportFindBoxComponent = (function () {
         email.mode = TextSearchMode_1.TextSearchMode.contains;
         email.value = this.findPostReportBox.controls['postOwnerIndex'].value;
         // Initiate find account conditions.
-        var findAccountsViewModel = new FindAccountsViewModel_1.FindAccountsViewModel();
+        var findAccountsViewModel = new SearchAccountsViewModel_1.SearchAccountsViewModel();
         // Update account which should be searched for.
         findAccountsViewModel.email = email;
         // All statuses can be found.
@@ -115,7 +115,7 @@ var PostReportFindBoxComponent = (function () {
     PostReportFindBoxComponent.prototype.loadPostTitles = function () {
         var _this = this;
         // Initiate find account conditions.
-        var findPostsViewModel = new FindPostViewModel_1.FindPostViewModel();
+        var findPostsViewModel = new SearchPostsViewModel_1.SearchPostsViewModel();
         // Update title search.
         var title = new TextSearch_1.TextSearch();
         title.mode = TextSearchMode_1.TextSearchMode.contains;

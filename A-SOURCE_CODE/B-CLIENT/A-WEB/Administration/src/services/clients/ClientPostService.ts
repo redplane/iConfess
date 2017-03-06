@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {FindPostViewModel} from "../../viewmodels/post/FindPostViewModel";
+import {SearchPostsViewModel} from "../../viewmodels/post/SearchPostsViewModel";
 import {ClientApiService} from "../ClientApiService";
 import {ClientAuthenticationService} from "./ClientAuthenticationService";
 
@@ -12,7 +12,7 @@ export class ClientPostService{
     }
 
     // Find categories by using specific conditions.
-    public findPosts(findPostsCondition: FindPostViewModel) {
+    public findPosts(findPostsCondition: SearchPostsViewModel) {
         // Page index should be decrease by one.
         let conditions = Object.assign({}, findPostsCondition);
         conditions['pagination'] = Object.assign({}, findPostsCondition.pagination);

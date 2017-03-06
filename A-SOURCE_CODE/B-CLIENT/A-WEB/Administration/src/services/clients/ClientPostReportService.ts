@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {FindPostReportViewModel} from "../../viewmodels/post-report/FindPostReportViewModel";
+import {SearchPostReportsViewModel} from "../../viewmodels/post-report/SearchPostReportsViewModel";
 import {ClientApiService} from "../ClientApiService";
 import {ClientAuthenticationService} from "./ClientAuthenticationService";
 
@@ -12,7 +12,7 @@ export class ClientPostReportService{
     }
 
     // Find post reports by using specific conditions.
-    public findPostReports(conditions: FindPostReportViewModel): any{
+    public findPostReports(conditions: SearchPostReportsViewModel): any{
         return this.clientApiService.post(
             this.clientAuthenticationService.findClientAuthenticationToken(),
             this.clientApiService.apiFindPostReport, null, conditions)
@@ -20,7 +20,7 @@ export class ClientPostReportService{
     }
 
     // Delete post reports by using specific conditions.
-    public deletePostReports(conditions: FindPostReportViewModel): any{
+    public deletePostReports(conditions: SearchPostReportsViewModel): any{
         return this.clientApiService.delete(
             this.clientAuthenticationService.findClientAuthenticationToken(),
             this.clientApiService.apiDeletePostReport, null, conditions)

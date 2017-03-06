@@ -2,8 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Account} from "../../models/Account";
-import {FindCommentReportsViewModel} from "../../viewmodels/comment-report/FindCommentReportsViewModel";
-import {FindAccountsViewModel} from "../../viewmodels/accounts/FindAccountsViewModel";
+import {SearchCommentReportsViewModel} from "../../viewmodels/comment-report/SearchCommentReportsViewModel";
+import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {TextSearch} from "../../viewmodels/TextSearch";
 import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {Pagination} from "../../viewmodels/Pagination";
@@ -33,7 +33,7 @@ export class CommentReportFindBoxComponent implements OnInit{
     private commentReportersList: Array<Account>;
 
     // Find comment report conditions.
-    private conditions: FindCommentReportsViewModel;
+    private conditions: SearchCommentReportsViewModel;
 
     public constructor(private clientConfigurationService: ClientConfigurationService,
                        private clientAccountService: ClientAccountService,
@@ -63,7 +63,7 @@ export class CommentReportFindBoxComponent implements OnInit{
             direction:['']
         });
 
-        this.conditions = new FindCommentReportsViewModel();
+        this.conditions = new SearchCommentReportsViewModel();
     }
 
     // Callback which is fired when component has been rendered successfully.
@@ -75,7 +75,7 @@ export class CommentReportFindBoxComponent implements OnInit{
     private loadAccounts(email: string): any {
 
         // Initiate find account conditions.
-        let findAccountsViewModel = new FindAccountsViewModel();
+        let findAccountsViewModel = new SearchAccountsViewModel();
 
         // Update account which should be searched for.
         if (findAccountsViewModel.email == null)

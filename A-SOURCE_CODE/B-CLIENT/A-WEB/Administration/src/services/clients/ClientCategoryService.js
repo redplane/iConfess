@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var FindCategoriesViewModel_1 = require("../../viewmodels/category/FindCategoriesViewModel");
+var SearchCategoriesViewModel_1 = require("../../viewmodels/category/SearchCategoriesViewModel");
 var ClientApiService_1 = require("../ClientApiService");
 require("rxjs/add/operator/toPromise");
 var UnixDateRange_1 = require("../../viewmodels/UnixDateRange");
@@ -56,9 +56,9 @@ var ClientCategoryService = (function () {
     // Reset categories search conditions.
     ClientCategoryService.prototype.resetFindCategoriesConditions = function () {
         // Initiate find categories conditions.
-        var conditions = new FindCategoriesViewModel_1.FindCategoriesViewModel();
+        var conditions = new SearchCategoriesViewModel_1.SearchCategoriesViewModel();
         if (conditions == null)
-            conditions = new FindCategoriesViewModel_1.FindCategoriesViewModel();
+            conditions = new SearchCategoriesViewModel_1.SearchCategoriesViewModel();
         conditions.creatorIndex = null;
         conditions.name = null;
         conditions.created = new UnixDateRange_1.UnixDateRange();

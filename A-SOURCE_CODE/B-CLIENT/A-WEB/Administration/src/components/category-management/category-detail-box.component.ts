@@ -1,7 +1,7 @@
 import {Component, EventEmitter} from '@angular/core';
 import {ClientTimeService} from "../../services/ClientTimeService";
 import {IClientTimeService} from "../../interfaces/services/ITimeService";
-import {CategoryDetailViewModel} from "../../viewmodels/category/CategoryDetailViewModel";
+import {CategoryDetailsViewModel} from "../../viewmodels/category/CategoryDetailsViewModel";
 
 @Component({
     selector: 'category-detail',
@@ -32,12 +32,12 @@ export class CategoryDetailBoxComponent{
     }
 
     // Fired when a category is clicked to be removed.
-    public deleteCategory(category: CategoryDetailViewModel): void{
+    public deleteCategory(category: CategoryDetailsViewModel): void{
         this.clickRemoveCategory.emit(category);
     }
 
     // Fired when a category is clicked to be changed.
-    public changeCategoryInfo(category: CategoryDetailViewModel): void{
+    public changeCategoryInfo(category: CategoryDetailsViewModel): void{
         this.clickChangeCategoryInfo.emit(category);
     }
 }

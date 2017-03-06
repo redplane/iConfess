@@ -16,8 +16,8 @@ var ClientAuthenticationService_1 = require("../../services/clients/ClientAuthen
 var ClientAccountService_1 = require("../../services/clients/ClientAccountService");
 var ClientApiService_1 = require("../../services/ClientApiService");
 var ClientCommonService_1 = require("../../services/ClientCommonService");
-var FindAccountsResultViewModel_1 = require("../../viewmodels/accounts/FindAccountsResultViewModel");
-var FindAccountsViewModel_1 = require("../../viewmodels/accounts/FindAccountsViewModel");
+var SearchAccountsResultViewModel_1 = require("../../viewmodels/accounts/SearchAccountsResultViewModel");
+var SearchAccountsViewModel_1 = require("../../viewmodels/accounts/SearchAccountsViewModel");
 var AccountStatuses_1 = require("../../enumerations/AccountStatuses");
 var Pagination_1 = require("../../viewmodels/Pagination");
 var AccountManagementComponent = (function () {
@@ -30,9 +30,9 @@ var AccountManagementComponent = (function () {
         // Account status enumeration.
         this.accountStatuses = AccountStatuses_1.AccountStatuses;
         // Initiate search conditions.
-        this.conditions = new FindAccountsViewModel_1.FindAccountsViewModel();
+        this.conditions = new SearchAccountsViewModel_1.SearchAccountsViewModel();
         // Initiate find accounts result.
-        this.findAccountsResult = new FindAccountsResultViewModel_1.FindAccountsResultViewModel();
+        this.findAccountsResult = new SearchAccountsResultViewModel_1.SearchAccountsResultViewModel();
     }
     // Callback which is fired when search button of category search box is clicked.
     AccountManagementComponent.prototype.clickSearch = function () {
@@ -112,7 +112,7 @@ var AccountManagementComponent = (function () {
         // Components are not busy loading.
         this.isLoading = false;
         // Initiate category search conditions.
-        this.conditions = new FindAccountsViewModel_1.FindAccountsViewModel();
+        this.conditions = new SearchAccountsViewModel_1.SearchAccountsViewModel();
         // Initiate pagination.
         var pagination = new Pagination_1.Pagination();
         pagination.index = 1;

@@ -16,8 +16,8 @@ var ClientApiService_1 = require("../../services/ClientApiService");
 var ClientConfigurationService_1 = require("../../services/ClientConfigurationService");
 var ClientAuthenticationService_1 = require("../../services/clients/ClientAuthenticationService");
 var ClientNotificationService_1 = require("../../services/ClientNotificationService");
-var CategorySearchDetailViewModel_1 = require("../../viewmodels/category/CategorySearchDetailViewModel");
-var FindCategoriesViewModel_1 = require("../../viewmodels/category/FindCategoriesViewModel");
+var SearchCategoriesResultViewModel_1 = require("../../viewmodels/category/SearchCategoriesResultViewModel");
+var SearchCategoriesViewModel_1 = require("../../viewmodels/category/SearchCategoriesViewModel");
 var Category_1 = require("../../models/Category");
 var Pagination_1 = require("../../viewmodels/Pagination");
 var CategoryManagementComponent = (function () {
@@ -29,7 +29,7 @@ var CategoryManagementComponent = (function () {
         this.clientNotificationService = clientNotificationService;
         this.clientTimeService = clientTimeService;
         // Initiate categories search result.
-        this.categorySearchResult = new CategorySearchDetailViewModel_1.CategorySearchDetailViewModel();
+        this.categorySearchResult = new SearchCategoriesResultViewModel_1.SearchCategoriesResultViewModel();
     }
     // Callback is fired when a category is created to be removed.
     CategoryManagementComponent.prototype.clickRemoveCategory = function (categoryDetail, deleteCategoryConfirmModal) {
@@ -45,7 +45,7 @@ var CategoryManagementComponent = (function () {
     CategoryManagementComponent.prototype.clickConfirmDeleteCategory = function (deleteCategoryConfirmModal) {
         var _this = this;
         // Find category by using specific conditions.
-        var findCategoriesConditions = new FindCategoriesViewModel_1.FindCategoriesViewModel();
+        var findCategoriesConditions = new SearchCategoriesViewModel_1.SearchCategoriesViewModel();
         findCategoriesConditions.id = this.selectCategoryDetail.id;
         // No category detail is selected.
         if (this.selectCategoryDetail != null) {
@@ -162,7 +162,7 @@ var CategoryManagementComponent = (function () {
     // This callback is fired when category management component is initiated.
     CategoryManagementComponent.prototype.ngOnInit = function () {
         // Initiate category search conditions.
-        this.findCategoriesViewModel = new FindCategoriesViewModel_1.FindCategoriesViewModel();
+        this.findCategoriesViewModel = new SearchCategoriesViewModel_1.SearchCategoriesViewModel();
         // Refactoring pagination.
         var pagination = new Pagination_1.Pagination();
         pagination.index = 1;

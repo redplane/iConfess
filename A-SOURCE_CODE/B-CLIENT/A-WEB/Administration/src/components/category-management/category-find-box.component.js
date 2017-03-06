@@ -11,13 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
-var FindCategoriesViewModel_1 = require("../../viewmodels/category/FindCategoriesViewModel");
+var SearchCategoriesViewModel_1 = require("../../viewmodels/category/SearchCategoriesViewModel");
 var ClientConfigurationService_1 = require("../../services/ClientConfigurationService");
 var ClientAccountService_1 = require("../../services/clients/ClientAccountService");
 var ClientDataConstraintService_1 = require("../../services/ClientDataConstraintService");
 var Pagination_1 = require("../../viewmodels/Pagination");
 var TextSearch_1 = require("../../viewmodels/TextSearch");
-var FindAccountsViewModel_1 = require("../../viewmodels/accounts/FindAccountsViewModel");
+var SearchAccountsViewModel_1 = require("../../viewmodels/accounts/SearchAccountsViewModel");
 var CategoryFindBoxComponent = (function () {
     // Initiate component with default dependency injection.
     function CategoryFindBoxComponent(formBuilder, clientConfigurationService, clientAccountService, clientDataConstraintService) {
@@ -69,7 +69,7 @@ var CategoryFindBoxComponent = (function () {
     CategoryFindBoxComponent.prototype.loadAccounts = function () {
         var _this = this;
         // Initiate find account conditions.
-        var findAccountsViewModel = new FindAccountsViewModel_1.FindAccountsViewModel();
+        var findAccountsViewModel = new SearchAccountsViewModel_1.SearchAccountsViewModel();
         // Update account which should be searched for.
         if (findAccountsViewModel.email == null)
             findAccountsViewModel.email = new TextSearch_1.TextSearch();
@@ -102,7 +102,7 @@ CategoryFindBoxComponent = __decorate([
         outputs: ['search'],
         providers: [
             forms_1.FormBuilder,
-            FindCategoriesViewModel_1.FindCategoriesViewModel,
+            SearchCategoriesViewModel_1.SearchCategoriesViewModel,
             ClientConfigurationService_1.ClientConfigurationService,
             ClientAccountService_1.ClientAccountService,
             ClientDataConstraintService_1.ClientDataConstraintService
