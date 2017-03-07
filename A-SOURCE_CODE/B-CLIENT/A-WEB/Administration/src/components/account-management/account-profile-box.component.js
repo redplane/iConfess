@@ -18,7 +18,13 @@ var AccountProfileBoxComponent = (function () {
         this.clientTimeService = clientTimeService;
         // Find list of account statuses.
         this.accountStatuses = AccountStatuses_1.AccountStatuses;
+        // Initialize event emitters.
+        this.clickChangeAccountStatus = new core_1.EventEmitter();
     }
+    // Callback which is fired when change account button is clicked.
+    AccountProfileBoxComponent.prototype.changeAccountStatus = function (account) {
+        this.clickChangeAccountStatus.emit(account);
+    };
     return AccountProfileBoxComponent;
 }());
 AccountProfileBoxComponent = __decorate([
@@ -26,6 +32,7 @@ AccountProfileBoxComponent = __decorate([
         selector: 'account-profile-box',
         templateUrl: 'account-profile-box.component.html',
         inputs: ['account'],
+        outputs: ['clickChangeAccountStatus'],
         providers: [
             ClientTimeService_1.ClientTimeService
         ]

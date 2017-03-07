@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {ModalDirective} from "ng2-bootstrap";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientCommonService} from "../../services/ClientCommonService";
@@ -24,11 +24,13 @@ import {SearchCommentsViewModel} from "../../viewmodels/comment/SearchCommentsVi
 import {ClientCommentService} from "../../services/clients/ClientCommentService";
 import {SearchCommentsDetailsViewModel} from "../../viewmodels/comment/SearchCommentsDetailsViewModel";
 import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/SearchCommentsDetailsResultViewModel";
+import {AccountStatuses} from "../../enumerations/AccountStatuses";
+import {ClientAccountService} from "../../services/clients/ClientAccountService";
 
 @Component({
     selector: 'post-report-management',
     templateUrl: 'post-report-management.component.html',
-    providers:[
+    providers: [
         ClientConfigurationService,
         ClientCommonService,
         ClientTimeService,
@@ -38,12 +40,16 @@ import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/Sea
         ClientPostReportService,
         ClientPostService,
         ClientCommentService,
+        ClientAccountService,
 
         AccountProfileBoxComponent
     ]
 })
 
-export class PostReportManagementComponent implements OnInit{
+export class PostReportManagementComponent implements OnInit {
+
+    // Profile box element on management component.
+    @ViewChild('accountProfileBox') profileBox : ModalDirective;
 
     // Conditions which are used for finding post reports.
     public findPostReportConditions: SearchPostReportsViewModel;
@@ -79,7 +85,8 @@ export class PostReportManagementComponent implements OnInit{
                        public clientTimeService: ClientTimeService,
                        public clientPostReportService: ClientPostReportService,
                        public clientPostService: ClientPostService,
-                       public clientCommentService: ClientCommentService){
+                       public clientCommentService: ClientCommentService,
+                       public clientAccountService: ClientAccountService) {
         // Initiate post reports search result.
         this.postReportsSearchResult = new SearchPostReportsResultViewModel();
     }
@@ -107,7 +114,7 @@ export class PostReportManagementComponent implements OnInit{
     }
 
     // Callback is fired when search button is clicked.
-    public clickSearch(condition: SearchPostReportsViewModel): void{
+    public clickSearch(condition: SearchPostReportsViewModel): void {
 
         // Make the component be loading.
         this.isLoading = true;
@@ -139,7 +146,7 @@ export class PostReportManagementComponent implements OnInit{
     }
 
     // Delete post report by searching for specific index.
-    public clickDeletePostReport(postReport: PostReport, deletePostReportConfirmModal: ModalDirective){
+    public clickDeletePostReport(postReport: PostReport, deletePostReportConfirmModal: ModalDirective) {
 
         // Invalid index.
         if (postReport == null)
@@ -154,12 +161,11 @@ export class PostReportManagementComponent implements OnInit{
     }
 
     // This callback is fired when post report is confirmed to be deleted.
-    public clickConfirmDeletePostReport(deletePostReportConfirmModal: ModalDirective){
+    public clickConfirmDeletePostReport(deletePostReportConfirmModal: ModalDirective) {
 
         // Post report is invalid.
         if (this.selectPostReport == null)
             return;
-
 
 
         let conditions = new SearchPostReportsViewModel();
@@ -176,7 +182,7 @@ export class PostReportManagementComponent implements OnInit{
         this.selectPostReport = null;
 
         this.clientPostReportService.deletePostReports(conditions)
-            .then((response: Response) =>{
+            .then((response: Response) => {
 
 
 
@@ -194,19 +200,16 @@ export class PostReportManagementComponent implements OnInit{
     }
 
     // Pick an account and monitor its profile.
-    public monitorAccountProfile(account: Account, accountProfileModal: ModalDirective): void{
+    public monitorAccountProfile(account: Account, accountProfileModal: ModalDirective): void {
         // Pick the account.
         this.monitoringAccountProfile = account;
-        console.log(this.monitoringAccountProfile);
-
-        console.log(accountProfileModal);
 
         // Display profile modal.
         accountProfileModal.show();
     }
 
     // Find post with its detail.
-    public clickOpenPostDetailBox(index: number, postDetailBox: ModalDirective): void{
+    public clickOpenPostDetailBox(index: number, postDetailBox: ModalDirective): void {
 
         // Make application understand that a post is being searched.
         this.isSearchingPost = true;
@@ -216,7 +219,7 @@ export class PostReportManagementComponent implements OnInit{
 
         // Find details of the specific post.
         this.clientPostService.findPostDetails(index)
-            .then((response: Response) =>{
+            .then((response: Response) => {
 
                 // Cancel the search progress.
                 this.isSearchingPost = false;
@@ -228,7 +231,7 @@ export class PostReportManagementComponent implements OnInit{
                 // Display post detail box.
                 postDetailBox.show();
             })
-            .catch((response: Response) =>{
+            .catch((response: Response) => {
                 // Cancel the search progress.
                 this.isSearchingPost = false;
 
@@ -238,7 +241,7 @@ export class PostReportManagementComponent implements OnInit{
     }
 
     // This callback is fired when a comment button is searched.
-    public clickSearchComment(page: number): void{
+    public clickSearchComment(page: number): void {
         // Page is not correct.
         if (page == null)
             return;
@@ -276,5 +279,54 @@ export class PostReportManagementComponent implements OnInit{
                 // Proceed common handling process.
                 this.clientApiService.proceedHttpNonSolidResponse(response);
             })
+    }
+
+    // Callback which is fired when change account status button is clicked inside change account information box.
+    public clickChangeAccountStatus(account: Account): void {
+
+        // Account is invalid.
+        if (account == null)
+            return;
+
+        switch (account.status) {
+            case AccountStatuses.Disabled:
+            case AccountStatuses.Pending:
+                account.status = AccountStatuses.Active;
+                break;
+            default:
+                account.status = AccountStatuses.Disabled;
+                break;
+        }
+
+
+        //Prevent UI interaction while data is being proceeded.
+        this.isLoading = true;
+
+        this.clientAccountService.changeAccountInformation(account.id, account)
+            .then((response: Response) => {
+
+                // Cancel loading status.
+                this.isLoading = false;
+
+                // Hide the profile box.
+                this.profileBox.hide();
+            })
+            .catch((response: Response) => {
+
+                // Cancel loading status.
+                this.isLoading = false;
+
+                // Hide the profile box.
+                this.profileBox.hide();
+
+                this.clientApiService.proceedHttpNonSolidResponse(response);
+            });
+    }
+
+    // Callback which is fired when post details box is hidden.
+    public onPostDetailsBoxHidden(): void {
+        this.monitoringPostDetail = null;
+        this.isSearchingComments = false;
+        this.isSearchingPost = false;
     }
 }

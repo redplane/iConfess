@@ -49,7 +49,7 @@
                 <div class="form-group">
                     <label>Last modified</label>
                     <div class="form-control">
-                        {{clientTimeService.findUnixTime(account.lastModified)}}
+                        {{clientTimeService.findUnixTime(account.lastModified) | amDateFormat: 'YYYY-MM-DD'}}
                     </div>
                 </div>
             </div>
@@ -59,7 +59,8 @@
          *ngIf="account.status != null">
         <button class="btn btn-flat btn-block"
                 [class.btn-primary]="account.status == accountStatuses.Pending || account.status == accountStatuses.Pending"
-                [class.btn-danger]="account.status == accountStatuses.Active">
+                [class.btn-danger]="account.status == accountStatuses.Active"
+                (click)="changeAccountStatus(account)">
             <span *ngIf="account.status == accountStatuses.Pending || account.status == accountStatuses.Disabled">Activate</span>
             <span *ngIf="account.status == accountStatuses.Active">Disable</span>
         </button>

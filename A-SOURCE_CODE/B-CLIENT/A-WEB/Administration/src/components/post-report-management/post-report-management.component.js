@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var ng2_bootstrap_1 = require("ng2-bootstrap");
 var ClientConfigurationService_1 = require("../../services/ClientConfigurationService");
 var ClientCommonService_1 = require("../../services/ClientCommonService");
 var ClientTimeService_1 = require("../../services/ClientTimeService");
@@ -28,9 +29,11 @@ var ClientPostService_1 = require("../../services/clients/ClientPostService");
 var ClientCommentService_1 = require("../../services/clients/ClientCommentService");
 var SearchCommentsDetailsViewModel_1 = require("../../viewmodels/comment/SearchCommentsDetailsViewModel");
 var SearchCommentsDetailsResultViewModel_1 = require("../../viewmodels/comment/SearchCommentsDetailsResultViewModel");
+var AccountStatuses_1 = require("../../enumerations/AccountStatuses");
+var ClientAccountService_1 = require("../../services/clients/ClientAccountService");
 var PostReportManagementComponent = (function () {
     // Initiate instance of component.
-    function PostReportManagementComponent(clientConfigurationService, clientCommonService, clientApiService, clientTimeService, clientPostReportService, clientPostService, clientCommentService) {
+    function PostReportManagementComponent(clientConfigurationService, clientCommonService, clientApiService, clientTimeService, clientPostReportService, clientPostService, clientCommentService, clientAccountService) {
         this.clientConfigurationService = clientConfigurationService;
         this.clientCommonService = clientCommonService;
         this.clientApiService = clientApiService;
@@ -38,6 +41,7 @@ var PostReportManagementComponent = (function () {
         this.clientPostReportService = clientPostReportService;
         this.clientPostService = clientPostService;
         this.clientCommentService = clientCommentService;
+        this.clientAccountService = clientAccountService;
         // Initiate post reports search result.
         this.postReportsSearchResult = new SearchPostReportsResultViewModel_1.SearchPostReportsResultViewModel();
     }
@@ -124,8 +128,6 @@ var PostReportManagementComponent = (function () {
     PostReportManagementComponent.prototype.monitorAccountProfile = function (account, accountProfileModal) {
         // Pick the account.
         this.monitoringAccountProfile = account;
-        console.log(this.monitoringAccountProfile);
-        console.log(accountProfileModal);
         // Display profile modal.
         accountProfileModal.show();
     };
@@ -187,8 +189,50 @@ var PostReportManagementComponent = (function () {
             _this.clientApiService.proceedHttpNonSolidResponse(response);
         });
     };
+    // Callback which is fired when change account status button is clicked inside change account information box.
+    PostReportManagementComponent.prototype.clickChangeAccountStatus = function (account) {
+        var _this = this;
+        // Account is invalid.
+        if (account == null)
+            return;
+        switch (account.status) {
+            case AccountStatuses_1.AccountStatuses.Disabled:
+            case AccountStatuses_1.AccountStatuses.Pending:
+                account.status = AccountStatuses_1.AccountStatuses.Active;
+                break;
+            default:
+                account.status = AccountStatuses_1.AccountStatuses.Disabled;
+                break;
+        }
+        //Prevent UI interaction while data is being proceeded.
+        this.isLoading = true;
+        this.clientAccountService.changeAccountInformation(account.id, account)
+            .then(function (response) {
+            // Cancel loading status.
+            _this.isLoading = false;
+            // Hide the profile box.
+            _this.profileBox.hide();
+        })
+            .catch(function (response) {
+            // Cancel loading status.
+            _this.isLoading = false;
+            // Hide the profile box.
+            _this.profileBox.hide();
+            _this.clientApiService.proceedHttpNonSolidResponse(response);
+        });
+    };
+    // Callback which is fired when post details box is hidden.
+    PostReportManagementComponent.prototype.onPostDetailsBoxHidden = function () {
+        this.monitoringPostDetail = null;
+        this.isSearchingComments = false;
+        this.isSearchingPost = false;
+    };
     return PostReportManagementComponent;
 }());
+__decorate([
+    core_1.ViewChild('accountProfileBox'),
+    __metadata("design:type", ng2_bootstrap_1.ModalDirective)
+], PostReportManagementComponent.prototype, "profileBox", void 0);
 PostReportManagementComponent = __decorate([
     core_1.Component({
         selector: 'post-report-management',
@@ -203,6 +247,7 @@ PostReportManagementComponent = __decorate([
             ClientPostReportService_1.ClientPostReportService,
             ClientPostService_1.ClientPostService,
             ClientCommentService_1.ClientCommentService,
+            ClientAccountService_1.ClientAccountService,
             account_profile_box_component_1.AccountProfileBoxComponent
         ]
     }),
@@ -212,7 +257,8 @@ PostReportManagementComponent = __decorate([
         ClientTimeService_1.ClientTimeService,
         ClientPostReportService_1.ClientPostReportService,
         ClientPostService_1.ClientPostService,
-        ClientCommentService_1.ClientCommentService])
+        ClientCommentService_1.ClientCommentService,
+        ClientAccountService_1.ClientAccountService])
 ], PostReportManagementComponent);
 exports.PostReportManagementComponent = PostReportManagementComponent;
 //# sourceMappingURL=post-report-management.component.js.map

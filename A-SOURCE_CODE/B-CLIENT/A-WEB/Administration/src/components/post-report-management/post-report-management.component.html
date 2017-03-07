@@ -170,7 +170,8 @@
     <div class="modal-dialog"
          *ngIf="monitoringAccountProfile != null">
         <div class="modal-content">
-            <account-profile-box [account]="monitoringAccountProfile"></account-profile-box>
+            <account-profile-box [account]="monitoringAccountProfile"
+                                 (clickChangeAccountStatus)="clickChangeAccountStatus($event)"></account-profile-box>
         </div>
     </div>
 </div>
@@ -183,7 +184,7 @@
      role="dialog"
      aria-hidden="true"
 
-     (onHide)="monitoringPostDetail = null; isSearchingComments = false; isSearchingPost = false;">
+     (onHide)="onPostDetailsBoxHidden()">
 
     <div class="modal-dialog">
         <div class="modal-content">

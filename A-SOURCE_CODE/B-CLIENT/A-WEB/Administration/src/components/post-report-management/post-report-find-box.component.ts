@@ -43,7 +43,7 @@ export class PostReportFindBoxComponent {
     public reporters: Array<Account>;
 
     // List of post owners in database.
-    private owners: Array<Account>;
+    public owners: Array<Account>;
 
     // List of posts in database.
     private posts: Array<Post>;
@@ -74,6 +74,9 @@ export class PostReportFindBoxComponent {
             sort: [],
             direction: []
         });
+
+        this.owners = new Array<Account>();
+        this.reporters = new Array<Account>();
 
         // Initiate emitter.
         this.search = new EventEmitter<SearchPostReportsViewModel>();
