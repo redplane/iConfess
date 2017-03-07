@@ -305,7 +305,7 @@ namespace iConfess.Admin.Controllers
                 var findCategoriesResult = await UnitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
 
                 // Find all accounts in the database.
-                var accounts = UnitOfWork.RepositoryAccounts.FindAccounts();
+                var accounts = UnitOfWork.RepositoryAccounts.Find();
 
                 var apiCategories = from account in accounts
                     from category in findCategoriesResult.Categories

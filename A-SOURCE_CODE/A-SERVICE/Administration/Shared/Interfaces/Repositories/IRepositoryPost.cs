@@ -5,7 +5,7 @@ using Shared.ViewModels.Posts;
 
 namespace Shared.Interfaces.Repositories
 {
-    public interface IRepositoryPost
+    public interface IRepositoryPost : IParentRepository<Post>
     {
         #region Properties
 
@@ -37,13 +37,7 @@ namespace Shared.Interfaces.Repositories
         /// <param name="conditions"></param>
         /// <returns></returns>
         IQueryable<Post> FindPosts(IQueryable<Post> posts, FindPostViewModel conditions);
-
-        /// <summary>
-        /// Find all posts in database.
-        /// </summary>
-        /// <returns></returns>
-        IQueryable<Post> FindPosts();
-
+        
         #endregion
     }
 }

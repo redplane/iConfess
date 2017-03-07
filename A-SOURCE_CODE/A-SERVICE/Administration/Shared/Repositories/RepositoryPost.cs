@@ -55,7 +55,7 @@ namespace Shared.Repositories
         public async Task<ResponsePostsViewModel> FindPostsAsync(FindPostViewModel conditions)
         {
             // Find all posts from database.
-            var posts = FindPosts();
+            var posts = Find();
 
             // Response initialization.
             var responsePostsViewModel = new ResponsePostsViewModel();
@@ -248,7 +248,7 @@ namespace Shared.Repositories
         /// Find all posts in database.
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Post> FindPosts()
+        public IQueryable<Post> Find()
         {
             return _iConfessDbContext.Posts.AsQueryable();
         }

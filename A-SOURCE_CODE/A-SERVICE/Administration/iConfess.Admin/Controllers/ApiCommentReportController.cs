@@ -36,6 +36,7 @@ namespace iConfess.Admin.Controllers
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
+            _identityService = identityService;
             _log = log;
         }
 
@@ -72,12 +73,11 @@ namespace iConfess.Admin.Controllers
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        [Route("initiate")]
+        [Route("")]
         [HttpPost]
         public async Task<HttpResponseMessage> InitiateCommentReport(
             [FromBody] InitiateCommentReportViewModel parameters)
         {
-            throw new NotImplementedException();
             try
             {
                 #region Parameters validation
@@ -140,6 +140,7 @@ namespace iConfess.Admin.Controllers
             }
             catch (Exception exception)
             {
+                _log.Error(exception.Message, exception);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -148,7 +149,7 @@ namespace iConfess.Admin.Controllers
         ///     Delete all reports from a comment due to its validation.
         /// </summary>
         /// <returns></returns>
-        [Route("delete")]
+        [Route("")]
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteCommentReport([FromBody] FindCommentReportsViewModel parameters)
         {
@@ -180,7 +181,7 @@ namespace iConfess.Admin.Controllers
                 
                 #region Record delete
 
-                // Account can only delete the reports whose reporter is it.
+                // Account can only delete the reports whose reporter is the requester.
                 if (account.Role != AccountRole.Admin)
                     parameters.CommentReporterIndex = account.Id;
                 
@@ -263,6 +264,7 @@ namespace iConfess.Admin.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+        
 
         #endregion
     }

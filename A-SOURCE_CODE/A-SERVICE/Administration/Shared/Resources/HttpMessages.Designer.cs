@@ -151,6 +151,15 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INFORMATION_IS_REQUIRED.
+        /// </summary>
+        public static string InformationIsRequired {
+            get {
+                return ResourceManager.GetString("InformationIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AUTHENTICATION_INFO_INVALID.
         /// </summary>
         public static string InvalidAuthenticationInfo {

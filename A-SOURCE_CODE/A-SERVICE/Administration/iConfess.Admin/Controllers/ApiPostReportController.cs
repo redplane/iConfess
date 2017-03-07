@@ -69,7 +69,7 @@ namespace iConfess.Admin.Controllers
                 #region Find post report
 
                 // Find all posts.
-                var posts = _unitOfWork.RepositoryPosts.FindPosts();
+                var posts = _unitOfWork.RepositoryPosts.Find();
 
                 // Conditions construction.
                 var findPostViewModel = new FindPostViewModel();
@@ -212,10 +212,10 @@ namespace iConfess.Admin.Controllers
                 postReports = _unitOfWork.RepositoryPostReports.FindPostReports(postReports, parameters);
                 
                 // Find posts from database.
-                var posts = _unitOfWork.RepositoryPosts.FindPosts();
+                var posts = _unitOfWork.RepositoryPosts.Find();
                 
                 // Find all accounts.
-                var accounts = _unitOfWork.RepositoryAccounts.FindAccounts();
+                var accounts = _unitOfWork.RepositoryAccounts.Find();
 
                 // Find post report by using specific conditions.
                 var result = from postReport in postReports

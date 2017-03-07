@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
@@ -20,7 +21,7 @@ namespace iConfess.Admin.Controllers
     [RoutePrefix("api/post")]
     [ApiAuthorize]
     [ApiRole(AccountRole.Admin)]
-    public class ApiPostController : ApiController
+    public class ApiPostController : ApiParentController
     {
         #region Controllers
 
@@ -34,7 +35,7 @@ namespace iConfess.Admin.Controllers
         public ApiPostController(IUnitOfWork unitOfWork,
             ITimeService timeService,
             IIdentityService identityService,
-            ILog log)
+            ILog log): base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
@@ -194,7 +195,7 @@ namespace iConfess.Admin.Controllers
                     condition.OwnerIndex = account.Id;
 
                 // Find all posts in database.
-                var posts = _unitOfWork.RepositoryPosts.FindPosts();
+                var posts = _unitOfWork.RepositoryPosts.Find();
                 posts = _unitOfWork.RepositoryPosts.FindPosts(posts, condition);
                 
                 #endregion
@@ -330,14 +331,14 @@ namespace iConfess.Admin.Controllers
             try
             {
                 // Find all posts from database.
-                var posts = _unitOfWork.RepositoryPosts.FindPosts();
+                var posts = _unitOfWork.RepositoryPosts.Find();
                 posts = posts.Where(x => x.Id == index);
 
                 // Find all accounts from database.
-                var accounts = _unitOfWork.RepositoryAccounts.FindAccounts();
+                var accounts = _unitOfWork.RepositoryAccounts.Find();
 
                 // Find all category from database.
-                var categories = _unitOfWork.RepositoryCategories.FindCategories();
+                var categories = _unitOfWork.RepositoryCategories.Find();
                 
                 // Search and select the first result.
                 var detail = await (from post in posts
@@ -362,6 +363,64 @@ namespace iConfess.Admin.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        //[Route("summary/daily")]
+        //[HttpPost]
+        //public async Task<HttpResponseMessage> SummarizePostsDaily([FromBody] DailyPostSummaryViewModel parameters)
+        //{
+        //    #region Parameters validation
+
+        //    if (parameters == null)
+        //    {
+        //        parameters = new DailyPostSummaryViewModel();
+        //        Validate(parameters);
+        //    }
+
+        //    if (!ModelState.IsValid)
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest,
+        //            FindValidationMessage(ModelState, nameof(parameters)));
+
+        //    #endregion
+
+        //    #region Result filter
+
+        //    // Find all posts.
+        //    var posts = _unitOfWork.RepositoryPosts.Find();
+
+        //    // Convert unix start date to datetime instance.
+        //    var startDate = _timeService.UnixToDateTimeUtc(parameters.StartDate);
+        //    var endDate = startDate.AddDays(parameters.Days);
+
+        //    // Convert end date back to unix date time.
+        //    var unixEndDate = _timeService.DateTimeUtcToUnix(endDate);
+
+        //    // Filter post by specific conditions.
+        //    posts = posts.Where(x => x.Created >= parameters.StartDate);
+        //    posts = posts.Where(x => x.Created <= unixEndDate);
+
+        //    // Category index is specified.
+        //    if (parameters.CategoryIndex != null)
+        //        posts = posts.Where(x => x.CategoryIndex != parameters.CategoryIndex.Value);
+
+        //    // Owner index is specified.
+        //    if (parameters.OwnerIndex != null)
+        //        posts = posts.Where(x => x.OwnerIndex == parameters.OwnerIndex.Value);
+
+        //    #endregion
+
+        //    var grouppedPosts = posts.GroupBy(x => x.CategoryIndex);
+
+        //    var postSummary = grouppedPosts.Select(x => new
+        //    {
+        //        Id = x.Key,
+        //        Count = x.Count()
+        //    });
+
+        //    var result = await postSummary.ToListAsync();
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
+
         #endregion
     }
+
 }

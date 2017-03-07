@@ -11,6 +11,7 @@ using iConfess.Admin.Attributes;
 using iConfess.Admin.Interfaces.Providers;
 using iConfess.Admin.Interfaces.Services;
 using iConfess.Admin.Models;
+using iConfess.Admin.Models.Statistics;
 using iConfess.Admin.SignalrHubs;
 using iConfess.Admin.ViewModels.ApiAccount;
 using iConfess.Database.Enumerations;
@@ -349,8 +350,8 @@ namespace iConfess.Admin.Controllers
                         findAccountsConditions.Email.Mode = TextComparision.Equal;
 
                         // Find all accounts in database.
-                        var accounts = UnitOfWork.RepositoryAccounts.FindAccounts();
-                        accounts = UnitOfWork.RepositoryAccounts.FindAccounts(accounts, findAccountsConditions);
+                        var accounts = UnitOfWork.RepositoryAccounts.Find();
+                        accounts = UnitOfWork.RepositoryAccounts.Find(accounts, findAccountsConditions);
 
                         // Token search.
                         var findTokensSearchConditions = new FindTokensViewModel();
@@ -458,7 +459,7 @@ namespace iConfess.Admin.Controllers
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<SystemMessageHub>();
             
             // Find all connection indexes of online administrators.
-            var accounts = UnitOfWork.RepositoryAccounts.FindAccounts();
+            var accounts = UnitOfWork.RepositoryAccounts.Find();
             var signalrConnections = UnitOfWork.RepositorySignalrConnections.Find();
 
             // Find connection indexes of online administrators.
@@ -562,6 +563,39 @@ namespace iConfess.Admin.Controllers
 
             // Tell the client about account whose information has been modified.
             return Request.CreateResponse(HttpStatusCode.OK, target);
+        }
+
+        [Route("summary/status")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SummarizeAccountByStatus([FromBody] AccountSummaryStatusViewModel parameters)
+        {
+            if (parameters == null)
+            {
+                parameters = new AccountSummaryStatusViewModel();
+                Validate(parameters);
+            }
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest,
+                    FindValidationMessage(ModelState, nameof(parameters)));
+
+            // Find accounts in database.
+            var condition = new FindAccountsViewModel();
+            condition.Joined = parameters.Joined;
+            condition.LastModified = parameters.LastModified;
+
+            var accounts = UnitOfWork.RepositoryAccounts.Find();
+            accounts = UnitOfWork.RepositoryAccounts.Find(accounts, condition);
+
+            // Group account by status.
+            var collections = accounts.GroupBy(x => x.Status)
+                .Select(x => new AccountStatusSummary
+                {
+                    Status = x.Key,
+                    Total = x.Count()
+                });
+
+            return Request.CreateResponse(HttpStatusCode.OK, collections);
         }
 
         #endregion

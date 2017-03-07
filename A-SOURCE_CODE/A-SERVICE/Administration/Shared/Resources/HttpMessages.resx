@@ -147,6 +147,9 @@
   <data name="CommentReportNotUnique" xml:space="preserve">
     <value>COMMENT_REPORT_NOT_UNIQUE</value>
   </data>
+  <data name="InformationIsRequired" xml:space="preserve">
+    <value>INFORMATION_IS_REQUIRED</value>
+  </data>
   <data name="InvalidAuthenticationInfo" xml:space="preserve">
     <value>AUTHENTICATION_INFO_INVALID</value>
   </data>

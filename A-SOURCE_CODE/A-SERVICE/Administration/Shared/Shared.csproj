@@ -104,6 +104,7 @@
     <Compile Include="Enumerations\Order\TokenSort.cs" />
     <Compile Include="Enumerations\SystemEmail.cs" />
     <Compile Include="Enumerations\TextComparision.cs" />
+    <Compile Include="Interfaces\Repositories\IParentRepository.cs" />
     <Compile Include="Interfaces\Services\ICommonRepositoryService.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryToken.cs" />
     <Compile Include="Interfaces\Services\IEncryptionService.cs" />

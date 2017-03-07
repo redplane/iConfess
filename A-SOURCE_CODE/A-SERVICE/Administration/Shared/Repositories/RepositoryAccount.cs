@@ -49,7 +49,7 @@ namespace Shared.Repositories
             var accounts = _iConfessDbContext.Accounts.AsQueryable();
 
             // Find accounts by using conditions.
-            accounts = FindAccounts(accounts, conditions);
+            accounts = Find(accounts, conditions);
             
             throw new NotImplementedException();
         }
@@ -64,7 +64,7 @@ namespace Shared.Repositories
             var accounts = _iConfessDbContext.Accounts.AsQueryable();
 
             // Find accounts with conditions.
-            accounts = FindAccounts(accounts, conditions);
+            accounts = Find(accounts, conditions);
 
             // Results sorting.
             switch (conditions.Direction)
@@ -146,7 +146,7 @@ namespace Shared.Repositories
             var accounts = _iConfessDbContext.Accounts.AsQueryable();
 
             // Find accounts with conditions.
-            accounts = FindAccounts(accounts, conditions);
+            accounts = Find(accounts, conditions);
 
             // Results sorting.
             switch (conditions.Direction)
@@ -220,7 +220,7 @@ namespace Shared.Repositories
         /// <param name="accounts"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<Account> FindAccounts(IQueryable<Account> accounts, FindAccountsViewModel conditions)
+        public IQueryable<Account> Find(IQueryable<Account> accounts, FindAccountsViewModel conditions)
         {
             // Index has been identified.
             if (conditions.Id != null)
@@ -301,12 +301,12 @@ namespace Shared.Repositories
 
             return accounts;
         }
-
+        
         /// <summary>
         /// Find all accounts in database.
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Account> FindAccounts()
+        public IQueryable<Account> Find()
         {
             return _iConfessDbContext.Accounts.AsQueryable();
         }

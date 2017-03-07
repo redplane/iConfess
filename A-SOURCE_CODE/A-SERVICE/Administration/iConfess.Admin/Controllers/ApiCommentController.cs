@@ -364,7 +364,7 @@ namespace iConfess.Admin.Controllers
                 comments = comments.Where(x => x.Id == index);
 
                 // Find all account in database.
-                var accounts = _unitOfWork.RepositoryAccounts.FindAccounts();
+                var accounts = _unitOfWork.RepositoryAccounts.Find();
 
                 var commentDetails = await (from comment in comments
                     from owner in accounts
@@ -431,7 +431,7 @@ namespace iConfess.Admin.Controllers
                 comments = _unitOfWork.RepositoryComments.FindComments(comments, conditions);
 
                 // Find accounts from database.
-                var accounts = _unitOfWork.RepositoryAccounts.FindAccounts();
+                var accounts = _unitOfWork.RepositoryAccounts.Find();
 
                 // Find comments details
                 var commentsDetails = from comment in comments

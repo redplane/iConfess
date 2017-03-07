@@ -272,6 +272,7 @@
     <Compile Include="Models\Messages\CommentReportMessage.cs" />
     <Compile Include="Models\Messages\PostMessage.cs" />
     <Compile Include="Models\Messages\PostReportMessage.cs" />
+    <Compile Include="Models\Statistics\AccountStatusSummary.cs" />
     <Compile Include="Modules\LogModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\Providers\IBearerAuthenticationProvider.cs" />
@@ -282,16 +283,20 @@
     <Compile Include="SignalrHubs\ParentHub.cs" />
     <Compile Include="SignalrHubs\SystemMessageHub.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ApiAccount\AccountSummaryStatusViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\ChangeAccountInfoViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\LoginViewModel.cs" />
     <Compile Include="ViewModels\ApiAccount\ResetPasswordViewModel.cs" />
+    <Compile Include="ViewModels\ApiCategory\CategorySummaryViewModel.cs" />
     <Compile Include="ViewModels\ApiCategory\InitiateCategoryViewModel.cs" />
     <Compile Include="ViewModels\ApiComment\CommentDetailViewModel.cs" />
     <Compile Include="ViewModels\ApiComment\FindCommentsDetailsViewModel.cs" />
     <Compile Include="ViewModels\ApiComment\ResponseCommentsDetailsViewModel.cs" />
     <Compile Include="ViewModels\ApiPostReport\PostReportViewModel.cs" />
     <Compile Include="ViewModels\ApiPostReport\ResponseFindPostReportViewModel.cs" />
+    <Compile Include="ViewModels\ApiPost\DailyPostSummaryViewModel.cs" />
     <Compile Include="ViewModels\ApiPost\PostDetailViewModel.cs" />
+    <Compile Include="ViewModels\ApiPost\PostSummaryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

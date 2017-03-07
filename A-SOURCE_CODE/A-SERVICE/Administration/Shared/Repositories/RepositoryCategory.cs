@@ -248,7 +248,7 @@ namespace Shared.Repositories
         /// Find all categories from database.
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Category> FindCategories()
+        public IQueryable<Category> Find()
         {
             return _iConfessDbContext.Categories.AsQueryable();
         }

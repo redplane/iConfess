@@ -5,7 +5,7 @@ using Shared.ViewModels.Categories;
 
 namespace Shared.Interfaces.Repositories
 {
-    public interface IRepositoryCategory
+    public interface IRepositoryCategory : IParentRepository<Category>
     {
         /// <summary>
         ///     Initiate category asynchronously with specific information.
@@ -34,13 +34,7 @@ namespace Shared.Interfaces.Repositories
         /// <param name="conditions"></param>
         /// <returns></returns>
         IQueryable<Category> FindCategories(IQueryable<Category> categories, FindCategoriesViewModel conditions);
-
-        /// <summary>
-        /// Get all categories from database.
-        /// </summary>
-        /// <returns></returns>
-        IQueryable<Category> FindCategories();
-
+        
         /// <summary>
         ///     Delete category by using specific conditions.
         /// </summary>

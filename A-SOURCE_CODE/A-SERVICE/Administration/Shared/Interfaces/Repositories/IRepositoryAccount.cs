@@ -5,7 +5,7 @@ using Shared.ViewModels.Accounts;
 
 namespace Shared.Interfaces.Repositories
 {
-    public interface IRepositoryAccount
+    public interface IRepositoryAccount : IParentRepository<Account>
     {
         /// <summary>
         ///     Create / update an account asynchronously with specific conditions.
@@ -41,12 +41,6 @@ namespace Shared.Interfaces.Repositories
         /// <param name="accounts"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        IQueryable<Account> FindAccounts(IQueryable<Account> accounts, FindAccountsViewModel conditions);
-
-        /// <summary>
-        /// Find all accounts in database.
-        /// </summary>
-        /// <returns></returns>
-        IQueryable<Account> FindAccounts();
+        IQueryable<Account> Find(IQueryable<Account> accounts, FindAccountsViewModel conditions);
     }
 }
