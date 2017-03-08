@@ -1,4 +1,7 @@
-﻿namespace Confess.Database.Models.Tables
+﻿using Confess.Database.Enumerations;
+using Newtonsoft.Json;
+
+namespace Confess.Database.Models.Tables
 {
     public class Token
     {

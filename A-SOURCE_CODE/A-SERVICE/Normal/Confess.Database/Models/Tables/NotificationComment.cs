@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Confess.Database.Enumerations;
+using Newtonsoft.Json;
 
 namespace Confess.Database.Models.Tables
 {
