@@ -12,6 +12,8 @@ import {Account} from "../../models/Account";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {Pagination} from "../../viewmodels/Pagination";
+import {ClientTimeService} from "../../services/ClientTimeService";
+import {AccountSummaryStatusViewModel} from "../../viewmodels/accounts/AccountSummaryStatusViewModel";
 
 @Component({
     selector: 'account-management',
@@ -22,14 +24,15 @@ import {Pagination} from "../../viewmodels/Pagination";
         ClientAuthenticationService,
         ClientAccountService,
         ClientApiService,
-        ClientCommonService
+        ClientCommonService,
+        ClientTimeService
     ]
 })
 
-export class AccountManagementComponent implements OnInit{
+export class AccountManagementComponent implements OnInit {
 
     // List of accounts.
-    private findAccountsResult : SearchAccountsResultViewModel;
+    private findAccountsResult: SearchAccountsResultViewModel;
 
     // Account which is being selected for editing.
     private selectedAccount: Account;
@@ -43,17 +46,24 @@ export class AccountManagementComponent implements OnInit{
     // Account status enumeration.
     private accountStatuses = AccountStatuses;
 
+    // Account statuses summary.
+    private summaries: Array<AccountSummaryStatusViewModel>;
+
     // Initiate component with injections.
     public constructor(private clientConfigurationService: ClientConfigurationService,
                        private clientAccountService: ClientAccountService,
                        private clientCommonService: ClientCommonService,
-                       private clientApiService: ClientApiService){
+                       private clientApiService: ClientApiService,
+                       private clientTimeService: ClientTimeService) {
 
         // Initiate search conditions.
         this.conditions = new SearchAccountsViewModel();
 
         // Initiate find accounts result.
         this.findAccountsResult = new SearchAccountsResultViewModel();
+
+        // Initiate account statuses summary.
+        this.summaries = new Array<AccountSummaryStatusViewModel>();
     }
 
     // Callback which is fired when search button of category search box is clicked.
@@ -62,7 +72,7 @@ export class AccountManagementComponent implements OnInit{
         this.isLoading = true;
 
         this.clientAccountService.findAccounts(this.conditions)
-            .then((response: Response | any) =>{
+            .then((response: Response | any) => {
 
                 // Find list of accounts which has been found from service.
                 let findAccountsResult = response.json();
@@ -71,7 +81,7 @@ export class AccountManagementComponent implements OnInit{
                 // Cancel loading.
                 this.isLoading = false;
             })
-            .catch((response: Response | any) =>{
+            .catch((response: Response | any) => {
 
                 // Cancel loading.
                 this.isLoading = false;
@@ -83,13 +93,13 @@ export class AccountManagementComponent implements OnInit{
     }
 
     // Callback which is fired when change account information button is clicked.
-    public clickChangeAccountInfo(account: Account, changeAccountInfoModal: ModalDirective){
+    public clickChangeAccountInfo(account: Account, changeAccountInfoModal: ModalDirective) {
         this.selectedAccount = account;
         changeAccountInfoModal.show();
     }
 
     // Callback which is fired when change account information ok button is clicked.
-    public clickConfirmChangeAccountDetail(changeAccountModal: ModalDirective): void{
+    public clickConfirmChangeAccountDetail(changeAccountModal: ModalDirective): void {
 
         // No account has been selected for edit.
         if (this.selectedAccount == null) {
@@ -128,7 +138,7 @@ export class AccountManagementComponent implements OnInit{
     }
 
     // Callback which is fired when paging item is clicked.
-    public clickPageChange(parameters: any): void{
+    public clickPageChange(parameters: any): void {
 
         // Update page index.
         this.conditions.pagination.index = parameters['page'];
@@ -138,7 +148,7 @@ export class AccountManagementComponent implements OnInit{
     }
 
     // Check whether account search result is available or not.
-    public isAccountSearchResultAvailable(): boolean{
+    public isAccountSearchResultAvailable(): boolean {
 
         // Check search result.
         let result = this.findAccountsResult;
@@ -168,11 +178,20 @@ export class AccountManagementComponent implements OnInit{
 
         // Initiate account statuses.
         let accountStatuses = new Array<AccountStatuses>();
-        for (let index = 0; index < this.clientConfigurationService.accountStatusSelections.keys().length; index++){
+        for (let index = 0; index < this.clientConfigurationService.accountStatusSelections.keys().length; index++) {
             // Find the key.
             let key = this.clientConfigurationService.accountStatusSelections.keys()[index];
             accountStatuses.push(this.clientConfigurationService.accountStatusSelections.item(key));
         }
         this.conditions.statuses = accountStatuses;
+
+        // Summarize accounts by their statuses.
+        this.clientAccountService.summarizeAccountStatus()
+            .then((response: Response) => {
+                this.summaries = <Array<AccountSummaryStatusViewModel>>response.json();
+            })
+            .catch((response: Response) => {
+                this.clientApiService.proceedHttpNonSolidResponse(response);
+            });
     }
 }

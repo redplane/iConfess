@@ -41,6 +41,9 @@ export class ClientApiService{
     // Url which is used for requesting password change
     public apiRequestChangePassword: string;
 
+    // Url which is used for summarizing accounts by specifying statuses.
+    public apiSummaryAccountStatus: string;
+
     //////////////////////////////////////////////////////////////////////////////////////
     // Hyperlink which is used for searching for tokens.
     public apiRequestSubmitPassword: string;
@@ -87,6 +90,7 @@ export class ClientApiService{
         this.apiChangeAccountInfo = `${this.apiUrl}/api/account`;
         this.apiRequestChangePassword = `${this.apiUrl}/api/account/lost_password`;
         this.apiRequestSubmitPassword = `${this.apiUrl}/api/account/lost_password`;
+        this.apiSummaryAccountStatus = `${this.apiUrl}/api/account/summary/status`;
 
         // Post api.
         this.apiFindPost = `${this.apiUrl}/api/post/find`;

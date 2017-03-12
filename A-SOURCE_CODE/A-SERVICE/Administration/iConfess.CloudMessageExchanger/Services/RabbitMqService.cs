@@ -37,35 +37,6 @@ namespace iConfess.CloudMessageExchanger.Services
                 channel.BasicPublish("", queueSetting.Name, null, messageBytes);
             }
         }
-
-        /// <summary>
-        /// Initiate basic consumer.
-        /// </summary>
-        /// <param name="factorySetting"></param>
-        /// <param name="queueSetting"></param>
-        /// <param name="callback"></param>
-        public void InitiateBasicConsumer(FactorySetting factorySetting, QueueSetting queueSetting, EventHandler<BasicDeliverEventArgs> callback)
-        {
-            var connectionFactory = new ConnectionFactory();
-            connectionFactory.Uri = factorySetting.Url;
-            connectionFactory.HostName = factorySetting.Server;
-            connectionFactory.UserName = factorySetting.User;
-            connectionFactory.Password = factorySetting.Password;
-
-            using (var connection = connectionFactory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                // Declare queue which messages should be consumed.
-                channel.QueueDeclare(queueSetting.Name, queueSetting.Durable, queueSetting.Exclusive, queueSetting.AutoDelete, queueSetting.Arguments);
-
-
-                var basicMessageConsumer = new EventingBasicConsumer(channel);
-                basicMessageConsumer.Received += callback;
-
-                // Initiate basic consumer.
-                channel.BasicConsume(queueSetting.Name, true, basicMessageConsumer);
-
-            }
-        }
+        
     }
 }

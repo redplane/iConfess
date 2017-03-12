@@ -13,14 +13,6 @@ namespace iConfess.CloudMessageExchanger.Interfaces
         /// <param name="queueSetting"></param>
         /// <param name="message"></param>
         void Publish(FactorySetting factorySetting, QueueSetting queueSetting, string message);
-
-        /// <summary>
-        /// Initiate basic consumer.
-        /// </summary>
-        /// <param name="factorySetting"></param>
-        /// <param name="queueSetting"></param>
-        /// <param name="callback"></param>
-        void InitiateBasicConsumer(FactorySetting factorySetting, QueueSetting queueSetting,
-            EventHandler<BasicDeliverEventArgs> callback);
+        
     }
 }

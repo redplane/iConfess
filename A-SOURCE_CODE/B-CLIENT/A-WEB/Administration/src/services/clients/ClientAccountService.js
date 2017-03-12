@@ -61,6 +61,11 @@ var ClientAccountService = (function () {
         return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(), this.clientApiService.apiRequestSubmitPassword, null, submitPasswordViewModel)
             .toPromise();
     };
+    // Request service to summarize by using specific conditions.
+    ClientAccountService.prototype.summarizeAccountStatus = function () {
+        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(), this.clientApiService.apiSummaryAccountStatus, null, null)
+            .toPromise();
+    };
     return ClientAccountService;
 }());
 ClientAccountService = __decorate([

@@ -259,6 +259,7 @@
     <Compile Include="Configs\InversionOfControlConfig.cs" />
     <Compile Include="Configs\MvcRouteConfig.cs" />
     <Compile Include="Configs\ApiRouteConfig.cs" />
+    <Compile Include="Controllers\ApiSystemMessageController.cs" />
     <Compile Include="Controllers\ApiAccountController.cs" />
     <Compile Include="Controllers\ApiCommentController.cs" />
     <Compile Include="Controllers\ApiPostController.cs" />
@@ -301,6 +302,7 @@
     <Compile Include="ViewModels\ApiPost\DailyPostSummaryViewModel.cs" />
     <Compile Include="ViewModels\ApiPost\PostDetailViewModel.cs" />
     <Compile Include="ViewModels\ApiPost\PostSummaryViewModel.cs" />
+    <Compile Include="ViewModels\ApiSystemMessage\PublishSystemMessageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

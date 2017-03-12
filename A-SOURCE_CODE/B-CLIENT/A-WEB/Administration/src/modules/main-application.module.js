@@ -33,6 +33,7 @@ var ng2_select_1 = require("ng2-select");
 var angular2_moment_1 = require("angular2-moment");
 var account_profile_box_component_1 = require("../components/account-management/account-profile-box.component");
 var post_detail_box_component_1 = require("../components/post-management/post-detail-box.component");
+var ng2_charts_1 = require("ng2-charts");
 // Routing configuration.
 var appRoutes = [
     {
@@ -83,6 +84,8 @@ MainApplicationModule = __decorate([
             ng2_select_1.SelectModule,
             // Moment module.
             angular2_moment_1.MomentModule,
+            // Chart module.
+            ng2_charts_1.ChartsModule,
             // Initiate application routing configuration.
             router_1.RouterModule.forRoot(appRoutes)
         ],

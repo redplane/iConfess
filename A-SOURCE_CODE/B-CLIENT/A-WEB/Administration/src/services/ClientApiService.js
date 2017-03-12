@@ -37,6 +37,7 @@ var ClientApiService = (function () {
         this.apiChangeAccountInfo = this.apiUrl + "/api/account";
         this.apiRequestChangePassword = this.apiUrl + "/api/account/lost_password";
         this.apiRequestSubmitPassword = this.apiUrl + "/api/account/lost_password";
+        this.apiSummaryAccountStatus = this.apiUrl + "/api/account/summary/status";
         // Post api.
         this.apiFindPost = this.apiUrl + "/api/post/find";
         this.apiFindPostDetails = this.apiUrl + "/api/post/details";
