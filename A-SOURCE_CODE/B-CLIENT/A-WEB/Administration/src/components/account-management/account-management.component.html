@@ -7,6 +7,46 @@
     </div>
 </div>
 
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="box box-default">
+            <div class="box-body">
+                <table class="table table-responsive table-condensed">
+                    <tbody>
+                    <tr *ngFor="let item of summaries">
+                        <th *ngIf="item.status == accountStatuses.Active">Active</th>
+                        <th *ngIf="item.status == accountStatuses.Pending">Pending</th>
+                        <th *ngIf="item.status == accountStatuses.Disabled">Disabled</th>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success"
+                                     role="progressbar"
+                                     aria-valuenow="item.total"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: 40%">
+                                    <span class="sr-only">40% Complete (success)</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<ul class="nav nav-tabs nav-justified">
+    <li role="presentation"
+        class="active disabled" *ngFor="let item of accountStatusesSummary">
+        <a href="javascript:void(0);">{{item.status}}</a></li>
+</ul>
+
 <!-- Pagination section -->
 <div class="row"
      *ngIf="isAccountSearchResultAvailable()">
@@ -53,7 +93,9 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let account of findAccountsResult.accounts; let i = index">
-                        <td>{{(clientCommonService.findRecordStartIndex(conditions.pagination.index, conditions.pagination.records, true) + i + 1)}}</td>
+                        <td>{{(clientCommonService.findRecordStartIndex(conditions.pagination.index,
+                            conditions.pagination.records, true) + i + 1)}}
+                        </td>
                         <td>
                             <a href="javascript:void(0);"
                                (click)="clickChangeAccountInfo(account, changeAccountInfoModal)">{{account.email}}</a>
@@ -67,11 +109,11 @@
                             </b>
                         </td>
                         <td>
-                            {{ (account.joined | amFromUnix) | amDateFormat:'DD-MM-YYYY'}}
+                            {{ clientTimeService.findUnixTime(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
                         </td>
                         <td>
                             <span *ngIf="account.lastModified != null">
-                                {{account.lastModified | amFromUnix}}
+                                {{clientTimeService.findUnixTime(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
                             </span>
 
                             <span *ngIf="account.lastModified == null">
@@ -133,7 +175,8 @@
                     <select class="form-control"
                             [(ngModel)]="selectedAccount.status">
                         <option *ngFor="let key of clientConfigurationService.accountStatusSelections.keys()"
-                                [value]="clientConfigurationService.accountStatusSelections.item(key)">{{key}}</option>
+                                [value]="clientConfigurationService.accountStatusSelections.item(key)">{{key}}
+                        </option>
                     </select>
                 </div>
             </div>

@@ -25,6 +25,7 @@ import {SelectModule} from "ng2-select";
 import {MomentModule} from "angular2-moment";
 import {AccountProfileBoxComponent} from "../components/account-management/account-profile-box.component";
 import {PostDetailBoxComponent} from "../components/post-management/post-detail-box.component";
+import {ChartsModule} from "ng2-charts";
 
 // Routing configuration.
 const appRoutes: Routes = [
@@ -75,6 +76,9 @@ const appRoutes: Routes = [
 
         // Moment module.
         MomentModule,
+
+        // Chart module.
+        ChartsModule,
 
         // Initiate application routing configuration.
         RouterModule.forRoot(appRoutes)

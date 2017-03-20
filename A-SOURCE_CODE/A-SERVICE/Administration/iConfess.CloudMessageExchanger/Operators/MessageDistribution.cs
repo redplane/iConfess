@@ -59,7 +59,7 @@ namespace iConfess.CloudMessageExchanger.Operators
             
             // Find cloud account registration queue.
             var cloudRegistrationQueue = cloudSetting.Queues["accountRegistration"];
-            messageQueueService.InitiateBasicConsumer(cloudRabbit, cloudRegistrationQueue, TaskConsumeAccountRegistrationMessage);
+            
         }
 
         /// <summary>
@@ -82,7 +82,17 @@ namespace iConfess.CloudMessageExchanger.Operators
         protected override void OnStop()
         {
         }
-        
+
+        /// <summary>
+        /// Initiate system message channel.
+        /// </summary>
+        /// <param name="cloudSetting"></param>
+        /// <param name="queueSetting"></param>
+        private void InitiateSystemMessageChannel(CloudSetting cloudSetting, QueueSetting queueSetting)
+        {
+            
+        }
+
         #endregion
     }
 }

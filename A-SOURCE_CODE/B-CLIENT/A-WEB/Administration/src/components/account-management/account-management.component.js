@@ -20,19 +20,23 @@ var SearchAccountsResultViewModel_1 = require("../../viewmodels/accounts/SearchA
 var SearchAccountsViewModel_1 = require("../../viewmodels/accounts/SearchAccountsViewModel");
 var AccountStatuses_1 = require("../../enumerations/AccountStatuses");
 var Pagination_1 = require("../../viewmodels/Pagination");
+var ClientTimeService_1 = require("../../services/ClientTimeService");
 var AccountManagementComponent = (function () {
     // Initiate component with injections.
-    function AccountManagementComponent(clientConfigurationService, clientAccountService, clientCommonService, clientApiService) {
+    function AccountManagementComponent(clientConfigurationService, clientAccountService, clientCommonService, clientApiService, clientTimeService) {
         this.clientConfigurationService = clientConfigurationService;
         this.clientAccountService = clientAccountService;
         this.clientCommonService = clientCommonService;
         this.clientApiService = clientApiService;
+        this.clientTimeService = clientTimeService;
         // Account status enumeration.
         this.accountStatuses = AccountStatuses_1.AccountStatuses;
         // Initiate search conditions.
         this.conditions = new SearchAccountsViewModel_1.SearchAccountsViewModel();
         // Initiate find accounts result.
         this.findAccountsResult = new SearchAccountsResultViewModel_1.SearchAccountsResultViewModel();
+        // Initiate account statuses summary.
+        this.summaries = new Array();
     }
     // Callback which is fired when search button of category search box is clicked.
     AccountManagementComponent.prototype.clickSearch = function () {
@@ -109,6 +113,7 @@ var AccountManagementComponent = (function () {
     };
     // Called when component has been successfully rendered.
     AccountManagementComponent.prototype.ngOnInit = function () {
+        var _this = this;
         // Components are not busy loading.
         this.isLoading = false;
         // Initiate category search conditions.
@@ -126,6 +131,14 @@ var AccountManagementComponent = (function () {
             accountStatuses.push(this.clientConfigurationService.accountStatusSelections.item(key));
         }
         this.conditions.statuses = accountStatuses;
+        // Summarize accounts by their statuses.
+        this.clientAccountService.summarizeAccountStatus()
+            .then(function (response) {
+            _this.summaries = response.json();
+        })
+            .catch(function (response) {
+            _this.clientApiService.proceedHttpNonSolidResponse(response);
+        });
     };
     return AccountManagementComponent;
 }());
@@ -139,13 +152,15 @@ AccountManagementComponent = __decorate([
             ClientAuthenticationService_1.ClientAuthenticationService,
             ClientAccountService_1.ClientAccountService,
             ClientApiService_1.ClientApiService,
-            ClientCommonService_1.ClientCommonService
+            ClientCommonService_1.ClientCommonService,
+            ClientTimeService_1.ClientTimeService
         ]
     }),
     __metadata("design:paramtypes", [ClientConfigurationService_1.ClientConfigurationService,
         ClientAccountService_1.ClientAccountService,
         ClientCommonService_1.ClientCommonService,
-        ClientApiService_1.ClientApiService])
+        ClientApiService_1.ClientApiService,
+        ClientTimeService_1.ClientTimeService])
 ], AccountManagementComponent);
 exports.AccountManagementComponent = AccountManagementComponent;
 //# sourceMappingURL=account-management.component.js.map

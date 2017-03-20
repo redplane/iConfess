@@ -73,4 +73,11 @@ export class ClientAccountService implements IClientAccountService {
         this.clientApiService.apiRequestSubmitPassword, null, submitPasswordViewModel)
             .toPromise();
     }
+
+    // Request service to summarize by using specific conditions.
+    public summarizeAccountStatus(): any{
+        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientApiService.apiSummaryAccountStatus, null, null)
+            .toPromise();
+    }
 }
