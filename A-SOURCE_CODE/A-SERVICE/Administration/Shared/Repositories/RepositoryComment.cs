@@ -46,7 +46,7 @@ namespace Shared.Repositories
         public void Delete(FindCommentsViewModel conditions)
         {
             // Find comments which match with conditions.
-            var comments = FindComments(_iConfessDbContext.Comments.AsQueryable(), conditions);
+            var comments = Find(_iConfessDbContext.Comments.AsQueryable(), conditions);
 
             foreach (var comment in comments)
             {
@@ -69,7 +69,7 @@ namespace Shared.Repositories
         {
             // Find all comments first.
             var comments = _iConfessDbContext.Comments.AsQueryable();
-            comments = FindComments(comments, conditions);
+            comments = Find(comments, conditions);
             comments = SortComments(comments, conditions);
 
             // Response initialization.
@@ -108,7 +108,7 @@ namespace Shared.Repositories
         /// <param name="comments"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<Comment> FindComments(IQueryable<Comment> comments, FindCommentsViewModel conditions)
+        public IQueryable<Comment> Find(IQueryable<Comment> comments, FindCommentsViewModel conditions)
         {
             // Comment index is specified.
             if (conditions.Id != null)
@@ -238,7 +238,7 @@ namespace Shared.Repositories
         /// Find comments from database.
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Comment> FindComments()
+        public IQueryable<Comment> Find()
         {
             return _iConfessDbContext.Comments.AsQueryable();
         }

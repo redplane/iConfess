@@ -156,6 +156,7 @@
     <Compile Include="ViewModels\Categories\FindCategoriesViewModel.cs" />
     <Compile Include="ViewModels\Categories\ResponseApiCategoriesViewModel.cs" />
     <Compile Include="ViewModels\Categories\ResponseCategoriesViewModel.cs" />
+    <Compile Include="ViewModels\CommentReports\CommentReportDetailViewModel.cs" />
     <Compile Include="ViewModels\CommentReports\FindCommentReportsViewModel.cs" />
     <Compile Include="ViewModels\CommentReports\InitiateCommentReportViewModel.cs" />
     <Compile Include="ViewModels\CommentReports\ResponseCommentReportsViewModel.cs" />
@@ -183,10 +184,6 @@
     <ProjectReference Include="..\iConfess.Database\iConfess.Database.csproj">
       <Project>{0c4b39be-cf91-47d4-be5b-31e6afe16667}</Project>
       <Name>iConfess.Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MultipartFormDataFormatter\MultipartFormDataMediaFormatter.csproj">
-      <Project>{1F851995-9C6B-4B34-82AF-AC4E075F00C2}</Project>
-      <Name>MultipartFormDataMediaFormatter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using iConfess.Admin.Middlewares;
-using MultipartFormDataMediaFormatter;
 using Newtonsoft.Json.Serialization;
 
 namespace iConfess.Admin.Configs
@@ -26,7 +25,6 @@ namespace iConfess.Admin.Configs
 
             // Web API configuration and services
             // Make web API support multipart/form-data request.
-            config.Formatters.Add(new MultipartFormDataFormatter());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

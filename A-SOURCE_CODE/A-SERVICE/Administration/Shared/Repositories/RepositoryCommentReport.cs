@@ -53,37 +53,7 @@ namespace Shared.Repositories
             // Delete all found comment reports.
             _iConfessDbContext.CommentReports.RemoveRange(commentReports);
         }
-
-        /// <summary>
-        ///     Find comment reports by using specific conditions.
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        public async Task<ResponseCommentReportsViewModel> FindCommentReportsAsync(
-            FindCommentReportsViewModel parameters)
-        {
-            // Find all comment reports first.
-            var commentReports = _iConfessDbContext.CommentReports.AsQueryable();
-
-            // Find comment report by using specific conditions.
-            commentReports = FindCommentReports(commentReports, parameters);
-
-            // Count the total condition matched result.
-            var totalRecords = await commentReports.CountAsync();
-
-            // Pagination is defined.
-            var pagination = parameters.Pagination;
-            if (pagination != null)
-                commentReports = commentReports.Skip(pagination.Index & pagination.Records)
-                    .Take(pagination.Records);
-
-            var responseCommentReports = new ResponseCommentReportsViewModel();
-            responseCommentReports.CommentReports = commentReports;
-            responseCommentReports.Total = totalRecords;
-
-            return responseCommentReports;
-        }
-
+        
         /// <summary>
         ///     Initiate / update comment report.
         /// </summary>
@@ -192,7 +162,7 @@ namespace Shared.Repositories
 
             return commentReports;
         }
-
+        
         #endregion
     }
 }

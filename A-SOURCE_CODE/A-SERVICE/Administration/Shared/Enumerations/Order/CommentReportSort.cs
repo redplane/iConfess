@@ -2,7 +2,10 @@
 {
     public enum CommentReportSort
     {
-        Index,
+        Id,
+        CommentIndex,
+        CommentOwnerIndex,
+        CommentReporterIndex,
         Created
     }
 }

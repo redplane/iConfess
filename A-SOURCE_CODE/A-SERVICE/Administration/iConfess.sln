@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iConfess.Admin", "iConfess.Admin\iConfess.Admin.csproj", "{0ADE9646-30D3-48CE-BCDE-8A1684401973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipartFormDataMediaFormatter", "MultipartFormDataFormatter\MultipartFormDataMediaFormatter.csproj", "{1F851995-9C6B-4B34-82AF-AC4E075F00C2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iConfess.Database", "iConfess.Database\iConfess.Database.csproj", "{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iConfess.CloudMessageExchanger", "iConfess.CloudMessageExchanger\iConfess.CloudMessageExchanger.csproj", "{C8A7B342-4254-4C20-AC23-919C63EF44EC}"
@@ -27,10 +25,6 @@ Global
 		{0ADE9646-30D3-48CE-BCDE-8A1684401973}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ADE9646-30D3-48CE-BCDE-8A1684401973}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ADE9646-30D3-48CE-BCDE-8A1684401973}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F851995-9C6B-4B34-82AF-AC4E075F00C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F851995-9C6B-4B34-82AF-AC4E075F00C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F851995-9C6B-4B34-82AF-AC4E075F00C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F851995-9C6B-4B34-82AF-AC4E075F00C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}.Release|Any CPU.ActiveCfg = Release|Any CPU

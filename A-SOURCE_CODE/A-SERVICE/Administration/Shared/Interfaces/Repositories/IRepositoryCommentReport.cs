@@ -12,14 +12,7 @@ namespace Shared.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         Task<CommentReport> InitiateCommentReportAsync(CommentReport commentReport);
-
-        /// <summary>
-        ///     Find comment report asynchronously.
-        /// </summary>
-        /// <returns></returns>
-        /// <param name="parameters"></param>
-        Task<ResponseCommentReportsViewModel> FindCommentReportsAsync(FindCommentReportsViewModel parameters);
-
+        
         /// <summary>
         ///     Delete comment reports asynchronously with specific information.
         /// </summary>

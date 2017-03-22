@@ -31,12 +31,12 @@ namespace Shared.Interfaces.Repositories
         /// <param name="comments"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        IQueryable<Comment> FindComments(IQueryable<Comment> comments, FindCommentsViewModel conditions);
+        IQueryable<Comment> Find(IQueryable<Comment> comments, FindCommentsViewModel conditions);
 
         /// <summary>
         /// Find all comments from database.
         /// </summary>
         /// <returns></returns>
-        IQueryable<Comment> FindComments();
+        IQueryable<Comment> Find();
     }
 }

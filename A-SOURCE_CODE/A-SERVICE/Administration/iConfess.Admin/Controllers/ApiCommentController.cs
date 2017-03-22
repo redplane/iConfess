@@ -187,8 +187,8 @@ namespace iConfess.Admin.Controllers
                     condition.OwnerIndex = account.Id;
 
                 // Find categories by using specific conditions.
-                var comments = _unitOfWork.RepositoryComments.FindComments();
-                comments = _unitOfWork.RepositoryComments.FindComments(comments, condition);
+                var comments = _unitOfWork.RepositoryComments.Find();
+                comments = _unitOfWork.RepositoryComments.Find(comments, condition);
                 
                 #endregion
 
@@ -259,8 +259,8 @@ namespace iConfess.Admin.Controllers
                     conditions.OwnerIndex = account.Id;
 
                 // Find all comments in database.
-                var comments = _unitOfWork.RepositoryComments.FindComments();
-                comments = _unitOfWork.RepositoryComments.FindComments(comments, conditions);
+                var comments = _unitOfWork.RepositoryComments.Find();
+                comments = _unitOfWork.RepositoryComments.Find(comments, conditions);
 
                 // Loop through every found comments.
                 foreach (var comment in comments)
@@ -360,7 +360,7 @@ namespace iConfess.Admin.Controllers
                 #region Find comments
 
                 // Find all comment in database.
-                var comments = _unitOfWork.RepositoryComments.FindComments();
+                var comments = _unitOfWork.RepositoryComments.Find();
                 comments = comments.Where(x => x.Id == index);
 
                 // Find all account in database.
@@ -427,8 +427,8 @@ namespace iConfess.Admin.Controllers
                 conditions.LastModified = searchCommentsDetailsCondition.LastModified;
                 conditions.Pagination = searchCommentsDetailsCondition.Pagination;
 
-                var comments = _unitOfWork.RepositoryComments.FindComments();
-                comments = _unitOfWork.RepositoryComments.FindComments(comments, conditions);
+                var comments = _unitOfWork.RepositoryComments.Find();
+                comments = _unitOfWork.RepositoryComments.Find(comments, conditions);
 
                 // Find accounts from database.
                 var accounts = _unitOfWork.RepositoryAccounts.Find();

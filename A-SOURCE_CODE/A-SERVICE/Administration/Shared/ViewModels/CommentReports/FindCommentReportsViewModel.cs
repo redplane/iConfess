@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using Shared.Enumerations.Order;
+using Shared.Models;
 
 namespace Shared.ViewModels.CommentReports
 {
@@ -33,6 +34,16 @@ namespace Shared.ViewModels.CommentReports
         ///     Reason of report.
         /// </summary>
         public TextSearch Reason { get; set; }
+
+        /// <summary>
+        /// Which property should be sorted.
+        /// </summary>
+        public CommentReportSort Sort { get; set; }
+
+        /// <summary>
+        /// Sort direction.
+        /// </summary>
+        public SortDirection Direction { get; set; }
 
         /// <summary>
         ///     When the comment should be created.
