@@ -22,7 +22,7 @@ namespace Shared.Interfaces.Repositories
         ///     Find all comment reports in database.
         /// </summary>
         /// <returns></returns>
-        IQueryable<CommentReport> FindCommentReports();
+        IQueryable<CommentReport> Find();
 
         /// <summary>
         ///     Find comment report by using specific conditions.
@@ -30,7 +30,7 @@ namespace Shared.Interfaces.Repositories
         /// <param name="commentReports"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        IQueryable<CommentReport> FindCommentReports(IQueryable<CommentReport> commentReports,
+        IQueryable<CommentReport> Find(IQueryable<CommentReport> commentReports,
             FindCommentReportsViewModel conditions);
     }
 }

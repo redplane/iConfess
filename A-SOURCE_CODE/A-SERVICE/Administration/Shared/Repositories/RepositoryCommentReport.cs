@@ -46,7 +46,7 @@ namespace Shared.Repositories
             var commentReports = _dbContextWrapper.CommentReports.AsQueryable();
 
             // Find all comment reports with specific conditions.
-            commentReports = FindCommentReports(commentReports, parameters);
+            commentReports = Find(commentReports, parameters);
 
             // Delete all found comment reports.
             _dbContextWrapper.CommentReports.RemoveRange(commentReports);
@@ -68,7 +68,7 @@ namespace Shared.Repositories
         ///     Find all comment reports in database.
         /// </summary>
         /// <returns></returns>
-        public IQueryable<CommentReport> FindCommentReports()
+        public IQueryable<CommentReport> Find()
         {
             return _dbContextWrapper.CommentReports.AsQueryable();
         }
@@ -79,7 +79,7 @@ namespace Shared.Repositories
         /// <param name="commentReports"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<CommentReport> FindCommentReports(IQueryable<CommentReport> commentReports,
+        public IQueryable<CommentReport> Find(IQueryable<CommentReport> commentReports,
             FindCommentReportsViewModel conditions)
         {
             // Index is specified.

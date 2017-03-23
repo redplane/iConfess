@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using iConfess.Database.Models.Tables;
 
 namespace Shared.ViewModels.CommentReports
 {
@@ -8,7 +7,7 @@ namespace Shared.ViewModels.CommentReports
         /// <summary>
         ///     List of comment reports which has been filtered.
         /// </summary>
-        public IList<CommentReport> CommentReports { get; set; }
+        public IList<CommentReportDetailViewModel> CommentReports { get; set; }
 
         /// <summary>
         ///     Total records number which matches with conditions.

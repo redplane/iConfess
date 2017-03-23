@@ -258,10 +258,43 @@ namespace iConfess.Admin.Controllers
                     condition.CommentReporterIndex = account.Id;
 
                 // Find comment reports with specific conditions.
-                var commentReports = UnitOfWork.RepositoryCommentReports.FindCommentReports();
-                commentReports = UnitOfWork.RepositoryCommentReports.FindCommentReports(commentReports, condition);
+                var commentReports = UnitOfWork.RepositoryCommentReports.Find();
+                commentReports = UnitOfWork.RepositoryCommentReports.Find(commentReports, condition);
                 commentReports = _commonRepositoryService.Sort(commentReports, condition.Direction, condition.Sort);
+                
+                // Find all accounts.
+                var accounts = UnitOfWork.RepositoryAccounts.Find();
 
+                // Find all comments.
+                var comments = UnitOfWork.RepositoryComments.Find();
+
+                // Find all posts.
+                var posts = UnitOfWork.RepositoryPosts.Find();
+
+                // Find comment report details
+                var commentReportDetails = from commentReport in commentReports
+                                                  from commentOwner in accounts
+                                                  from commentReporter in accounts
+                                                  from comment in comments
+                                                  from post in posts
+                                                  where (commentReport.CommentOwnerIndex == commentOwner.Id)
+                                                        && (commentReport.CommentReporterIndex == commentReporter.Id)
+                                                        && (commentReport.PostIndex == post.Id)
+                                                        && (commentReport.CommentIndex == comment.Id)
+                                                  select new CommentReportDetailViewModel
+                                                  {
+                                                      Id = commentReport.Id,
+                                                      Comment = comment,
+                                                      Post = post,
+                                                      Body = commentReport.Body,
+                                                      Reason = commentReport.Reason,
+                                                      Created = commentReport.Created
+                                                  };
+
+                #endregion
+
+                #region Comment report search
+                
                 // Initiate result.
                 var result = new ResponseCommentReportsViewModel();
 
@@ -269,10 +302,8 @@ namespace iConfess.Admin.Controllers
                 result.Total = await commentReports.CountAsync();
 
                 // Do pagination.
-                commentReports = _commonRepositoryService.Paginate(commentReports, condition.Pagination);
-
-                // Get the list of reports.
-                result.CommentReports = await commentReports.ToListAsync();
+                commentReportDetails = _commonRepositoryService.Paginate(commentReportDetails, condition.Pagination);
+                result.CommentReports = await commentReportDetails.ToListAsync();
 
                 #endregion
 
@@ -308,7 +339,7 @@ namespace iConfess.Admin.Controllers
                 #region Comment report search
 
                 // Find comment reports with specific conditions.
-                var commentReports = UnitOfWork.RepositoryCommentReports.FindCommentReports();
+                var commentReports = UnitOfWork.RepositoryCommentReports.Find();
 
                 // Account can only see the comments which it is their reporter.
                 if (account.Role != AccountRole.Admin)
