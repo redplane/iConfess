@@ -1,3 +1,5 @@
+using iConfess.Database.Models.Contextes;
+
 namespace iConfess.Database.Migrations
 {
     using System;
@@ -5,14 +7,14 @@ namespace iConfess.Database.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<iConfess.Database.Models.ConfessDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SqlServerDataContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(iConfess.Database.Models.ConfessDbContext context)
+        protected override void Seed(SqlServerDataContext context)
         {
             //  This method will be called after migrating to the latest version.
 

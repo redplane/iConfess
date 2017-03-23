@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
-using iConfess.Admin.ViewModels.ApiComment;
 using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
@@ -54,12 +53,12 @@ namespace iConfess.Admin.Controllers
         private readonly ITimeService _timeService;
 
         /// <summary>
-        /// Service which handles identity in request.
+        ///     Service which handles identity in request.
         /// </summary>
         private readonly IIdentityService _identityService;
 
         /// <summary>
-        /// Service which handles common repository business.
+        ///     Service which handles common repository business.
         /// </summary>
         private readonly ICommonRepositoryService _commonRepositoryService;
 
@@ -136,7 +135,10 @@ namespace iConfess.Admin.Controllers
                 commentReport.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 // Save record into database.
-                commentReport = await UnitOfWork.RepositoryCommentReports.InitiateCommentReportAsync(commentReport);
+                commentReport = UnitOfWork.RepositoryCommentReports.Initiate(commentReport);
+
+                // Commit changes to database.
+                await UnitOfWork.CommitAsync();
 
                 #endregion
 
@@ -240,7 +242,6 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-
                 #region Request identity search
 
                 // Find account which sends the current request.
@@ -285,7 +286,7 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        /// Find details of a comment report.
+        ///     Find details of a comment report.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -327,23 +328,24 @@ namespace iConfess.Admin.Controllers
 
                 // Find comment report details
                 var commentReportDetails = await (from commentReport in commentReports
-                                                  from commentOwner in accounts
-                                                  from commentReporter in accounts
-                                                  from comment in comments
-                                                  from post in posts
-                                                  where commentReport.CommentOwnerIndex == commentOwner.Id
-                                                        && commentReport.CommentReporterIndex == commentReporter.Id
-                                                        && commentReport.PostIndex == post.Id
-                                                        && commentReport.CommentIndex == comment.Id
-                                                  select new CommentReportDetailViewModel
-                                                  {
-                                                      Id = commentReport.Id,
-                                                      Comment = comment,
-                                                      Post = post,
-                                                      Body = commentReport.Body,
-                                                      Reason = commentReport.Reason,
-                                                      Created = commentReport.Created
-                                                  }).FirstOrDefaultAsync();
+                    from commentOwner in accounts
+                    from commentReporter in accounts
+                    from comment in comments
+                    from post in posts
+                    where (commentReport.CommentOwnerIndex == commentOwner.Id)
+                          && (commentReport.CommentReporterIndex == commentReporter.Id)
+                          && (commentReport.PostIndex == post.Id)
+                          && (commentReport.CommentIndex == comment.Id)
+                    select new CommentReportDetailViewModel
+                    {
+                        Id = commentReport.Id,
+                        Comment = comment,
+                        Post = post,
+                        Body = commentReport.Body,
+                        Reason = commentReport.Reason,
+                        Created = commentReport.Created
+                    }).FirstOrDefaultAsync();
+
                 #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK, commentReportDetails);

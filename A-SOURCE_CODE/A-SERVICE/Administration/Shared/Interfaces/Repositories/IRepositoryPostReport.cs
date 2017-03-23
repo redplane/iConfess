@@ -11,7 +11,7 @@ namespace Shared.Interfaces.Repositories
         ///     Create a post report asynchronously with specific conditions.
         /// </summary>
         /// <returns></returns>
-        Task<PostReport> InitiatePostReportAsync(PostReport postReport);
+        PostReport Initiate(PostReport postReport);
 
         /// <summary>
         ///     Find post reports by using specific conditions.

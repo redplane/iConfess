@@ -3,7 +3,9 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models;
+using iConfess.Database.Models.Contextes;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
@@ -19,7 +21,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Instance which is used for accessing database context.
         /// </summary>
-        private readonly ConfessDbContext _iConfessDbContext;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
@@ -28,9 +30,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with inversion of control.
         /// </summary>
-        public RepositoryPost(ConfessDbContext iConfessionDbContext)
+        public RepositoryPost(IDbContextWrapper dbContextWrapper)
         {
-            _iConfessDbContext = iConfessionDbContext;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -45,7 +47,7 @@ namespace Shared.Repositories
         public void Initiate(Post post)
         {
             // Add or update the record.
-            _iConfessDbContext.Posts.AddOrUpdate(post);
+            _dbContextWrapper.Posts.AddOrUpdate(post);
         }
 
         /// <summary>
@@ -132,30 +134,30 @@ namespace Shared.Repositories
         public void Delete(FindPostViewModel conditions)
         {
             // Find posts by using specific conditions.
-            var posts = FindPosts(_iConfessDbContext.Posts.AsQueryable(), conditions);
+            var posts = FindPosts(_dbContextWrapper.Posts.AsQueryable(), conditions);
 
             foreach (var post in posts)
             {
                 // Delete all comments related to the post.
-                var comments = _iConfessDbContext.Comments.Where(x => x.PostIndex == post.Id);
-                _iConfessDbContext.Comments.RemoveRange(comments);
+                var comments = _dbContextWrapper.Comments.Where(x => x.PostIndex == post.Id);
+                _dbContextWrapper.Comments.RemoveRange(comments);
 
                 // Delete all reports related to post.
-                var postReports = _iConfessDbContext.PostReports.Where(x => x.PostIndex == post.Id);
-                _iConfessDbContext.PostReports.RemoveRange(postReports);
+                var postReports = _dbContextWrapper.PostReports.Where(x => x.PostIndex == post.Id);
+                _dbContextWrapper.PostReports.RemoveRange(postReports);
 
                 // Delete all comment reports.
-                var commentReports = _iConfessDbContext.CommentReports.Where(x => x.PostIndex == post.Id);
-                _iConfessDbContext.CommentReports.RemoveRange(commentReports);
+                var commentReports = _dbContextWrapper.CommentReports.Where(x => x.PostIndex == post.Id);
+                _dbContextWrapper.CommentReports.RemoveRange(commentReports);
 
                 // Delete all post notifications.
-                var postNotifications = _iConfessDbContext.NotificationPosts.Where(x => x.PostIndex == post.Id);
-                _iConfessDbContext.NotificationPosts.RemoveRange(postNotifications);
+                var postNotifications = _dbContextWrapper.NotificationPosts.Where(x => x.PostIndex == post.Id);
+                _dbContextWrapper.NotificationPosts.RemoveRange(postNotifications);
 
                 // Delete all comment notifications.
                 var commentNotifications =
-                    _iConfessDbContext.NotificationComments.Where(x => x.PostIndex == post.Id);
-                _iConfessDbContext.NotificationComments.RemoveRange(commentNotifications);
+                    _dbContextWrapper.NotificationComments.Where(x => x.PostIndex == post.Id);
+                _dbContextWrapper.NotificationComments.RemoveRange(commentNotifications);
             }
         }
 
@@ -250,7 +252,7 @@ namespace Shared.Repositories
         /// <returns></returns>
         public IQueryable<Post> Find()
         {
-            return _iConfessDbContext.Posts.AsQueryable();
+            return _dbContextWrapper.Posts.AsQueryable();
         }
 
         #endregion

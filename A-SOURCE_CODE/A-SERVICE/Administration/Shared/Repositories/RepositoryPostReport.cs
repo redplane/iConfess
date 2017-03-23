@@ -3,7 +3,9 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models;
+using iConfess.Database.Models.Contextes;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
@@ -19,7 +21,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Instance which is used for accessing database context.
         /// </summary>
-        private readonly ConfessDbContext _iConfessDbContext;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
@@ -28,9 +30,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with inversion of control.
         /// </summary>
-        public RepositoryPostReport(ConfessDbContext iConfessionDbContext)
+        public RepositoryPostReport(IDbContextWrapper dbContextWrapper)
         {
-            _iConfessDbContext = iConfessionDbContext;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -42,14 +44,10 @@ namespace Shared.Repositories
         /// </summary>
         /// <param name="postReport"></param>
         /// <returns></returns>
-        public async Task<PostReport> InitiatePostReportAsync(PostReport postReport)
+        public PostReport Initiate(PostReport postReport)
         {
             // Add or update the record.
-            _iConfessDbContext.PostReports.AddOrUpdate(postReport);
-
-            // Save changes into database.
-            await _iConfessDbContext.SaveChangesAsync();
-
+            _dbContextWrapper.PostReports.AddOrUpdate(postReport);
             return postReport;
         }
 
@@ -97,10 +95,10 @@ namespace Shared.Repositories
         public void Delete(FindPostReportsViewModel conditions)
         {
             // Find posts by using specific conditions.
-            var postReports = FindPostReports(_iConfessDbContext.PostReports.AsQueryable(), conditions);
+            var postReports = FindPostReports(_dbContextWrapper.PostReports.AsQueryable(), conditions);
 
             // Delete all searched records.
-            _iConfessDbContext.PostReports.RemoveRange(postReports);
+            _dbContextWrapper.PostReports.RemoveRange(postReports);
         }
 
         /// <summary>
@@ -109,7 +107,7 @@ namespace Shared.Repositories
         /// <returns></returns>
         public IQueryable<PostReport> FindPostReports()
         {
-            return _iConfessDbContext.PostReports.AsQueryable();
+            return _dbContextWrapper.PostReports.AsQueryable();
         }
 
         /// <summary>

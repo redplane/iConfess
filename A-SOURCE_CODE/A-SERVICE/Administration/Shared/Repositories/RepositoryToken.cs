@@ -3,7 +3,8 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
-using iConfess.Database.Models;
+using iConfess.Database.Interfaces;
+using iConfess.Database.Models.Contextes;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
@@ -19,7 +20,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Database context which provides access to database.
         /// </summary>
-        private readonly ConfessDbContext _iConfessDbContext;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
@@ -28,10 +29,10 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with dependency injection.
         /// </summary>
-        /// <param name="iConfessDbContext"></param>
-        public RepositoryToken(ConfessDbContext iConfessDbContext)
+        /// <param name="dbContextWrapper"></param>
+        public RepositoryToken(IDbContextWrapper dbContextWrapper)
         {
-            _iConfessDbContext = iConfessDbContext;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -46,58 +47,13 @@ namespace Shared.Repositories
         public void Delete(FindTokensViewModel conditions)
         {
             // Find tokens with specific conditions.
-            var tokens = _iConfessDbContext.Tokens.AsQueryable();
-            tokens = FindTokens(tokens, conditions);
+            var tokens = _dbContextWrapper.Tokens.AsQueryable();
+            tokens = Find(tokens, conditions);
 
             // Delete 'em all.
-            _iConfessDbContext.Tokens.RemoveRange(tokens);
+            _dbContextWrapper.Tokens.RemoveRange(tokens);
         }
-
-        /// <summary>
-        /// Find token asychronously using specific conditions.
-        /// </summary>
-        /// <param name="conditions"></param>
-        /// <returns></returns>
-        public Task<Token> FindTokenAsync(FindTokensViewModel conditions)
-        {
-            // Result initialization.
-            var findTokensResultViewModel = new FindTokensResultViewModel();
-
-            // Token search.
-            var tokens = _iConfessDbContext.Tokens.AsQueryable();
-            tokens = FindTokens(tokens, conditions);
-            return tokens.FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        /// Find tokens by using specific conditions asynchronously.
-        /// </summary>
-        /// <param name="conditions"></param>
-        /// <returns></returns>
-        public async Task<FindTokensResultViewModel> FindTokensAsync(FindTokensViewModel conditions)
-        {
-            // Result initialization.
-            var findTokensResultViewModel = new FindTokensResultViewModel();
-
-            // Token search.
-            var tokens = _iConfessDbContext.Tokens.AsQueryable();
-            tokens = FindTokens(tokens, conditions);
-
-            // Count the number of matched records.
-            findTokensResultViewModel.Total = await tokens.CountAsync();
-
-            // Do pagination.
-            if (conditions.Pagination != null)
-            {
-                var pagination = conditions.Pagination;
-                tokens = tokens.Skip(pagination.Index*pagination.Records).Take(pagination.Records);
-            }
-
-            
-            findTokensResultViewModel.Tokens = tokens;
-            return findTokensResultViewModel;
-        }
-
+        
         /// <summary>
         /// Initiate a token into database.
         /// </summary>
@@ -105,7 +61,7 @@ namespace Shared.Repositories
         /// <returns></returns>
         public Token Initiate(Token token)
         {
-            _iConfessDbContext.Tokens.AddOrUpdate(token);
+            _dbContextWrapper.Tokens.AddOrUpdate(token);
             return token;
         }
 
@@ -115,7 +71,7 @@ namespace Shared.Repositories
         /// <param name="tokens"></param>
         /// <param name="findTokensCondition"></param>
         /// <returns></returns>
-        public IQueryable<Token> FindTokens(IQueryable<Token> tokens, FindTokensViewModel findTokensCondition)
+        public IQueryable<Token> Find(IQueryable<Token> tokens, FindTokensViewModel findTokensCondition)
         {
             // Owner index are specified.
             if (findTokensCondition.OwnerIndexes != null)
@@ -218,9 +174,9 @@ namespace Shared.Repositories
         /// Find tokens from database.
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Token> FindTokens()
+        public IQueryable<Token> Find()
         {
-            return _iConfessDbContext.Tokens.AsQueryable();
+            return _dbContextWrapper.Tokens.AsQueryable();
         }
 
         #endregion

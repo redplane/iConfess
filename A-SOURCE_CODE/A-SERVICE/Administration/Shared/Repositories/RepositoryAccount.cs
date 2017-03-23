@@ -3,7 +3,8 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
-using iConfess.Database.Models;
+using iConfess.Database.Interfaces;
+using iConfess.Database.Models.Contextes;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
@@ -19,7 +20,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Database context which provides access to database.
         /// </summary>
-        private readonly ConfessDbContext _iConfessDbContext;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
@@ -28,10 +29,10 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with dependency injection.
         /// </summary>
-        /// <param name="iConfessDbContext"></param>
-        public RepositoryAccount(ConfessDbContext iConfessDbContext)
+        /// <param name="dbContextWrapper"></param>
+        public RepositoryAccount(IDbContextWrapper dbContextWrapper)
         {
-            _iConfessDbContext = iConfessDbContext;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -46,11 +47,11 @@ namespace Shared.Repositories
         public void Delete(FindAccountsViewModel conditions)
         {
             // Find all accounts in database.
-            var accounts = _iConfessDbContext.Accounts.AsQueryable();
+            var accounts = _dbContextWrapper.Accounts.AsQueryable();
 
             // Find accounts by using conditions.
             accounts = Find(accounts, conditions);
-            
+
             throw new NotImplementedException();
         }
 
@@ -61,7 +62,7 @@ namespace Shared.Repositories
         public async Task<ResponseAccountsViewModel> FindAccountsAsync(FindAccountsViewModel conditions)
         {
             // Find all accounts in database.
-            var accounts = _iConfessDbContext.Accounts.AsQueryable();
+            var accounts = _dbContextWrapper.Accounts.AsQueryable();
 
             // Find accounts with conditions.
             accounts = Find(accounts, conditions);
@@ -136,14 +137,14 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        ///  Find account by using specific conditions.
+        ///     Find account by using specific conditions.
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
         public async Task<Account> FindAccountAsync(FindAccountsViewModel conditions)
         {
             // Find all accounts in database.
-            var accounts = _iConfessDbContext.Accounts.AsQueryable();
+            var accounts = _dbContextWrapper.Accounts.AsQueryable();
 
             // Find accounts with conditions.
             accounts = Find(accounts, conditions);
@@ -198,7 +199,7 @@ namespace Shared.Repositories
                     }
                     break;
             }
-            
+
             return await accounts.FirstOrDefaultAsync();
         }
 
@@ -209,13 +210,13 @@ namespace Shared.Repositories
         public Account Initiate(Account account)
         {
             // Add / update account.
-            _iConfessDbContext.Accounts.AddOrUpdate(account);
-            
+            _dbContextWrapper.Accounts.AddOrUpdate(account);
+
             return account;
         }
 
         /// <summary>
-        /// Find accounts using specific conditions.
+        ///     Find accounts using specific conditions.
         /// </summary>
         /// <param name="accounts"></param>
         /// <param name="conditions"></param>
@@ -301,14 +302,14 @@ namespace Shared.Repositories
 
             return accounts;
         }
-        
+
         /// <summary>
-        /// Find all accounts in database.
+        ///     Find all accounts in database.
         /// </summary>
         /// <returns></returns>
         public IQueryable<Account> Find()
         {
-            return _iConfessDbContext.Accounts.AsQueryable();
+            return _dbContextWrapper.Accounts.AsQueryable();
         }
 
         #endregion

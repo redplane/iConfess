@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using iConfess.Database.Models.Tables;
 using Shared.ViewModels.CommentReports;
 
@@ -11,8 +10,8 @@ namespace Shared.Interfaces.Repositories
         ///     Initiate / update comment report with specific information.
         /// </summary>
         /// <returns></returns>
-        Task<CommentReport> InitiateCommentReportAsync(CommentReport commentReport);
-        
+        CommentReport Initiate(CommentReport commentReport);
+
         /// <summary>
         ///     Delete comment reports asynchronously with specific information.
         /// </summary>
@@ -20,13 +19,13 @@ namespace Shared.Interfaces.Repositories
         void Delete(FindCommentReportsViewModel parameters);
 
         /// <summary>
-        /// Find all comment reports in database.
+        ///     Find all comment reports in database.
         /// </summary>
         /// <returns></returns>
         IQueryable<CommentReport> FindCommentReports();
 
-            /// <summary>
-        /// Find comment report by using specific conditions.
+        /// <summary>
+        ///     Find comment report by using specific conditions.
         /// </summary>
         /// <param name="commentReports"></param>
         /// <param name="conditions"></param>

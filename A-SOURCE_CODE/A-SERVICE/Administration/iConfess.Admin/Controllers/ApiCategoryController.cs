@@ -186,32 +186,16 @@ namespace iConfess.Admin.Controllers
                 #endregion
 
                 #region Information update
-
-                // Begin transaction.
-                using (var transaction = UnitOfWork.Context.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        // Find unix system time.
-                        var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
+                
+                // Find unix system time.
+                var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
                         
-                        // Modify information.
-                        category.Name = parameters.Name;
-                        category.LastModified = unixSystemTime;
+                // Modify information.
+                category.Name = parameters.Name;
+                category.LastModified = unixSystemTime;
                         
-                        // Save changes into database.
-                        await UnitOfWork.CommitAsync();
-
-                        // Save changes into database.
-                        transaction.Commit();
-                    }
-                    catch
-                    {
-                        // Rollback transaction.
-                        transaction.Rollback();
-                        throw;
-                    }
-                }
+                // Save changes into database.
+                await UnitOfWork.CommitAsync();
 
                 #endregion
 

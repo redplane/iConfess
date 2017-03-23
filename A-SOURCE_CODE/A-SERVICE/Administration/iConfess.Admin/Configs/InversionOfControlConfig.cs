@@ -12,7 +12,9 @@ using iConfess.Admin.Interfaces.Services;
 using iConfess.Admin.Modules;
 using iConfess.Admin.Providers;
 using iConfess.Admin.Services;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models;
+using iConfess.Database.Models.Contextes;
 using log4net.Config;
 using Microsoft.AspNet.SignalR;
 using Shared.Enumerations;
@@ -50,7 +52,7 @@ namespace iConfess.Admin.Configs
             #region Unit of work & Database context
 
             // Database context initialization.
-            containerBuilder.RegisterType<ConfessDbContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<SqlServerDataContext>().As<IDbContextWrapper>().InstancePerLifetimeScope();
 
             // Unit of work registration.
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();

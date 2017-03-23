@@ -113,8 +113,9 @@ namespace iConfess.Admin.Controllers
                 postReport.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 // Initiate post report into database.
-                postReport = await _unitOfWork.RepositoryPostReports.InitiatePostReportAsync(postReport);
+                postReport = _unitOfWork.RepositoryPostReports.Initiate(postReport);
 
+                // Commit changes.
                 #endregion
 
                 // Tell the client about the post report.

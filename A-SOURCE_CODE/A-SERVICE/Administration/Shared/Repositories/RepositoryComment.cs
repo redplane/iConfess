@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
-using iConfess.Database.Models;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
@@ -19,7 +19,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Provides functions to access to database.
         /// </summary>
-        private readonly ConfessDbContext _iConfessDbContext;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
@@ -28,10 +28,10 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with database context.
         /// </summary>
-        /// <param name="iConfessDbContext"></param>
-        public RepositoryComment(ConfessDbContext iConfessDbContext)
+        /// <param name="dbContextWrapper"></param>
+        public RepositoryComment(IDbContextWrapper dbContextWrapper)
         {
-            _iConfessDbContext = iConfessDbContext;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -46,18 +46,18 @@ namespace Shared.Repositories
         public void Delete(FindCommentsViewModel conditions)
         {
             // Find comments which match with conditions.
-            var comments = Find(_iConfessDbContext.Comments.AsQueryable(), conditions);
+            var comments = Find(_dbContextWrapper.Comments.AsQueryable(), conditions);
 
             foreach (var comment in comments)
             {
                 // Find all comment reports.
-                var commentReports = _iConfessDbContext.CommentReports.AsQueryable();
+                var commentReports = _dbContextWrapper.CommentReports.AsQueryable();
                 commentReports = commentReports.Where(x => x.CommentIndex == comment.Id);
-                _iConfessDbContext.CommentReports.RemoveRange(commentReports);
+                _dbContextWrapper.CommentReports.RemoveRange(commentReports);
             }
 
             // Delete all found comments.
-            _iConfessDbContext.Comments.RemoveRange(comments);
+            _dbContextWrapper.Comments.RemoveRange(comments);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Shared.Repositories
         public async Task<ResponseCommentsViewModel> FindCommentsAsync(FindCommentsViewModel conditions)
         {
             // Find all comments first.
-            var comments = _iConfessDbContext.Comments.AsQueryable();
+            var comments = _dbContextWrapper.Comments.AsQueryable();
             comments = Find(comments, conditions);
             comments = SortComments(comments, conditions);
 
@@ -99,7 +99,7 @@ namespace Shared.Repositories
         public void Initiate(Comment comment)
         {
             // Initiate / update comment into database.
-            _iConfessDbContext.Comments.AddOrUpdate(comment);
+            _dbContextWrapper.Comments.AddOrUpdate(comment);
         }
 
         /// <summary>
@@ -174,12 +174,12 @@ namespace Shared.Repositories
                 if (lastModified.To != null)
                     comments = comments.Where(x => x.LastModified <= lastModified.To.Value);
             }
-            
+
             return comments;
         }
 
         /// <summary>
-        /// Sort comments by using specific conditions.
+        ///     Sort comments by using specific conditions.
         /// </summary>
         /// <param name="comments"></param>
         /// <param name="conditions"></param>
@@ -235,12 +235,12 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Find comments from database.
+        ///     Find comments from database.
         /// </summary>
         /// <returns></returns>
         public IQueryable<Comment> Find()
         {
-            return _iConfessDbContext.Comments.AsQueryable();
+            return _dbContextWrapper.Comments.AsQueryable();
         }
 
         #endregion

@@ -1,17 +1,20 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Threading.Tasks;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
 
-namespace iConfess.Database.Models
+namespace iConfess.Database.Models.Contextes
 {
-    public class ConfessDbContext : DbContext
+    public class SqlServerDataContext : DbContext, IDbContextWrapper
     {
         #region Constructor
 
         /// <summary>
         ///     Initiate database context with connection string.
         /// </summary>
-        public ConfessDbContext() : base("iConfess")
+        public SqlServerDataContext() : base("iConfess")
         {
         }
 
@@ -429,6 +432,24 @@ namespace iConfess.Database.Models
                 x.OwnerIndex,
                 x.Type
             });
+        }
+
+        /// <summary>
+        /// Commit changes to database.
+        /// </summary>
+        /// <returns></returns>
+        public int Commit()
+        {
+            return SaveChanges();
+        }
+
+        /// <summary>
+        /// Commit changes to database asychronously.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> CommitAsync()
+        {
+            return await SaveChangesAsync();
         }
 
         #endregion

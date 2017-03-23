@@ -57,6 +57,7 @@
     <Compile Include="Enumerations\AccountStatus.cs" />
     <Compile Include="Enumerations\NotificationType.cs" />
     <Compile Include="Enumerations\TokenType.cs" />
+    <Compile Include="Interfaces\IDbContextWrapper.cs" />
     <Compile Include="Migrations\201702011320531_20170201001.cs" />
     <Compile Include="Migrations\201702011320531_20170201001.Designer.cs">
       <DependentUpon>201702011320531_20170201001.cs</DependentUpon>
@@ -69,7 +70,7 @@
     <Compile Include="Models\Tables\Account.cs" />
     <Compile Include="Models\Tables\Category.cs" />
     <Compile Include="Models\Tables\Comment.cs" />
-    <Compile Include="Models\ConfessDbContext.cs" />
+    <Compile Include="Models\Contextes\SqlServerDataContext.cs" />
     <Compile Include="Models\Tables\FollowCategory.cs" />
     <Compile Include="Models\Tables\FollowPost.cs" />
     <Compile Include="Models\Tables\NotificationComment.cs" />
@@ -95,6 +96,7 @@
       <DependentUpon>201702031726039_20170204001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

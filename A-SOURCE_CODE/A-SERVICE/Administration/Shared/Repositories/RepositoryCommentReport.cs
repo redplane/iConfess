@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Threading.Tasks;
-using iConfess.Database.Models;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -18,7 +16,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Provides access to database.
         /// </summary>
-        private readonly ConfessDbContext _iConfessDbContext;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
@@ -27,10 +25,10 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository of comment reports.
         /// </summary>
-        /// <param name="iConfessDbContext"></param>
-        public RepositoryCommentReport(ConfessDbContext iConfessDbContext)
+        /// <param name="dbContextWrapper"></param>
+        public RepositoryCommentReport(IDbContextWrapper dbContextWrapper)
         {
-            _iConfessDbContext = iConfessDbContext;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -45,38 +43,34 @@ namespace Shared.Repositories
         public void Delete(FindCommentReportsViewModel parameters)
         {
             // Find all comment reports first.
-            var commentReports = _iConfessDbContext.CommentReports.AsQueryable();
+            var commentReports = _dbContextWrapper.CommentReports.AsQueryable();
 
             // Find all comment reports with specific conditions.
             commentReports = FindCommentReports(commentReports, parameters);
 
             // Delete all found comment reports.
-            _iConfessDbContext.CommentReports.RemoveRange(commentReports);
+            _dbContextWrapper.CommentReports.RemoveRange(commentReports);
         }
-        
+
         /// <summary>
         ///     Initiate / update comment report.
         /// </summary>
         /// <param name="commentReport"></param>
         /// <returns></returns>
-        public async Task<CommentReport> InitiateCommentReportAsync(CommentReport commentReport)
+        public CommentReport Initiate(CommentReport commentReport)
         {
             // Insert / update comment report.
-            _iConfessDbContext.CommentReports.AddOrUpdate(commentReport);
-
-            // Save changes into database.
-            await _iConfessDbContext.SaveChangesAsync();
-
+            _dbContextWrapper.CommentReports.AddOrUpdate(commentReport);
             return commentReport;
         }
 
         /// <summary>
-        /// Find all comment reports in database.
+        ///     Find all comment reports in database.
         /// </summary>
         /// <returns></returns>
         public IQueryable<CommentReport> FindCommentReports()
         {
-            return _iConfessDbContext.CommentReports.AsQueryable();
+            return _dbContextWrapper.CommentReports.AsQueryable();
         }
 
         /// <summary>
@@ -162,7 +156,7 @@ namespace Shared.Repositories
 
             return commentReports;
         }
-        
+
         #endregion
     }
 }

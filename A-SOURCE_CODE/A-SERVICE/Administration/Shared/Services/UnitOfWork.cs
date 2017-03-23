@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using iConfess.Database.Models;
+using iConfess.Database.Interfaces;
 using Shared.Interfaces.Repositories;
 using Shared.Interfaces.Services;
 using Shared.Repositories;
@@ -14,10 +14,10 @@ namespace Shared.Services
         /// <summary>
         ///     Initiate unit of work with database context provided by Entity Framework.
         /// </summary>
-        /// <param name="iConfessDbContext"></param>
-        public UnitOfWork(ConfessDbContext iConfessDbContext)
+        /// <param name="dbContextWrapper"></param>
+        public UnitOfWork(IDbContextWrapper dbContextWrapper)
         {
-            _iConfessDbContext = iConfessDbContext;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -32,7 +32,7 @@ namespace Shared.Services
         /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
-        private readonly ConfessDbContext _iConfessDbContext;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
@@ -69,21 +69,21 @@ namespace Shared.Services
         private IRepositoryPost _repositoryPost;
 
         /// <summary>
-        /// Provide access to token database.
+        ///     Provide access to token database.
         /// </summary>
         private IRepositoryToken _repositoryToken;
 
         /// <summary>
-        /// Provide access to signalr connection database.
+        ///     Provide access to signalr connection database.
         /// </summary>
         private IRepositorySignalrConnection _repositorySignalrConnection;
 
         /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
-        public ConfessDbContext Context
+        public IDbContextWrapper Context
         {
-            get { return _iConfessDbContext; }
+            get { return _dbContextWrapper; }
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Shared.Services
         /// </summary>
         public IRepositoryAccount RepositoryAccounts
         {
-            get { return _repositoryAccounts ?? (_repositoryAccounts = new RepositoryAccount(_iConfessDbContext)); }
+            get { return _repositoryAccounts ?? (_repositoryAccounts = new RepositoryAccount(_dbContextWrapper)); }
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Shared.Services
         {
             get
             {
-                return _repositoryCategories ?? (_repositoryCategories = new RepositoryCategory(_iConfessDbContext));
+                return _repositoryCategories ?? (_repositoryCategories = new RepositoryCategory(_dbContextWrapper));
             }
         }
 
@@ -110,7 +110,7 @@ namespace Shared.Services
         /// </summary>
         public IRepositoryComment RepositoryComments
         {
-            get { return _repositoryComment ?? (_repositoryComment = new RepositoryComment(_iConfessDbContext)); }
+            get { return _repositoryComment ?? (_repositoryComment = new RepositoryComment(_dbContextWrapper)); }
         }
 
 
@@ -118,26 +118,26 @@ namespace Shared.Services
         ///     Provides functions to access to post reports database.
         /// </summary>
         public IRepositoryPostReport RepositoryPostReports
-            => _repositoryPostReport ?? (_repositoryPostReport = new RepositoryPostReport(_iConfessDbContext));
+            => _repositoryPostReport ?? (_repositoryPostReport = new RepositoryPostReport(_dbContextWrapper));
 
         /// <summary>
         ///     Provides functions to access post database.
         /// </summary>
         public IRepositoryPost RepositoryPosts
         {
-            get { return _repositoryPost ?? (_repositoryPost = new RepositoryPost(_iConfessDbContext)); }
+            get { return _repositoryPost ?? (_repositoryPost = new RepositoryPost(_dbContextWrapper)); }
         }
 
         /// <summary>
-        /// Provides functions to access realtime connection database.
+        ///     Provides functions to access realtime connection database.
         /// </summary>
         public IRepositorySignalrConnection RepositorySignalrConnections
         {
-           get
-           {
-               return _repositorySignalrConnection ??
-                      (_repositorySignalrConnection = new RepositorySignalrConnection(_iConfessDbContext));
-           }
+            get
+            {
+                return _repositorySignalrConnection ??
+                       (_repositorySignalrConnection = new RepositorySignalrConnection(_dbContextWrapper));
+            }
         }
 
         /// <summary>
@@ -145,36 +145,37 @@ namespace Shared.Services
         /// </summary>
         public IRepositoryCommentReport RepositoryCommentReports => _repositoryCommentReport ??
                                                                     (_repositoryCommentReport =
-                                                                        new RepositoryCommentReport(_iConfessDbContext))
+                                                                        new RepositoryCommentReport(_dbContextWrapper))
             ;
 
         /// <summary>
-        /// Provides function to access token database.
+        ///     Provides function to access token database.
         /// </summary>
         public IRepositoryToken RepositoryTokens
         {
-            get { return _repositoryToken ?? (_repositoryToken = new RepositoryToken(_iConfessDbContext)); }
+            get { return _repositoryToken ?? (_repositoryToken = new RepositoryToken(_dbContextWrapper)); }
         }
+
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Save changes into database.
+        ///     Save changes into database.
         /// </summary>
         /// <returns></returns>
         public int Commit()
         {
-            return _iConfessDbContext.SaveChanges();
+            return _dbContextWrapper.Commit();
         }
 
         /// <summary>
-        /// Save changes into database asynchronously.
+        ///     Save changes into database asynchronously.
         /// </summary>
         /// <returns></returns>
         public async Task<int> CommitAsync()
         {
-            return await _iConfessDbContext.SaveChangesAsync();
+            return await _dbContextWrapper.CommitAsync();
         }
 
         /// <summary>
@@ -189,7 +190,7 @@ namespace Shared.Services
 
             // Object is being disposed.
             if (disposing)
-                _iConfessDbContext.Dispose();
+                _dbContextWrapper.Dispose();
 
             _disposed = true;
         }

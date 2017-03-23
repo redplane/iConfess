@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
@@ -214,7 +213,7 @@ namespace iConfess.Admin.Controllers
                 }
 
                 // Save changes into database.
-                await _unitOfWork.Context.SaveChangesAsync();
+                await _unitOfWork.CommitAsync();
 
                 #endregion
 

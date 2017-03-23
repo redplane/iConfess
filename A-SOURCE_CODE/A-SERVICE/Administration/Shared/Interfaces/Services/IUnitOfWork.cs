@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models;
+using iConfess.Database.Models.Contextes;
 using Shared.Interfaces.Repositories;
 
 namespace Shared.Interfaces.Services
@@ -51,7 +53,7 @@ namespace Shared.Interfaces.Services
         /// <summary>
         ///     iConfess database context.
         /// </summary>
-        ConfessDbContext Context { get; }
+        IDbContextWrapper Context { get; }
 
         #endregion
 

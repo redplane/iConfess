@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models;
+using iConfess.Database.Models.Contextes;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -14,21 +16,21 @@ namespace Shared.Repositories
         #region Properties
 
         /// <summary>
-        /// Database context.
+        /// Database dbContextWrapper.
         /// </summary>
-        private readonly ConfessDbContext _context;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initiate signalr connection repository with database context.
+        /// Initiate signalr connection repository with database dbContextWrapper.
         /// </summary>
-        /// <param name="context"></param>
-        public RepositorySignalrConnection(ConfessDbContext context)
+        /// <param name="dbContextWrapper"></param>
+        public RepositorySignalrConnection(IDbContextWrapper dbContextWrapper)
         {
-            _context = context;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -47,7 +49,7 @@ namespace Shared.Repositories
             // Find connections with specific conditions.
             signalrConnections = Find(signalrConnections, conditions);
 
-            _context.SignalrConnections.RemoveRange(signalrConnections);
+            _dbContextWrapper.SignalrConnections.RemoveRange(signalrConnections);
         }
 
         /// <summary>
@@ -56,7 +58,7 @@ namespace Shared.Repositories
         /// <returns></returns>
         public IQueryable<SignalrConnection> Find()
         {
-            return _context.SignalrConnections.AsQueryable();
+            return _dbContextWrapper.SignalrConnections.AsQueryable();
         }
 
         /// <summary>
@@ -114,7 +116,7 @@ namespace Shared.Repositories
         /// <param name="signalrConnection"></param>
         public void Initiate(SignalrConnection signalrConnection)
         {
-            _context.SignalrConnections.AddOrUpdate(signalrConnection);
+            _dbContextWrapper.SignalrConnections.AddOrUpdate(signalrConnection);
         }
 
         #endregion

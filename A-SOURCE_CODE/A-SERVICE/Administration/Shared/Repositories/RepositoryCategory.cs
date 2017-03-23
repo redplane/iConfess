@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
-using iConfess.Database.Models;
+using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
@@ -19,7 +19,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Provides functions to access to real database.
         /// </summary>
-        private readonly ConfessDbContext _iConfessDbContext;
+        private readonly IDbContextWrapper _dbContextWrapper;
 
         #endregion
 
@@ -28,10 +28,10 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with database context.
         /// </summary>
-        /// <param name="iConfessDbContext"></param>
-        public RepositoryCategory(ConfessDbContext iConfessDbContext)
+        /// <param name="dbContextWrapper"></param>
+        public RepositoryCategory(IDbContextWrapper dbContextWrapper)
         {
-            _iConfessDbContext = iConfessDbContext;
+            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -46,13 +46,13 @@ namespace Shared.Repositories
         public void Delete(FindCategoriesViewModel conditions)
         {
             // Find all categories.
-            var categories = _iConfessDbContext.Categories;
+            var categories = _dbContextWrapper.Categories;
 
             // Find categories by using specific conditions.
             var result = FindCategories(categories, conditions);
 
             // Remove all records which are filtered.
-            _iConfessDbContext.Categories.RemoveRange(result);
+            _dbContextWrapper.Categories.RemoveRange(result);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Shared.Repositories
         public async Task<ResponseCategoriesViewModel> FindCategoriesAsync(FindCategoriesViewModel conditions)
         {
             // Find all categories.
-            var categories = _iConfessDbContext.Categories;
+            var categories = _dbContextWrapper.Categories;
 
             // Response initialization.
             var responseCategoriesViewModel = new ResponseCategoriesViewModel();
@@ -160,7 +160,7 @@ namespace Shared.Repositories
         public async Task<Category> FindCategoryAsync(FindCategoriesViewModel conditions)
         {
             // Find all categories.
-            var categories = _iConfessDbContext.Categories;
+            var categories = _dbContextWrapper.Categories;
 
             // Find categories with specific conditions.
             return await FindCategories(categories, conditions).FirstOrDefaultAsync();
@@ -174,7 +174,7 @@ namespace Shared.Repositories
         public Category Initiate(Category category)
         {
             // Add or update a category.
-            _iConfessDbContext.Categories.AddOrUpdate(category);
+            _dbContextWrapper.Categories.AddOrUpdate(category);
             return category;
         }
 
@@ -245,12 +245,12 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Find all categories from database.
+        ///     Find all categories from database.
         /// </summary>
         /// <returns></returns>
         public IQueryable<Category> Find()
         {
-            return _iConfessDbContext.Categories.AsQueryable();
+            return _dbContextWrapper.Categories.AsQueryable();
         }
 
         #endregion
