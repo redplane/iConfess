@@ -238,7 +238,7 @@ namespace iConfess.Admin.Controllers
 
                 // Parameters are invalid.
                 if (!ModelState.IsValid)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, FindValidationMessage(ModelState, nameof(condition)));
 
                 #endregion
 
