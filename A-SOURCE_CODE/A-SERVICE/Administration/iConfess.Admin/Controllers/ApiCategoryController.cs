@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,6 +13,7 @@ using Shared.Enumerations;
 using Shared.Interfaces.Services;
 using Shared.Models;
 using Shared.Resources;
+using Shared.ViewModels;
 using Shared.ViewModels.Accounts;
 using Shared.ViewModels.Categories;
 
@@ -29,13 +31,18 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
+        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
-        public ApiCategoryController(IUnitOfWork unitOfWork,
-            ITimeService timeService, IIdentityService identityService,
+        public ApiCategoryController(
+            IUnitOfWork unitOfWork,
+            ITimeService timeService, 
+            IIdentityService identityService,
+            ICommonRepositoryService commonRepositoryService,
             ILog log) : base(unitOfWork)
         {
             _timeService = timeService;
             _identityService = identityService;
+            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
@@ -57,6 +64,11 @@ namespace iConfess.Admin.Controllers
         ///     Service which analyzes identity in request.
         /// </summary>
         private readonly IIdentityService _identityService;
+
+        /// <summary>
+        /// Service which handles common repository business.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         #endregion
 
@@ -89,7 +101,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Account validate
 
-                // Find account information attached in the current request.
+                // Search account information attached in the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 
                 if (account == null)
@@ -99,13 +111,14 @@ namespace iConfess.Admin.Controllers
 
                 #region Record duplicate check
 
-                var findCategoryConditions = new FindCategoriesViewModel();
+                var findCategoryConditions = new SearchCategoryViewModel();
                 findCategoryConditions.Name = new TextSearch();
                 findCategoryConditions.Name.Value = parameters.Name;
                 findCategoryConditions.Name.Mode = TextComparision.EqualIgnoreCase;
 
                 // Category has been created before.
-                var category = await UnitOfWork.RepositoryCategories.FindCategoryAsync(findCategoryConditions);
+                var categories = UnitOfWork.RepositoryCategories.Search();
+                var category = await UnitOfWork.RepositoryCategories.Search(categories, findCategoryConditions).FirstOrDefaultAsync();
                 if (category != null)
                 {
                     _log.Error($"Category with name : {parameters.Name} has been created before.");
@@ -116,10 +129,10 @@ namespace iConfess.Admin.Controllers
 
                 #region Record initialization
 
-                // Find current time on system.
+                // Search current time on system.
                 var systemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
-                // Find the id of requester.
+                // Search the id of requester.
                 //Initiate new category
                 category = new Category();
                 category.CreatorIndex = account.Id;
@@ -127,7 +140,7 @@ namespace iConfess.Admin.Controllers
                 category.Name = parameters.Name;
 
                 //Add category record
-                UnitOfWork.RepositoryCategories.Initiate(category);
+                UnitOfWork.RepositoryCategories.Insert(category);
 
                 // Save changes.
                 await UnitOfWork.CommitAsync();
@@ -170,13 +183,12 @@ namespace iConfess.Admin.Controllers
                 #endregion
 
                 #region Category search
-
-                // Find the category
-                var findCategoryViewModel = new FindCategoriesViewModel();
-                findCategoryViewModel.Id = index;
                 
-                // Find the category.
-                var category = await UnitOfWork.RepositoryCategories.FindCategoryAsync(findCategoryViewModel);
+                // Search the category.
+                var categories = UnitOfWork.RepositoryCategories.Search();
+                categories = categories.Where(x => x.Id == index);
+
+                var category = await categories.FirstOrDefaultAsync();
                 if (category == null)
                 {
                     _log.Error($"Category (Id: {index}) is not found in database.");
@@ -187,7 +199,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Information update
                 
-                // Find unix system time.
+                // Search unix system time.
                 var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
                         
                 // Modify information.
@@ -214,7 +226,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteCategories([FromBody] FindCategoriesViewModel conditions)
+        public async Task<HttpResponseMessage> DeleteCategories([FromBody] SearchCategoryViewModel conditions)
         {
             try
             {
@@ -223,7 +235,7 @@ namespace iConfess.Admin.Controllers
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindCategoriesViewModel();
+                    conditions = new SearchCategoryViewModel();
                     Validate(conditions);
                 }
 
@@ -236,7 +248,11 @@ namespace iConfess.Admin.Controllers
                 #region Record delete
 
                 // Delete categories by using specific conditions.
-                UnitOfWork.RepositoryCategories.Delete(conditions);
+                var categories = UnitOfWork.RepositoryCategories.Search();
+                categories = UnitOfWork.RepositoryCategories.Search(categories, conditions);
+
+                // Delete the list of categories.
+                UnitOfWork.RepositoryCategories.Remove(categories);
 
                 // Save changes into database.
                 var totalRecords = await UnitOfWork.CommitAsync();
@@ -263,7 +279,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
-        public async Task<HttpResponseMessage> FindCategories([FromBody] FindCategoriesViewModel conditions)
+        public async Task<HttpResponseMessage> FindCategories([FromBody] SearchCategoryViewModel conditions)
         {
             try
             {
@@ -272,7 +288,7 @@ namespace iConfess.Admin.Controllers
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindCategoriesViewModel();
+                    conditions = new SearchCategoryViewModel();
                     Validate(conditions);
                 }
 
@@ -285,14 +301,18 @@ namespace iConfess.Admin.Controllers
 
                 #region Records search
 
-                // Find all categories.
-                var findCategoriesResult = await UnitOfWork.RepositoryCategories.FindCategoriesAsync(conditions);
+                // Initiate search result.
+                var searchResult = new SearchResult<CategoryViewModel>();
 
-                // Find all accounts in the database.
-                var accounts = UnitOfWork.RepositoryAccounts.Find();
+                // Search all categories.
+                var categories = UnitOfWork.RepositoryCategories.Search();
+                categories = UnitOfWork.RepositoryCategories.Search(categories, conditions);
+
+                // Search all accounts in the database.
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
 
                 var apiCategories = from account in accounts
-                    from category in findCategoriesResult.Categories
+                    from category in categories
                     where account.Id == category.CreatorIndex
                     select new CategoryViewModel
                     {
@@ -312,11 +332,14 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                return Request.CreateResponse(HttpStatusCode.OK, new ResponseApiCategoriesViewModel
-                {
-                    Categories = apiCategories,
-                    Total = findCategoriesResult.Total
-                });
+                // Sort the results.
+                _commonRepositoryService.Sort(apiCategories, conditions.Direction, conditions.Sort);
+
+                // Update result.
+                searchResult.Total = await apiCategories.CountAsync();
+                searchResult.Records = _commonRepositoryService.Paginate(apiCategories, conditions.Pagination);
+
+                return Request.CreateResponse(HttpStatusCode.OK, searchResult);
             }
             catch (Exception exception)
             {

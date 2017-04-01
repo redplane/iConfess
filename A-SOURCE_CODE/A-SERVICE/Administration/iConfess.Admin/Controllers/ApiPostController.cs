@@ -12,6 +12,7 @@ using iConfess.Database.Models.Tables;
 using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
+using Shared.ViewModels;
 using Shared.ViewModels.Categories;
 using Shared.ViewModels.Posts;
 
@@ -30,15 +31,19 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
+        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
-        public ApiPostController(IUnitOfWork unitOfWork,
+        public ApiPostController(
+            IUnitOfWork unitOfWork,
             ITimeService timeService,
             IIdentityService identityService,
-            ILog log): base(unitOfWork)
+            ICommonRepositoryService commonRepositoryService,
+            ILog log) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
             _identityService = identityService;
+            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
@@ -60,6 +65,11 @@ namespace iConfess.Admin.Controllers
         ///     Identity service which handles analyze identity from request.
         /// </summary>
         private readonly IIdentityService _identityService;
+
+        /// <summary>
+        ///     Common repository service.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         /// <summary>
         ///     Service which handles log writing.
@@ -98,7 +108,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Account identity search
 
-                // Find account from request.
+                // Search account from request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account has attached to request");
@@ -108,11 +118,14 @@ namespace iConfess.Admin.Controllers
                 #region Category search
 
                 // Search condition build.
-                var findCategoryConditions = new FindCategoriesViewModel();
+                var findCategoryConditions = new SearchCategoryViewModel();
                 findCategoryConditions.Id = parameters.CategoryIndex;
 
-                // Find the first match category in the database.
-                var category = await _unitOfWork.RepositoryCategories.FindCategoryAsync(findCategoryConditions);
+                // Search the first match category in the database.
+                var categories = _unitOfWork.RepositoryCategories.Search();
+                var category =
+                    await _unitOfWork.RepositoryCategories.Search(categories, findCategoryConditions)
+                        .FirstOrDefaultAsync();
                 if (category == null)
                 {
                     _log.Error($"No category (Id: {parameters.CategoryIndex}) is found in database.");
@@ -132,13 +145,13 @@ namespace iConfess.Admin.Controllers
                 post.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 //Add category record
-                _unitOfWork.RepositoryPosts.Initiate(post);
+                _unitOfWork.RepositoryPosts.Insert(post);
 
                 // Save changes into database.
                 await _unitOfWork.CommitAsync();
 
                 #endregion
-                
+
                 return Request.CreateResponse(HttpStatusCode.Created, post);
             }
             catch (Exception exception)
@@ -176,7 +189,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Account identity search
 
-                // Find account from request.
+                // Search account from request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account has attached to request");
@@ -185,23 +198,23 @@ namespace iConfess.Admin.Controllers
 
                 #region Information available check
 
-                // Find the post by index.
-                var condition = new FindPostViewModel();
+                // Search the post by index.
+                var condition = new SearchPostViewModel();
                 condition.Id = index;
 
                 // If account is not admin. It can only change its own posts.
                 if (account.Role != AccountRole.Admin)
                     condition.OwnerIndex = account.Id;
 
-                // Find all posts in database.
-                var posts = _unitOfWork.RepositoryPosts.Find();
-                posts = _unitOfWork.RepositoryPosts.FindPosts(posts, condition);
-                
+                // Search all posts in database.
+                var posts = _unitOfWork.RepositoryPosts.Search();
+                posts = _unitOfWork.RepositoryPosts.Search(posts, condition);
+
                 #endregion
 
                 #region Update post
 
-                // Find the current time on the system.
+                // Search the current time on the system.
                 var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 foreach (var post in posts)
@@ -234,7 +247,7 @@ namespace iConfess.Admin.Controllers
         [Route("")]
         [HttpDelete]
         [ApiRole(AccountRole.Admin)]
-        public async Task<HttpResponseMessage> DeletePosts([FromBody] FindPostViewModel conditions)
+        public async Task<HttpResponseMessage> DeletePosts([FromBody] SearchPostViewModel conditions)
         {
             try
             {
@@ -243,7 +256,7 @@ namespace iConfess.Admin.Controllers
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindPostViewModel();
+                    conditions = new SearchPostViewModel();
                     Validate(conditions);
                 }
 
@@ -255,8 +268,20 @@ namespace iConfess.Admin.Controllers
 
                 #region Records delete
 
-                // Delete categories by using specific conditions.
-                _unitOfWork.RepositoryPosts.Delete(conditions);
+                // Find posts by using specific conditions.
+                var posts = _unitOfWork.RepositoryPosts.Search();
+                posts = _unitOfWork.RepositoryPosts.Search(posts, conditions);
+
+                // Find related post reports.
+                var postReports = _unitOfWork.RepositoryPostReports.Search();
+                var childrenPostReports = from post in posts
+                    from postReport in postReports
+                    where post.Id == postReport.PostIndex
+                    select postReport;
+
+                // Remove posts & post reports from database.
+                _unitOfWork.RepositoryPosts.Remove(posts);
+                _unitOfWork.RepositoryPostReports.Remove(childrenPostReports);
 
                 // Save changes and count the number of deleted records.
                 var totalRecords = await _unitOfWork.CommitAsync();
@@ -287,7 +312,7 @@ namespace iConfess.Admin.Controllers
         [Route("find")]
         [HttpPost]
         [ApiRole(AccountRole.Admin)]
-        public async Task<HttpResponseMessage> FindPosts([FromBody] FindPostViewModel conditions)
+        public async Task<HttpResponseMessage> FindPosts([FromBody] SearchPostViewModel conditions)
         {
             try
             {
@@ -296,7 +321,7 @@ namespace iConfess.Admin.Controllers
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindPostViewModel();
+                    conditions = new SearchPostViewModel();
                     Validate(conditions);
                 }
 
@@ -306,10 +331,20 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                // Find posts by using specific conditions.
-                var response = await _unitOfWork.RepositoryPosts.FindPostsAsync(conditions);
+                // Initiate search result.
+                var searchResult = new SearchResult<Post>();
 
-                return Request.CreateResponse(HttpStatusCode.OK, response);
+                // Search posts by using specific conditions.
+                var posts = _unitOfWork.RepositoryPosts.Search();
+                posts = _unitOfWork.RepositoryPosts.Search(posts, conditions);
+
+                // Count the number of condition matched records.
+                searchResult.Total = await posts.CountAsync();
+
+                // Order and paginate record.
+                searchResult.Records = _commonRepositoryService.Paginate(posts, conditions.Pagination);
+
+                return Request.CreateResponse(HttpStatusCode.OK, searchResult);
             }
             catch (Exception exception)
             {
@@ -329,16 +364,16 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
-                // Find all posts from database.
-                var posts = _unitOfWork.RepositoryPosts.Find();
+                // Search all posts from database.
+                var posts = _unitOfWork.RepositoryPosts.Search();
                 posts = posts.Where(x => x.Id == index);
 
-                // Find all accounts from database.
-                var accounts = _unitOfWork.RepositoryAccounts.Find();
+                // Search all accounts from database.
+                var accounts = _unitOfWork.RepositoryAccounts.Search();
 
-                // Find all category from database.
-                var categories = _unitOfWork.RepositoryCategories.Find();
-                
+                // Search all category from database.
+                var categories = _unitOfWork.RepositoryCategories.Search();
+
                 // Search and select the first result.
                 var detail = await (from post in posts
                     from account in accounts
@@ -353,7 +388,7 @@ namespace iConfess.Admin.Controllers
                         Created = post.Created,
                         LastModified = post.LastModified
                     }).FirstOrDefaultAsync();
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, detail);
             }
             catch (Exception exception)
@@ -383,8 +418,8 @@ namespace iConfess.Admin.Controllers
 
         //    #region Result filter
 
-        //    // Find all posts.
-        //    var posts = _unitOfWork.RepositoryPosts.Find();
+        //    // Search all posts.
+        //    var posts = _unitOfWork.RepositoryPosts.Search();
 
         //    // Convert unix start date to datetime instance.
         //    var startDate = _timeService.UnixToDateTimeUtc(parameters.StartDate);
@@ -421,5 +456,4 @@ namespace iConfess.Admin.Controllers
 
         #endregion
     }
-
 }

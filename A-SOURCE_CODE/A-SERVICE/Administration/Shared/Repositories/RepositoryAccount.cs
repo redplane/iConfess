@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Threading.Tasks;
 using iConfess.Database.Interfaces;
-using iConfess.Database.Models.Contextes;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
-using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
+using Shared.Interfaces.Services;
 using Shared.ViewModels.Accounts;
 
 namespace Shared.Repositories
 {
-    public class RepositoryAccount : IRepositoryAccount
+    public class RepositoryAccount : ParentRepository<Account>, IRepositoryAccount
     {
         #region Properties
 
@@ -21,6 +17,11 @@ namespace Shared.Repositories
         ///     Database context which provides access to database.
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
+
+        /// <summary>
+        /// Service which handles common repository service.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         #endregion
 
@@ -30,9 +31,13 @@ namespace Shared.Repositories
         ///     Initiate repository with dependency injection.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        public RepositoryAccount(IDbContextWrapper dbContextWrapper)
+        /// <param name="commonRepositoryService"></param>
+        public RepositoryAccount(
+            IDbContextWrapper dbContextWrapper,
+            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
+            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -40,233 +45,24 @@ namespace Shared.Repositories
         #region Methods
 
         /// <summary>
-        ///     Delete accounts by using specific conditions.
-        /// </summary>
-        /// <returns></returns>
-        /// <param name="conditions"></param>
-        public void Delete(FindAccountsViewModel conditions)
-        {
-            // Find all accounts in database.
-            var accounts = _dbContextWrapper.Accounts.AsQueryable();
-
-            // Find accounts by using conditions.
-            accounts = Find(accounts, conditions);
-
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///     Find accounts by using specific conditions.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<ResponseAccountsViewModel> FindAccountsAsync(FindAccountsViewModel conditions)
-        {
-            // Find all accounts in database.
-            var accounts = _dbContextWrapper.Accounts.AsQueryable();
-
-            // Find accounts with conditions.
-            accounts = Find(accounts, conditions);
-
-            // Results sorting.
-            switch (conditions.Direction)
-            {
-                case SortDirection.Decending:
-                    switch (conditions.Sort)
-                    {
-                        case AccountsSort.Email:
-                            accounts = accounts.OrderByDescending(x => x.Email);
-                            break;
-                        case AccountsSort.Nickname:
-                            accounts = accounts.OrderByDescending(x => x.Nickname);
-                            break;
-                        case AccountsSort.Status:
-                            accounts = accounts.OrderByDescending(x => x.Status);
-                            break;
-                        case AccountsSort.Joined:
-                            accounts = accounts.OrderByDescending(x => x.Joined);
-                            break;
-                        case AccountsSort.LastModified:
-                            accounts = accounts.OrderByDescending(x => x.LastModified);
-                            break;
-                        default:
-                            accounts = accounts.OrderByDescending(x => x.Id);
-                            break;
-                    }
-                    break;
-                default:
-                    switch (conditions.Sort)
-                    {
-                        case AccountsSort.Email:
-                            accounts = accounts.OrderBy(x => x.Email);
-                            break;
-                        case AccountsSort.Nickname:
-                            accounts = accounts.OrderBy(x => x.Nickname);
-                            break;
-                        case AccountsSort.Status:
-                            accounts = accounts.OrderBy(x => x.Status);
-                            break;
-                        case AccountsSort.Joined:
-                            accounts = accounts.OrderBy(x => x.Joined);
-                            break;
-                        case AccountsSort.LastModified:
-                            accounts = accounts.OrderBy(x => x.LastModified);
-                            break;
-                        default:
-                            accounts = accounts.OrderBy(x => x.Id);
-                            break;
-                    }
-                    break;
-            }
-
-            // Count the total records first.
-            var totalRecords = await accounts.CountAsync();
-
-            // Pagination.
-            if (conditions.Pagination != null)
-            {
-                var pagination = conditions.Pagination;
-                accounts = accounts.Skip(pagination.Index*pagination.Records)
-                    .Take(pagination.Records);
-            }
-
-            var result = new ResponseAccountsViewModel();
-            result.Total = totalRecords;
-            result.Accounts = accounts;
-
-            return result;
-        }
-
-        /// <summary>
-        ///     Find account by using specific conditions.
-        /// </summary>
-        /// <param name="conditions"></param>
-        /// <returns></returns>
-        public async Task<Account> FindAccountAsync(FindAccountsViewModel conditions)
-        {
-            // Find all accounts in database.
-            var accounts = _dbContextWrapper.Accounts.AsQueryable();
-
-            // Find accounts with conditions.
-            accounts = Find(accounts, conditions);
-
-            // Results sorting.
-            switch (conditions.Direction)
-            {
-                case SortDirection.Decending:
-                    switch (conditions.Sort)
-                    {
-                        case AccountsSort.Email:
-                            accounts = accounts.OrderByDescending(x => x.Email);
-                            break;
-                        case AccountsSort.Nickname:
-                            accounts = accounts.OrderByDescending(x => x.Nickname);
-                            break;
-                        case AccountsSort.Status:
-                            accounts = accounts.OrderByDescending(x => x.Status);
-                            break;
-                        case AccountsSort.Joined:
-                            accounts = accounts.OrderByDescending(x => x.Joined);
-                            break;
-                        case AccountsSort.LastModified:
-                            accounts = accounts.OrderByDescending(x => x.LastModified);
-                            break;
-                        default:
-                            accounts = accounts.OrderByDescending(x => x.Id);
-                            break;
-                    }
-                    break;
-                default:
-                    switch (conditions.Sort)
-                    {
-                        case AccountsSort.Email:
-                            accounts = accounts.OrderBy(x => x.Email);
-                            break;
-                        case AccountsSort.Nickname:
-                            accounts = accounts.OrderBy(x => x.Nickname);
-                            break;
-                        case AccountsSort.Status:
-                            accounts = accounts.OrderBy(x => x.Status);
-                            break;
-                        case AccountsSort.Joined:
-                            accounts = accounts.OrderBy(x => x.Joined);
-                            break;
-                        case AccountsSort.LastModified:
-                            accounts = accounts.OrderBy(x => x.LastModified);
-                            break;
-                        default:
-                            accounts = accounts.OrderBy(x => x.Id);
-                            break;
-                    }
-                    break;
-            }
-
-            return await accounts.FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        ///     Initiate / update an account asynchronously.
-        /// </summary>
-        /// <returns></returns>
-        public Account Initiate(Account account)
-        {
-            // Add / update account.
-            _dbContextWrapper.Accounts.AddOrUpdate(account);
-
-            return account;
-        }
-
-        /// <summary>
-        ///     Find accounts using specific conditions.
+        ///     Search accounts using specific conditions.
         /// </summary>
         /// <param name="accounts"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<Account> Find(IQueryable<Account> accounts, FindAccountsViewModel conditions)
+        public IQueryable<Account> Search(IQueryable<Account> accounts, SearchAccountViewModel conditions)
         {
             // Index has been identified.
             if (conditions.Id != null)
                 accounts = accounts.Where(x => x.Id == conditions.Id.Value);
 
             // Email has been identified.
-            if ((conditions.Email != null) && !string.IsNullOrWhiteSpace(conditions.Email.Value))
-            {
-                // Find email.
-                var email = conditions.Email;
-                switch (email.Mode)
-                {
-                    case TextComparision.Equal:
-                        accounts = accounts.Where(x => x.Email.Equals(email.Value));
-                        break;
-                    case TextComparision.EqualIgnoreCase:
-                        accounts =
-                            accounts.Where(x => x.Email.Equals(email.Value, StringComparison.InvariantCultureIgnoreCase));
-                        break;
-                    default:
-                        accounts = accounts.Where(x => x.Email.Contains(email.Value));
-                        break;
-                }
-            }
+            if (conditions.Email != null && !string.IsNullOrWhiteSpace(conditions.Email.Value))
+                accounts = _commonRepositoryService.SearchPropertyText(accounts, x => x.Email, conditions.Email);
 
             // Nickname has been identified.
-            if ((conditions.Nickname != null) && !string.IsNullOrWhiteSpace(conditions.Nickname.Value))
-            {
-                // Find email.
-                var nickname = conditions.Nickname;
-                switch (nickname.Mode)
-                {
-                    case TextComparision.Equal:
-                        accounts = accounts.Where(x => x.Nickname.Equals(nickname.Value));
-                        break;
-                    case TextComparision.EqualIgnoreCase:
-                        accounts =
-                            accounts.Where(
-                                x => x.Nickname.Equals(nickname.Value, StringComparison.InvariantCultureIgnoreCase));
-                        break;
-                    default:
-                        accounts = accounts.Where(x => x.Nickname.Contains(nickname.Value));
-                        break;
-                }
-            }
+            if (conditions.Nickname != null && !string.IsNullOrWhiteSpace(conditions.Nickname.Value))
+                accounts = _commonRepositoryService.SearchPropertyText(accounts, x => x.Nickname, conditions.Nickname);
 
             // Statuses have been defined.
             if (conditions.Statuses != null)
@@ -301,15 +97,6 @@ namespace Shared.Repositories
             }
 
             return accounts;
-        }
-
-        /// <summary>
-        ///     Find all accounts in database.
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<Account> Find()
-        {
-            return _dbContextWrapper.Accounts.AsQueryable();
         }
 
         #endregion

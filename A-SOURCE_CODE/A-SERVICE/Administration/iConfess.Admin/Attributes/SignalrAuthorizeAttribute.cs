@@ -132,7 +132,7 @@ namespace iConfess.Admin.Attributes
 
             using (var lifeTimeScope = LifetimeScope.BeginLifetimeScope())
             {
-                // Find logging service.
+                // Search logging service.
                 var log = lifeTimeScope.Resolve<ILog>();
 
                 #region Request validation
@@ -163,13 +163,13 @@ namespace iConfess.Admin.Attributes
         /// <returns></returns>
         private bool IsAccessible(ILifetimeScope lifeTimeScope, IRequest request)
         {
-            // Find logging service.
+            // Search logging service.
             var unitOfWork = lifeTimeScope.Resolve<IUnitOfWork>();
             var httpContext = request.GetHttpContext();
 
             #region Identity check.
 
-            // Find request principle.
+            // Search request principle.
             var principle = request.User;
 
             // Request has been authenticated before.
@@ -180,15 +180,15 @@ namespace iConfess.Admin.Attributes
 
             #region Request url token search
 
-            // Find url of signalr request.
+            // Search url of signalr request.
             var url = request.QueryString;
 
-            // Find authentication token from request url.
+            // Search authentication token from request url.
             var authenticationToken = url.Get(nameof(Authorization));
             if (string.IsNullOrWhiteSpace(authenticationToken))
                 return false;
 
-            // Find bearer authentication provider from services.
+            // Search bearer authentication provider from services.
             var bearerAuthenticationProvider = lifeTimeScope.Resolve<IBearerAuthenticationProvider>();
             if (bearerAuthenticationProvider == null)
             {
@@ -217,8 +217,8 @@ namespace iConfess.Admin.Attributes
             if ((claimEmail == null) || string.IsNullOrEmpty(claimEmail.Value))
                 return false;
 
-            // Find email in the database.
-            var account = unitOfWork.Context.Accounts
+            // Search email in the database.
+            var account = unitOfWork.RepositoryAccounts.Search()
                 .FirstOrDefault(x => x.Email.Equals(claimEmail.Value, StringComparison.InvariantCultureIgnoreCase));
 
             // Account is not found.

@@ -12,6 +12,7 @@ using log4net;
 using Shared.Enumerations.Order;
 using Shared.Interfaces.Services;
 using Shared.Resources;
+using Shared.ViewModels;
 using Shared.ViewModels.PostReports;
 using Shared.ViewModels.Posts;
 
@@ -29,14 +30,19 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
+        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
-        public ApiPostReportController(IUnitOfWork unitOfWork,
-            ITimeService timeService, IIdentityService identityService,
+        public ApiPostReportController(
+            IUnitOfWork unitOfWork,
+            ITimeService timeService, 
+            IIdentityService identityService,
+            ICommonRepositoryService commonRepositoryService,
             ILog log)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
             _identityService = identityService;
+            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
@@ -66,17 +72,17 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                #region Find post report
+                #region Search post report
 
-                // Find all posts.
-                var posts = _unitOfWork.RepositoryPosts.Find();
+                // Search all posts.
+                var posts = _unitOfWork.RepositoryPosts.Search();
 
                 // Conditions construction.
-                var findPostViewModel = new FindPostViewModel();
+                var findPostViewModel = new SearchPostViewModel();
                 findPostViewModel.Id = parameters.PostIndex;
 
-                // Find the post information.
-                var post = await _unitOfWork.RepositoryPosts.FindPosts(posts, findPostViewModel).FirstOrDefaultAsync();
+                // Search the post information.
+                var post = await _unitOfWork.RepositoryPosts.Search(posts, findPostViewModel).FirstOrDefaultAsync();
 
                 // Post is not found.
                 if (post == null)
@@ -89,7 +95,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Requester search.
 
-                // Find the request sender.
+                // Search the request sender.
                 var requester = _identityService.FindAccount(Request.Properties);
 
                 // Requester is not found.
@@ -113,7 +119,7 @@ namespace iConfess.Admin.Controllers
                 postReport.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 // Initiate post report into database.
-                postReport = _unitOfWork.RepositoryPostReports.Initiate(postReport);
+                postReport = _unitOfWork.RepositoryPostReports.Insert(postReport);
 
                 // Commit changes.
                 #endregion
@@ -134,7 +140,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeletePostReports([FromBody] FindPostReportsViewModel parameters)
+        public async Task<HttpResponseMessage> DeletePostReports([FromBody] SearchPostReportViewModel parameters)
         {
             try
             {
@@ -144,7 +150,7 @@ namespace iConfess.Admin.Controllers
                 if (parameters == null)
                 {
                     // Initiate parameters.
-                    parameters = new FindPostReportsViewModel();
+                    parameters = new SearchPostReportViewModel();
                     Validate(parameters);
                 }
 
@@ -156,8 +162,13 @@ namespace iConfess.Admin.Controllers
 
                 #region Record delete
 
+                // Search post reports.
+                var postReports = _unitOfWork.RepositoryPostReports.Search();
+                postReports = _unitOfWork.RepositoryPostReports.Search(postReports, parameters);
+
+                // Find comment 
                 // Delete post reports by using specific conditions.
-                _unitOfWork.RepositoryPostReports.Delete(parameters);
+                _unitOfWork.RepositoryPostReports.Remove(postReports);
 
                 // Commit the change.
                 var totalRecord = await _unitOfWork.CommitAsync();
@@ -181,12 +192,12 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        ///     Find post reports by using specific conditions.
+        ///     Search post reports by using specific conditions.
         /// </summary>
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
-        public async Task<HttpResponseMessage> FindPostReports([FromBody] FindPostReportsViewModel parameters)
+        public async Task<HttpResponseMessage> FindPostReports([FromBody] SearchPostReportViewModel parameters)
         {
             try
             {
@@ -196,7 +207,7 @@ namespace iConfess.Admin.Controllers
                 if (parameters == null)
                 {
                     // Initiate parameters.
-                    parameters = new FindPostReportsViewModel();
+                    parameters = new SearchPostReportViewModel();
                     Validate(parameters);
                 }
 
@@ -206,20 +217,20 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                #region Find post reports
+                #region Search post reports
 
-                // Find all post reports.
-                var postReports = _unitOfWork.RepositoryPostReports.FindPostReports();
-                postReports = _unitOfWork.RepositoryPostReports.FindPostReports(postReports, parameters);
+                // Search all post reports.
+                var postReports = _unitOfWork.RepositoryPostReports.Search();
+                postReports = _unitOfWork.RepositoryPostReports.Search(postReports, parameters);
                 
-                // Find posts from database.
-                var posts = _unitOfWork.RepositoryPosts.Find();
+                // Search posts from database.
+                var posts = _unitOfWork.RepositoryPosts.Search();
                 
-                // Find all accounts.
-                var accounts = _unitOfWork.RepositoryAccounts.Find();
+                // Search all accounts.
+                var accounts = _unitOfWork.RepositoryAccounts.Search();
 
-                // Find post report by using specific conditions.
-                var result = from postReport in postReports
+                // Search post report by using specific conditions.
+                var postReportDetails = from postReport in postReports
                     from post in posts
                     from owner in accounts
                     from reporter in accounts
@@ -237,81 +248,17 @@ namespace iConfess.Admin.Controllers
                         Created = postReport.Created
                     };
 
-                #endregion
+                // Order records.
+                postReportDetails = _commonRepositoryService.Sort(postReportDetails, parameters.Direction, parameters.Sort);
 
-                #region Result order 
-
-                switch (parameters.Direction)
-                {
-                    case SortDirection.Decending:
-                        switch (parameters.Sort)
-                        {
-                            case PostReportSort.PostIndex:
-                                result = result.OrderByDescending(x => x.Post.Id);
-                                break;
-                            case PostReportSort.PostOwnerIndex:
-                                result = result.OrderByDescending(x => x.Owner.Id);
-                                break;
-                            case PostReportSort.PostReporterIndex:
-                                result = result.OrderByDescending(x => x.Reporter.Id);
-                                break;
-                            case PostReportSort.Created:
-                                result = result.OrderByDescending(x => x.Created);
-                                break;
-                            default:
-                                result = result.OrderByDescending(x => x.Id);
-                                break;
-                        }
-                        break;
-                    default:
-                        switch (parameters.Sort)
-                        {
-                            case PostReportSort.PostIndex:
-                                result = result.OrderBy(x => x.Post.Id);
-                                break;
-                            case PostReportSort.PostOwnerIndex:
-                                result = result.OrderBy(x => x.Owner.Id);
-                                break;
-                            case PostReportSort.PostReporterIndex:
-                                result = result.OrderBy(x => x.Reporter.Id);
-                                break;
-                            case PostReportSort.Created:
-                                result = result.OrderBy(x => x.Created);
-                                break;
-                            default:
-                                result = result.OrderBy(x => x.Id);
-                                break;
-                        }
-                        break;
-                }
-
-                #endregion
-
-                #region Pagination
-
-                // Count the total records.
-                var total = await result.CountAsync();
-
-                // Find pagination information.
-                var pagination = parameters.Pagination;
+                // Initiate search result
+                var searchResult = new SearchResult<PostReportViewModel>();
+                searchResult.Total = await postReportDetails.CountAsync();
+                searchResult.Records = _commonRepositoryService.Paginate(postReportDetails, parameters.Pagination);
                 
-                // Pagination specified.
-                if (pagination != null)
-                {
-                    // Do pagination.
-                    result = result
-                        .Skip(pagination.Index*pagination.Records)
-                        .Take(pagination.Records);
-                }
-                
-                // Initiate response.
-                var responseFindPostReport = new ResponseFindPostReportViewModel();
-                responseFindPostReport.PostReports = result;
-                responseFindPostReport.Total = total;
-
                 #endregion
 
-                return Request.CreateResponse(HttpStatusCode.OK, responseFindPostReport);
+                return Request.CreateResponse(HttpStatusCode.OK, searchResult);
             }
             catch (Exception exception)
             {
@@ -336,6 +283,11 @@ namespace iConfess.Admin.Controllers
         ///     Service which handles identity operations.
         /// </summary>
         private readonly IIdentityService _identityService;
+
+        /// <summary>
+        /// Service which handles common repository business.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         /// <summary>
         ///     Service which handles logging process.

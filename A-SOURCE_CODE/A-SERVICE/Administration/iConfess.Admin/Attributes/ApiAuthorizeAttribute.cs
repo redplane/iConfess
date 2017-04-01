@@ -38,12 +38,12 @@ namespace iConfess.Admin.Attributes
             {
                 using (var lifetimeScope = LifetimeScope.BeginLifetimeScope())
                 {
-                    // Find the instance of unit of work.
+                    // Search the instance of unit of work.
                     var unitOfWork = lifetimeScope.Resolve<IUnitOfWork>();
 
                     #region Principle validation
 
-                    // Find the principle of request.
+                    // Search the principle of request.
                     var principle = httpActionContext.RequestContext.Principal;
 
                     // Principal is invalid.
@@ -58,7 +58,7 @@ namespace iConfess.Admin.Attributes
                                 HttpMessages.InvalidAuthenticationToken);
                         return;
                     }
-                    // Find the identity set in principle.
+                    // Search the identity set in principle.
                     var identity = principle.Identity;
                     if (identity == null)
                     {
@@ -76,7 +76,7 @@ namespace iConfess.Admin.Attributes
 
                     #region Claim identity
 
-                    // Find the claim identity.
+                    // Search the claim identity.
                     var claimIdentity = (ClaimsIdentity)identity;
 
                     // Claim doesn't contain email.
@@ -93,8 +93,8 @@ namespace iConfess.Admin.Attributes
                         return;
                     }
 
-                    // Find email in the database.
-                    var account = unitOfWork.Context.Accounts
+                    // Search email in the database.
+                    var account = unitOfWork.RepositoryAccounts.Search()
                         .FirstOrDefault(x => x.Email.Equals(claimEmail.Value, StringComparison.InvariantCultureIgnoreCase));
 
                     // Account is not found.

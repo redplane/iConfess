@@ -33,7 +33,7 @@ namespace iConfess.Admin.Controllers
         #region Methods
 
         /// <summary>
-        ///     Find validation messages from modelstate dictionary.
+        ///     Search validation messages from modelstate dictionary.
         /// </summary>
         /// <param name="modelStateDictionary"></param>
         /// <param name="parameterName"></param>

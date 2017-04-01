@@ -8,14 +8,14 @@ namespace Shared.Interfaces.Services
     public interface IIdentityService
     {
         /// <summary>
-        ///     Find account information from identity attached to request.
+        ///     Search account information from identity attached to request.
         /// </summary>
         /// <returns></returns>
         /// <param name="identity"></param>
         ClaimsIdentity FindClaimsIdentity(IIdentity identity);
 
         /// <summary>
-        ///     Find account instance which is stored in request context dictionary.
+        ///     Search account instance which is stored in request context dictionary.
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>

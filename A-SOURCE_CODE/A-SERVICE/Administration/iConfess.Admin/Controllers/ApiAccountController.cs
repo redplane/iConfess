@@ -24,6 +24,7 @@ using Shared.Enumerations;
 using Shared.Interfaces.Services;
 using Shared.Models;
 using Shared.Resources;
+using Shared.ViewModels;
 using Shared.ViewModels.Accounts;
 using Shared.ViewModels.Token;
 
@@ -140,13 +141,13 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest,
                         FindValidationMessage(ModelState, nameof(parameters)));
 
-                // Find encrypted password.
+                // Search encrypted password.
                 var encryptedPassword = _encryptionService.Md5Hash(parameters.Password);
 
-                // Find account information from database.
+                // Search account information from database.
                 // Password submitted to server is already hashed.
                 var account = await
-                    UnitOfWork.Context.Accounts.Where(
+                    UnitOfWork.RepositoryAccounts.Search().Where(
                             x =>
                                 x.Email.Equals(parameters.Email) &&
                                 x.Password.Equals(encryptedPassword, StringComparison.InvariantCultureIgnoreCase))
@@ -193,7 +194,7 @@ namespace iConfess.Admin.Controllers
                 jwtResponse.Token = JsonWebToken.Encode(claimsIdentity, _bearerAuthenticationProvider.Key,
                     JwtHashAlgorithm.HS256);
 
-                // Find account by using 
+                // Search account by using 
                 return Request.CreateResponse(HttpStatusCode.OK, jwtResponse);
             }
             catch (Exception exception)
@@ -231,16 +232,20 @@ namespace iConfess.Admin.Controllers
             {
                 #region Account check
 
-                var findAccountsCondition = new FindAccountsViewModel();
-                findAccountsCondition.Email = new TextSearch
+                var conditions = new SearchAccountViewModel();
+                conditions.Email = new TextSearch
                 {
                     Mode = TextComparision.Equal,
                     Value = parameter.Email
                 };
-                findAccountsCondition.Statuses = new[] { AccountStatus.Active };
+                conditions.Statuses = new[] { AccountStatus.Active };
 
-                // Find account information from database.
-                var account = await UnitOfWork.RepositoryAccounts.FindAccountAsync(findAccountsCondition);
+                // Search account information from database.
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
+                accounts = UnitOfWork.RepositoryAccounts.Search(accounts, conditions);
+
+                // Find account with specific conditions.
+                var account = await UnitOfWork.RepositoryAccounts.Search(accounts, conditions).FirstOrDefaultAsync();
 
                 // Account is not found.
                 if (account == null)
@@ -265,7 +270,7 @@ namespace iConfess.Admin.Controllers
                         DateTime.UtcNow.AddSeconds(_configurationService.ForgotPasswordTokenExpiration));
 
                 // Save token into database.
-                UnitOfWork.RepositoryTokens.Initiate(token);
+                UnitOfWork.RepositoryTokens.Insert(token);
 
                 // Contruct data to fill into email which will be sent to client.
                 var data = new
@@ -274,7 +279,7 @@ namespace iConfess.Admin.Controllers
                     token = token.Code
                 };
 
-                // Find email raw content.
+                // Search email raw content.
                 var emailRawContent = _systemEmailService.LoadEmailContent(SystemEmail.ForgotPassword);
                 var htmlEmailContent = _templateService.Render(emailRawContent, data);
 
@@ -326,27 +331,27 @@ namespace iConfess.Admin.Controllers
                 #region Information search
 
                 // Account search condition construction.
-                var findAccountsConditions = new FindAccountsViewModel();
-                findAccountsConditions.Email = new TextSearch();
-                findAccountsConditions.Email.Value = parameters.Email;
-                findAccountsConditions.Email.Mode = TextComparision.Equal;
+                var searchAccountCondition = new SearchAccountViewModel();
+                searchAccountCondition.Email = new TextSearch();
+                searchAccountCondition.Email.Value = parameters.Email;
+                searchAccountCondition.Email.Mode = TextComparision.Equal;
 
-                // Find all accounts in database.
-                var accounts = UnitOfWork.RepositoryAccounts.Find();
-                accounts = UnitOfWork.RepositoryAccounts.Find(accounts, findAccountsConditions);
+                // Search all accounts in database.
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
+                accounts = UnitOfWork.RepositoryAccounts.Search(accounts, searchAccountCondition);
 
                 // Token search.
-                var findTokensSearchConditions = new FindTokensViewModel();
-                findTokensSearchConditions.Code = new TextSearch
+                var conditions = new FindTokensViewModel();
+                conditions.Code = new TextSearch
                 {
                     Mode = TextComparision.Equal,
                     Value = parameters.Token
                 };
-                findTokensSearchConditions.Types = new[] { TokenType.Forgot };
+                conditions.Types = new[] { TokenType.Forgot };
 
-                // Find all tokens from database.
-                var tokens = UnitOfWork.RepositoryTokens.Find();
-                tokens = UnitOfWork.RepositoryTokens.Find(tokens, findTokensSearchConditions);
+                // Search all tokens from database.
+                var tokens = UnitOfWork.RepositoryTokens.Search();
+                tokens = UnitOfWork.RepositoryTokens.Search(tokens, conditions);
 
                 // Information join & search.
                 var findResult = await (from token in tokens
@@ -367,9 +372,9 @@ namespace iConfess.Admin.Controllers
 
                 // Update password
                 findResult.Password = _encryptionService.Md5Hash(parameters.NewPassword);
-
-                // Delete the tokens.
-                UnitOfWork.RepositoryTokens.Delete(findTokensSearchConditions);
+                
+                // Remove tokens.
+                UnitOfWork.RepositoryTokens.Remove(tokens);
 
                 // Save changes into database.
                 await UnitOfWork.CommitAsync();
@@ -386,20 +391,20 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        ///     Find list of accounts by using specific conditions.
+        ///     Search list of accounts by using specific conditions.
         /// </summary>
         /// <returns></returns>
         [Route("find")]
         [ApiRole(AccountRole.Admin)]
         [HttpPost]
-        public async Task<HttpResponseMessage> FindAccounts([FromBody] FindAccountsViewModel conditions)
+        public async Task<HttpResponseMessage> FindAccounts([FromBody] SearchAccountViewModel conditions)
         {
             #region Parameters validation
 
             // Conditions haven't been initialized.
             if (conditions == null)
             {
-                conditions = new FindAccountsViewModel();
+                conditions = new SearchAccountViewModel();
                 Validate(conditions);
             }
 
@@ -412,9 +417,12 @@ namespace iConfess.Admin.Controllers
 
             #endregion
 
-            #region Find account
+            #region Search account
 
-            var result = await UnitOfWork.RepositoryAccounts.FindAccountsAsync(conditions);
+            // Initiate search result.
+            var result = new SearchResult<Account>();
+            
+            // Search for accounts in database.
             return Request.CreateResponse(HttpStatusCode.OK, result);
 
             #endregion
@@ -426,14 +434,14 @@ namespace iConfess.Admin.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> RegisterAccount()
         {
-            // Find system message hub from connection manager.
+            // Search system message hub from connection manager.
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<SystemMessageHub>();
 
-            // Find all connection indexes of online administrators.
-            var accounts = UnitOfWork.RepositoryAccounts.Find();
-            var signalrConnections = UnitOfWork.RepositorySignalrConnections.Find();
+            // Search all connection indexes of online administrators.
+            var accounts = UnitOfWork.RepositoryAccounts.Search();
+            var signalrConnections = UnitOfWork.RepositorySignalrConnections.Search();
 
-            // Find connection indexes of online administrators.
+            // Search connection indexes of online administrators.
             var connectionIndexes = await (from account in accounts
                                            from signalrConnection in signalrConnections
                                            where
@@ -473,7 +481,7 @@ namespace iConfess.Admin.Controllers
 
             #region Requester identity find
 
-            // Find account which sent the current request.
+            // Search account which sent the current request.
             var account = _identityService.FindAccount(Request.Properties);
 
             // Account is invalid.
@@ -485,13 +493,13 @@ namespace iConfess.Admin.Controllers
 
             #endregion
 
-            #region Find account
+            #region Search account
+            
+            var accounts = UnitOfWork.RepositoryAccounts.Search();
+            accounts = accounts.Where(x => x.Id == id);
 
-            var conditions = new FindAccountsViewModel();
-            conditions.Id = id;
-
-            // Find the first account.
-            var target = await UnitOfWork.RepositoryAccounts.FindAccountAsync(conditions);
+            // Search the first account.
+            var target = await accounts.FirstOrDefaultAsync();
             if (target == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound, HttpMessages.AccountNotFound);
 
@@ -550,13 +558,13 @@ namespace iConfess.Admin.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,
                     FindValidationMessage(ModelState, nameof(parameters)));
 
-            // Find accounts in database.
-            var condition = new FindAccountsViewModel();
+            // Search accounts in database.
+            var condition = new SearchAccountViewModel();
             condition.Joined = parameters.Joined;
             condition.LastModified = parameters.LastModified;
 
-            var accounts = UnitOfWork.RepositoryAccounts.Find();
-            accounts = UnitOfWork.RepositoryAccounts.Find(accounts, condition);
+            var accounts = UnitOfWork.RepositoryAccounts.Search();
+            accounts = UnitOfWork.RepositoryAccounts.Search(accounts, condition);
 
             // Group account by status.
             var collections = accounts.GroupBy(x => x.Status)

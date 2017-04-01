@@ -268,7 +268,7 @@ namespace Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [iConfess] Find lost password.
+        ///   Looks up a localized string similar to [iConfess] Search lost password.
         /// </summary>
         public static string TitleEmailForgotPassword {
             get {

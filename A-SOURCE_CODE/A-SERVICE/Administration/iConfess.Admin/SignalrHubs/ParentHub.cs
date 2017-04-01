@@ -64,14 +64,14 @@ namespace iConfess.Admin.SignalrHubs
         /// <returns></returns>
         public override async Task OnConnected()
         {
-            // Find account from request.
+            // Search account from request.
             var httpContext = Context.Request.GetHttpContext();
 
             // Http context is invalid.
             if (httpContext == null)
                 return;
 
-            // Find account from request.
+            // Search account from request.
             var account = (Account) httpContext.Items[ClaimTypes.Actor];
             if (account == null)
                 return;
@@ -79,19 +79,19 @@ namespace iConfess.Admin.SignalrHubs
             // Begin new life time scope.
             using (var lifeTimeScope = LifetimeScope.BeginLifetimeScope())
             {
-                // Find unit of work of life time scope.
+                // Search unit of work of life time scope.
                 var unitOfWork = lifeTimeScope.Resolve<IUnitOfWork>();
                 var timeService = lifeTimeScope.Resolve<ITimeService>();
 
                 try
                 {
-                    // Find and update connection to the account.
+                    // Search and update connection to the account.
                     var signalrConnection = new SignalrConnection();
                     signalrConnection.OwnerIndex = account.Id;
                     signalrConnection.Index = Context.ConnectionId;
                     signalrConnection.Created = timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
-                    unitOfWork.RepositorySignalrConnections.Initiate(signalrConnection);
+                    unitOfWork.RepositorySignalrConnections.Insert(signalrConnection);
                     await unitOfWork.CommitAsync();
 
                     Log.Info(
@@ -113,7 +113,7 @@ namespace iConfess.Admin.SignalrHubs
         {
             using (var lifeTimeScope = LifetimeScope.BeginLifetimeScope())
             {
-                // Find unit of work from life time scope.
+                // Search unit of work from life time scope.
                 var unitOfWork = lifeTimeScope.Resolve<IUnitOfWork>();
 
                 // Search for record whose index is the same as connection index.
@@ -122,7 +122,11 @@ namespace iConfess.Admin.SignalrHubs
                 condition.Index.Mode = TextComparision.EqualIgnoreCase;
                 condition.Index.Value = Context.ConnectionId;
 
-                unitOfWork.RepositorySignalrConnections.Delete(condition);
+                // Find connections with specific conditions.
+                var connections = unitOfWork.RepositorySignalrConnections.Search();
+                connections = unitOfWork.RepositorySignalrConnections.Search(connections, condition);
+
+                unitOfWork.RepositorySignalrConnections.Remove(connections);
                 await unitOfWork.CommitAsync();
             }
         }

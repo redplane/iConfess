@@ -96,22 +96,22 @@ namespace iConfess.Admin.Controllers
 
                 #endregion
 
-                #region Find records
+                #region Search records
 
-                // Find all actives accounts in database.
-                var accounts = UnitOfWork.RepositoryAccounts.Find();
-                accounts = UnitOfWork.RepositoryAccounts.Find(accounts, parameters.Search);
+                // Search all actives accounts in database.
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
+                accounts = UnitOfWork.RepositoryAccounts.Search(accounts, parameters.Search);
 
-                // Find all real-time connection
-                var connections = UnitOfWork.RepositorySignalrConnections.Find();
+                // Search all real-time connection
+                var connections = UnitOfWork.RepositorySignalrConnections.Search();
 
-                // Find connection indexes whose owner are the found accounts.
+                // Search connection indexes whose owner are the found accounts.
                 var connectionIndexes = await (from account in accounts
                     from connection in connections
                     where account.Id == connection.OwnerIndex
                     select connection.Index).ToListAsync();
 
-                // Find system message signalr hub.
+                // Search system message signalr hub.
                 var hubContext = GlobalHost.ConnectionManager.GetHubContext<SystemMessageHub>();
                 hubContext.Clients.Clients(connectionIndexes).obtainSystemMessage(parameters.Message);
 

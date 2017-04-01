@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 using iConfess.Database.Interfaces;
-using iConfess.Database.Models;
-using iConfess.Database.Models.Contextes;
 using Shared.Interfaces.Repositories;
 
 namespace Shared.Interfaces.Services
@@ -46,7 +44,7 @@ namespace Shared.Interfaces.Services
         IRepositorySignalrConnection RepositorySignalrConnections { get; }
 
         /// <summary>
-        /// Provides functions to access token database.
+        ///     Provides functions to access token database.
         /// </summary>
         IRepositoryToken RepositoryTokens { get; }
 
@@ -60,13 +58,13 @@ namespace Shared.Interfaces.Services
         #region Methods
 
         /// <summary>
-        /// Save changes into database.
+        ///     Save changes into database.
         /// </summary>
         /// <returns></returns>
         int Commit();
 
         /// <summary>
-        /// Save changes into database asynchronously.
+        ///     Save changes into database asynchronously.
         /// </summary>
         /// <returns></returns>
         Task<int> CommitAsync();

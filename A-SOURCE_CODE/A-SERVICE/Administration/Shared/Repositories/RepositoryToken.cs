@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Threading.Tasks;
 using iConfess.Database.Interfaces;
-using iConfess.Database.Models.Contextes;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
+using Shared.Interfaces.Services;
 using Shared.ViewModels.Token;
 
 namespace Shared.Repositories
 {
-    public class RepositoryToken : IRepositoryToken
+    public class RepositoryToken : ParentRepository<Token>, IRepositoryToken
     {
         #region Properties
 
@@ -21,6 +18,11 @@ namespace Shared.Repositories
         ///     Database context which provides access to database.
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
+
+        /// <summary>
+        /// Service which handles common repositories businesses.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         #endregion
 
@@ -30,9 +32,13 @@ namespace Shared.Repositories
         ///     Initiate repository with dependency injection.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        public RepositoryToken(IDbContextWrapper dbContextWrapper)
+        /// <param name="commonRepositoryService"></param>
+        public RepositoryToken(
+            IDbContextWrapper dbContextWrapper,
+            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
+            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -40,73 +46,29 @@ namespace Shared.Repositories
         #region Methods
 
         /// <summary>
-        /// Delete token asynchronously.
-        /// </summary>
-        /// <param name="conditions"></param>
-        /// <returns></returns>
-        public void Delete(FindTokensViewModel conditions)
-        {
-            // Find tokens with specific conditions.
-            var tokens = _dbContextWrapper.Tokens.AsQueryable();
-            tokens = Find(tokens, conditions);
-
-            // Delete 'em all.
-            _dbContextWrapper.Tokens.RemoveRange(tokens);
-        }
-        
-        /// <summary>
-        /// Initiate a token into database.
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public Token Initiate(Token token)
-        {
-            _dbContextWrapper.Tokens.AddOrUpdate(token);
-            return token;
-        }
-
-        /// <summary>
-        /// Find tokens with specific conditions.
+        ///     Search tokens with specific conditions.
         /// </summary>
         /// <param name="tokens"></param>
-        /// <param name="findTokensCondition"></param>
+        /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<Token> Find(IQueryable<Token> tokens, FindTokensViewModel findTokensCondition)
+        public IQueryable<Token> Search(IQueryable<Token> tokens, FindTokensViewModel conditions)
         {
             // Owner index are specified.
-            if (findTokensCondition.OwnerIndexes != null)
-                tokens = tokens.Where(x => findTokensCondition.OwnerIndexes.Contains(x.OwnerIndex));
+            if (conditions.OwnerIndexes != null)
+                tokens = tokens.Where(x => conditions.OwnerIndexes.Contains(x.OwnerIndex));
 
             // Types are specified.
-            if (findTokensCondition.Types != null)
-                tokens = tokens.Where(x => findTokensCondition.Types.Contains(x.Type));
+            if (conditions.Types != null)
+                tokens = tokens.Where(x => conditions.Types.Contains(x.Type));
 
             // Code has been specified.
-            if (findTokensCondition.Code != null && !string.IsNullOrEmpty(findTokensCondition.Code.Value))
-            {
-                var tokenCodeSearchCondition = findTokensCondition.Code;
-                switch (tokenCodeSearchCondition.Mode)
-                {
-                    case TextComparision.Equal:
-                        tokens = tokens.Where(x => x.Code.Equals(tokenCodeSearchCondition.Value));
-                        break;
-                    case TextComparision.EqualIgnoreCase:
-                        tokens =
-                            tokens.Where(
-                                x =>
-                                    x.Code.Equals(tokenCodeSearchCondition.Value,
-                                        StringComparison.InvariantCultureIgnoreCase));
-                        break;
-                    default:
-                        tokens = tokens.Where(x => x.Code.Contains(tokenCodeSearchCondition.Value));
-                        break;
-                }
-            }
-
+            if (conditions.Code != null && !string.IsNullOrEmpty(conditions.Code.Value))
+                tokens = _commonRepositoryService.SearchPropertyText(tokens, x => x.Code, conditions.Code);
+               
             // Issued range is specified.
-            if (findTokensCondition.Issued != null)
+            if (conditions.Issued != null)
             {
-                var issuedRange = findTokensCondition.Issued;
+                var issuedRange = conditions.Issued;
                 if (issuedRange.From != null)
                     tokens = tokens.Where(x => x.Issued >= issuedRange.From.Value);
                 if (issuedRange.To != null)
@@ -114,69 +76,17 @@ namespace Shared.Repositories
             }
 
             // Expired range is specified.
-            if (findTokensCondition.Expired != null)
+            if (conditions.Expired != null)
             {
-                var expiredRange = findTokensCondition.Expired;
+                var expiredRange = conditions.Expired;
                 if (expiredRange.From != null)
                     tokens = tokens.Where(x => x.Expired >= expiredRange.From.Value);
                 if (expiredRange.To != null)
                     tokens = tokens.Where(x => x.Expired <= expiredRange.To.Value);
             }
 
-            switch (findTokensCondition.Direction)
-            {
-                case SortDirection.Decending:
-                    switch (findTokensCondition.Sort)
-                    {
-                        case TokenSort.Code:
-                            tokens = tokens.OrderByDescending(x => x.Code);
-                            break;
-                            case TokenSort.Expired:
-                            tokens = tokens.OrderByDescending(x => x.Expired);
-                            break;
-                            case TokenSort.Issued:
-                            tokens = tokens.OrderByDescending(x => x.Issued);
-                            break;
-                            case TokenSort.Type:
-                            tokens = tokens.OrderByDescending(x => x.Type);
-                            break;
-                        default:
-                            tokens = tokens.OrderByDescending(x => x.OwnerIndex);
-                            break;
-                    }
-                    break;
-                default:
-                    switch (findTokensCondition.Sort)
-                    {
-                        case TokenSort.Code:
-                            tokens = tokens.OrderBy(x => x.Code);
-                            break;
-                        case TokenSort.Expired:
-                            tokens = tokens.OrderBy(x => x.Expired);
-                            break;
-                        case TokenSort.Issued:
-                            tokens = tokens.OrderBy(x => x.Issued);
-                            break;
-                        case TokenSort.Type:
-                            tokens = tokens.OrderBy(x => x.Type);
-                            break;
-                        default:
-                            tokens = tokens.OrderBy(x => x.OwnerIndex);
-                            break;
-                    }
-                    break;
-            }
-
+            
             return tokens;
-        }
-
-        /// <summary>
-        /// Find tokens from database.
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<Token> Find()
-        {
-            return _dbContextWrapper.Tokens.AsQueryable();
         }
 
         #endregion

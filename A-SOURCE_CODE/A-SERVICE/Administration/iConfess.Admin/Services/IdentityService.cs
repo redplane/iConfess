@@ -9,7 +9,7 @@ namespace iConfess.Admin.Services
     public class IdentityService : IIdentityService
     {
         /// <summary>
-        ///     Find account information from identity which is attached to request.
+        ///     Search account information from identity which is attached to request.
         /// </summary>
         /// <param name="identity"></param>
         /// <returns></returns>
@@ -24,7 +24,7 @@ namespace iConfess.Admin.Services
         }
 
         /// <summary>
-        ///     Find account instance which is stored in request context dictionary.
+        ///     Search account instance which is stored in request context dictionary.
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>

@@ -76,7 +76,7 @@ namespace iConfess.Admin.Attributes
                     return;
                 }
 
-                // Find account attached in properties.
+                // Search account attached in properties.
                 var account = (Account) properties[ClaimTypes.Actor];
                 if (account == null)
                 {

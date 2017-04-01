@@ -61,7 +61,7 @@ namespace iConfess.Admin.Middlewares
             if ((principal != null) && (principal.Identity != null) && principal.Identity.IsAuthenticated)
                 return Task.FromResult(0);
 
-            // Find the authorization in the header.
+            // Search the authorization in the header.
             var authorization = httpAuthenticationContext.Request.Headers.Authorization;
 
             // Bearer token is detected.
@@ -80,7 +80,7 @@ namespace iConfess.Admin.Middlewares
 
             try
             {
-                // Find authentication provider from request sent from client.
+                // Search authentication provider from request sent from client.
                 var bearerAuthenticationProvider = FindProviderFromRequest(httpAuthenticationContext).Result;
                 if (bearerAuthenticationProvider == null)
                     return Task.FromResult(0);
@@ -118,7 +118,7 @@ namespace iConfess.Admin.Middlewares
         }
 
         /// <summary>
-        ///     Find authentication provider from request sent from client.
+        ///     Search authentication provider from request sent from client.
         /// </summary>
         /// <param name="httpAuthenticationContext"></param>
         /// <returns></returns>
@@ -127,14 +127,14 @@ namespace iConfess.Admin.Middlewares
         {
             try
             {
-                // Find http request from authentication context.
+                // Search http request from authentication context.
                 var httpRequest = httpAuthenticationContext.Request;
 
                 // Invalid request.
                 if (httpRequest == null)
                     return null;
 
-                // Find configuration of HttpRequest.
+                // Search configuration of HttpRequest.
                 var httpConfiguration = httpRequest.GetConfiguration();
 
                 // Configuration is invalid.

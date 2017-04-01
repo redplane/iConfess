@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Threading.Tasks;
 using iConfess.Database.Interfaces;
-using iConfess.Database.Models;
-using iConfess.Database.Models.Contextes;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
-using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
+using Shared.Interfaces.Services;
 using Shared.ViewModels.PostReports;
 
 namespace Shared.Repositories
 {
-    public class RepositoryPostReport : IRepositoryPostReport
+    public class RepositoryPostReport : ParentRepository<PostReport>, IRepositoryPostReport
     {
         #region Properties
 
@@ -23,6 +18,11 @@ namespace Shared.Repositories
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
 
+        /// <summary>
+        /// Service which handles common businesses of repositories.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
+
         #endregion
 
         #region Constructors
@@ -30,9 +30,14 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with inversion of control.
         /// </summary>
-        public RepositoryPostReport(IDbContextWrapper dbContextWrapper)
+        /// <param name="dbContextWrapper"></param>
+        /// <param name="commonRepositoryService"></param>
+        public RepositoryPostReport(
+            IDbContextWrapper dbContextWrapper, 
+            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
+            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -40,84 +45,13 @@ namespace Shared.Repositories
         #region Methods
 
         /// <summary>
-        ///     Initiate / update a post report information.
-        /// </summary>
-        /// <param name="postReport"></param>
-        /// <returns></returns>
-        public PostReport Initiate(PostReport postReport)
-        {
-            // Add or update the record.
-            _dbContextWrapper.PostReports.AddOrUpdate(postReport);
-            return postReport;
-        }
-
-        /// <summary>
-        ///     Find posts by using specific conditions.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<ResponsePostReportsViewModel> FindPostReportsAsync(FindPostReportsViewModel conditions)
-        {
-            // Find all reports from database.
-            var postReports = FindPostReports();
-
-            // Response initialization.
-            var responsePostReportsViewModel = new ResponsePostReportsViewModel();
-
-            // Find posts by using specific conditions.
-            responsePostReportsViewModel.PostReports = FindPostReports(postReports,
-                conditions);
-            
-            // Bind the filtered list to model.
-            responsePostReportsViewModel.PostReports = postReports;
-
-            // Find total records which match with specific conditions.
-            responsePostReportsViewModel.Total = await responsePostReportsViewModel.PostReports.CountAsync();
-
-            // Do pagination.
-            if (conditions.Pagination != null)
-            {
-                // Find pagination.
-                var pagination = conditions.Pagination;
-
-                responsePostReportsViewModel.PostReports = responsePostReportsViewModel.PostReports.Skip(
-                        pagination.Index * pagination.Records)
-                    .Take(pagination.Records);
-            }
-
-            return responsePostReportsViewModel;
-        }
-
-        /// <summary>
-        ///     Delete pots by using specific conditions.
-        /// </summary>
-        /// <param name="conditions"></param>
-        /// <returns></returns>
-        public void Delete(FindPostReportsViewModel conditions)
-        {
-            // Find posts by using specific conditions.
-            var postReports = FindPostReports(_dbContextWrapper.PostReports.AsQueryable(), conditions);
-
-            // Delete all searched records.
-            _dbContextWrapper.PostReports.RemoveRange(postReports);
-        }
-
-        /// <summary>
-        /// Find post reports from database.
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<PostReport> FindPostReports()
-        {
-            return _dbContextWrapper.PostReports.AsQueryable();
-        }
-
-        /// <summary>
-        ///     Find posts by using specific conditions.
+        ///     Search posts by using specific conditions.
         /// </summary>
         /// <param name="postReports"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<PostReport> FindPostReports(IQueryable<PostReport> postReports,
-            FindPostReportsViewModel conditions)
+        public IQueryable<PostReport> Search(IQueryable<PostReport> postReports,
+            SearchPostReportViewModel conditions)
         {
             // Id is specified.
             if (conditions.Id != null)
@@ -136,45 +70,13 @@ namespace Shared.Repositories
                 postReports = postReports.Where(x => x.PostReporterIndex == conditions.PostReporterIndex.Value);
 
             // Body of post.
-            if ((conditions.Body != null) && !string.IsNullOrEmpty(conditions.Body.Value))
-            {
-                var body = conditions.Body;
-                switch (body.Mode)
-                {
-                    case TextComparision.Contain:
-                        postReports = postReports.Where(x => x.Body.Contains(body.Value));
-                        break;
-                    case TextComparision.Equal:
-                        postReports = postReports.Where(x => x.Body.Equals(body.Value));
-                        break;
-                    default:
-                        postReports =
-                            postReports.Where(
-                                x => x.Body.Equals(body.Value, StringComparison.InvariantCultureIgnoreCase));
-                        break;
-                }
-            }
-
+            if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
+                postReports = _commonRepositoryService.SearchPropertyText(postReports, x => x.Body, conditions.Body);
+            
             // Reason is specified.
-            if ((conditions.Reason != null) && !string.IsNullOrEmpty(conditions.Reason.Value))
-            {
-                var reason = conditions.Reason;
-                switch (reason.Mode)
-                {
-                    case TextComparision.Contain:
-                        postReports = postReports.Where(x => x.Body.Contains(reason.Value));
-                        break;
-                    case TextComparision.Equal:
-                        postReports = postReports.Where(x => x.Body.Equals(reason.Value));
-                        break;
-                    default:
-                        postReports =
-                            postReports.Where(
-                                x => x.Body.Equals(reason.Value, StringComparison.InvariantCultureIgnoreCase));
-                        break;
-                }
-            }
-
+            if (conditions.Reason != null && !string.IsNullOrEmpty(conditions.Reason.Value))
+                postReports = _commonRepositoryService.SearchPropertyText(postReports, x => x.Reason, conditions.Reason);
+               
             // Created is specified.
             if (conditions.Created != null)
             {
@@ -188,7 +90,7 @@ namespace Shared.Repositories
                 if (created.To != null)
                     postReports = postReports.Where(x => x.Created <= created.To.Value);
             }
-            
+
             return postReports;
         }
 

@@ -7,7 +7,7 @@ namespace iConfess.Admin.ViewModels.ApiSystemMessage
         /// <summary>
         /// Search accounts conditions.
         /// </summary>
-        public FindAccountsViewModel Search { get; set; }
+        public SearchAccountViewModel Search { get; set; }
 
         /// <summary>
         /// Message which should be broadcasted to specific clients.

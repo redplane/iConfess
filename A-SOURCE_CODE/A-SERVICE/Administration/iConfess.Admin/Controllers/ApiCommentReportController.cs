@@ -11,6 +11,7 @@ using iConfess.Database.Models.Tables;
 using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
+using Shared.ViewModels;
 using Shared.ViewModels.CommentReports;
 using Shared.ViewModels.Comments;
 
@@ -101,14 +102,14 @@ namespace iConfess.Admin.Controllers
                 #region Comment find
 
                 // Comment find conditions build.
-                var findCommentViewModel = new FindCommentsViewModel();
+                var findCommentViewModel = new SearchCommentViewModel();
                 findCommentViewModel.Id = parameters.CommentIndex;
 
-                // Find all comments from database.
-                var comments = UnitOfWork.RepositoryComments.Find();
-                comments = UnitOfWork.RepositoryComments.Find(comments, findCommentViewModel);
+                // Search all comments from database.
+                var comments = UnitOfWork.RepositoryComments.Search();
+                comments = UnitOfWork.RepositoryComments.Search(comments, findCommentViewModel);
 
-                // Find the first matched comment.
+                // Search the first matched comment.
                 var comment = await comments.FirstOrDefaultAsync();
                 if (comment == null)
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, HttpMessages.CommentNotFound);
@@ -117,7 +118,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Request identity search
 
-                // Find account which sends the current request.
+                // Search account which sends the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
@@ -135,7 +136,7 @@ namespace iConfess.Admin.Controllers
                 commentReport.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 // Save record into database.
-                commentReport = UnitOfWork.RepositoryCommentReports.Initiate(commentReport);
+                commentReport = UnitOfWork.RepositoryCommentReports.Insert(commentReport);
 
                 // Commit changes to database.
                 await UnitOfWork.CommitAsync();
@@ -157,7 +158,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteCommentReport([FromBody] FindCommentReportsViewModel parameters)
+        public async Task<HttpResponseMessage> DeleteCommentReport([FromBody] SearchCommentReportViewModel parameters)
         {
             try
             {
@@ -166,7 +167,7 @@ namespace iConfess.Admin.Controllers
                 // Parameters haven't been initialized.
                 if (parameters == null)
                 {
-                    parameters = new FindCommentReportsViewModel();
+                    parameters = new SearchCommentReportViewModel();
                     Validate(parameters);
                 }
 
@@ -178,7 +179,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Request identity search
 
-                // Find account which sends the current request.
+                // Search account which sends the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
@@ -191,8 +192,12 @@ namespace iConfess.Admin.Controllers
                 if (account.Role != AccountRole.Admin)
                     parameters.CommentReporterIndex = account.Id;
 
-                // Find comments and delete 'em all.
-                UnitOfWork.RepositoryCommentReports.Delete(parameters);
+                // Search comment reports by using specific conditions.
+                var commentReports = UnitOfWork.RepositoryCommentReports.Search();
+                commentReports = UnitOfWork.RepositoryCommentReports.Search(commentReports, parameters);
+
+                // Search comments and delete 'em all.
+                UnitOfWork.RepositoryCommentReports.Remove(commentReports);
 
                 // Save changes.
                 var totalRecords = await UnitOfWork.CommitAsync();
@@ -217,13 +222,13 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        ///     Find list of comment reports by using specific conditions.
+        ///     Search list of comment reports by using specific conditions.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
-        public async Task<HttpResponseMessage> FindCommentReports([FromBody] FindCommentReportsViewModel condition)
+        public async Task<HttpResponseMessage> FindCommentReports([FromBody] SearchCommentReportViewModel condition)
         {
             try
             {
@@ -232,7 +237,7 @@ namespace iConfess.Admin.Controllers
                 // Parameters haven't been initialized.
                 if (condition == null)
                 {
-                    condition = new FindCommentReportsViewModel();
+                    condition = new SearchCommentReportViewModel();
                     Validate(condition);
                 }
 
@@ -244,7 +249,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Request identity search
 
-                // Find account which sends the current request.
+                // Search account which sends the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
@@ -257,21 +262,21 @@ namespace iConfess.Admin.Controllers
                 if (account.Role != AccountRole.Admin)
                     condition.CommentReporterIndex = account.Id;
 
-                // Find comment reports with specific conditions.
-                var commentReports = UnitOfWork.RepositoryCommentReports.Find();
-                commentReports = UnitOfWork.RepositoryCommentReports.Find(commentReports, condition);
+                // Search comment reports with specific conditions.
+                var commentReports = UnitOfWork.RepositoryCommentReports.Search();
+                commentReports = UnitOfWork.RepositoryCommentReports.Search(commentReports, condition);
                 commentReports = _commonRepositoryService.Sort(commentReports, condition.Direction, condition.Sort);
                 
-                // Find all accounts.
-                var accounts = UnitOfWork.RepositoryAccounts.Find();
+                // Search all accounts.
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
 
-                // Find all comments.
-                var comments = UnitOfWork.RepositoryComments.Find();
+                // Search all comments.
+                var comments = UnitOfWork.RepositoryComments.Search();
 
-                // Find all posts.
-                var posts = UnitOfWork.RepositoryPosts.Find();
+                // Search all posts.
+                var posts = UnitOfWork.RepositoryPosts.Search();
 
-                // Find comment report details
+                // Search comment report details
                 var commentReportDetails = from commentReport in commentReports
                                                   from commentOwner in accounts
                                                   from commentReporter in accounts
@@ -296,15 +301,14 @@ namespace iConfess.Admin.Controllers
                 #region Comment report search
                 
                 // Initiate result.
-                var result = new ResponseCommentReportsViewModel();
+                var result = new SearchResult<CommentReportDetailViewModel>();
 
                 // Count the total records first.
                 result.Total = await commentReports.CountAsync();
 
                 // Do pagination.
-                commentReportDetails = _commonRepositoryService.Paginate(commentReportDetails, condition.Pagination);
-                result.CommentReports = await commentReportDetails.ToListAsync();
-
+                result.Records = _commonRepositoryService.Paginate(commentReportDetails, condition.Pagination);
+                
                 #endregion
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -317,7 +321,7 @@ namespace iConfess.Admin.Controllers
         }
 
         /// <summary>
-        ///     Find details of a comment report.
+        ///     Search details of a comment report.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -329,7 +333,7 @@ namespace iConfess.Admin.Controllers
             {
                 #region Request identity search
 
-                // Find account which sends the current request.
+                // Search account which sends the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
@@ -338,26 +342,26 @@ namespace iConfess.Admin.Controllers
 
                 #region Comment report search
 
-                // Find comment reports with specific conditions.
-                var commentReports = UnitOfWork.RepositoryCommentReports.Find();
+                // Search comment reports with specific conditions.
+                var commentReports = UnitOfWork.RepositoryCommentReports.Search();
 
                 // Account can only see the comments which it is their reporter.
                 if (account.Role != AccountRole.Admin)
                     commentReports = commentReports.Where(x => x.CommentReporterIndex == account.Id);
 
-                // Find the comment by using id.
+                // Search the comment by using id.
                 commentReports = commentReports.Where(x => x.Id == index);
 
-                // Find all accounts.
-                var accounts = UnitOfWork.RepositoryAccounts.Find();
+                // Search all accounts.
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
 
-                // Find all comments.
-                var comments = UnitOfWork.RepositoryComments.Find();
+                // Search all comments.
+                var comments = UnitOfWork.RepositoryComments.Search();
 
-                // Find all posts.
-                var posts = UnitOfWork.RepositoryPosts.Find();
+                // Search all posts.
+                var posts = UnitOfWork.RepositoryPosts.Search();
 
-                // Find comment report details
+                // Search comment report details
                 var commentReportDetails = await (from commentReport in commentReports
                     from commentOwner in accounts
                     from commentReporter in accounts

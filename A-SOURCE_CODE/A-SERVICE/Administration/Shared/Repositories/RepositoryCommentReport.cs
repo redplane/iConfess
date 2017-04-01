@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
+using Shared.Interfaces.Services;
 using Shared.ViewModels.CommentReports;
 
 namespace Shared.Repositories
 {
-    public class RepositoryCommentReport : IRepositoryCommentReport
+    public class RepositoryCommentReport : ParentRepository<CommentReport>, IRepositoryCommentReport
     {
         #region Properties
 
@@ -17,6 +17,11 @@ namespace Shared.Repositories
         ///     Provides access to database.
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
+
+        /// <summary>
+        /// Service which handles common businesses of repositories.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         #endregion
 
@@ -26,61 +31,27 @@ namespace Shared.Repositories
         ///     Initiate repository of comment reports.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        public RepositoryCommentReport(IDbContextWrapper dbContextWrapper)
+        /// <param name="commonRepositoryService"></param>
+        public RepositoryCommentReport(
+            IDbContextWrapper dbContextWrapper,
+            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
+            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
 
         #region Methods
-
+        
         /// <summary>
-        ///     Delete comment reports by searching for specific conditions.
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        public void Delete(FindCommentReportsViewModel parameters)
-        {
-            // Find all comment reports first.
-            var commentReports = _dbContextWrapper.CommentReports.AsQueryable();
-
-            // Find all comment reports with specific conditions.
-            commentReports = Find(commentReports, parameters);
-
-            // Delete all found comment reports.
-            _dbContextWrapper.CommentReports.RemoveRange(commentReports);
-        }
-
-        /// <summary>
-        ///     Initiate / update comment report.
-        /// </summary>
-        /// <param name="commentReport"></param>
-        /// <returns></returns>
-        public CommentReport Initiate(CommentReport commentReport)
-        {
-            // Insert / update comment report.
-            _dbContextWrapper.CommentReports.AddOrUpdate(commentReport);
-            return commentReport;
-        }
-
-        /// <summary>
-        ///     Find all comment reports in database.
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<CommentReport> Find()
-        {
-            return _dbContextWrapper.CommentReports.AsQueryable();
-        }
-
-        /// <summary>
-        ///     Find comment reports by using specific conditions.
+        ///     Search comment reports by using specific conditions.
         /// </summary>
         /// <param name="commentReports"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<CommentReport> Find(IQueryable<CommentReport> commentReports,
-            FindCommentReportsViewModel conditions)
+        public IQueryable<CommentReport> Search(IQueryable<CommentReport> commentReports,
+            SearchCommentReportViewModel conditions)
         {
             // Index is specified.
             if (conditions.Id != null)
@@ -100,44 +71,14 @@ namespace Shared.Repositories
                     commentReports.Where(x => x.CommentReporterIndex == conditions.CommentReporterIndex.Value);
 
             // Comment body is specified.
-            if ((conditions.Body != null) && !string.IsNullOrEmpty(conditions.Body.Value))
-            {
-                var commentBody = conditions.Body;
-                switch (commentBody.Mode)
-                {
-                    case TextComparision.Contain:
-                        commentReports = commentReports.Where(x => x.Body.Contains(commentBody.Value));
-                        break;
-                    case TextComparision.Equal:
-                        commentReports = commentReports.Where(x => x.Body.Equals(commentBody.Value));
-                        break;
-                    default:
-                        commentReports =
-                            commentReports.Where(
-                                x => x.Body.Equals(commentBody.Value, StringComparison.InvariantCultureIgnoreCase));
-                        break;
-                }
-            }
-
+            if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
+                commentReports = _commonRepositoryService.SearchPropertyText(commentReports, x => x.Body,
+                    conditions.Body);
+            
             // Comment reason is specified.
-            if ((conditions.Reason != null) && !string.IsNullOrEmpty(conditions.Reason.Value))
-            {
-                var commentReason = conditions.Reason;
-                switch (commentReason.Mode)
-                {
-                    case TextComparision.Contain:
-                        commentReports = commentReports.Where(x => x.Reason.Contains(commentReason.Value));
-                        break;
-                    case TextComparision.Equal:
-                        commentReports = commentReports.Where(x => x.Reason.Equals(commentReason.Value));
-                        break;
-                    default:
-                        commentReports =
-                            commentReports.Where(
-                                x => x.Reason.Equals(commentReason.Value, StringComparison.InvariantCultureIgnoreCase));
-                        break;
-                }
-            }
+            if (conditions.Reason != null && !string.IsNullOrEmpty(conditions.Reason.Value))
+                commentReports = _commonRepositoryService.SearchPropertyText(commentReports, x => x.Reason,
+                    conditions.Reason);
 
             // Created is specified.
             if (conditions.Created != null)

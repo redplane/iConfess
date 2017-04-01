@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Threading.Tasks;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
+using Shared.Interfaces.Services;
 using Shared.ViewModels.Comments;
 
 namespace Shared.Repositories
 {
-    public class RepositoryComment : IRepositoryComment
+    public class RepositoryComment : ParentRepository<Comment>, IRepositoryComment
     {
         #region Properties
 
@@ -20,6 +18,11 @@ namespace Shared.Repositories
         ///     Provides functions to access to database.
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
+
+        /// <summary>
+        /// Service which handles common business of repositories.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         #endregion
 
@@ -29,9 +32,13 @@ namespace Shared.Repositories
         ///     Initiate repository with database context.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        public RepositoryComment(IDbContextWrapper dbContextWrapper)
+        /// <param name="commonRepositoryService"></param>
+        public RepositoryComment(
+            IDbContextWrapper dbContextWrapper,
+            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
+            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -39,76 +46,12 @@ namespace Shared.Repositories
         #region Methods
 
         /// <summary>
-        ///     Delete a list of comments which match with the specific conditions.
-        /// </summary>
-        /// <param name="conditions"></param>
-        /// <returns></returns>
-        public void Delete(FindCommentsViewModel conditions)
-        {
-            // Find comments which match with conditions.
-            var comments = Find(_dbContextWrapper.Comments.AsQueryable(), conditions);
-
-            foreach (var comment in comments)
-            {
-                // Find all comment reports.
-                var commentReports = _dbContextWrapper.CommentReports.AsQueryable();
-                commentReports = commentReports.Where(x => x.CommentIndex == comment.Id);
-                _dbContextWrapper.CommentReports.RemoveRange(commentReports);
-            }
-
-            // Delete all found comments.
-            _dbContextWrapper.Comments.RemoveRange(comments);
-        }
-
-        /// <summary>
-        ///     Find comments by using specific conditions asychronously.
-        /// </summary>
-        /// <param name="conditions"></param>
-        /// <returns></returns>
-        public async Task<ResponseCommentsViewModel> FindCommentsAsync(FindCommentsViewModel conditions)
-        {
-            // Find all comments first.
-            var comments = _dbContextWrapper.Comments.AsQueryable();
-            comments = Find(comments, conditions);
-            comments = SortComments(comments, conditions);
-
-            // Response initialization.
-            var responseComment = new ResponseCommentsViewModel();
-            responseComment.Comments = comments;
-
-            // Sort comments by using specific conditions.
-
-            // Count total of comments which match with the conditions.
-            responseComment.Total = await responseComment.Comments.CountAsync();
-
-            // Do pagination.
-            if (conditions.Pagination != null)
-            {
-                var pagination = conditions.Pagination;
-                responseComment.Comments = responseComment.Comments.Skip(pagination.Index*pagination.Records)
-                    .Take(pagination.Records);
-            }
-
-            return responseComment;
-        }
-
-        /// <summary>
-        ///     Initiate / update a comment information.
-        /// </summary>
-        /// <returns></returns>
-        public void Initiate(Comment comment)
-        {
-            // Initiate / update comment into database.
-            _dbContextWrapper.Comments.AddOrUpdate(comment);
-        }
-
-        /// <summary>
-        ///     Find comments by using specific conditions.
+        ///     Search comments by using specific conditions.
         /// </summary>
         /// <param name="comments"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IQueryable<Comment> Find(IQueryable<Comment> comments, FindCommentsViewModel conditions)
+        public IQueryable<Comment> Search(IQueryable<Comment> comments, SearchCommentViewModel conditions)
         {
             // Comment index is specified.
             if (conditions.Id != null)
@@ -122,33 +65,15 @@ namespace Shared.Repositories
             if (conditions.PostIndex != null)
                 comments = comments.Where(x => x.PostIndex == conditions.PostIndex.Value);
 
+            
             // Content is specified.
-            if (conditions.Content != null)
-            {
-                var content = conditions.Content;
-
-                // Content value is not blank.
-                if (!string.IsNullOrEmpty(content.Value))
-                    switch (content.Mode)
-                    {
-                        case TextComparision.Contain:
-                            comments = comments.Where(x => x.Content.Contains(content.Value));
-                            break;
-                        case TextComparision.Equal:
-                            comments = comments.Where(x => x.Content.Equals(content.Value));
-                            break;
-                        default:
-                            comments =
-                                comments.Where(
-                                    x => x.Content.Equals(content.Value, StringComparison.InvariantCultureIgnoreCase));
-                            break;
-                    }
-            }
-
+            if (conditions.Content != null && !string.IsNullOrWhiteSpace(conditions.Content.Value))
+                comments = _commonRepositoryService.SearchPropertyText(comments, x => x.Content, conditions.Content);
+            
             // Created is specified.
             if (conditions.Created != null)
             {
-                // Find created time.
+                // Search created time.
                 var created = conditions.Created;
 
                 // From is specified.
@@ -163,7 +88,7 @@ namespace Shared.Repositories
             // Last modified is specified.
             if (conditions.LastModified != null)
             {
-                // Find created time.
+                // Search created time.
                 var lastModified = conditions.LastModified;
 
                 // From is specified.
@@ -177,72 +102,7 @@ namespace Shared.Repositories
 
             return comments;
         }
-
-        /// <summary>
-        ///     Sort comments by using specific conditions.
-        /// </summary>
-        /// <param name="comments"></param>
-        /// <param name="conditions"></param>
-        /// <returns></returns>
-        public IQueryable<Comment> SortComments(IQueryable<Comment> comments, FindCommentsViewModel conditions)
-        {
-            // Result sorting.
-            switch (conditions.Direction)
-            {
-                case SortDirection.Decending:
-                    switch (conditions.Sort)
-                    {
-                        case CommentSort.Post:
-                            comments = comments.OrderByDescending(x => x.PostIndex);
-                            break;
-                        case CommentSort.Owner:
-                            comments = comments.OrderByDescending(x => x.OwnerIndex);
-                            break;
-                        case CommentSort.Created:
-                            comments = comments.OrderByDescending(x => x.Created);
-                            break;
-                        case CommentSort.LastModified:
-                            comments = comments.OrderByDescending(x => x.LastModified);
-                            break;
-                        default:
-                            comments = comments.OrderByDescending(x => x.Id);
-                            break;
-                    }
-                    break;
-                default:
-                    switch (conditions.Sort)
-                    {
-                        case CommentSort.Post:
-                            comments = comments.OrderBy(x => x.PostIndex);
-                            break;
-                        case CommentSort.Owner:
-                            comments = comments.OrderBy(x => x.OwnerIndex);
-                            break;
-                        case CommentSort.Created:
-                            comments = comments.OrderBy(x => x.Created);
-                            break;
-                        case CommentSort.LastModified:
-                            comments = comments.OrderBy(x => x.LastModified);
-                            break;
-                        default:
-                            comments = comments.OrderBy(x => x.Id);
-                            break;
-                    }
-                    break;
-            }
-
-            return comments;
-        }
-
-        /// <summary>
-        ///     Find comments from database.
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<Comment> Find()
-        {
-            return _dbContextWrapper.Comments.AsQueryable();
-        }
-
+        
         #endregion
     }
 }

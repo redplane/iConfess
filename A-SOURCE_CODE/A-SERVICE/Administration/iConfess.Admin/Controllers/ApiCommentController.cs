@@ -6,16 +6,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
-using iConfess.Admin.Enumerations;
 using iConfess.Admin.ViewModels.ApiComment;
 using iConfess.Database.Enumerations;
 using iConfess.Database.Models.Tables;
 using log4net;
-using Microsoft.Ajax.Utilities;
-using Shared.Enumerations.Order;
 using Shared.Interfaces.Services;
 using Shared.Resources;
-using Shared.ViewModels.CommentReports;
+using Shared.ViewModels;
 using Shared.ViewModels.Comments;
 
 namespace iConfess.Admin.Controllers
@@ -36,8 +33,8 @@ namespace iConfess.Admin.Controllers
         /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
         public ApiCommentController(
-            IUnitOfWork unitOfWork, 
-            ITimeService timeService, 
+            IUnitOfWork unitOfWork,
+            ITimeService timeService,
             IIdentityService identityService,
             ICommonRepositoryService commonRepositoryService,
             ILog log)
@@ -59,7 +56,7 @@ namespace iConfess.Admin.Controllers
         private readonly IUnitOfWork _unitOfWork;
 
         /// <summary>
-        /// Service which handles common business of repositories.
+        ///     Service which handles common business of repositories.
         /// </summary>
         private readonly ICommonRepositoryService _commonRepositoryService;
 
@@ -69,12 +66,12 @@ namespace iConfess.Admin.Controllers
         private readonly ITimeService _timeService;
 
         /// <summary>
-        /// Service which handles identity in request.
+        ///     Service which handles identity in request.
         /// </summary>
         private readonly IIdentityService _identityService;
 
         /// <summary>
-        /// Service which is for handling log.
+        ///     Service which is for handling log.
         /// </summary>
         private readonly ILog _log;
 
@@ -109,7 +106,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Request identity search
 
-                // Find account which sends the current request.
+                // Search account which sends the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
@@ -125,13 +122,13 @@ namespace iConfess.Admin.Controllers
                 comment.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 //Add category record
-                _unitOfWork.RepositoryComments.Initiate(comment);
+                _unitOfWork.RepositoryComments.Insert(comment);
 
                 // Save changes into database.
                 await _unitOfWork.CommitAsync();
 
                 #endregion
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, comment);
             }
             catch (Exception exception)
@@ -169,7 +166,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Request identity search
 
-                // Find account which sends the current request.
+                // Search account which sends the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
@@ -178,22 +175,22 @@ namespace iConfess.Admin.Controllers
 
                 #region Record find
 
-                // Find the category
-                var condition = new FindCommentsViewModel();
+                // Search the category
+                var condition = new SearchCommentViewModel();
                 condition.Id = index;
 
                 // Account can only change its comment as it is not an administrator.
                 if (account.Role != AccountRole.Admin)
                     condition.OwnerIndex = account.Id;
 
-                // Find categories by using specific conditions.
-                var comments = _unitOfWork.RepositoryComments.Find();
-                comments = _unitOfWork.RepositoryComments.Find(comments, condition);
-                
+                // Search categories by using specific conditions.
+                var comments = _unitOfWork.RepositoryComments.Search();
+                comments = _unitOfWork.RepositoryComments.Search(comments, condition);
+
                 #endregion
 
                 #region Record update
-                
+
                 // Calculate the system time.
                 var unixSystemTime = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
@@ -224,7 +221,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteComments([FromBody] FindCommentsViewModel conditions)
+        public async Task<HttpResponseMessage> DeleteComments([FromBody] SearchCommentViewModel conditions)
         {
             try
             {
@@ -233,7 +230,7 @@ namespace iConfess.Admin.Controllers
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindCommentsViewModel();
+                    conditions = new SearchCommentViewModel();
                     Validate(conditions);
                 }
 
@@ -245,35 +242,34 @@ namespace iConfess.Admin.Controllers
 
                 #region Request identity search
 
-                // Find account which sends the current request.
+                // Search account which sends the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
 
                 #endregion
 
-                #region Find & delete records
+                #region Search & delete records
 
                 // Account can only delete its own comment as it is not an administrator.
                 if (account.Role != AccountRole.Admin)
                     conditions.OwnerIndex = account.Id;
 
-                // Find all comments in database.
-                var comments = _unitOfWork.RepositoryComments.Find();
-                comments = _unitOfWork.RepositoryComments.Find(comments, conditions);
+                // Search all comments in database.
+                var comments = _unitOfWork.RepositoryComments.Search();
+                comments = _unitOfWork.RepositoryComments.Search(comments, conditions);
 
-                // Loop through every found comments.
-                foreach (var comment in comments)
-                {
-                    var findCommentReportConditions = new FindCommentReportsViewModel();
-                    findCommentReportConditions.CommentIndex = comment.Id;
+                // Search comment reports and delete them first.
+                var commentReports = _unitOfWork.RepositoryCommentReports.Search();
+                var markCommentReports = from comment in comments
+                    from commentReport in commentReports
+                    where comment.Id == commentReport.CommentIndex
+                    select commentReport;
 
-                    // Delete all comment report.
-                    _unitOfWork.RepositoryCommentReports.Delete(findCommentReportConditions);
-                }
 
                 // Delete all found comments.
-                _unitOfWork.RepositoryComments.Delete(conditions);
+                _unitOfWork.RepositoryCommentReports.Remove(markCommentReports);
+                _unitOfWork.RepositoryComments.Remove(comments);
 
                 // Save changes.
                 var totalRecords = await _unitOfWork.CommitAsync();
@@ -303,7 +299,7 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
-        public async Task<HttpResponseMessage> FindComments([FromBody] FindCommentsViewModel conditions)
+        public async Task<HttpResponseMessage> FindComments([FromBody] SearchCommentViewModel conditions)
         {
             try
             {
@@ -312,7 +308,7 @@ namespace iConfess.Admin.Controllers
                 // Conditions haven't been initialized.
                 if (conditions == null)
                 {
-                    conditions = new FindCommentsViewModel();
+                    conditions = new SearchCommentViewModel();
                     Validate(conditions);
                 }
 
@@ -324,21 +320,26 @@ namespace iConfess.Admin.Controllers
 
                 #region Request identity search
 
-                // Find account which sends the current request.
+                // Search account which sends the current request.
                 var account = _identityService.FindAccount(Request.Properties);
                 if (account == null)
                     throw new Exception("No account information is attached into current request.");
 
                 #endregion
 
-                #region Find comments
-                
-                // Find categories by using specific conditions.
-                var findCommentsResult = await _unitOfWork.RepositoryComments.FindCommentsAsync(conditions);
+                #region Search comments
+
+                // Search comments by using specific conditions.
+                var comments = _unitOfWork.RepositoryComments.Search();
+                comments = _unitOfWork.RepositoryComments.Search(comments, conditions);
+
+                var searchResult = new SearchResult<Comment>();
+                searchResult.Total = await comments.CountAsync();
+                searchResult.Records = _commonRepositoryService.Paginate(comments, conditions.Pagination);
 
                 #endregion
 
-                return Request.CreateResponse(HttpStatusCode.OK, findCommentsResult);
+                return Request.CreateResponse(HttpStatusCode.OK, searchResult);
             }
             catch (Exception exception)
             {
@@ -346,7 +347,7 @@ namespace iConfess.Admin.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-        
+
         /// <summary>
         ///     Filter categories by using specific conditions.
         /// </summary>
@@ -357,14 +358,14 @@ namespace iConfess.Admin.Controllers
         {
             try
             {
-                #region Find comments
+                #region Search comments
 
-                // Find all comment in database.
-                var comments = _unitOfWork.RepositoryComments.Find();
+                // Search all comment in database.
+                var comments = _unitOfWork.RepositoryComments.Search();
                 comments = comments.Where(x => x.Id == index);
 
-                // Find all account in database.
-                var accounts = _unitOfWork.RepositoryAccounts.Find();
+                // Search all account in database.
+                var accounts = _unitOfWork.RepositoryAccounts.Search();
 
                 var commentDetails = await (from comment in comments
                     from owner in accounts
@@ -395,7 +396,8 @@ namespace iConfess.Admin.Controllers
         /// <returns></returns>
         [Route("~/api/comments/details")]
         [HttpPost]
-        public async Task<HttpResponseMessage> FindCommentsDetails([FromBody] FindCommentsDetailsViewModel searchCommentsDetailsCondition)
+        public async Task<HttpResponseMessage> FindCommentsDetails(
+            [FromBody] FindCommentsDetailsViewModel searchCommentsDetailsCondition)
         {
             try
             {
@@ -413,11 +415,11 @@ namespace iConfess.Admin.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
 
                 #endregion
-                
-                #region Find comments
 
-                // Find categories by using specific conditions.
-                var conditions = new FindCommentsViewModel();
+                #region Search comments
+
+                // Search categories by using specific conditions.
+                var conditions = new SearchCommentViewModel();
                 conditions.Id = searchCommentsDetailsCondition.Id;
                 conditions.OwnerIndex = searchCommentsDetailsCondition.OwnerIndex;
                 conditions.PostIndex = searchCommentsDetailsCondition.PostIndex;
@@ -427,13 +429,13 @@ namespace iConfess.Admin.Controllers
                 conditions.LastModified = searchCommentsDetailsCondition.LastModified;
                 conditions.Pagination = searchCommentsDetailsCondition.Pagination;
 
-                var comments = _unitOfWork.RepositoryComments.Find();
-                comments = _unitOfWork.RepositoryComments.Find(comments, conditions);
+                var comments = _unitOfWork.RepositoryComments.Search();
+                comments = _unitOfWork.RepositoryComments.Search(comments, conditions);
 
-                // Find accounts from database.
-                var accounts = _unitOfWork.RepositoryAccounts.Find();
+                // Search accounts from database.
+                var accounts = _unitOfWork.RepositoryAccounts.Search();
 
-                // Find comments details
+                // Search comments details
                 var commentsDetails = from comment in comments
                     from account in accounts
                     where comment.OwnerIndex == account.Id
@@ -452,49 +454,15 @@ namespace iConfess.Admin.Controllers
 
                 commentsDetails = _commonRepositoryService.Sort(commentsDetails,
                     searchCommentsDetailsCondition.Direction, searchCommentsDetailsCondition.Sort);
-
-                //switch (conditions.Direction)
-                //{
-                //    case SortDirection.Decending:
-                //        switch (searchCommentsDetailsCondition.Sort)
-                //        {
-                //            case CommentsDetailsSort.Created:
-                //                commentsDetails = commentsDetails.OrderByDescending(x => x.Created);
-                //                break;
-                //                case CommentsDetailsSort.LastModified:
-                //                commentsDetails = commentsDetails.OrderByDescending(x => x.LastModified);
-                //                break;
-                //            default:
-                //                commentsDetails = commentsDetails.OrderByDescending(x => x.Id);
-                //                break;
-                //        }
-                //        break;
-                //    default:
-                //        switch (searchCommentsDetailsCondition.Sort)
-                //        {
-                //            case CommentsDetailsSort.Created:
-                //                commentsDetails = commentsDetails.OrderBy(x => x.Created);
-                //                break;
-                //            case CommentsDetailsSort.LastModified:
-                //                commentsDetails = commentsDetails.OrderBy(x => x.LastModified);
-                //                break;
-                //            default:
-                //                commentsDetails = commentsDetails.OrderBy(x => x.Id);
-                //                break;
-                //        }
-                //        break;
-                //}
-
+                
                 #endregion
 
                 #region Pagination
-
-                // Do pagination.
-                var pagination = conditions.Pagination;
-                var searchResult = new ResponseCommentsDetailsViewModel();
+                
+                var searchResult = new SearchResult<CommentDetailViewModel>();
 
                 searchResult.Total = await commentsDetails.CountAsync();
-                searchResult.CommentsDetails = _commonRepositoryService.Paginate(commentsDetails, pagination);
+                searchResult.Records = _commonRepositoryService.Paginate(commentsDetails, conditions.Pagination);
 
                 #endregion
 

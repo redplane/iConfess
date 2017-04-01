@@ -124,7 +124,7 @@ namespace iConfess.Admin.Configs
         }
 
         /// <summary>
-        ///     Find bearer authentication setting from web.config.
+        ///     Search bearer authentication setting from web.config.
         /// </summary>
         /// <returns></returns>
         private static BearerAuthenticationProvider FindBearerAuthenticationSettings()
@@ -151,10 +151,10 @@ namespace iConfess.Admin.Configs
 
             #region Load emails list 
 
-            // Find emails list.
+            // Search emails list.
             var emailsList = Enum.GetValues(typeof(SystemEmail));
 
-            // Find and load email list defined in the enumerations.
+            // Search and load email list defined in the enumerations.
             for (var index = 0; index < emailsList.Length; index++)
             {
                 // Key of email configuration.

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
 using iConfess.Database.Interfaces;
@@ -435,7 +434,7 @@ namespace iConfess.Database.Models.Contextes
         }
 
         /// <summary>
-        /// Commit changes to database.
+        ///     Commit changes to database.
         /// </summary>
         /// <returns></returns>
         public int Commit()
@@ -444,7 +443,7 @@ namespace iConfess.Database.Models.Contextes
         }
 
         /// <summary>
-        /// Commit changes to database asychronously.
+        ///     Commit changes to database asychronously.
         /// </summary>
         /// <returns></returns>
         public async Task<int> CommitAsync()

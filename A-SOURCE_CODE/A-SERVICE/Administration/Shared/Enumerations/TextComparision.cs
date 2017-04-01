@@ -4,6 +4,11 @@
     {
         Equal,
         EqualIgnoreCase,
-        Contain
+        Contain,
+        ContainIgnoreCase,
+        StartsWith,
+        StartsWithIgnoreCase,
+        EndsWith,
+        EndsWithIgnoreCase
     }
 }
