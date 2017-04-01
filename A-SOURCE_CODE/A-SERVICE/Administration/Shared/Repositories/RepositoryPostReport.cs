@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
-using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.Interfaces.Services;
 using Shared.ViewModels.PostReports;
@@ -11,20 +9,6 @@ namespace Shared.Repositories
 {
     public class RepositoryPostReport : ParentRepository<PostReport>, IRepositoryPostReport
     {
-        #region Properties
-
-        /// <summary>
-        ///     Instance which is used for accessing database context.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
-        /// <summary>
-        /// Service which handles common businesses of repositories.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -33,7 +17,7 @@ namespace Shared.Repositories
         /// <param name="dbContextWrapper"></param>
         /// <param name="commonRepositoryService"></param>
         public RepositoryPostReport(
-            IDbContextWrapper dbContextWrapper, 
+            IDbContextWrapper dbContextWrapper,
             ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
@@ -72,11 +56,11 @@ namespace Shared.Repositories
             // Body of post.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
                 postReports = _commonRepositoryService.SearchPropertyText(postReports, x => x.Body, conditions.Body);
-            
+
             // Reason is specified.
             if (conditions.Reason != null && !string.IsNullOrEmpty(conditions.Reason.Value))
                 postReports = _commonRepositoryService.SearchPropertyText(postReports, x => x.Reason, conditions.Reason);
-               
+
             // Created is specified.
             if (conditions.Created != null)
             {
@@ -93,6 +77,20 @@ namespace Shared.Repositories
 
             return postReports;
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     Instance which is used for accessing database context.
+        /// </summary>
+        private readonly IDbContextWrapper _dbContextWrapper;
+
+        /// <summary>
+        ///     Service which handles common businesses of repositories.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         #endregion
     }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
-using Shared.Enumerations;
-using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
 using Shared.Interfaces.Services;
 using Shared.ViewModels.Token;
@@ -12,20 +9,6 @@ namespace Shared.Repositories
 {
     public class RepositoryToken : ParentRepository<Token>, IRepositoryToken
     {
-        #region Properties
-
-        /// <summary>
-        ///     Database context which provides access to database.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
-        /// <summary>
-        /// Service which handles common repositories businesses.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -64,7 +47,7 @@ namespace Shared.Repositories
             // Code has been specified.
             if (conditions.Code != null && !string.IsNullOrEmpty(conditions.Code.Value))
                 tokens = _commonRepositoryService.SearchPropertyText(tokens, x => x.Code, conditions.Code);
-               
+
             // Issued range is specified.
             if (conditions.Issued != null)
             {
@@ -85,9 +68,23 @@ namespace Shared.Repositories
                     tokens = tokens.Where(x => x.Expired <= expiredRange.To.Value);
             }
 
-            
+
             return tokens;
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     Database context which provides access to database.
+        /// </summary>
+        private readonly IDbContextWrapper _dbContextWrapper;
+
+        /// <summary>
+        ///     Service which handles common repositories businesses.
+        /// </summary>
+        private readonly ICommonRepositoryService _commonRepositoryService;
 
         #endregion
     }
