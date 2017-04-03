@@ -250,6 +250,7 @@
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\SendGridService.cs" />
     <Compile Include="SignalrHubs\ParentHub.cs" />
     <Compile Include="SignalrHubs\SystemMessageHub.cs" />
     <Compile Include="Startup.cs" />
