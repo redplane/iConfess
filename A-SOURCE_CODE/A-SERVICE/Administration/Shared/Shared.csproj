@@ -46,7 +46,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Nustache.Core, Version=1.16.0.4, Culture=neutral, PublicKeyToken=efd6f3d8f76ecd9f, processorArchitecture=MSIL">
@@ -124,10 +124,10 @@
     <Compile Include="Enumerations\SystemEmail.cs" />
     <Compile Include="Enumerations\TextComparision.cs" />
     <Compile Include="Interfaces\Repositories\IParentRepository.cs" />
-    <Compile Include="Interfaces\Services\ICommonRepositoryService.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryToken.cs" />
     <Compile Include="Interfaces\Services\IEncryptionService.cs" />
     <Compile Include="Interfaces\Services\IIdentityService.cs" />
+    <Compile Include="Interfaces\Services\IGeneralRepositoryService.cs" />
     <Compile Include="Interfaces\Services\ISystemEmailService.cs" />
     <Compile Include="Interfaces\Services\ITemplateService.cs" />
     <Compile Include="Interfaces\Services\IUnitOfWork.cs" />
@@ -142,13 +142,13 @@
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\TextSearch.cs" />
     <Compile Include="Repositories\ParentRepository.cs" />
-    <Compile Include="Services\CommonRepositoryService.cs" />
     <Compile Include="Repositories\RepositoryCommentReport.cs" />
     <Compile Include="Repositories\RepositoryPostReport.cs" />
     <Compile Include="Repositories\RepositoryPost.cs" />
     <Compile Include="Repositories\RepositorySignalrConnection.cs" />
     <Compile Include="Repositories\RepositoryToken.cs" />
     <Compile Include="Services\EncryptionService.cs" />
+    <Compile Include="Services\GeneralRepositoryService.cs" />
     <Compile Include="Services\SendGridService.cs" />
     <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Services\UnitOfWork.cs" />

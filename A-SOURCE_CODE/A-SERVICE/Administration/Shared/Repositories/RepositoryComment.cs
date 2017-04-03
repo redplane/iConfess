@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
-using Shared.Enumerations;
-using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
-using Shared.Interfaces.Services;
 using Shared.ViewModels.Comments;
 
 namespace Shared.Repositories
@@ -19,11 +15,6 @@ namespace Shared.Repositories
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
 
-        /// <summary>
-        /// Service which handles common business of repositories.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
         #endregion
 
         #region Constructor
@@ -32,13 +23,10 @@ namespace Shared.Repositories
         ///     Initiate repository with database context.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        /// <param name="commonRepositoryService"></param>
         public RepositoryComment(
-            IDbContextWrapper dbContextWrapper,
-            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
+            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
-            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -65,11 +53,11 @@ namespace Shared.Repositories
             if (conditions.PostIndex != null)
                 comments = comments.Where(x => x.PostIndex == conditions.PostIndex.Value);
 
-            
+
             // Content is specified.
             if (conditions.Content != null && !string.IsNullOrWhiteSpace(conditions.Content.Value))
-                comments = _commonRepositoryService.SearchPropertyText(comments, x => x.Content, conditions.Content);
-            
+                comments = SearchPropertyText(comments, x => x.Content, conditions.Content);
+
             // Created is specified.
             if (conditions.Created != null)
             {
@@ -102,7 +90,7 @@ namespace Shared.Repositories
 
             return comments;
         }
-        
+
         #endregion
     }
 }

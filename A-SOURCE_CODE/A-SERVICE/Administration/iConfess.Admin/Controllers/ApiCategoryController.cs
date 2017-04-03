@@ -31,18 +31,15 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
-        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
         public ApiCategoryController(
             IUnitOfWork unitOfWork,
             ITimeService timeService, 
             IIdentityService identityService,
-            ICommonRepositoryService commonRepositoryService,
             ILog log) : base(unitOfWork)
         {
             _timeService = timeService;
             _identityService = identityService;
-            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
@@ -64,12 +61,7 @@ namespace iConfess.Admin.Controllers
         ///     Service which analyzes identity in request.
         /// </summary>
         private readonly IIdentityService _identityService;
-
-        /// <summary>
-        /// Service which handles common repository business.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         #endregion
 
         #region Methods
@@ -333,11 +325,11 @@ namespace iConfess.Admin.Controllers
                 #endregion
 
                 // Sort the results.
-                _commonRepositoryService.Sort(apiCategories, conditions.Direction, conditions.Sort);
+                UnitOfWork.RepositoryCategories.Sort(apiCategories, conditions.Direction, conditions.Sort);
 
                 // Update result.
                 searchResult.Total = await apiCategories.CountAsync();
-                searchResult.Records = _commonRepositoryService.Paginate(apiCategories, conditions.Pagination);
+                searchResult.Records = UnitOfWork.RepositoryCategories.Paginate(apiCategories, conditions.Pagination);
 
                 return Request.CreateResponse(HttpStatusCode.OK, searchResult);
             }

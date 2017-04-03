@@ -1,33 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using iConfess.Database.Interfaces;
 using Shared.Interfaces.Repositories;
+using Shared.Services;
 
 namespace Shared.Repositories
 {
-    public class ParentRepository<T>  : IParentRepository<T> where T : class 
+    public class ParentRepository<T> : GeneralRepositoryService, IParentRepository<T> where T : class
     {
-        #region Properties
-
-        /// <summary>
-        /// Database context wrapper.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
-        /// <summary>
-        /// Database set.
-        /// </summary>
-        private readonly DbSet<T> _dbSet;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
-        /// Initiate repository with database context wrapper.
+        ///     Initiate repository with database context wrapper.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
         public ParentRepository(IDbContextWrapper dbContextWrapper)
@@ -38,10 +24,24 @@ namespace Shared.Repositories
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///     Database context wrapper.
+        /// </summary>
+        private readonly IDbContextWrapper _dbContextWrapper;
+
+        /// <summary>
+        ///     Database set.
+        /// </summary>
+        private readonly DbSet<T> _dbSet;
+
+        #endregion
+
         #region Methods
 
         /// <summary>
-        /// Search all data from the specific table.
+        ///     Search all data from the specific table.
         /// </summary>
         /// <returns></returns>
         public IQueryable<T> Search()
@@ -50,7 +50,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Insert a record into data table.
+        ///     Insert a record into data table.
         /// </summary>
         /// <param name="entity"></param>
         public T Insert(T entity)
@@ -59,7 +59,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Insert or update a record in table.
+        ///     Insert or update a record in table.
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
@@ -70,7 +70,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Remove a list of entities from database.
+        ///     Remove a list of entities from database.
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
@@ -80,7 +80,7 @@ namespace Shared.Repositories
         }
 
         /// <summary>
-        /// Remove an entity from database.
+        ///     Remove an entity from database.
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>

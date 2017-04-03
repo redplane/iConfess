@@ -20,7 +20,7 @@ namespace iConfess.Admin.Controllers
 {
     [RoutePrefix("api/report/post")]
     [ApiAuthorize]
-    public class ApiPostReportController : ApiController
+    public class ApiPostReportController : ApiParentController
     {
         #region Constructors
 
@@ -30,19 +30,15 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
-        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
         public ApiPostReportController(
             IUnitOfWork unitOfWork,
             ITimeService timeService, 
             IIdentityService identityService,
-            ICommonRepositoryService commonRepositoryService,
-            ILog log)
+            ILog log) : base(unitOfWork)
         {
-            _unitOfWork = unitOfWork;
             _timeService = timeService;
             _identityService = identityService;
-            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
@@ -75,14 +71,14 @@ namespace iConfess.Admin.Controllers
                 #region Search post report
 
                 // Search all posts.
-                var posts = _unitOfWork.RepositoryPosts.Search();
+                var posts = UnitOfWork.RepositoryPosts.Search();
 
                 // Conditions construction.
                 var findPostViewModel = new SearchPostViewModel();
                 findPostViewModel.Id = parameters.PostIndex;
 
                 // Search the post information.
-                var post = await _unitOfWork.RepositoryPosts.Search(posts, findPostViewModel).FirstOrDefaultAsync();
+                var post = await UnitOfWork.RepositoryPosts.Search(posts, findPostViewModel).FirstOrDefaultAsync();
 
                 // Post is not found.
                 if (post == null)
@@ -119,7 +115,7 @@ namespace iConfess.Admin.Controllers
                 postReport.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 // Initiate post report into database.
-                postReport = _unitOfWork.RepositoryPostReports.Insert(postReport);
+                postReport = UnitOfWork.RepositoryPostReports.Insert(postReport);
 
                 // Commit changes.
                 #endregion
@@ -163,15 +159,15 @@ namespace iConfess.Admin.Controllers
                 #region Record delete
 
                 // Search post reports.
-                var postReports = _unitOfWork.RepositoryPostReports.Search();
-                postReports = _unitOfWork.RepositoryPostReports.Search(postReports, parameters);
+                var postReports = UnitOfWork.RepositoryPostReports.Search();
+                postReports = UnitOfWork.RepositoryPostReports.Search(postReports, parameters);
 
                 // Find comment 
                 // Delete post reports by using specific conditions.
-                _unitOfWork.RepositoryPostReports.Remove(postReports);
+                UnitOfWork.RepositoryPostReports.Remove(postReports);
 
                 // Commit the change.
-                var totalRecord = await _unitOfWork.CommitAsync();
+                var totalRecord = await UnitOfWork.CommitAsync();
 
                 // No record has been affected.
                 if (totalRecord < 1)
@@ -220,14 +216,14 @@ namespace iConfess.Admin.Controllers
                 #region Search post reports
 
                 // Search all post reports.
-                var postReports = _unitOfWork.RepositoryPostReports.Search();
-                postReports = _unitOfWork.RepositoryPostReports.Search(postReports, parameters);
+                var postReports = UnitOfWork.RepositoryPostReports.Search();
+                postReports = UnitOfWork.RepositoryPostReports.Search(postReports, parameters);
                 
                 // Search posts from database.
-                var posts = _unitOfWork.RepositoryPosts.Search();
+                var posts = UnitOfWork.RepositoryPosts.Search();
                 
                 // Search all accounts.
-                var accounts = _unitOfWork.RepositoryAccounts.Search();
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
 
                 // Search post report by using specific conditions.
                 var postReportDetails = from postReport in postReports
@@ -249,12 +245,12 @@ namespace iConfess.Admin.Controllers
                     };
 
                 // Order records.
-                postReportDetails = _commonRepositoryService.Sort(postReportDetails, parameters.Direction, parameters.Sort);
+                postReportDetails = UnitOfWork.RepositoryPostReports.Sort(postReportDetails, parameters.Direction, parameters.Sort);
 
                 // Initiate search result
                 var searchResult = new SearchResult<PostReportViewModel>();
                 searchResult.Total = await postReportDetails.CountAsync();
-                searchResult.Records = _commonRepositoryService.Paginate(postReportDetails, parameters.Pagination);
+                searchResult.Records = UnitOfWork.RepositoryPostReports.Paginate(postReportDetails, parameters.Pagination);
                 
                 #endregion
 
@@ -268,12 +264,7 @@ namespace iConfess.Admin.Controllers
         }
 
         #region Properties
-
-        /// <summary>
-        ///     Provides repositories to access database.
-        /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
-
+        
         /// <summary>
         ///     Provides function for time calculation.
         /// </summary>
@@ -283,12 +274,7 @@ namespace iConfess.Admin.Controllers
         ///     Service which handles identity operations.
         /// </summary>
         private readonly IIdentityService _identityService;
-
-        /// <summary>
-        /// Service which handles common repository business.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         /// <summary>
         ///     Service which handles logging process.
         /// </summary>

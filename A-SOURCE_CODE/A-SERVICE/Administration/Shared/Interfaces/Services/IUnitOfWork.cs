@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using iConfess.Database.Interfaces;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
+using Shared.Models;
 
 namespace Shared.Interfaces.Services
 {
@@ -68,7 +72,7 @@ namespace Shared.Interfaces.Services
         /// </summary>
         /// <returns></returns>
         Task<int> CommitAsync();
-
+        
         #endregion
     }
 }

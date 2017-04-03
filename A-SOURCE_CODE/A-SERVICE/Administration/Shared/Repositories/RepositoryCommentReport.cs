@@ -17,12 +17,7 @@ namespace Shared.Repositories
         ///     Provides access to database.
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
-
-        /// <summary>
-        /// Service which handles common businesses of repositories.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         #endregion
 
         #region Constructors
@@ -31,13 +26,10 @@ namespace Shared.Repositories
         ///     Initiate repository of comment reports.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        /// <param name="commonRepositoryService"></param>
         public RepositoryCommentReport(
-            IDbContextWrapper dbContextWrapper,
-            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
+            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
-            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -72,12 +64,12 @@ namespace Shared.Repositories
 
             // Comment body is specified.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
-                commentReports = _commonRepositoryService.SearchPropertyText(commentReports, x => x.Body,
+                commentReports = SearchPropertyText(commentReports, x => x.Body,
                     conditions.Body);
             
             // Comment reason is specified.
             if (conditions.Reason != null && !string.IsNullOrEmpty(conditions.Reason.Value))
-                commentReports = _commonRepositoryService.SearchPropertyText(commentReports, x => x.Reason,
+                commentReports = SearchPropertyText(commentReports, x => x.Reason,
                     conditions.Reason);
 
             // Created is specified.

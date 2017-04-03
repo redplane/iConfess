@@ -15,13 +15,10 @@ namespace Shared.Repositories
         ///     Initiate repository with dependency injection.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        /// <param name="commonRepositoryService"></param>
         public RepositoryToken(
-            IDbContextWrapper dbContextWrapper,
-            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
+            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
-            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -46,7 +43,7 @@ namespace Shared.Repositories
 
             // Code has been specified.
             if (conditions.Code != null && !string.IsNullOrEmpty(conditions.Code.Value))
-                tokens = _commonRepositoryService.SearchPropertyText(tokens, x => x.Code, conditions.Code);
+                tokens = SearchPropertyText(tokens, x => x.Code, conditions.Code);
 
             // Issued range is specified.
             if (conditions.Issued != null)
@@ -80,12 +77,7 @@ namespace Shared.Repositories
         ///     Database context which provides access to database.
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
-
-        /// <summary>
-        ///     Service which handles common repositories businesses.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         #endregion
     }
 }

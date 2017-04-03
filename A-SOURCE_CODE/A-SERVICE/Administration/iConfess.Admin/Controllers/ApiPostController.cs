@@ -31,19 +31,16 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
-        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
         public ApiPostController(
             IUnitOfWork unitOfWork,
             ITimeService timeService,
             IIdentityService identityService,
-            ICommonRepositoryService commonRepositoryService,
             ILog log) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
             _identityService = identityService;
-            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
@@ -65,12 +62,7 @@ namespace iConfess.Admin.Controllers
         ///     Identity service which handles analyze identity from request.
         /// </summary>
         private readonly IIdentityService _identityService;
-
-        /// <summary>
-        ///     Common repository service.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         /// <summary>
         ///     Service which handles log writing.
         /// </summary>
@@ -342,7 +334,7 @@ namespace iConfess.Admin.Controllers
                 searchResult.Total = await posts.CountAsync();
 
                 // Order and paginate record.
-                searchResult.Records = _commonRepositoryService.Paginate(posts, conditions.Pagination);
+                searchResult.Records = UnitOfWork.RepositoryPosts.Paginate(posts, conditions.Pagination);
 
                 return Request.CreateResponse(HttpStatusCode.OK, searchResult);
             }

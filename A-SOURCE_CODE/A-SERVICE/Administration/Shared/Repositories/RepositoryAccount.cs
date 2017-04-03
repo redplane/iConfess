@@ -15,13 +15,10 @@ namespace Shared.Repositories
         ///     Initiate repository with dependency injection.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        /// <param name="commonRepositoryService"></param>
         public RepositoryAccount(
-            IDbContextWrapper dbContextWrapper,
-            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
+            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
-            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -42,11 +39,11 @@ namespace Shared.Repositories
 
             // Email has been identified.
             if (conditions.Email != null && !string.IsNullOrWhiteSpace(conditions.Email.Value))
-                accounts = _commonRepositoryService.SearchPropertyText(accounts, x => x.Email, conditions.Email);
+                accounts = SearchPropertyText(accounts, x => x.Email, conditions.Email);
 
             // Nickname has been identified.
             if (conditions.Nickname != null && !string.IsNullOrWhiteSpace(conditions.Nickname.Value))
-                accounts = _commonRepositoryService.SearchPropertyText(accounts, x => x.Nickname, conditions.Nickname);
+                accounts = SearchPropertyText(accounts, x => x.Nickname, conditions.Nickname);
 
             // Statuses have been defined.
             if (conditions.Statuses != null)
@@ -91,12 +88,7 @@ namespace Shared.Repositories
         ///     Database context which provides access to database.
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
-
-        /// <summary>
-        ///     Service which handles common repository service.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         #endregion
     }
 }

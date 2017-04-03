@@ -20,7 +20,7 @@ namespace iConfess.Admin.Controllers
     [RoutePrefix("api/comment")]
     [ApiAuthorize]
     [ApiRole(AccountRole.Admin)]
-    public class ApiCommentController : ApiController
+    public class ApiCommentController : ApiParentController
     {
         #region Controllers
 
@@ -30,36 +30,22 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
-        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
         public ApiCommentController(
             IUnitOfWork unitOfWork,
             ITimeService timeService,
             IIdentityService identityService,
-            ICommonRepositoryService commonRepositoryService,
-            ILog log)
+            ILog log) : base(unitOfWork)
         {
-            _unitOfWork = unitOfWork;
             _timeService = timeService;
             _identityService = identityService;
-            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        ///     Unit of work which provides database context and repositories to handle business of application.
-        /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
-
-        /// <summary>
-        ///     Service which handles common business of repositories.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         /// <summary>
         ///     Service which handles time calculation.
         /// </summary>
@@ -122,10 +108,10 @@ namespace iConfess.Admin.Controllers
                 comment.Created = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
                 //Add category record
-                _unitOfWork.RepositoryComments.Insert(comment);
+                UnitOfWork.RepositoryComments.Insert(comment);
 
                 // Save changes into database.
-                await _unitOfWork.CommitAsync();
+                await UnitOfWork.CommitAsync();
 
                 #endregion
 
@@ -184,8 +170,8 @@ namespace iConfess.Admin.Controllers
                     condition.OwnerIndex = account.Id;
 
                 // Search categories by using specific conditions.
-                var comments = _unitOfWork.RepositoryComments.Search();
-                comments = _unitOfWork.RepositoryComments.Search(comments, condition);
+                var comments = UnitOfWork.RepositoryComments.Search();
+                comments = UnitOfWork.RepositoryComments.Search(comments, condition);
 
                 #endregion
 
@@ -202,7 +188,7 @@ namespace iConfess.Admin.Controllers
                 }
 
                 // Save changes into database.
-                await _unitOfWork.CommitAsync();
+                await UnitOfWork.CommitAsync();
 
                 #endregion
 
@@ -256,11 +242,11 @@ namespace iConfess.Admin.Controllers
                     conditions.OwnerIndex = account.Id;
 
                 // Search all comments in database.
-                var comments = _unitOfWork.RepositoryComments.Search();
-                comments = _unitOfWork.RepositoryComments.Search(comments, conditions);
+                var comments = UnitOfWork.RepositoryComments.Search();
+                comments = UnitOfWork.RepositoryComments.Search(comments, conditions);
 
                 // Search comment reports and delete them first.
-                var commentReports = _unitOfWork.RepositoryCommentReports.Search();
+                var commentReports = UnitOfWork.RepositoryCommentReports.Search();
                 var markCommentReports = from comment in comments
                     from commentReport in commentReports
                     where comment.Id == commentReport.CommentIndex
@@ -268,11 +254,11 @@ namespace iConfess.Admin.Controllers
 
 
                 // Delete all found comments.
-                _unitOfWork.RepositoryCommentReports.Remove(markCommentReports);
-                _unitOfWork.RepositoryComments.Remove(comments);
+                UnitOfWork.RepositoryCommentReports.Remove(markCommentReports);
+                UnitOfWork.RepositoryComments.Remove(comments);
 
                 // Save changes.
-                var totalRecords = await _unitOfWork.CommitAsync();
+                var totalRecords = await UnitOfWork.CommitAsync();
 
                 // No record has been deleted.
                 if (totalRecords < 1)
@@ -330,12 +316,12 @@ namespace iConfess.Admin.Controllers
                 #region Search comments
 
                 // Search comments by using specific conditions.
-                var comments = _unitOfWork.RepositoryComments.Search();
-                comments = _unitOfWork.RepositoryComments.Search(comments, conditions);
+                var comments = UnitOfWork.RepositoryComments.Search();
+                comments = UnitOfWork.RepositoryComments.Search(comments, conditions);
 
                 var searchResult = new SearchResult<Comment>();
                 searchResult.Total = await comments.CountAsync();
-                searchResult.Records = _commonRepositoryService.Paginate(comments, conditions.Pagination);
+                searchResult.Records = UnitOfWork.RepositoryComments.Paginate(comments, conditions.Pagination);
 
                 #endregion
 
@@ -361,11 +347,11 @@ namespace iConfess.Admin.Controllers
                 #region Search comments
 
                 // Search all comment in database.
-                var comments = _unitOfWork.RepositoryComments.Search();
+                var comments = UnitOfWork.RepositoryComments.Search();
                 comments = comments.Where(x => x.Id == index);
 
                 // Search all account in database.
-                var accounts = _unitOfWork.RepositoryAccounts.Search();
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
 
                 var commentDetails = await (from comment in comments
                     from owner in accounts
@@ -429,11 +415,11 @@ namespace iConfess.Admin.Controllers
                 conditions.LastModified = searchCommentsDetailsCondition.LastModified;
                 conditions.Pagination = searchCommentsDetailsCondition.Pagination;
 
-                var comments = _unitOfWork.RepositoryComments.Search();
-                comments = _unitOfWork.RepositoryComments.Search(comments, conditions);
+                var comments = UnitOfWork.RepositoryComments.Search();
+                comments = UnitOfWork.RepositoryComments.Search(comments, conditions);
 
                 // Search accounts from database.
-                var accounts = _unitOfWork.RepositoryAccounts.Search();
+                var accounts = UnitOfWork.RepositoryAccounts.Search();
 
                 // Search comments details
                 var commentsDetails = from comment in comments
@@ -452,7 +438,7 @@ namespace iConfess.Admin.Controllers
 
                 #region Comments Details sort
 
-                commentsDetails = _commonRepositoryService.Sort(commentsDetails,
+                commentsDetails = UnitOfWork.RepositoryComments.Sort(commentsDetails,
                     searchCommentsDetailsCondition.Direction, searchCommentsDetailsCondition.Sort);
                 
                 #endregion
@@ -462,7 +448,7 @@ namespace iConfess.Admin.Controllers
                 var searchResult = new SearchResult<CommentDetailViewModel>();
 
                 searchResult.Total = await commentsDetails.CountAsync();
-                searchResult.Records = _commonRepositoryService.Paginate(commentsDetails, conditions.Pagination);
+                searchResult.Records = UnitOfWork.RepositoryComments.Paginate(commentsDetails, conditions.Pagination);
 
                 #endregion
 

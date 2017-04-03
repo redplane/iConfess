@@ -2,26 +2,31 @@
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
 using Shared.Interfaces.Repositories;
-using Shared.Interfaces.Services;
 using Shared.ViewModels.Categories;
 
 namespace Shared.Repositories
 {
     public class RepositoryCategory : ParentRepository<Category>, IRepositoryCategory
     {
+        #region Properties
+
+        /// <summary>
+        ///     Provides functions to access to real database.
+        /// </summary>
+        private readonly IDbContextWrapper _dbContextWrapper;
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
         ///     Initiate repository with database context.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        /// <param name="commonRepositoryService"></param>
         public RepositoryCategory(
-            IDbContextWrapper dbContextWrapper,
-            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
+            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
-            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -46,7 +51,7 @@ namespace Shared.Repositories
 
             // Name search condition has been defined.
             if (conditions.Name != null && !string.IsNullOrWhiteSpace(conditions.Name.Value))
-                categories = _commonRepositoryService.SearchPropertyText(categories, x => x.Name, conditions.Name);
+                categories = SearchPropertyText(categories, x => x.Name, conditions.Name);
 
             // Created time range has been defined.
             if (conditions.Created != null)
@@ -74,20 +79,6 @@ namespace Shared.Repositories
 
             return categories;
         }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///     Provides functions to access to real database.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
-        /// <summary>
-        ///     Provides functions to handles common business with repositories.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
 
         #endregion
     }

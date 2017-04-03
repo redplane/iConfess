@@ -30,17 +30,14 @@ namespace iConfess.Admin.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="timeService"></param>
         /// <param name="identityService"></param>
-        /// <param name="commonRepositoryService"></param>
         /// <param name="log"></param>
         public ApiCommentReportController(IUnitOfWork unitOfWork,
             ITimeService timeService,
             IIdentityService identityService,
-            ICommonRepositoryService commonRepositoryService,
             ILog log) : base(unitOfWork)
         {
             _timeService = timeService;
             _identityService = identityService;
-            _commonRepositoryService = commonRepositoryService;
             _log = log;
         }
 
@@ -57,12 +54,7 @@ namespace iConfess.Admin.Controllers
         ///     Service which handles identity in request.
         /// </summary>
         private readonly IIdentityService _identityService;
-
-        /// <summary>
-        ///     Service which handles common repository business.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         /// <summary>
         ///     Service which handles logging operation.
         /// </summary>
@@ -265,7 +257,7 @@ namespace iConfess.Admin.Controllers
                 // Search comment reports with specific conditions.
                 var commentReports = UnitOfWork.RepositoryCommentReports.Search();
                 commentReports = UnitOfWork.RepositoryCommentReports.Search(commentReports, condition);
-                commentReports = _commonRepositoryService.Sort(commentReports, condition.Direction, condition.Sort);
+                commentReports = UnitOfWork.RepositoryCommentReports.Sort(commentReports, condition.Direction, condition.Sort);
                 
                 // Search all accounts.
                 var accounts = UnitOfWork.RepositoryAccounts.Search();
@@ -307,7 +299,7 @@ namespace iConfess.Admin.Controllers
                 result.Total = await commentReports.CountAsync();
 
                 // Do pagination.
-                result.Records = _commonRepositoryService.Paginate(commentReportDetails, condition.Pagination);
+                result.Records = UnitOfWork.RepositoryCommentReports.Paginate(commentReportDetails, condition.Pagination);
                 
                 #endregion
 

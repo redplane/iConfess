@@ -15,13 +15,10 @@ namespace Shared.Repositories
         ///     Initiate repository with inversion of control.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        /// <param name="commonRepositoryService"></param>
         public RepositoryPostReport(
-            IDbContextWrapper dbContextWrapper,
-            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
+            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
-            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -55,11 +52,11 @@ namespace Shared.Repositories
 
             // Body of post.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
-                postReports = _commonRepositoryService.SearchPropertyText(postReports, x => x.Body, conditions.Body);
+                postReports = SearchPropertyText(postReports, x => x.Body, conditions.Body);
 
             // Reason is specified.
             if (conditions.Reason != null && !string.IsNullOrEmpty(conditions.Reason.Value))
-                postReports = _commonRepositoryService.SearchPropertyText(postReports, x => x.Reason, conditions.Reason);
+                postReports = SearchPropertyText(postReports, x => x.Reason, conditions.Reason);
 
             // Created is specified.
             if (conditions.Created != null)
@@ -86,12 +83,7 @@ namespace Shared.Repositories
         ///     Instance which is used for accessing database context.
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
-
-        /// <summary>
-        ///     Service which handles common businesses of repositories.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
+        
         #endregion
     }
 }

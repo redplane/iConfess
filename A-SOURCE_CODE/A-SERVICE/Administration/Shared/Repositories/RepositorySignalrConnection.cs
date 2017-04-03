@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
-using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
-using Shared.Interfaces.Services;
 using Shared.ViewModels.SignalrConnections;
 
 namespace Shared.Repositories
@@ -18,11 +15,6 @@ namespace Shared.Repositories
         /// </summary>
         private readonly IDbContextWrapper _dbContextWrapper;
 
-        /// <summary>
-        /// Service which handles common repositories businesses.
-        /// </summary>
-        private readonly ICommonRepositoryService _commonRepositoryService;
-
         #endregion
 
         #region Constructors
@@ -31,13 +23,10 @@ namespace Shared.Repositories
         ///     Initiate signalr connection repository with database dbContextWrapper.
         /// </summary>
         /// <param name="dbContextWrapper"></param>
-        /// <param name="commonRepositoryService"></param>
         public RepositorySignalrConnection(
-            IDbContextWrapper dbContextWrapper, 
-            ICommonRepositoryService commonRepositoryService) : base(dbContextWrapper)
+            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
             _dbContextWrapper = dbContextWrapper;
-            _commonRepositoryService = commonRepositoryService;
         }
 
         #endregion
@@ -56,9 +45,9 @@ namespace Shared.Repositories
             // Conditions is invalid.
             if (conditions == null)
                 return connections;
-            
+
             if (conditions.Index != null && !string.IsNullOrEmpty(conditions.Index.Value))
-                connections = _commonRepositoryService.SearchPropertyText(connections, x => x.Index, conditions.Index);
+                connections = SearchPropertyText(connections, x => x.Index, conditions.Index);
 
             if (conditions.Owner != null)
                 connections = connections.Where(x => x.OwnerIndex == conditions.Owner.Value);

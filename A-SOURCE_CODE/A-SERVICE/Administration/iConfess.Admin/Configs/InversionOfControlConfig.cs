@@ -56,8 +56,7 @@ namespace iConfess.Admin.Configs
 
             // Unit of work registration.
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<CommonRepositoryService>().As<ICommonRepositoryService>().SingleInstance();
-
+            
             #endregion
 
             #region Services
@@ -73,6 +72,9 @@ namespace iConfess.Admin.Configs
 
             // Handle businesses related to system configuration.
             containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>().SingleInstance();
+
+            // Handle common businesses of repositories.
+            containerBuilder.RegisterType<GeneralRepositoryService>().As<GeneralRepositoryService>().SingleInstance();
 
             // System email service.
             var systemEmailService = new SendGridService();
