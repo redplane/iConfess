@@ -422,6 +422,22 @@ namespace iConfess.Admin.Controllers
             // Initiate search result.
             var result = new SearchResult<Account>();
             
+            // Find all accounts in database.
+            var accounts = UnitOfWork.RepositoryAccounts.Search();
+
+            // Find accounts with specific conditions.
+            accounts = UnitOfWork.RepositoryAccounts.Search(accounts, conditions);
+
+            // Count total condition matched account number.
+            result.Total = await accounts.CountAsync();
+
+            // Sort and paginate.
+            accounts = UnitOfWork.RepositoryAccounts.Sort(accounts, conditions.Direction, conditions.Sort);
+            accounts = UnitOfWork.RepositoryAccounts.Paginate(accounts, conditions.Pagination);
+
+            // Take accounts list.
+            result.Records = accounts;
+
             // Search for accounts in database.
             return Request.CreateResponse(HttpStatusCode.OK, result);
 

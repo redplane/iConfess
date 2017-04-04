@@ -2,7 +2,7 @@
 {
     public enum AccountsSort
     {
-        Index,
+        Id,
         Email,
         Nickname,
         Status,
