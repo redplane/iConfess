@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientAccountService} from "../../services/clients/ClientAccountService";
@@ -7,9 +7,9 @@ import {ClientApiService} from "../../services/ClientApiService";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 
 @Component({
-    selector: 'account-find-box',
-    templateUrl: 'account-find-box.component.html',
-    inputs: ['conditions', 'isLoading'],
+    selector: 'account-search-box',
+    templateUrl: 'account-search-box.component.html',
+    inputs: ['conditions'],
     outputs: ['search'],
     providers: [
         FormBuilder,
@@ -19,9 +19,10 @@ import {AccountStatuses} from "../../enumerations/AccountStatuses";
     ]
 })
 
-export class AccountFindBoxComponent implements OnInit {
+export class AccountSearchBoxComponent implements OnInit {
 
     // Whether records are being loaded from server or not.
+    @Input('is-loading')
     public isLoading: boolean;
 
     // Event which is emitted when search button is clicked.

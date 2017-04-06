@@ -75,6 +75,7 @@ export class PostReportFindBoxComponent {
             direction: []
         });
 
+        this.posts = new Array<Post>();
         this.owners = new Array<Account>();
         this.reporters = new Array<Account>();
 

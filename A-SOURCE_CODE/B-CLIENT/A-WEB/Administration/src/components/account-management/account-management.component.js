@@ -10,17 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var ng2_bootstrap_1 = require("ng2-bootstrap");
 var ClientConfigurationService_1 = require("../../services/ClientConfigurationService");
 var ClientNotificationService_1 = require("../../services/ClientNotificationService");
 var ClientAuthenticationService_1 = require("../../services/clients/ClientAuthenticationService");
 var ClientAccountService_1 = require("../../services/clients/ClientAccountService");
 var ClientApiService_1 = require("../../services/ClientApiService");
 var ClientCommonService_1 = require("../../services/ClientCommonService");
-var SearchAccountsResultViewModel_1 = require("../../viewmodels/accounts/SearchAccountsResultViewModel");
 var SearchAccountsViewModel_1 = require("../../viewmodels/accounts/SearchAccountsViewModel");
 var AccountStatuses_1 = require("../../enumerations/AccountStatuses");
 var Pagination_1 = require("../../viewmodels/Pagination");
 var ClientTimeService_1 = require("../../services/ClientTimeService");
+var SearchResult_1 = require("../../models/SearchResult");
 var AccountManagementComponent = (function () {
     // Initiate component with injections.
     function AccountManagementComponent(clientConfigurationService, clientAccountService, clientCommonService, clientApiService, clientTimeService) {
@@ -33,8 +34,8 @@ var AccountManagementComponent = (function () {
         this.accountStatuses = AccountStatuses_1.AccountStatuses;
         // Initiate search conditions.
         this.conditions = new SearchAccountsViewModel_1.SearchAccountsViewModel();
-        // Initiate find accounts result.
-        this.findAccountsResult = new SearchAccountsResultViewModel_1.SearchAccountsResultViewModel();
+        // Initiate search result.
+        this.searchResult = new SearchResult_1.SearchResult();
         // Initiate account statuses summary.
         this.summaries = new Array();
     }
@@ -47,7 +48,7 @@ var AccountManagementComponent = (function () {
             .then(function (response) {
             // Find list of accounts which has been found from service.
             var findAccountsResult = response.json();
-            _this.findAccountsResult = findAccountsResult;
+            _this.searchResult = findAccountsResult;
             // Cancel loading.
             _this.isLoading = false;
         })
@@ -64,12 +65,12 @@ var AccountManagementComponent = (function () {
         changeAccountInfoModal.show();
     };
     // Callback which is fired when change account information ok button is clicked.
-    AccountManagementComponent.prototype.clickConfirmChangeAccountDetail = function (changeAccountModal) {
+    AccountManagementComponent.prototype.clickConfirmChangeAccountDetail = function () {
         var _this = this;
         // No account has been selected for edit.
         if (this.selectedAccount == null) {
             // Close the dialog.
-            changeAccountModal.hide();
+            this.changeAccountInfoModal.hide();
             return;
         }
         // Set components to loading state.
@@ -80,7 +81,7 @@ var AccountManagementComponent = (function () {
             // Cancel loading.
             _this.isLoading = false;
             // Close the dialog.
-            changeAccountModal.hide();
+            _this.changeAccountInfoModal.hide();
             // Reload the page.
             _this.clickSearch();
         })
@@ -88,7 +89,7 @@ var AccountManagementComponent = (function () {
             // Cancel loading process.
             _this.isLoading = false;
             // Close the dialog.
-            changeAccountModal.hide();
+            _this.changeAccountInfoModal.hide();
             // Handle common error response.
             _this.clientApiService.proceedHttpNonSolidResponse(response);
         });
@@ -103,11 +104,11 @@ var AccountManagementComponent = (function () {
     // Check whether account search result is available or not.
     AccountManagementComponent.prototype.isAccountSearchResultAvailable = function () {
         // Check search result.
-        var result = this.findAccountsResult;
+        var result = this.searchResult;
         if (result == null)
             return false;
         // No account has been found,
-        if (result.accounts == null || result.accounts.length < 1)
+        if (result.records == null || result.records.length < 1)
             return false;
         return true;
     };
@@ -142,6 +143,10 @@ var AccountManagementComponent = (function () {
     };
     return AccountManagementComponent;
 }());
+__decorate([
+    core_1.ViewChild("changeAccountInfoModal"),
+    __metadata("design:type", ng2_bootstrap_1.ModalDirective)
+], AccountManagementComponent.prototype, "changeAccountInfoModal", void 0);
 AccountManagementComponent = __decorate([
     core_1.Component({
         selector: 'account-management',

@@ -13,7 +13,7 @@ import {CategoryFindBoxComponent} from "../components/category-management/catego
 import {HttpModule, JsonpModule} from '@angular/http';
 import {ModalModule, PaginationModule, TypeaheadModule} from 'ng2-bootstrap';
 import {RouterModule, Routes} from '@angular/router';
-import {AccountFindBoxComponent} from "../components/account-management/account-find-box.component";
+import {AccountSearchBoxComponent} from "../components/account-management/account-search-box.component";
 import {CommentReportManagementComponent} from "../components/comment-report-management/comment-report-management.component";
 import {CommentReportFindBoxComponent} from "../components/comment-report-management/comment-report-find-box.component";
 import {AccountLoginComponent} from "../components/account-management/account-login.component";
@@ -89,7 +89,7 @@ const appRoutes: Routes = [
         SidebarComponent,
 
         AccountManagementComponent,
-        AccountFindBoxComponent,
+        AccountSearchBoxComponent,
         AccountForgotPasswordComponent,
         AccountLoginComponent,
         AccountSubmitPasswordComponent,

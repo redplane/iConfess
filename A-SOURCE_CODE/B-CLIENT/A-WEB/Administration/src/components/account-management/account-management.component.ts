@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Response} from "@angular/http";
 import {ModalDirective} from "ng2-bootstrap";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
@@ -14,6 +14,7 @@ import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {Pagination} from "../../viewmodels/Pagination";
 import {ClientTimeService} from "../../services/ClientTimeService";
 import {AccountSummaryStatusViewModel} from "../../viewmodels/accounts/AccountSummaryStatusViewModel";
+import {SearchResult} from "../../models/SearchResult";
 
 @Component({
     selector: 'account-management',
@@ -31,8 +32,12 @@ import {AccountSummaryStatusViewModel} from "../../viewmodels/accounts/AccountSu
 
 export class AccountManagementComponent implements OnInit {
 
+    // Inject change account modal from view.
+    @ViewChild("changeAccountInfoModal")
+    public changeAccountInfoModal: ModalDirective;
+
     // List of accounts.
-    private findAccountsResult: SearchAccountsResultViewModel;
+    public searchResult: SearchResult<Account>;
 
     // Account which is being selected for editing.
     private selectedAccount: Account;
@@ -59,8 +64,8 @@ export class AccountManagementComponent implements OnInit {
         // Initiate search conditions.
         this.conditions = new SearchAccountsViewModel();
 
-        // Initiate find accounts result.
-        this.findAccountsResult = new SearchAccountsResultViewModel();
+        // Initiate search result.
+        this.searchResult = new SearchResult<Account>();
 
         // Initiate account statuses summary.
         this.summaries = new Array<AccountSummaryStatusViewModel>();
@@ -76,7 +81,7 @@ export class AccountManagementComponent implements OnInit {
 
                 // Find list of accounts which has been found from service.
                 let findAccountsResult = response.json();
-                this.findAccountsResult = <SearchAccountsResultViewModel> findAccountsResult;
+                this.searchResult = <SearchResult<Account>> findAccountsResult;
 
                 // Cancel loading.
                 this.isLoading = false;
@@ -99,12 +104,12 @@ export class AccountManagementComponent implements OnInit {
     }
 
     // Callback which is fired when change account information ok button is clicked.
-    public clickConfirmChangeAccountDetail(changeAccountModal: ModalDirective): void {
+    public clickConfirmChangeAccountDetail(): void {
 
         // No account has been selected for edit.
         if (this.selectedAccount == null) {
             // Close the dialog.
-            changeAccountModal.hide();
+            this.changeAccountInfoModal.hide();
             return;
         }
 
@@ -119,7 +124,7 @@ export class AccountManagementComponent implements OnInit {
                 this.isLoading = false;
 
                 // Close the dialog.
-                changeAccountModal.hide();
+                this.changeAccountInfoModal.hide();
 
                 // Reload the page.
                 this.clickSearch();
@@ -130,7 +135,7 @@ export class AccountManagementComponent implements OnInit {
                 this.isLoading = false;
 
                 // Close the dialog.
-                changeAccountModal.hide();
+                this.changeAccountInfoModal.hide();
 
                 // Handle common error response.
                 this.clientApiService.proceedHttpNonSolidResponse(response);
@@ -151,12 +156,12 @@ export class AccountManagementComponent implements OnInit {
     public isAccountSearchResultAvailable(): boolean {
 
         // Check search result.
-        let result = this.findAccountsResult;
+        let result = this.searchResult;
         if (result == null)
             return false;
 
         // No account has been found,
-        if (result.accounts == null || result.accounts.length < 1)
+        if (result.records == null || result.records.length < 1)
             return false;
 
         return true;

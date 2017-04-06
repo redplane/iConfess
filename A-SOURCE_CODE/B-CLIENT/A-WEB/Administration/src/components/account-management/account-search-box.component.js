@@ -15,9 +15,9 @@ var ClientConfigurationService_1 = require("../../services/ClientConfigurationSe
 var ClientAccountService_1 = require("../../services/clients/ClientAccountService");
 var SearchAccountsViewModel_1 = require("../../viewmodels/accounts/SearchAccountsViewModel");
 var ClientApiService_1 = require("../../services/ClientApiService");
-var AccountFindBoxComponent = (function () {
+var AccountSearchBoxComponent = (function () {
     // Initiate component with default dependency injection.
-    function AccountFindBoxComponent(formBuilder, clientConfigurationService, clientAccountService) {
+    function AccountSearchBoxComponent(formBuilder, clientConfigurationService, clientAccountService) {
         this.formBuilder = formBuilder;
         this.clientConfigurationService = clientConfigurationService;
         this.clientAccountService = clientAccountService;
@@ -46,7 +46,7 @@ var AccountFindBoxComponent = (function () {
         this.conditions = new SearchAccountsViewModel_1.SearchAccountsViewModel();
     }
     // Callback which is fired when status button is toggled.
-    AccountFindBoxComponent.prototype.toggleStatuses = function (status) {
+    AccountSearchBoxComponent.prototype.toggleStatuses = function (status) {
         // Statuses list hasn't been initialized.
         if (this.conditions.statuses == null) {
             this.conditions.statuses = new Array();
@@ -62,11 +62,11 @@ var AccountFindBoxComponent = (function () {
         this.conditions.statuses.splice(index, 1);
     };
     // Callback which is fired when search button is clicked.
-    AccountFindBoxComponent.prototype.clickSearch = function () {
+    AccountSearchBoxComponent.prototype.clickSearch = function () {
         this.search.emit();
     };
     // Callback which is fired when control is starting to load data of accounts from service.
-    AccountFindBoxComponent.prototype.loadAccounts = function () {
+    AccountSearchBoxComponent.prototype.loadAccounts = function () {
         // // Initiate find account conditions.
         // let findAccountsViewModel = new SearchAccountsViewModel();
         //
@@ -99,15 +99,19 @@ var AccountFindBoxComponent = (function () {
     /*
     * Callback which is fired when component has been loaded successfully.
     * */
-    AccountFindBoxComponent.prototype.ngOnInit = function () {
+    AccountSearchBoxComponent.prototype.ngOnInit = function () {
     };
-    return AccountFindBoxComponent;
+    return AccountSearchBoxComponent;
 }());
-AccountFindBoxComponent = __decorate([
+__decorate([
+    core_1.Input('is-loading'),
+    __metadata("design:type", Boolean)
+], AccountSearchBoxComponent.prototype, "isLoading", void 0);
+AccountSearchBoxComponent = __decorate([
     core_1.Component({
-        selector: 'account-find-box',
-        templateUrl: 'account-find-box.component.html',
-        inputs: ['conditions', 'isLoading'],
+        selector: 'account-search-box',
+        templateUrl: 'account-search-box.component.html',
+        inputs: ['conditions'],
         outputs: ['search'],
         providers: [
             forms_1.FormBuilder,
@@ -119,6 +123,6 @@ AccountFindBoxComponent = __decorate([
     __metadata("design:paramtypes", [forms_1.FormBuilder,
         ClientConfigurationService_1.ClientConfigurationService,
         ClientAccountService_1.ClientAccountService])
-], AccountFindBoxComponent);
-exports.AccountFindBoxComponent = AccountFindBoxComponent;
-//# sourceMappingURL=account-find-box.component.js.map
+], AccountSearchBoxComponent);
+exports.AccountSearchBoxComponent = AccountSearchBoxComponent;
+//# sourceMappingURL=account-search-box.component.js.map

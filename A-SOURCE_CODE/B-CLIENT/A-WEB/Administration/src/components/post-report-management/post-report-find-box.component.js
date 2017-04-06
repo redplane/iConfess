@@ -46,6 +46,7 @@ var PostReportFindBoxComponent = (function () {
             sort: [],
             direction: []
         });
+        this.posts = new Array();
         this.owners = new Array();
         this.reporters = new Array();
         // Initiate emitter.

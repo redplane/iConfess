@@ -1,9 +1,9 @@
 <!-- Account search box -->
 <div class="row">
     <div class="col-lg-12">
-        <account-find-box [conditions]="conditions"
-                          [isLoading]="isLoading"
-                          (search)="clickSearch()"></account-find-box>
+        <account-search-box [conditions]="conditions"
+                            [is-loading]="isLoading"
+                            (search)="clickSearch()"></account-search-box>
     </div>
 </div>
 
@@ -52,7 +52,7 @@
      *ngIf="isAccountSearchResultAvailable()">
     <div class="col-lg-12">
         <div class="text-center">
-            <pagination [totalItems]="findAccountsResult.total"
+            <pagination [totalItems]="searchResult.total"
                         [itemsPerPage]="conditions.pagination.records"
                         [(ngModel)]="conditions.pagination.index"
                         [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
@@ -92,7 +92,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let account of findAccountsResult.accounts; let i = index">
+                    <tr *ngFor="let account of searchResult.records; let i = index">
                         <td>{{(clientCommonService.findRecordStartIndex(conditions.pagination.index,
                             conditions.pagination.records, true) + i + 1)}}
                         </td>
@@ -134,7 +134,7 @@
      *ngIf="isAccountSearchResultAvailable()">
     <div class="col-lg-12">
         <div class="text-center">
-            <pagination [totalItems]="findAccountsResult.total"
+            <pagination [totalItems]="searchResult.total"
                         [itemsPerPage]="conditions.pagination.records"
                         [(ngModel)]="conditions.pagination.index"
                         [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
@@ -183,7 +183,7 @@
             <div class="modal-footer">
                 <div class="text-center">
                     <button class="btn btn-flat btn-primary"
-                            (click)="clickConfirmChangeAccountDetail(changeAccountInfoModal)">
+                            (click)="clickConfirmChangeAccountDetail()">
                         <span class="glyphicon glyphicon-check"></span>
                     </button>
                 </div>

@@ -21,7 +21,7 @@ var category_find_box_component_1 = require("../components/category-management/c
 var http_1 = require("@angular/http");
 var ng2_bootstrap_1 = require("ng2-bootstrap");
 var router_1 = require("@angular/router");
-var account_find_box_component_1 = require("../components/account-management/account-find-box.component");
+var account_search_box_component_1 = require("../components/account-management/account-search-box.component");
 var comment_report_management_component_1 = require("../components/comment-report-management/comment-report-management.component");
 var comment_report_find_box_component_1 = require("../components/comment-report-management/comment-report-find-box.component");
 var account_login_component_1 = require("../components/account-management/account-login.component");
@@ -94,7 +94,7 @@ MainApplicationModule = __decorate([
             navigation_bar_component_1.NavigationBarComponent,
             sidebar_component_1.SidebarComponent,
             account_management_component_1.AccountManagementComponent,
-            account_find_box_component_1.AccountFindBoxComponent,
+            account_search_box_component_1.AccountSearchBoxComponent,
             account_forgot_password_component_1.AccountForgotPasswordComponent,
             account_login_component_1.AccountLoginComponent,
             account_submit_password_component_1.AccountSubmitPasswordComponent,
