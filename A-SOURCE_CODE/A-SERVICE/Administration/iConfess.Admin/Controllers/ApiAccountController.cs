@@ -428,11 +428,13 @@ namespace iConfess.Admin.Controllers
             // Find accounts with specific conditions.
             accounts = UnitOfWork.RepositoryAccounts.Search(accounts, conditions);
 
+            // Sort accounts
+            accounts = UnitOfWork.RepositoryAccounts.Sort(accounts, conditions.Direction, conditions.Sort);
+
             // Count total condition matched account number.
             result.Total = await accounts.CountAsync();
 
             // Sort and paginate.
-            accounts = UnitOfWork.RepositoryAccounts.Sort(accounts, conditions.Direction, conditions.Sort);
             accounts = UnitOfWork.RepositoryAccounts.Paginate(accounts, conditions.Pagination);
 
             // Take accounts list.

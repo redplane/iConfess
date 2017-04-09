@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Interfaces.Services;
@@ -73,9 +74,14 @@ namespace Shared.Services
         /// <returns></returns>
         public IQueryable<T> SearchPropertyText<T>(IQueryable<T> records, Func<T, string> property, TextSearch search)
         {
+            // Text search is not valid.
+            if (search == null || string.IsNullOrWhiteSpace(search.Value))
+                return records;
+            
             switch (search.Mode)
             {
                 case TextComparision.Contain:
+                    
                     records = records.Where(x => property(x).Contains(search.Value));
                     break;
                 case TextComparision.Equal:

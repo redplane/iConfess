@@ -38,12 +38,10 @@ namespace Shared.Repositories
                 accounts = accounts.Where(x => x.Id == conditions.Id.Value);
 
             // Email has been identified.
-            if (conditions.Email != null && !string.IsNullOrWhiteSpace(conditions.Email.Value))
-                accounts = SearchPropertyText(accounts, x => x.Email, conditions.Email);
+            accounts = SearchPropertyText(accounts, x => x.Email, conditions.Email);
 
             // Nickname has been identified.
-            if (conditions.Nickname != null && !string.IsNullOrWhiteSpace(conditions.Nickname.Value))
-                accounts = SearchPropertyText(accounts, x => x.Nickname, conditions.Nickname);
+            accounts = SearchPropertyText(accounts, x => x.Nickname, conditions.Nickname);
 
             // Statuses have been defined.
             if (conditions.Statuses != null)
