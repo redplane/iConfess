@@ -3,7 +3,8 @@
     <div class="col-lg-12">
         <account-search-box [conditions]="conditions"
                             [is-loading]="isLoading"
-                            (search)="clickSearch()"></account-search-box>
+                            (search)="clickSearch()">
+        </account-search-box>
     </div>
 </div>
 
@@ -75,11 +76,11 @@
                             </b>
                         </td>
                         <td>
-                            {{ clientTimeService.findUnixTime(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
+                            {{ clientTimeService.getUtc(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
                         </td>
                         <td>
                             <span *ngIf="account.lastModified != null">
-                                {{clientTimeService.findUnixTime(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
+                                {{clientTimeService.getUtc(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
                             </span>
 
                             <span *ngIf="account.lastModified == null">

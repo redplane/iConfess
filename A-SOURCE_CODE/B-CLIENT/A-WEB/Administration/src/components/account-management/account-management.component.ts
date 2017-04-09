@@ -178,7 +178,7 @@ export class AccountManagementComponent implements OnInit {
         // Initiate pagination.
         let pagination = new Pagination();
         pagination.index = 1;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
         this.conditions.pagination = pagination;
 
         // Initiate account statuses.

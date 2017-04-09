@@ -106,7 +106,7 @@ export class ClientConfigurationService {
     }
 
     // Maximum number of records which can be displayed on page.
-    public findMaxPageRecords(): number {
+    public getMaxPageRecords(): number {
         return this.pageRecords[this.pageRecords.length - 1];
     }
 

@@ -23,70 +23,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ClientAccountService.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/api/ClientAccountService.ts">
+      <file leaf-file-name="account-search-box.component.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/account-management/account-search-box.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-249">
-              <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-                <element signature="n#!!block;n#getAccounts#0;n#ClientAccountService#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientCategoryService.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/api/ClientCategoryService.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="686">
-              <caret line="58" column="46" lean-forward="false" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#92#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientCommentService.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/api/ClientCommentService.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientPostReportService.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/api/ClientPostReportService.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-147">
-              <caret line="1" column="24" lean-forward="true" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
+            <state relative-caret-position="527">
+              <caret line="40" column="62" lean-forward="true" selection-start-line="40" selection-start-column="62" selection-end-line="40" selection-end-column="62" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientPostService.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/services/api/ClientPostService.ts">
+      <file leaf-file-name="account-search-box.component.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/account-management/account-search-box.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4">
-              <caret line="25" column="29" lean-forward="false" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+            <state relative-caret-position="574">
+              <caret line="104" column="5" lean-forward="false" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
               <folding>
-                <element signature="e#0#49#0" expanded="true" />
+                <element signature="e#0#85#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="post-report-management.component.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/post-report-management/post-report-management.component.ts">
+      <file leaf-file-name="ClientConfigurationService.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/services/ClientConfigurationService.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-238">
-              <caret line="31" column="28" lean-forward="false" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+            <state relative-caret-position="408">
+              <caret line="128" column="32" lean-forward="true" selection-start-line="128" selection-start-column="32" selection-end-line="128" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account-management.component.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/account-management/account-management.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="59" column="78" lean-forward="false" selection-start-line="59" selection-start-column="61" selection-end-line="59" selection-end-column="78" />
               <folding>
                 <element signature="e#0#67#0" expanded="true" />
               </folding>
@@ -94,53 +67,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navigation-bar.component.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/shared/navigation-bar.component.ts">
+      <file leaf-file-name="account-management.component.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/account-management/account-management.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="31" column="16" lean-forward="false" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#48#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main-application.module.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/modules/main-application.module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1489">
-              <caret line="36" column="8" lean-forward="false" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+            <state relative-caret-position="1717">
+              <caret line="101" column="27" lean-forward="true" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientApiService.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/ClientApiService.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="80" column="33" lean-forward="true" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="post-report-find-box.component.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/post-report-management/post-report-find-box.component.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="65" lean-forward="false" selection-start-line="4" selection-start-column="65" selection-end-line="4" selection-end-column="65" />
-              <folding>
-                <element signature="n#!!block;n#loadPostReporters#0;n#PostReportFindBoxComponent#0" expanded="false" />
-                <element signature="n#!!block;n#loadPostOwners#0;n#PostReportFindBoxComponent#0" expanded="false" />
-                <element signature="n#!!block;n#loadPostTitles#0;n#PostReportFindBoxComponent#0" expanded="false" />
-                <element signature="n#!!block;n#selectPostReporter#0;n#PostReportFindBoxComponent#0" expanded="false" />
-                <element signature="n#!!block;n#selectPostOwner#0;n#PostReportFindBoxComponent#0" expanded="false" />
-                <element signature="n#!!block;n#clickSearch#0;n#PostReportFindBoxComponent#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -186,12 +118,12 @@
       <find>ClientTime</find>
       <find>ClientTimeS</find>
       <find>ClientTimeSer</find>
-      <find>clientTimeService</find>
       <find>Response</find>
       <find>searchCommentsDetailsResult</find>
       <find>ClientTimeService</find>
       <find>post-detail-box</find>
       <find>clientAuthenticationService</find>
+      <find>clientTimeService</find>
     </findStrings>
     <replaceStrings>
       <replace>clientConfigurationService</replace>
@@ -212,7 +144,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/viewmodels/post/SearchPostsViewModel.ts" />
         <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsResultViewModel.ts" />
         <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsViewModel.ts" />
         <option value="$PROJECT_DIR$/src/viewmodels/accounts/SearchAccountsResultViewModel.ts" />
@@ -229,7 +160,6 @@
         <option value="$PROJECT_DIR$/src/components/category-management/category-detail-box.component.ts" />
         <option value="$PROJECT_DIR$/src/components/post-management/post-detail-box.component.ts" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-profile-box.component.ts" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-management.component.html" />
         <option value="$PROJECT_DIR$/src/components/category-management/category-find-box.component.ts" />
         <option value="$PROJECT_DIR$/src/services/clients/ClientAccountService.ts" />
         <option value="$PROJECT_DIR$/src/interfaces/services/IClientAccountService.ts" />
@@ -245,12 +175,10 @@
         <option value="$PROJECT_DIR$/src/interfaces/services/IClientCommentService.ts" />
         <option value="$PROJECT_DIR$/src/services/ClientNotificationService.ts" />
         <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-management.component.html" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-search-box.component.ts" />
         <option value="$PROJECT_DIR$/src/components/comment-report-management/comment-report-find-box.component.ts" />
         <option value="$PROJECT_DIR$/src/modules/main-application.module.ts" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-login.component.ts" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-forgot-password.component.ts" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-management.component.ts" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-submit-password.component.ts" />
         <option value="$PROJECT_DIR$/src/components/category-management/category-management.component.ts" />
         <option value="$PROJECT_DIR$/src/components/comment-report-management/comment-report-management.component.ts" />
@@ -263,6 +191,10 @@
         <option value="$PROJECT_DIR$/src/services/api/ClientCommentService.ts" />
         <option value="$PROJECT_DIR$/src/services/api/ClientPostReportService.ts" />
         <option value="$PROJECT_DIR$/src/services/api/ClientPostService.ts" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-management.component.ts" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-management.component.html" />
+        <option value="$PROJECT_DIR$/src/services/ClientConfigurationService.ts" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-search-box.component.ts" />
       </list>
     </option>
   </component>
@@ -619,7 +551,7 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SearchEverywhereHistoryKey" value="main-ap&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;main-a&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;account-ma&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;post-report-m&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-management.component.html&#10;PostReportManagem&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-management.component.ts&#10;post-detail-box&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-management/post-detail-box.component.ts&#10;ClientAccountS&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/api/ClientAccountService.ts&#10;ClientAccount&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/api/IClientAccountService.ts&#10;ClientCommentSer&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientCommentService.ts&#10;post-report-mana&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-management.component.ts&#10;main-appl&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;ClientPost&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientPostService.ts&#10;clientPost&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientPostService.ts&#10;ClientPostS&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientPostService.ts&#10;IClientPost&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/IClientPostReportService.ts&#10;CategorySer&#9;null&#9;null&#10;IClient&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/IClientAccountService.ts&#10;IClientAccount&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/IClientAccountService.ts&#10;account-manag&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;app&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;ClientAccou&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientAccountService.ts&#10;app.mo&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;account&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;account-manage&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;account-manageme&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;account-management&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;post-detail-box.component.&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-management/post-detail-box.component.ts&#10;CategorySearchResult&#9;null&#9;null&#10;account-sear&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-search-box.component.html&#10;SearchResultView&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/viewmodels/accounts/SearchAccountsResultViewModel.ts&#10;post-report-fi&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-find-box.component.ts&#10;account-find&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-find-box.component.html&#10;SearchAccount&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/viewmodels/accounts/SearchAccountsViewModel.ts&#10;ClientAPi&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientApiService.ts&#10;account-m&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;ClientAcc&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientAccountService.ts&#10;ClientApi&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientApiService.ts&#10;account-man&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;main-app&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;index.h&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/index.html&#10;account-profile&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.html&#10;account-mana&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;post-report-find&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-find-box.component.ts&#10;post-report&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-find-box.component.html&#10;account-p&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.html&#10;account-prof&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.html&#10;account-profi&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.ts&#10;ClientAccountSer&#9;null&#9;null&#10;post-detail&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-management/post-detail-box.component.html&#10;post-report-&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-management.component.ts" />
+    <property name="SearchEverywhereHistoryKey" value="account-search-box.component.ts&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-search-box.component.ts&#10;account-sea&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-search-box.component.ts&#10;account-management&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;account-sear&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-search-box.component.ts&#10;main-ap&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;main-a&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;account-ma&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;post-report-m&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-management.component.html&#10;PostReportManagem&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-management.component.ts&#10;post-detail-box&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-management/post-detail-box.component.ts&#10;ClientAccountS&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/api/ClientAccountService.ts&#10;ClientAccount&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/api/IClientAccountService.ts&#10;ClientCommentSer&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientCommentService.ts&#10;post-report-mana&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-management.component.ts&#10;main-appl&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;ClientPost&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientPostService.ts&#10;clientPost&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientPostService.ts&#10;ClientPostS&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientPostService.ts&#10;IClientPost&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/IClientPostReportService.ts&#10;CategorySer&#9;null&#9;null&#10;IClient&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/IClientAccountService.ts&#10;IClientAccount&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/IClientAccountService.ts&#10;account-manag&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;app&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;ClientAccou&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientAccountService.ts&#10;app.mo&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;account&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;account-manage&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;account-manageme&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;post-detail-box.component.&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-management/post-detail-box.component.ts&#10;CategorySearchResult&#9;null&#9;null&#10;SearchResultView&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/viewmodels/accounts/SearchAccountsResultViewModel.ts&#10;post-report-fi&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-find-box.component.ts&#10;account-find&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-find-box.component.html&#10;SearchAccount&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/viewmodels/accounts/SearchAccountsViewModel.ts&#10;ClientAPi&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientApiService.ts&#10;account-m&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;ClientAcc&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/clients/ClientAccountService.ts&#10;ClientApi&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientApiService.ts&#10;account-man&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;main-app&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;index.h&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/index.html&#10;account-profile&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.html&#10;account-mana&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;post-report-find&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-find-box.component.ts&#10;post-report&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/post-report-management/post-report-find-box.component.html&#10;account-p&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.html&#10;account-prof&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.html&#10;account-profi&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.ts&#10;ClientAccountSer&#9;null&#9;null" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
@@ -939,7 +871,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="705177000" />
+    <option name="totallyTimeSpent" value="713149000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -952,10 +884,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27804106" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27804106" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39150944" sideWeight="0.5431918" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3214683" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
@@ -966,11 +897,22 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39863715" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39150944" sideWeight="0.5431918" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38932148" sideWeight="0.4568082" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27804106" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3214683" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39863715" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1114,13 +1056,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/enumerations/AccountStatuses.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="4" column="12" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/viewmodels/accounts/SearchAccountsViewModel.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1147,13 +1082,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="28" lean-forward="true" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-search-box.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="29" column="31" lean-forward="false" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1189,7 +1117,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1228,20 +1155,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-management.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/category-management/category-find-box.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="54" column="0" lean-forward="true" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding>
-            <element signature="e#0#62#0" expanded="true" />
+            <element signature="e#0#62#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1320,16 +1239,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/ClientConfigurationService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="16" column="28" lean-forward="false" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/interfaces/services/api/IClientAccountService.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1345,7 +1254,7 @@
         <state relative-caret-position="-809">
           <caret line="23" column="54" lean-forward="true" selection-start-line="23" selection-start-column="54" selection-end-line="23" selection-end-column="54" />
           <folding>
-            <element signature="e#0#70#0" expanded="true" />
+            <element signature="e#0#70#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1358,25 +1267,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-search-box.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="34" lean-forward="false" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#77#0" expanded="true" />
-            <element signature="n#!!block;n#toggleStatuses#0;n#AccountSearchBoxComponent#0" expanded="false" />
-            <element signature="n#!!block;n#clickSearch#0;n#AccountSearchBoxComponent#0" expanded="false" />
-            <element signature="n#!!block;n#loadAccounts#0;n#AccountSearchBoxComponent#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/comment-report-management/comment-report-find-box.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
           <caret line="17" column="34" lean-forward="false" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
           <folding>
-            <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#0#56#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1402,7 +1298,7 @@
         <state relative-caret-position="357">
           <caret line="27" column="40" lean-forward="true" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
           <folding>
-            <element signature="e#0#62#0" expanded="true" />
+            <element signature="e#0#62#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1412,16 +1308,8 @@
         <state relative-caret-position="185">
           <caret line="66" column="48" lean-forward="false" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="48" />
           <folding>
-            <element signature="e#0#48#0" expanded="true" />
+            <element signature="e#0#48#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-management.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-714">
-          <caret line="3" column="85" lean-forward="false" selection-start-line="3" selection-start-column="85" selection-end-line="3" selection-end-column="85" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1455,7 +1343,7 @@
         <state relative-caret-position="85">
           <caret line="5" column="59" lean-forward="false" selection-start-line="5" selection-start-column="59" selection-end-line="5" selection-end-column="59" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#0#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1485,28 +1373,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/shared/navigation-bar.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="16" lean-forward="false" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/main-application.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1489">
-          <caret line="36" column="8" lean-forward="false" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="693">
+          <caret line="88" column="24" lean-forward="false" selection-start-line="88" selection-start-column="24" selection-end-line="88" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+            <marker date="1491746499408" expanded="true" signature="4120:4326" ph="[...]" />
+            <marker date="1491746499408" expanded="true" signature="4120:5962" ph="{...}" />
+            <marker date="1491746499408" expanded="true" signature="4346:5044" ph="[...]" />
+            <marker date="1491746499408" expanded="true" signature="5061:5903" ph="[...]" />
+            <marker date="1491746499408" expanded="true" signature="5071:5171" ph="{&quot;provide&quot;: &quot;IClientAccountService&quot;...}" />
+            <marker date="1491746499408" expanded="true" signature="5181:5283" ph="{&quot;provide&quot;: &quot;IClientCategoryService&quot;...}" />
+            <marker date="1491746499408" expanded="true" signature="5293:5393" ph="{&quot;provide&quot;: &quot;IClientCommentService&quot;...}" />
+            <marker date="1491746499408" expanded="true" signature="5403:5497" ph="{&quot;provide&quot;: &quot;IClientPostService&quot;...}" />
+            <marker date="1491746499408" expanded="true" signature="5507:5613" ph="{&quot;provide&quot;: &quot;IClientPostReportService&quot;...}" />
+            <marker date="1491746499408" expanded="true" signature="5623:5717" ph="{&quot;provide&quot;: &quot;IClientTimeService&quot;...}" />
+            <marker date="1491746499408" expanded="true" signature="5727:5841" ph="{&quot;provide&quot;: &quot;IClientAuthenticationService&quot;...}" />
+            <marker date="1491746499408" expanded="true" signature="5920:5960" ph="[...]" />
+            <marker date="1491746499408" expanded="true" signature="5999:6002" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/services/ClientApiService.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
-          <caret line="80" column="33" lean-forward="true" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+          <caret line="80" column="33" lean-forward="false" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
@@ -1516,10 +1409,10 @@
     <entry file="file://$PROJECT_DIR$/src/services/api/ClientAccountService.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-249">
-          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding>
-            <element signature="e#0#49#0" expanded="true" />
             <element signature="n#!!block;n#getAccounts#0;n#ClientAccountService#0" expanded="false" />
+            <marker date="1491739210259" expanded="true" signature="7:678" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1530,6 +1423,7 @@
           <caret line="58" column="46" lean-forward="false" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
           <folding>
             <element signature="e#0#92#0" expanded="true" />
+            <marker date="1491739327914" expanded="true" signature="642:3486" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1537,9 +1431,10 @@
     <entry file="file://$PROJECT_DIR$/src/services/api/ClientCommentService.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
+            <marker date="1491739380255" expanded="true" signature="615:1648" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1547,18 +1442,81 @@
     <entry file="file://$PROJECT_DIR$/src/services/api/ClientPostReportService.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-147">
-          <caret line="1" column="24" lean-forward="true" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
+          <caret line="1" column="24" lean-forward="false" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/services/api/ClientPostService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4">
-          <caret line="25" column="29" lean-forward="false" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+        <state relative-caret-position="125">
+          <caret line="27" column="20" lean-forward="false" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
           <folding>
-            <element signature="e#0#49#0" expanded="true" />
+            <marker date="1491739462937" expanded="true" signature="7:414" ph="..." />
+            <marker date="1491739462937" expanded="true" signature="490:2034" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="89">
+          <caret line="55" column="38" lean-forward="false" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/shared/navigation-bar.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="16" lean-forward="false" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-management.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="59" column="78" lean-forward="false" selection-start-line="59" selection-start-column="61" selection-end-line="59" selection-end-column="78" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-management.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="101" column="27" lean-forward="true" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/ClientConfigurationService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="128" column="32" lean-forward="true" selection-start-line="128" selection-start-column="32" selection-end-line="128" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-search-box.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="574">
+          <caret line="104" column="5" lean-forward="false" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#85#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-search-box.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="40" column="62" lean-forward="true" selection-start-line="40" selection-start-column="62" selection-end-line="40" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>

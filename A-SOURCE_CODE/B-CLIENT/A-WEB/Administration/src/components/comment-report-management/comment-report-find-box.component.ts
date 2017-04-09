@@ -76,7 +76,7 @@ export class CommentReportFindBoxComponent implements OnInit{
 
     // Callback which is fired when component has been rendered successfully.
     public ngOnInit(): void {
-        this.conditions.pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        this.conditions.pagination.records = this.clientConfigurationService.getMaxPageRecords();
     }
 
     // Callback which is fired when control is starting to load data of accounts from service.
@@ -94,7 +94,7 @@ export class CommentReportFindBoxComponent implements OnInit{
         // Initiate pagination.
         let pagination = new Pagination();
         pagination.index = 0;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
 
         // Pagination update.
         findAccountsViewModel.pagination = pagination;

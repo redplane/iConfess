@@ -99,7 +99,7 @@ export class PostReportManagementComponent implements OnInit {
         // Update pagination.
         let pagination = new Pagination();
         pagination.index = 0;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
         this.findPostReportConditions.pagination = pagination;
 
         // Update the sort property.

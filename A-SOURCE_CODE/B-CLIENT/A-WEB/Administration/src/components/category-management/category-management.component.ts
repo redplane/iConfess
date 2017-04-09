@@ -230,7 +230,7 @@ export class CategoryManagementComponent implements OnInit {
         // Refactoring pagination.
         let pagination = new Pagination();
         pagination.index = 1;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
         this.findCategoriesViewModel.pagination = pagination;
     }
 

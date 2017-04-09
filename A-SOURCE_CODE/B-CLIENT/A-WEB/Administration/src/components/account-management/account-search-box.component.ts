@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Inject} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Inject, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {ClientApiService} from "../../services/ClientApiService";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
+import {TextSearch} from "../../viewmodels/TextSearch";
+import {Pagination} from "../../viewmodels/Pagination";
 
 @Component({
     selector: 'account-search-box',
     templateUrl: 'account-search-box.component.html',
-    inputs: ['conditions'],
-    outputs: ['search'],
     providers: [
         FormBuilder,
         ClientConfigurationService
@@ -26,14 +26,18 @@ export class AccountSearchBoxComponent implements OnInit {
     public isLoading: boolean;
 
     // Event which is emitted when search button is clicked.
+    @Output('search')
     private search: EventEmitter<any>;
 
     // Form contains controls which are for searching accounts.
     private findAccountBox: FormGroup;
 
     // Collection of conditions which are used for searching categories.
+    @Input('conditions')
     private conditions: SearchAccountsViewModel;
 
+    // List of accounts which can be selected.
+    public accounts: Array<Account>;
     //#endregion
 
     //#region Constructor
@@ -65,6 +69,7 @@ export class AccountSearchBoxComponent implements OnInit {
 
         // Initiate event emitters.
         this.search = new EventEmitter();
+        this.accounts = new Array<Account>();
 
         // Initiate search conditions.
         this.conditions = new SearchAccountsViewModel();
@@ -97,39 +102,6 @@ export class AccountSearchBoxComponent implements OnInit {
     // Callback which is fired when search button is clicked.
     public clickSearch(): void {
         this.search.emit();
-    }
-
-    // Callback which is fired when control is starting to load data of accounts from service.
-    public loadAccounts(): void {
-
-        // // Initiate find account conditions.
-        // let findAccountsViewModel = new SearchAccountsViewModel();
-        //
-        // // Update account which should be searched for.
-        // if (findAccountsViewModel.email == null)
-        //     findAccountsViewModel.email = new TextSearch();
-        // findAccountsViewModel.email.value = this.findCategoryBox.controls['categoryCreatorEmail'].value;
-        //
-        // // Initiate pagination.
-        // let pagination = new Pagination();
-        // pagination.index = 0;
-        // pagination.records = this._clientConfigurationService.findMaxPageRecords();
-        //
-        // // Pagination update.
-        // findAccountsViewModel.pagination = pagination;
-        //
-        // this._clientAccountService.getAccounts(findAccountsViewModel)
-        //     .then((response: Response | any) => {
-        //
-        //         // Analyze find account response view model.
-        //         let findAccountResult = response.json();
-        //
-        //         // Find list of accounts which has been responded from service.
-        //         this._accounts = findAccountResult.accounts;
-        //     })
-        //     .catch((response: any) => {
-        //
-        //     });
     }
 
     /*
