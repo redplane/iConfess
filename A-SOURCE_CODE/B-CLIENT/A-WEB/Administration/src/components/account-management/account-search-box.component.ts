@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Inject} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {ClientApiService} from "../../services/ClientApiService";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 
 @Component({
     selector: 'account-search-box',
@@ -13,13 +13,13 @@ import {AccountStatuses} from "../../enumerations/AccountStatuses";
     outputs: ['search'],
     providers: [
         FormBuilder,
-        ClientConfigurationService,
-        ClientAccountService,
-        ClientApiService
+        ClientConfigurationService
     ]
 })
 
 export class AccountSearchBoxComponent implements OnInit {
+
+    //#region Properties
 
     // Whether records are being loaded from server or not.
     @Input('is-loading')
@@ -34,10 +34,14 @@ export class AccountSearchBoxComponent implements OnInit {
     // Collection of conditions which are used for searching categories.
     private conditions: SearchAccountsViewModel;
 
+    //#endregion
+
+    //#region Constructor
+
     // Initiate component with default dependency injection.
     public constructor(private formBuilder: FormBuilder,
                        private clientConfigurationService: ClientConfigurationService,
-                       private clientAccountService: ClientAccountService) {
+                       @Inject("IClientAccountService") private clientAccountService: IClientAccountService) {
 
         // Form control of find category box.
         this.findAccountBox = formBuilder.group({
@@ -65,6 +69,10 @@ export class AccountSearchBoxComponent implements OnInit {
         // Initiate search conditions.
         this.conditions = new SearchAccountsViewModel();
     }
+
+    //#endregion
+
+    //#region Methods
 
     // Callback which is fired when status button is toggled.
     public toggleStatuses(status: AccountStatuses): void{
@@ -110,7 +118,7 @@ export class AccountSearchBoxComponent implements OnInit {
         // // Pagination update.
         // findAccountsViewModel.pagination = pagination;
         //
-        // this._clientAccountService.findAccounts(findAccountsViewModel)
+        // this._clientAccountService.getAccounts(findAccountsViewModel)
         //     .then((response: Response | any) => {
         //
         //         // Analyze find account response view model.
@@ -129,4 +137,6 @@ export class AccountSearchBoxComponent implements OnInit {
     * */
     public ngOnInit(): void {
     }
+
+    //#endregion
 }

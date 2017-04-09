@@ -1,21 +1,24 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {Router} from "@angular/router";
-import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
+import {IClientAuthenticationService} from "../../interfaces/services/api/IClientAuthenticationService";
 
 @Component({
     selector: 'navigation-bar',
-    templateUrl: 'navigation-bar.component.html',
-    providers: [
-        ClientAuthenticationService
-    ]
+    templateUrl: 'navigation-bar.component.html'
 })
 
 export class NavigationBarComponent {
 
+    //#region Constructor
+
     // Initiate instance with IoC.
-    public constructor(public clientAuthenticationService: ClientAuthenticationService,
+    public constructor(@Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
                        public clientRoutingService: Router) {
     }
+
+    //#endregion
+
+    //#region Methods
 
     // Sign the user out.
     public clickSignOut(): void {
@@ -25,4 +28,6 @@ export class NavigationBarComponent {
         // Re-direct to login page.
         this.clientRoutingService.navigate(['/']);
     }
+
+    //#endregion
 }

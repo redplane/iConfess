@@ -22,13 +22,13 @@
 
         <span class="pull-right text-muted"
               *ngIf="hasComments() && !isComponentBusy()">
-            {{searchCommentsDetailsResult.total}} comments
+            {{getCommentsDetailsResult.total}} comments
         </span>
     </div>
     <div class="box-footer box-comments"
          *ngIf="hasComments() && !isComponentBusy()">
         <div class="box-comment"
-             *ngFor="let commentDetails of searchCommentsDetailsResult.commentsDetails">
+             *ngFor="let commentDetails of getCommentsDetailsResult.commentsDetails">
 
             <img class="img-responsive img-thumbnail"
                  [src]="commentDetails.owner.photoRelativeUrl"
@@ -49,7 +49,7 @@
         <div class="col-lg-12">
             <div class="text-center"
                  *ngIf="hasComments()">
-                <pagination [totalItems]="searchCommentsDetailsResult.total"
+                <pagination [totalItems]="getCommentsDetailsResult.total"
                             [itemsPerPage]="clientConfigurationService.getMinPageRecords()"
                             [(ngModel)]="searchPostDetailCondition.pagination.index"
                             [rotate]="clientConfigurationService.ngPaginationSettings.rotate"

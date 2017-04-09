@@ -1,12 +1,8 @@
-import {Component, EventEmitter} from "@angular/core";
+import {Component, EventEmitter, Inject} from "@angular/core";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {Response} from "@angular/http";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {ClientApiService} from "../../services/ClientApiService";
-import {ClientPostService} from "../../services/clients/ClientPostService";
-import {ClientNotificationService} from "../../services/ClientNotificationService";
-import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
 import {SearchPostReportsViewModel} from "../../viewmodels/post-report/SearchPostReportsViewModel";
 import {Account} from "../../models/Account";
 import {Post} from "../../models/Post";
@@ -15,6 +11,8 @@ import {TextSearchMode} from "../../enumerations/TextSearchMode";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {Pagination} from "../../viewmodels/Pagination";
 import {SearchPostsViewModel} from "../../viewmodels/post/SearchPostsViewModel";
+import {IClientPostService} from "../../interfaces/services/api/IClientPostService";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 
 @Component({
     selector: 'post-report-find-box',
@@ -22,16 +20,13 @@ import {SearchPostsViewModel} from "../../viewmodels/post/SearchPostsViewModel";
     inputs: ['conditions', 'isLoading'],
     outputs:['search'],
     providers: [
-        ClientConfigurationService,
-        ClientAccountService,
-        ClientApiService,
-        ClientPostService,
-        ClientNotificationService,
-        ClientAuthenticationService
+        ClientConfigurationService
     ]
 })
 
 export class PostReportFindBoxComponent {
+
+    //#region Properties
 
     // Conditions which are used for finding post report.
     public conditions: SearchPostReportsViewModel;
@@ -51,10 +46,14 @@ export class PostReportFindBoxComponent {
     // Find post report emitter
     private search: EventEmitter<SearchPostReportsViewModel>;
 
+    //#endregion
+
+    //#region Constructor
+
     // Initiate post report component.
     public constructor(public clientConfigurationService: ClientConfigurationService,
-                       public clientAccountService: ClientAccountService,
-                       public clientPostService: ClientPostService,
+                       @Inject("IClientAccountService") public clientAccountService: IClientAccountService,
+                       @Inject("IClientPostService") public clientPostService: IClientPostService,
                        public clientApiService: ClientApiService,
                        public formBuilder: FormBuilder) {
 
@@ -83,6 +82,10 @@ export class PostReportFindBoxComponent {
         this.search = new EventEmitter<SearchPostReportsViewModel>();
     }
 
+    //#endregion
+
+    //#region Methods
+
     // Callback which is fired when control is starting to load data of accounts from service.
     public loadPostReporters(): void {
         let email = new TextSearch();
@@ -107,7 +110,7 @@ export class PostReportFindBoxComponent {
         findAccountsViewModel.pagination = pagination;
 
         // Find reporters by using specific conditions.
-        this.clientAccountService.findAccounts(findAccountsViewModel)
+        this.clientAccountService.getAccounts(findAccountsViewModel)
             .then((response: Response | any) => {
 
                 // Analyze find account response view model.
@@ -146,7 +149,7 @@ export class PostReportFindBoxComponent {
         findAccountsViewModel.pagination = pagination;
 
         // Find reporters by using specific conditions.
-        this.clientAccountService.findAccounts(findAccountsViewModel)
+        this.clientAccountService.getAccounts(findAccountsViewModel)
             .then((response: Response | any) => {
 
                 // Analyze find account response view model.
@@ -184,7 +187,7 @@ export class PostReportFindBoxComponent {
         findPostsViewModel.pagination = pagination;
 
         // Find reporters by using specific conditions.
-        this.clientPostService.findPosts(findPostsViewModel)
+        this.clientPostService.getPosts(findPostsViewModel)
             .then((response: Response | any) => {
 
                 // Analyze find account response view model.
@@ -261,4 +264,6 @@ export class PostReportFindBoxComponent {
         }
         return;
     }
+
+    //#endregion
 }

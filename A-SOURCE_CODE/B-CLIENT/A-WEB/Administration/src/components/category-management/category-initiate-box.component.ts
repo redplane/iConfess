@@ -1,7 +1,7 @@
 import {Component, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
+import {ClientAccountService} from "../../services/api/ClientAccountService";
 import {ClientDataConstraintService} from "../../services/ClientDataConstraintService";
 
 @Component({

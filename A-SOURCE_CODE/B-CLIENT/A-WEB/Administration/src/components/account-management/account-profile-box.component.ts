@@ -1,16 +1,13 @@
-import {Component, EventEmitter } from "@angular/core";
-import {ClientTimeService} from "../../services/ClientTimeService";
+import {Component, EventEmitter, Inject} from "@angular/core";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {Account} from "../../models/Account";
+import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
 
 @Component({
     selector: 'account-profile-box',
     templateUrl: 'account-profile-box.component.html',
     inputs:['account'],
-    outputs:['clickChangeAccountStatus'],
-    providers:[
-        ClientTimeService
-    ]
+    outputs:['clickChangeAccountStatus']
 })
 
 export class AccountProfileBoxComponent{
@@ -22,7 +19,7 @@ export class AccountProfileBoxComponent{
     private clickChangeAccountStatus: EventEmitter<Account>;
 
     // Initiate component with injections.
-    public constructor(public clientTimeService: ClientTimeService){
+    public constructor(@Inject("IClientTimeService") public clientTimeService: IClientTimeService){
 
         // Initialize event emitters.
         this.clickChangeAccountStatus = new EventEmitter<Account>();

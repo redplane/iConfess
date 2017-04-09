@@ -1,26 +1,22 @@
-import {Component} from "@angular/core";
+import {Component, Inject} from "@angular/core";
 import {Response} from "@angular/http";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ClientApiService} from "../../services/ClientApiService";
-import {ClientNotificationService} from "../../services/ClientNotificationService";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
-import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
+import {ClientToastrService} from "../../services/ClientToastrService";
 import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
 import {ClientAuthenticationToken} from "../../models/ClientAuthenticationToken";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
+import {IClientAuthenticationService} from "../../interfaces/services/api/IClientAuthenticationService";
 
 @Component({
     selector: 'account-login',
-    templateUrl: 'account-login.component.html',
-    providers:[
-        ClientApiService,
-        ClientNotificationService,
-        ClientAccountService,
-        ClientAuthenticationService
-    ]
+    templateUrl: 'account-login.component.html'
 })
 
 export class AccountLoginComponent{
+
+    //#region Properties
 
     // Whether login function is being executed or not.
     private isLoading: boolean;
@@ -31,11 +27,15 @@ export class AccountLoginComponent{
     // Login form group.
     public loginBox: FormGroup;
 
+    //#endregion
+
+    //#region Constructor
+
     // Initiate component with default settings.
     public constructor(public clientApiService: ClientApiService,
-                       public clientAuthenticationService: ClientAuthenticationService,
-                       public clientNotificationService: ClientNotificationService,
-                       public clientAccountService: ClientAccountService,
+                       @Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
+                       public clientNotificationService: ClientToastrService,
+                       @Inject("IClientAccountService") public clientAccountService: IClientAccountService,
                        public clientRoutingService: Router,
                        public formBuilder: FormBuilder){
 
@@ -46,6 +46,10 @@ export class AccountLoginComponent{
 
         this.loginViewModel = new LoginViewModel();
     }
+
+    //#endregion
+
+    //#region Methods
 
     // Callback is fired when login button is clicked.
     public clickLogin(){
@@ -76,4 +80,6 @@ export class AccountLoginComponent{
                 this.clientApiService.proceedHttpNonSolidResponse(response);
             });
     }
+
+    //#endregion
 }
