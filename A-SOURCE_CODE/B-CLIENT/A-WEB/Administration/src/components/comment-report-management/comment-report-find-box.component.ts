@@ -1,27 +1,27 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, Inject, OnInit} from "@angular/core";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Account} from "../../models/Account";
 import {SearchCommentReportsViewModel} from "../../viewmodels/comment-report/SearchCommentReportsViewModel";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {TextSearch} from "../../viewmodels/TextSearch";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {Pagination} from "../../viewmodels/Pagination";
 import {TextSearchMode} from "../../enumerations/TextSearchMode";
 import {ClientApiService} from "../../services/ClientApiService";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 
 @Component({
     selector: 'comment-report-find-box',
     templateUrl: 'comment-report-find-box.component.html',
     inputs:['conditions'],
     providers:[
-        ClientConfigurationService,
-        ClientAccountService,
-        ClientApiService
+        ClientConfigurationService
     ]
 })
 
 export class CommentReportFindBoxComponent implements OnInit{
+
+    //#region Properties
 
     // Container of controls of comment report.
     private commentReportFindBox: FormGroup;
@@ -35,8 +35,12 @@ export class CommentReportFindBoxComponent implements OnInit{
     // Find comment report conditions.
     private conditions: SearchCommentReportsViewModel;
 
+    //#endregion
+
+    //#region Constructor
+
     public constructor(private clientConfigurationService: ClientConfigurationService,
-                       private clientAccountService: ClientAccountService,
+                       @Inject("IClientAccountService") private clientAccountService: IClientAccountService,
                        private formBuilder: FormBuilder){
 
         // Initiate comment report find box components container.
@@ -66,9 +70,13 @@ export class CommentReportFindBoxComponent implements OnInit{
         this.conditions = new SearchCommentReportsViewModel();
     }
 
+    //#endregion
+
+    //#region Methods
+
     // Callback which is fired when component has been rendered successfully.
     public ngOnInit(): void {
-        this.conditions.pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        this.conditions.pagination.records = this.clientConfigurationService.getMaxPageRecords();
     }
 
     // Callback which is fired when control is starting to load data of accounts from service.
@@ -86,12 +94,12 @@ export class CommentReportFindBoxComponent implements OnInit{
         // Initiate pagination.
         let pagination = new Pagination();
         pagination.index = 0;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
 
         // Pagination update.
         findAccountsViewModel.pagination = pagination;
 
-        return this.clientAccountService.findAccounts(findAccountsViewModel);
+        return this.clientAccountService.getAccounts(findAccountsViewModel);
             //
             // .then((response: Response | any) => {
             //
@@ -106,4 +114,5 @@ export class CommentReportFindBoxComponent implements OnInit{
             // });
     }
 
+    //#endregion
 }

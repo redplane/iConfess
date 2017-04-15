@@ -1,36 +1,30 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Response} from "@angular/http";
 import {ModalDirective} from "ng2-bootstrap";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientNotificationService} from "../../services/ClientNotificationService";
-import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {ClientApiService} from "../../services/ClientApiService";
 import {ClientCommonService} from "../../services/ClientCommonService";
-import {SearchAccountsResultViewModel} from "../../viewmodels/accounts/SearchAccountsResultViewModel";
 import {Account} from "../../models/Account";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {Pagination} from "../../viewmodels/Pagination";
-import {ClientTimeService} from "../../services/ClientTimeService";
 import {AccountSummaryStatusViewModel} from "../../viewmodels/accounts/AccountSummaryStatusViewModel";
 import {SearchResult} from "../../models/SearchResult";
+import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 
 @Component({
     selector: 'account-management',
     templateUrl: 'account-management.component.html',
     providers: [
         ClientConfigurationService,
-        ClientNotificationService,
-        ClientAuthenticationService,
-        ClientAccountService,
-        ClientApiService,
-        ClientCommonService,
-        ClientTimeService
+        ClientCommonService
     ]
 })
 
 export class AccountManagementComponent implements OnInit {
+
+    //#region Properties
 
     // Inject change account modal from view.
     @ViewChild("changeAccountInfoModal")
@@ -54,12 +48,16 @@ export class AccountManagementComponent implements OnInit {
     // Account statuses summary.
     private summaries: Array<AccountSummaryStatusViewModel>;
 
+    //#endregion
+
+    //#region Constructor
+
     // Initiate component with injections.
     public constructor(private clientConfigurationService: ClientConfigurationService,
-                       private clientAccountService: ClientAccountService,
+                       @Inject("IClientAccountService") private clientAccountService: IClientAccountService,
                        private clientCommonService: ClientCommonService,
                        private clientApiService: ClientApiService,
-                       private clientTimeService: ClientTimeService) {
+                       @Inject("IClientTimeService") private clientTimeService: IClientTimeService) {
 
         // Initiate search conditions.
         this.conditions = new SearchAccountsViewModel();
@@ -71,12 +69,14 @@ export class AccountManagementComponent implements OnInit {
         this.summaries = new Array<AccountSummaryStatusViewModel>();
     }
 
+    //#endregion
+
     // Callback which is fired when search button of category search box is clicked.
     public clickSearch(): void {
         // Freeze the find box.
         this.isLoading = true;
 
-        this.clientAccountService.findAccounts(this.conditions)
+        this.clientAccountService.getAccounts(this.conditions)
             .then((response: Response | any) => {
 
                 // Find list of accounts which has been found from service.
@@ -117,7 +117,7 @@ export class AccountManagementComponent implements OnInit {
         this.isLoading = true;
 
         // Send request to service to change account information.
-        this.clientAccountService.changeAccountInformation(this.selectedAccount.id, this.selectedAccount)
+        this.clientAccountService.editUserProfile(this.selectedAccount.id, this.selectedAccount)
             .then((response: Response) => {
 
                 // Cancel loading.
@@ -178,7 +178,7 @@ export class AccountManagementComponent implements OnInit {
         // Initiate pagination.
         let pagination = new Pagination();
         pagination.index = 1;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
         this.conditions.pagination = pagination;
 
         // Initiate account statuses.
@@ -189,14 +189,5 @@ export class AccountManagementComponent implements OnInit {
             accountStatuses.push(this.clientConfigurationService.accountStatusSelections.item(key));
         }
         this.conditions.statuses = accountStatuses;
-
-        // Summarize accounts by their statuses.
-        this.clientAccountService.summarizeAccountStatus()
-            .then((response: Response) => {
-                this.summaries = <Array<AccountSummaryStatusViewModel>>response.json();
-            })
-            .catch((response: Response) => {
-                this.clientApiService.proceedHttpNonSolidResponse(response);
-            });
     }
 }

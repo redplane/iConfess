@@ -1,14 +1,14 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Inject} from '@angular/core';
 import {Response} from "@angular/http";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {ClientDataConstraintService} from "../../services/ClientDataConstraintService";
 import {Account} from "../../models/Account";
 import {Pagination} from "../../viewmodels/Pagination";
 import {TextSearch} from "../../viewmodels/TextSearch";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 
 @Component({
     selector: 'category-find-box',
@@ -20,12 +20,13 @@ import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsV
         SearchCategoriesViewModel,
 
         ClientConfigurationService,
-        ClientAccountService,
         ClientDataConstraintService
     ]
 })
 
 export class CategoryFindBoxComponent {
+
+    //#region Properties
 
     // Whether records are being loaded from server or not.
     public isLoading: boolean;
@@ -42,10 +43,14 @@ export class CategoryFindBoxComponent {
     // List of accounts which are used for typeahead binding.
     private _accounts: Array<Account>;
 
+    //#endregion
+
+    //#region Constructor
+
     // Initiate component with default dependency injection.
     public constructor(private formBuilder: FormBuilder,
                        public clientConfigurationService: ClientConfigurationService,
-                       public clientAccountService: ClientAccountService,
+                       @Inject("IClientAccountService") public clientAccountService: IClientAccountService,
                        public clientDataConstraintService: ClientDataConstraintService) {
 
         // Initiate account typeahead data.
@@ -73,6 +78,10 @@ export class CategoryFindBoxComponent {
         // Initiate event emitters.
         this.search = new EventEmitter();
     }
+
+    //#endregion
+
+    //#region Methods
 
     // Callback which is fired when search button is clicked.
     public clickSearch(): void {
@@ -111,13 +120,13 @@ export class CategoryFindBoxComponent {
         // Initiate pagination.
         let pagination = new Pagination();
         pagination.index = 0;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
 
         // Pagination update.
         findAccountsViewModel.pagination = pagination;
 
         // Find accounts with specific conditions.
-        this.clientAccountService.findAccounts(findAccountsViewModel)
+        this.clientAccountService.getAccounts(findAccountsViewModel)
             .then((response: Response | any) => {
 
                 // Analyze find account response view model.
@@ -130,4 +139,6 @@ export class CategoryFindBoxComponent {
             // TODO:
             });
     }
+
+    //#endregion
 }

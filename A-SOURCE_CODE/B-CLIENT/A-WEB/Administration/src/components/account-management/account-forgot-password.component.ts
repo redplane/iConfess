@@ -1,24 +1,19 @@
-import {Component, EventEmitter} from "@angular/core";
+import {Inject, Component, EventEmitter} from "@angular/core";
 import {ClientDataConstraintService} from "../../services/ClientDataConstraintService";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Account} from "../../models/Account";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {Response} from "@angular/http";
 import {ClientApiService} from "../../services/ClientApiService";
-import {ClientNotificationService} from "../../services/ClientNotificationService";
-import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
+import {ClientToastrService} from "../../services/ClientToastrService";
 import {Router} from "@angular/router";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 
 @Component({
     selector: 'account-forgot-password-box',
     templateUrl: 'account-forgot-password.component.html',
     inputs: ['isLoading'],
     providers:[
-        ClientDataConstraintService,
-        ClientAccountService,
-        ClientApiService,
-        ClientNotificationService,
-        ClientAuthenticationService
+        ClientDataConstraintService
     ]
 })
 
@@ -36,8 +31,8 @@ export class AccountForgotPasswordComponent {
     // Initiate component with default settings.
     public constructor(private formBuilder: FormBuilder,
                        private clientDataConstraintService: ClientDataConstraintService,
-                       private clientAccountService: ClientAccountService,
-                       private clientNotificationService: ClientNotificationService,
+                       @Inject("IClientAccountService") private clientAccountService: IClientAccountService,
+                       private clientNotificationService: ClientToastrService,
                        private clientApiService: ClientApiService,
                        private clientRoutingService: Router){
 
@@ -64,7 +59,7 @@ export class AccountForgotPasswordComponent {
         this.isLoading = true;
 
         // Call api to request password change.
-        this.clientAccountService.requestPasswordChange(this.account.email)
+        this.clientAccountService.sendPasswordChangeRequest(this.account.email)
             .then((response: Response) => {
 
             // Tell client that password request has been submitted.

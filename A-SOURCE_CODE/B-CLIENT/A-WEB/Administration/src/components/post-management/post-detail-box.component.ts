@@ -1,21 +1,17 @@
-import {Component, OnInit, EventEmitter} from "@angular/core";
-import {Post} from "../../models/Post";
-import {SearchCommentsResultViewModel} from "../../viewmodels/comment/SearchCommentsResultViewModel";
-import {Category} from "../../models/Category";
-import {Account} from "../../models/Account";
-import {ClientTimeService} from "../../services/ClientTimeService";
+import {Component, OnInit, EventEmitter, Inject} from "@angular/core";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {SearchPostsViewModel} from "../../viewmodels/post/SearchPostsViewModel";
 import {Pagination} from "../../viewmodels/Pagination";
-import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/SearchCommentsDetailsResultViewModel";
+import {CommentDetailsViewModel} from "../../viewmodels/comment/CommentDetailsViewModel";
+import {SearchResult} from "../../models/SearchResult";
+import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
 
 @Component({
     selector: 'post-detail-box',
     templateUrl: 'post-detail-box.component.html',
-    inputs:['maxComments', 'postDetails', 'searchCommentsDetailsResult', 'isSearchingPost', 'isSearchingComments'],
+    inputs:['maxComments', 'postDetails', 'getCommentDetailsResult', 'isSearchingPost', 'isSearchingComments'],
     outputs:['changeCommentsPage'],
     providers: [
-        ClientTimeService,
         ClientConfigurationService
     ]
 })
@@ -29,7 +25,7 @@ export class PostDetailBoxComponent implements OnInit{
     private isSearchingComments: boolean;
 
     // List of comments search result.
-    public searchCommentsDetailsResult: SearchCommentsDetailsResultViewModel;
+    public getCommentsDetailsResult: SearchResult<CommentDetailsViewModel>;
 
     // Condition of post detail searching.
     public searchPostDetailCondition: SearchPostsViewModel;
@@ -37,13 +33,19 @@ export class PostDetailBoxComponent implements OnInit{
     // Emitter which is used for emitting event when comments page is changed.
     private changeCommentsPage: EventEmitter<number>;
 
+    //#region Constructor
+
     public constructor(
-        public clientTimeService: ClientTimeService,
+        @Inject("IClientTimeService") public clientTimeService: IClientTimeService,
         public clientConfigurationService: ClientConfigurationService) {
 
         // Event emitter initialization.
         this.changeCommentsPage = new EventEmitter();
     }
+
+    //#endregion
+
+    //#region Methods
 
     // Callback which is fired when component has been initiated.
     public ngOnInit(): void {
@@ -61,14 +63,14 @@ export class PostDetailBoxComponent implements OnInit{
     // Check whether post contains any comments or not.
     private hasComments(): boolean {
         // Result is blank.
-        if (this.searchCommentsDetailsResult == null)
+        if (this.getCommentsDetailsResult == null)
             return false;
 
         // Comments list is empty.
-        let comments = this.searchCommentsDetailsResult.commentsDetails;
+        let comments = this.getCommentsDetailsResult.records;
         if (comments == null || comments.length < 1)
             return false;
-        if (this.searchCommentsDetailsResult.total < 1)
+        if (this.getCommentsDetailsResult.total < 1)
             return false;
         return true;
     }
@@ -92,4 +94,6 @@ export class PostDetailBoxComponent implements OnInit{
             page = 0;
         this.changeCommentsPage.emit(page);
     }
+
+    //#endregion
 }

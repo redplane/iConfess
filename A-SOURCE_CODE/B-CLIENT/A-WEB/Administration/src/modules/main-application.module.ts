@@ -26,6 +26,15 @@ import {MomentModule} from "angular2-moment";
 import {AccountProfileBoxComponent} from "../components/account-management/account-profile-box.component";
 import {PostDetailBoxComponent} from "../components/post-management/post-detail-box.component";
 import {ChartsModule} from "ng2-charts";
+import {ClientTimeService} from "../services/ClientTimeService";
+import {ClientAccountService} from "../services/api/ClientAccountService";
+import {ClientCategoryService} from "../services/api/ClientCategoryService";
+import {ClientCommentService} from "../services/api/ClientCommentService";
+import {ClientPostService} from "../services/api/ClientPostService";
+import {ClientPostReportService} from "../services/api/ClientPostReportService";
+import {ClientApiService} from "../services/ClientApiService";
+import {ClientToastrService} from "../services/ClientToastrService";
+import {ClientAuthenticationService} from "../services/api/ClientAuthenticationService";
 
 // Routing configuration.
 const appRoutes: Routes = [
@@ -110,6 +119,38 @@ const appRoutes: Routes = [
 
         TextPropertyComparisionValidator
 
+    ],
+    providers: [
+        {
+            provide: "IClientAccountService",
+            useClass: ClientAccountService
+        },
+        {
+            provide: "IClientCategoryService",
+            useClass: ClientCategoryService
+        },
+        {
+            provide: "IClientCommentService",
+            useClass: ClientCommentService
+        },
+        {
+            provide: "IClientPostService",
+            useClass: ClientPostService
+        },
+        {
+            provide: "IClientPostReportService",
+            useClass: ClientPostReportService
+        },
+        {
+            provide: "IClientTimeService",
+            useClass: ClientTimeService
+        },
+        {
+            provide: "IClientAuthenticationService",
+            useClass: ClientAuthenticationService
+        },
+        ClientApiService,
+        ClientToastrService,
     ],
     bootstrap: [
         MainApplicationComponent

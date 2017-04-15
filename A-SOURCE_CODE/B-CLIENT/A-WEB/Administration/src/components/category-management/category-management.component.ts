@@ -1,37 +1,31 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, Inject, OnInit} from '@angular/core'
 import {Response} from "@angular/http";
-import {ClientCategoryService} from "../../services/clients/ClientCategoryService";
-import {ClientTimeService} from "../../services/ClientTimeService";
 import {ClientApiService} from "../../services/ClientApiService";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
-import {ClientNotificationService} from "../../services/ClientNotificationService";
-import {SearchCategoriesResultViewModel} from "../../viewmodels/category/SearchCategoriesResultViewModel";
+import {ClientToastrService} from "../../services/ClientToastrService";
 import {CategoryDetailsViewModel} from "../../viewmodels/category/CategoryDetailsViewModel";
 import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
 import {Category} from "../../models/Category";
 import {Pagination} from "../../viewmodels/Pagination";
 import {ModalDirective} from "ng2-bootstrap";
+import {SearchResult} from "../../models/SearchResult";
+import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
+import {IClientCategoryService} from "../../interfaces/services/api/IClientCategoryService";
 
 @Component({
     selector: 'category-management',
     templateUrl: 'category-management.component.html',
     providers: [
-        ClientCategoryService,
-        ClientTimeService,
-
-        ClientApiService,
         ClientConfigurationService,
-        ClientAuthenticationService,
-
-        ClientNotificationService
     ],
 })
 
 export class CategoryManagementComponent implements OnInit {
 
+    //#region Properties
+
     // List of categories responded from service.
-    private categorySearchResult: SearchCategoriesResultViewModel;
+    private categorySearchResult: SearchResult<CategoryDetailsViewModel>;
 
     // Whether records are being searched or not.
     private isLoading: boolean;
@@ -42,16 +36,24 @@ export class CategoryManagementComponent implements OnInit {
     // Category which is currently selected to be edited/deleted.
     private selectCategoryDetail : CategoryDetailsViewModel;
 
+    //#endregion
+
+    //#region Constructor
+
     // Initiate component with dependency injections.
-    public constructor(public clientCategoryService: ClientCategoryService,
+    public constructor(@Inject("IClientCategoryService") public clientCategoryService: IClientCategoryService,
                        public clientConfigurationService: ClientConfigurationService,
                        public clientApiService: ClientApiService,
-                       public clientNotificationService: ClientNotificationService,
-                       public clientTimeService: ClientTimeService) {
+                       public clientNotificationService: ClientToastrService,
+                       @Inject("IClientTimeService") public clientTimeService: IClientTimeService) {
 
         // Initiate categories search result.
-        this.categorySearchResult = new SearchCategoriesResultViewModel();
+        this.categorySearchResult = new SearchResult<CategoryDetailsViewModel>();
     }
+
+    //#endregion
+
+    //#region Methods
 
     // Callback is fired when a category is created to be removed.
     public clickRemoveCategory(categoryDetail: CategoryDetailsViewModel, deleteCategoryConfirmModal: any): void {
@@ -137,7 +139,7 @@ export class CategoryManagementComponent implements OnInit {
         this.isLoading = true;
 
         // Call service to update category information.
-        this.clientCategoryService.changeCategoryDetails(category.id, category)
+        this.clientCategoryService.editCategoryDetails(category.id, category)
             .then((response: Response | any) => {
                 // Reload the categories list.
                 this.clickSearch();
@@ -192,7 +194,7 @@ export class CategoryManagementComponent implements OnInit {
         this.selectCategoryDetail = null;
 
         // Find categories by using specific conditions.
-        this.clientCategoryService.findCategories(this.findCategoriesViewModel)
+        this.clientCategoryService.getCategories(this.findCategoriesViewModel)
             .then((response: Response)=> {
 
                 // Update categories list.
@@ -228,7 +230,9 @@ export class CategoryManagementComponent implements OnInit {
         // Refactoring pagination.
         let pagination = new Pagination();
         pagination.index = 1;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
         this.findCategoriesViewModel.pagination = pagination;
     }
+
+    //#endregion
 }

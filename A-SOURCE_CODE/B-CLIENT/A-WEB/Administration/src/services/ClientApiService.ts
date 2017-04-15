@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
+import {Inject, Injectable} from "@angular/core";
 import {TokenViewModel} from "../viewmodels/accounts/TokenViewModel";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
-import {ClientNotificationService} from "./ClientNotificationService";
-import {ClientAuthenticationService} from "./clients/ClientAuthenticationService";
+import {ClientToastrService} from "./ClientToastrService";
 import {Router} from "@angular/router";
+import {IClientAuthenticationService} from "../interfaces/services/api/IClientAuthenticationService";
 
 /*
 * Service which handles hyperlink of api.
@@ -74,8 +74,8 @@ export class ClientApiService{
 
     // Initiate service with settings.
     public constructor(public clientRequestService: Http,
-                       public clientNotificationService: ClientNotificationService,
-                       public clientAuthenticationService: ClientAuthenticationService,
+                       public clientNotificationService: ClientToastrService,
+                       @Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
                        public clientRoutingService: Router){
 
         // Find category api url.

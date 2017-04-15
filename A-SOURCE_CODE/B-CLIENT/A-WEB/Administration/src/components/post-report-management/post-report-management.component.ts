@@ -1,12 +1,8 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, Inject, OnInit, ViewChild} from "@angular/core";
 import {ModalDirective} from "ng2-bootstrap";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientCommonService} from "../../services/ClientCommonService";
-import {ClientTimeService} from "../../services/ClientTimeService";
 import {ClientApiService} from "../../services/ClientApiService";
-import {ClientNotificationService} from "../../services/ClientNotificationService";
-import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
-import {ClientPostReportService} from "../../services/clients/ClientPostReportService";
 import {SearchPostReportsViewModel} from "../../viewmodels/post-report/SearchPostReportsViewModel";
 import {SearchPostReportsResultViewModel} from "../../viewmodels/post-report/SearchPostReportsResultViewModel";
 import {PostReport} from "../../models/PostReport";
@@ -18,14 +14,15 @@ import {Response} from "@angular/http";
 import {AccountProfileBoxComponent} from "../account-management/account-profile-box.component";
 import {Account} from "../../models/Account";
 import {Post} from "../../models/Post";
-import {ClientPostService} from "../../services/clients/ClientPostService";
-import {SearchCommentsResultViewModel} from "../../viewmodels/comment/SearchCommentsResultViewModel";
-import {SearchCommentsViewModel} from "../../viewmodels/comment/SearchCommentsViewModel";
-import {ClientCommentService} from "../../services/clients/ClientCommentService";
 import {SearchCommentsDetailsViewModel} from "../../viewmodels/comment/SearchCommentsDetailsViewModel";
-import {SearchCommentsDetailsResultViewModel} from "../../viewmodels/comment/SearchCommentsDetailsResultViewModel";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
+import {SearchResult} from "../../models/SearchResult";
+import {CommentDetailsViewModel} from "../../viewmodels/comment/CommentDetailsViewModel";
+import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
+import {IClientCommentService} from "../../interfaces/services/api/IClientCommentService";
+import {IClientPostReportService} from "../../interfaces/services/api/IClientPostReportService";
+import {IClientPostService} from "../../interfaces/services/api/IClientPostService";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 
 @Component({
     selector: 'post-report-management',
@@ -33,20 +30,13 @@ import {ClientAccountService} from "../../services/clients/ClientAccountService"
     providers: [
         ClientConfigurationService,
         ClientCommonService,
-        ClientTimeService,
-        ClientApiService,
-        ClientNotificationService,
-        ClientAuthenticationService,
-        ClientPostReportService,
-        ClientPostService,
-        ClientCommentService,
-        ClientAccountService,
-
         AccountProfileBoxComponent
     ]
 })
 
 export class PostReportManagementComponent implements OnInit {
+
+    //#region Properties
 
     // Profile box element on management component.
     @ViewChild('accountProfileBox') profileBox : ModalDirective;
@@ -58,7 +48,7 @@ export class PostReportManagementComponent implements OnInit {
     public postReportsSearchResult: SearchPostReportsResultViewModel;
 
     // Result of finding comments of a specific post.
-    public searchCommentsDetailsResult: SearchCommentsDetailsResultViewModel;
+    public getCommentDetailsResult: SearchResult<CommentDetailsViewModel>;
 
     // Post report which is selected to be deleted.
     public selectPostReport: PostReport;
@@ -78,18 +68,26 @@ export class PostReportManagementComponent implements OnInit {
     // Which post is being monitored.
     public monitoringPostDetail: Post;
 
+    //#endregion
+
+    //#region Constructor
+
     // Initiate instance of component.
     public constructor(public clientConfigurationService: ClientConfigurationService,
                        public clientCommonService: ClientCommonService,
                        public clientApiService: ClientApiService,
-                       public clientTimeService: ClientTimeService,
-                       public clientPostReportService: ClientPostReportService,
-                       public clientPostService: ClientPostService,
-                       public clientCommentService: ClientCommentService,
-                       public clientAccountService: ClientAccountService) {
+                       @Inject("IClientTimeService") public clientTimeService: IClientTimeService,
+                       @Inject("IClientPostReportService") public clientPostReportService: IClientPostReportService,
+                       @Inject("IClientPostService") public clientPostService: IClientPostService,
+                       @Inject("IClientCommentService") public clientCommentService: IClientCommentService,
+                       @Inject("IClientAccountService") public clientAccountService: IClientAccountService) {
         // Initiate post reports search result.
         this.postReportsSearchResult = new SearchPostReportsResultViewModel();
     }
+
+    //#endregion
+
+    //#region Methods
 
     // Callback which is fired when component has been initiated successfully.
     public ngOnInit(): void {
@@ -101,7 +99,7 @@ export class PostReportManagementComponent implements OnInit {
         // Update pagination.
         let pagination = new Pagination();
         pagination.index = 0;
-        pagination.records = this.clientConfigurationService.findMaxPageRecords();
+        pagination.records = this.clientConfigurationService.getMaxPageRecords();
         this.findPostReportConditions.pagination = pagination;
 
         // Update the sort property.
@@ -119,7 +117,7 @@ export class PostReportManagementComponent implements OnInit {
         // Make the component be loading.
         this.isLoading = true;
 
-        this.clientPostReportService.findPostReports(condition)
+        this.clientPostReportService.getPostReports(condition)
             .then((response: Response) => {
                 // Response is invalid.
                 if (response == null)
@@ -215,17 +213,17 @@ export class PostReportManagementComponent implements OnInit {
         this.isSearchingPost = true;
 
         // Reset the search comments result.
-        this.searchCommentsDetailsResult = new SearchCommentsDetailsResultViewModel();
+        this.getCommentDetailsResult = new SearchResult<CommentDetailsViewModel>();
 
         // Find details of the specific post.
-        this.clientPostService.findPostDetails(index)
-            .then((response: Response) => {
+        this.clientPostService.getPostDetails(index)
+            .then((x: Response) => {
 
                 // Cancel the search progress.
                 this.isSearchingPost = false;
 
                 // Get the details.
-                let details = response.json();
+                let details = x.json();
                 this.monitoringPostDetail = details;
 
                 // Display post detail box.
@@ -262,15 +260,15 @@ export class PostReportManagementComponent implements OnInit {
         this.isSearchingComments = true;
 
         // Search for comments.
-        this.clientCommentService.searchCommentDetails(searchCommentsDetailsCondition)
-            .then((response: Response) => {
+        this.clientCommentService.getCommentDetails(searchCommentsDetailsCondition)
+            .then((x: Response) => {
 
                 // Cancel comment loading status.
                 this.isSearchingComments = false;
 
                 // Get the comments search result.
-                let commentsDetailsSearchResult = response.json();
-                this.searchCommentsDetailsResult = commentsDetailsSearchResult;
+                let getCommentDetailsResult = <SearchResult<CommentDetailsViewModel>> x.json();
+                this.getCommentDetailsResult = getCommentDetailsResult;
             })
             .catch((response: Response) => {
                 // Cancel comment loading status.
@@ -302,7 +300,7 @@ export class PostReportManagementComponent implements OnInit {
         //Prevent UI interaction while data is being proceeded.
         this.isLoading = true;
 
-        this.clientAccountService.changeAccountInformation(account.id, account)
+        this.clientAccountService.editUserProfile(account.id, account)
             .then((response: Response) => {
 
                 // Cancel loading status.
@@ -329,4 +327,6 @@ export class PostReportManagementComponent implements OnInit {
         this.isSearchingComments = false;
         this.isSearchingPost = false;
     }
+
+    //#endregion
 }

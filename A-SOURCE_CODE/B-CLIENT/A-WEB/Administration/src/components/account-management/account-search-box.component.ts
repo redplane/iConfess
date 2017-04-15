@@ -1,43 +1,51 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Inject, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientAccountService} from "../../services/clients/ClientAccountService";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {ClientApiService} from "../../services/ClientApiService";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
+import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
+import {TextSearch} from "../../viewmodels/TextSearch";
+import {Pagination} from "../../viewmodels/Pagination";
 
 @Component({
     selector: 'account-search-box',
     templateUrl: 'account-search-box.component.html',
-    inputs: ['conditions'],
-    outputs: ['search'],
     providers: [
         FormBuilder,
-        ClientConfigurationService,
-        ClientAccountService,
-        ClientApiService
+        ClientConfigurationService
     ]
 })
 
 export class AccountSearchBoxComponent implements OnInit {
+
+    //#region Properties
 
     // Whether records are being loaded from server or not.
     @Input('is-loading')
     public isLoading: boolean;
 
     // Event which is emitted when search button is clicked.
+    @Output('search')
     private search: EventEmitter<any>;
 
     // Form contains controls which are for searching accounts.
     private findAccountBox: FormGroup;
 
     // Collection of conditions which are used for searching categories.
+    @Input('conditions')
     private conditions: SearchAccountsViewModel;
+
+    // List of accounts which can be selected.
+    public accounts: Array<Account>;
+    //#endregion
+
+    //#region Constructor
 
     // Initiate component with default dependency injection.
     public constructor(private formBuilder: FormBuilder,
                        private clientConfigurationService: ClientConfigurationService,
-                       private clientAccountService: ClientAccountService) {
+                       @Inject("IClientAccountService") private clientAccountService: IClientAccountService) {
 
         // Form control of find category box.
         this.findAccountBox = formBuilder.group({
@@ -61,10 +69,15 @@ export class AccountSearchBoxComponent implements OnInit {
 
         // Initiate event emitters.
         this.search = new EventEmitter();
+        this.accounts = new Array<Account>();
 
         // Initiate search conditions.
         this.conditions = new SearchAccountsViewModel();
     }
+
+    //#endregion
+
+    //#region Methods
 
     // Callback which is fired when status button is toggled.
     public toggleStatuses(status: AccountStatuses): void{
@@ -91,42 +104,11 @@ export class AccountSearchBoxComponent implements OnInit {
         this.search.emit();
     }
 
-    // Callback which is fired when control is starting to load data of accounts from service.
-    public loadAccounts(): void {
-
-        // // Initiate find account conditions.
-        // let findAccountsViewModel = new SearchAccountsViewModel();
-        //
-        // // Update account which should be searched for.
-        // if (findAccountsViewModel.email == null)
-        //     findAccountsViewModel.email = new TextSearch();
-        // findAccountsViewModel.email.value = this.findCategoryBox.controls['categoryCreatorEmail'].value;
-        //
-        // // Initiate pagination.
-        // let pagination = new Pagination();
-        // pagination.index = 0;
-        // pagination.records = this._clientConfigurationService.findMaxPageRecords();
-        //
-        // // Pagination update.
-        // findAccountsViewModel.pagination = pagination;
-        //
-        // this._clientAccountService.findAccounts(findAccountsViewModel)
-        //     .then((response: Response | any) => {
-        //
-        //         // Analyze find account response view model.
-        //         let findAccountResult = response.json();
-        //
-        //         // Find list of accounts which has been responded from service.
-        //         this._accounts = findAccountResult.accounts;
-        //     })
-        //     .catch((response: any) => {
-        //
-        //     });
-    }
-
     /*
     * Callback which is fired when component has been loaded successfully.
     * */
     public ngOnInit(): void {
     }
+
+    //#endregion
 }

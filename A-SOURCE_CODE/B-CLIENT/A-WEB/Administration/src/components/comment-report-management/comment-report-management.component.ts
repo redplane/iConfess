@@ -1,14 +1,9 @@
 import {Component} from "@angular/core";
-import {ClientNotificationService} from "../../services/ClientNotificationService";
-import {ClientAuthenticationService} from "../../services/clients/ClientAuthenticationService";
+import {ClientToastrService} from "../../services/ClientToastrService";
 
 @Component({
     selector: 'comment-report-management',
-    templateUrl: 'comment-report-management.component.html',
-    providers:[
-        ClientNotificationService,
-        ClientAuthenticationService
-    ]
+    templateUrl: 'comment-report-management.component.html'
 })
 
 export class CommentReportManagementComponent{
