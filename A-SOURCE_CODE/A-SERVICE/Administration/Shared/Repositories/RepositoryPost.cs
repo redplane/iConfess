@@ -1,25 +1,15 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
-using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
-using Shared.Interfaces.Services;
 using Shared.ViewModels.Posts;
+using Shared.Enumerations;
+using System;
 
 namespace Shared.Repositories
 {
     public class RepositoryPost : ParentRepository<Post>, IRepositoryPost
     {
-        #region Properties
-
-        /// <summary>
-        ///     Instance which is used for accessing database context.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-        
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -28,7 +18,6 @@ namespace Shared.Repositories
         public RepositoryPost(
             IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
-            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -57,11 +46,79 @@ namespace Shared.Repositories
 
             // Title is specified.
             if (conditions.Title != null && !string.IsNullOrEmpty(conditions.Title.Value))
-                posts = SearchPropertyText(posts, x => x.Title, conditions.Title);
-            
+            {
+                var szTitle = conditions.Title;
+                switch (szTitle.Mode)
+                {
+                    case TextComparision.Contain:
+                        posts = posts.Where(x => x.Title.Contains(szTitle.Value));
+                        break;
+                    case TextComparision.Equal:
+                        posts = posts.Where(x => x.Title.Equals(szTitle.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        posts =
+                            posts.Where(x => x.Title.Equals(szTitle.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        posts = posts.Where(x => x.Title.StartsWith(szTitle.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        posts =
+                            posts.Where(
+                                x => x.Title.StartsWith(szTitle.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        posts = posts.Where(x => x.Title.EndsWith(szTitle.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        posts =
+                            posts.Where(
+                                x => x.Title.EndsWith(szTitle.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        posts = posts.Where(x => x.Title.ToLower().Contains(szTitle.Value.ToLower()));
+                        break;
+                }
+            }
+
             // Body is specified.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
-                posts = SearchPropertyText(posts, x => x.Body, conditions.Body);
+            {
+                var szBody = conditions.Body;
+                switch (szBody.Mode)
+                {
+                    case TextComparision.Contain:
+                        posts = posts.Where(x => x.Body.Contains(szBody.Value));
+                        break;
+                    case TextComparision.Equal:
+                        posts = posts.Where(x => x.Body.Equals(szBody.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        posts =
+                            posts.Where(x => x.Body.Equals(szBody.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        posts = posts.Where(x => x.Body.StartsWith(szBody.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        posts =
+                            posts.Where(
+                                x => x.Body.StartsWith(szBody.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        posts = posts.Where(x => x.Body.EndsWith(szBody.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        posts =
+                            posts.Where(
+                                x => x.Body.EndsWith(szBody.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        posts = posts.Where(x => x.Body.ToLower().Contains(szBody.Value.ToLower()));
+                        break;
+                }
+            }
 
             // Created is specified.
             if (conditions.Created != null)

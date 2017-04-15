@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
+using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Comments;
 
@@ -56,7 +58,42 @@ namespace Shared.Repositories
 
             // Content is specified.
             if (conditions.Content != null && !string.IsNullOrWhiteSpace(conditions.Content.Value))
-                comments = SearchPropertyText(comments, x => x.Content, conditions.Content);
+            {
+                var szContent = conditions.Content;
+                switch (szContent.Mode)
+                {
+                    case TextComparision.Contain:
+                        comments = comments.Where(x => x.Content.Contains(szContent.Value));
+                        break;
+                    case TextComparision.Equal:
+                        comments = comments.Where(x => x.Content.Equals(szContent.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        comments =
+                            comments.Where(
+                                x => x.Content.Equals(szContent.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        comments = comments.Where(x => x.Content.StartsWith(szContent.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        comments =
+                            comments.Where(
+                                x => x.Content.StartsWith(szContent.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        comments = comments.Where(x => x.Content.EndsWith(szContent.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        comments =
+                            comments.Where(
+                                x => x.Content.EndsWith(szContent.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        comments = comments.Where(x => x.Content.ToLower().Contains(szContent.Value.ToLower()));
+                        break;
+                }
+            }
 
             // Created is specified.
             if (conditions.Created != null)

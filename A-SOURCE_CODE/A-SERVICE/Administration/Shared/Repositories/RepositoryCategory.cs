@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
+using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Categories;
 
@@ -8,15 +10,6 @@ namespace Shared.Repositories
 {
     public class RepositoryCategory : ParentRepository<Category>, IRepositoryCategory
     {
-        #region Properties
-
-        /// <summary>
-        ///     Provides functions to access to real database.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -26,7 +19,6 @@ namespace Shared.Repositories
         public RepositoryCategory(
             IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
-            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -51,7 +43,41 @@ namespace Shared.Repositories
 
             // Name search condition has been defined.
             if (conditions.Name != null && !string.IsNullOrWhiteSpace(conditions.Name.Value))
-                categories = SearchPropertyText(categories, x => x.Name, conditions.Name);
+            {
+                var szName = conditions.Name;
+                switch (szName.Mode)
+                {
+                    case TextComparision.Contain:
+                        categories = categories.Where(x => x.Name.Contains(szName.Value));
+                        break;
+                    case TextComparision.Equal:
+                        categories = categories.Where(x => x.Name.Equals(szName.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        categories =
+                            categories.Where(x => x.Name.Equals(szName.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        categories = categories.Where(x => x.Name.StartsWith(szName.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        categories =
+                            categories.Where(
+                                x => x.Name.StartsWith(szName.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        categories = categories.Where(x => x.Name.EndsWith(szName.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        categories =
+                            categories.Where(
+                                x => x.Name.EndsWith(szName.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        categories = categories.Where(x => x.Name.ToLower().Contains(szName.Value.ToLower()));
+                        break;
+                }
+            }
 
             // Created time range has been defined.
             if (conditions.Created != null)

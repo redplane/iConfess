@@ -26,15 +26,15 @@ namespace Shared.Interfaces.Services
         /// <returns></returns>
         IQueryable<T> Sort<T>(IQueryable<T> list, SortDirection sortDirection, Enum sortProperty);
 
-        /// <summary>
-        ///     Search property base on searching mode.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="records"></param>
-        /// <param name="property"></param>
-        /// <param name="search"></param>
-        /// <returns></returns>
-        IQueryable<T> SearchPropertyText<T>(IQueryable<T> records, Func<T, string> property, TextSearch search);
+        ///// <summary>
+        /////     Search property base on searching mode.
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="records"></param>
+        ///// <param name="property"></param>
+        ///// <param name="search"></param>
+        ///// <returns></returns>
+        //IQueryable<T> SearchPropertyText<T>(IQueryable<T> records, Func<T, string> property, TextSearch search);
 
     }
 }

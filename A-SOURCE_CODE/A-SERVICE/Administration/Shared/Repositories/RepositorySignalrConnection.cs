@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
+using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.SignalrConnections;
 
@@ -47,7 +49,41 @@ namespace Shared.Repositories
                 return connections;
 
             if (conditions.Index != null && !string.IsNullOrEmpty(conditions.Index.Value))
-                connections = SearchPropertyText(connections, x => x.Index, conditions.Index);
+            {
+                var szIndex = conditions.Index;
+                switch (szIndex.Mode)
+                {
+                    case TextComparision.Contain:
+                        connections = connections.Where(x => x.Index.Contains(szIndex.Value));
+                        break;
+                    case TextComparision.Equal:
+                        connections = connections.Where(x => x.Index.Equals(szIndex.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        connections =
+                            connections.Where(x => x.Index.Equals(szIndex.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        connections = connections.Where(x => x.Index.StartsWith(szIndex.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        connections =
+                            connections.Where(
+                                x => x.Index.StartsWith(szIndex.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        connections = connections.Where(x => x.Index.EndsWith(szIndex.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        connections =
+                            connections.Where(
+                                x => x.Index.EndsWith(szIndex.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        connections = connections.Where(x => x.Index.ToLower().Contains(szIndex.Value.ToLower()));
+                        break;
+                }
+            }
 
             if (conditions.Owner != null)
                 connections = connections.Where(x => x.OwnerIndex == conditions.Owner.Value);

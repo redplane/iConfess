@@ -228,7 +228,6 @@
     <Compile Include="Controllers\ApiCategoryController.cs" />
     <Compile Include="Controllers\ApiParentController.cs" />
     <Compile Include="Controllers\ApiPostReportController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Enumerations\CommentsDetailsSort.cs" />
     <Compile Include="Interfaces\Services\IConfigurationService.cs" />
     <Compile Include="Interfaces\Services\INotificationService.cs" />

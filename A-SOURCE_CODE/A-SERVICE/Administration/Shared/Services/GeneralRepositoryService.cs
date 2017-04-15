@@ -63,50 +63,53 @@ namespace Shared.Services
             return list.Provider.CreateQuery<T>(methodCallExpression);
         }
 
-        /// <summary>
-        ///     Search property base on searching mode.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="records"></param>
-        /// <param name="property"></param>
-        /// <param name="search"></param>
-        /// <returns></returns>
-        public IQueryable<T> SearchPropertyText<T>(IQueryable<T> records, Func<T, string> property, TextSearch search)
-        {
-            switch (search.Mode)
-            {
-                case TextComparision.Contain:
-                    records = records.Where(x => property(x).Contains(search.Value));
-                    break;
-                case TextComparision.Equal:
-                    records = records.Where(x => property(x).Equals(search.Value));
-                    break;
-                case TextComparision.EqualIgnoreCase:
-                    records =
-                        records.Where(x => property(x).Equals(search.Value, StringComparison.InvariantCultureIgnoreCase));
-                    break;
-                case TextComparision.StartsWith:
-                    records = records.Where(x => property(x).StartsWith(search.Value));
-                    break;
-                case TextComparision.StartsWithIgnoreCase:
-                    records =
-                        records.Where(
-                            x => property(x).StartsWith(search.Value, StringComparison.InvariantCultureIgnoreCase));
-                    break;
-                case TextComparision.EndsWith:
-                    records = records.Where(x => property(x).EndsWith(search.Value));
-                    break;
-                case TextComparision.EndsWithIgnoreCase:
-                    records =
-                        records.Where(
-                            x => property(x).EndsWith(search.Value, StringComparison.InvariantCultureIgnoreCase));
-                    break;
-                default:
-                    records = records.Where(x => property(x).ToLower().Contains(search.Value.ToLower()));
-                    break;
-            }
-            return records;
-        }
+        ///// <summary>
+        /////     Search property base on searching mode.
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="records"></param>
+        ///// <param name="property"></param>
+        ///// <param name="search"></param>
+        ///// <returns></returns>
+        //public IQueryable<T> SearchPropertyText<T>(IQueryable<T> records, Func<T, string> property, TextSearch search)
+        //{
+        //    if (search == null || string.IsNullOrWhiteSpace(search.Value))
+        //        return records;
+
+        //    switch (search.Mode)
+        //    {
+        //        case TextComparision.Contain:
+        //            records = records.Where(x => property(x).Contains(search.Value));
+        //            break;
+        //        case TextComparision.Equal:
+        //            records = records.Where(x => property(x).Equals(search.Value));
+        //            break;
+        //        case TextComparision.EqualIgnoreCase:
+        //            records =
+        //                records.Where(x => property(x).Equals(search.Value, StringComparison.InvariantCultureIgnoreCase));
+        //            break;
+        //        case TextComparision.StartsWith:
+        //            records = records.Where(x => property(x).StartsWith(search.Value));
+        //            break;
+        //        case TextComparision.StartsWithIgnoreCase:
+        //            records =
+        //                records.Where(
+        //                    x => property(x).StartsWith(search.Value, StringComparison.InvariantCultureIgnoreCase));
+        //            break;
+        //        case TextComparision.EndsWith:
+        //            records = records.Where(x => property(x).EndsWith(search.Value));
+        //            break;
+        //        case TextComparision.EndsWithIgnoreCase:
+        //            records =
+        //                records.Where(
+        //                    x => property(x).EndsWith(search.Value, StringComparison.InvariantCultureIgnoreCase));
+        //            break;
+        //        default:
+        //            records = records.Where(x => property(x).ToLower().Contains(search.Value.ToLower()));
+        //            break;
+        //    }
+        //    return records;
+        //}
 
     }
 }

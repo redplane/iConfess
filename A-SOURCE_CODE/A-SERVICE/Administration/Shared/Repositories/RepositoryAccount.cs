@@ -1,14 +1,24 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
+using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
-using Shared.Interfaces.Services;
 using Shared.ViewModels.Accounts;
 
 namespace Shared.Repositories
 {
     public class RepositoryAccount : ParentRepository<Account>, IRepositoryAccount
     {
+        #region Properties
+
+        /// <summary>
+        ///     Database context which provides access to database.
+        /// </summary>
+        private readonly IDbContextWrapper _dbContextWrapper;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -39,11 +49,67 @@ namespace Shared.Repositories
 
             // Email has been identified.
             if (conditions.Email != null && !string.IsNullOrWhiteSpace(conditions.Email.Value))
-                accounts = SearchPropertyText(accounts, x => x.Email, conditions.Email);
+            {
+                switch (conditions.Email.Mode)
+                {
+                    case TextComparision.Contain:
+                        accounts = accounts.Where(x => x.Email.Contains(conditions.Email.Value));
+                        break;
+                    case TextComparision.Equal:
+                        accounts = accounts.Where(x => x.Email.Equals(conditions.Email.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        accounts = accounts.Where(x => x.Email.Equals(conditions.Email.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        accounts = accounts.Where(x => x.Email.StartsWith(conditions.Email.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        accounts = accounts.Where(x => x.Email.StartsWith(conditions.Email.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        accounts = accounts.Where(x => x.Email.EndsWith(conditions.Email.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        accounts = accounts.Where(x => x.Email.EndsWith(conditions.Email.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        accounts = accounts.Where(x => x.Email.ToLower().Contains(conditions.Email.Value.ToLower()));
+                        break;
+                }
+            }
 
             // Nickname has been identified.
             if (conditions.Nickname != null && !string.IsNullOrWhiteSpace(conditions.Nickname.Value))
-                accounts = SearchPropertyText(accounts, x => x.Nickname, conditions.Nickname);
+            {
+                switch (conditions.Nickname.Mode)
+                {
+                    case TextComparision.Contain:
+                        accounts = accounts.Where(x => x.Nickname.Contains(conditions.Nickname.Value));
+                        break;
+                    case TextComparision.Equal:
+                        accounts = accounts.Where(x => x.Nickname.Equals(conditions.Nickname.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        accounts = accounts.Where(x => x.Nickname.Equals(conditions.Nickname.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        accounts = accounts.Where(x => x.Nickname.StartsWith(conditions.Nickname.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        accounts = accounts.Where(x => x.Nickname.StartsWith(conditions.Nickname.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        accounts = accounts.Where(x => x.Nickname.EndsWith(conditions.Nickname.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        accounts = accounts.Where(x => x.Nickname.EndsWith(conditions.Nickname.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        accounts = accounts.Where(x => x.Nickname.ToLower().Contains(conditions.Nickname.Value.ToLower()));
+                        break;
+                }
+            }
 
             // Statuses have been defined.
             if (conditions.Statuses != null)
@@ -80,15 +146,6 @@ namespace Shared.Repositories
             return accounts;
         }
 
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///     Database context which provides access to database.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-        
         #endregion
     }
 }

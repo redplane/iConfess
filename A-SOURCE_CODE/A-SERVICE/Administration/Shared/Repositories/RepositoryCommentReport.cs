@@ -4,22 +4,12 @@ using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
-using Shared.Interfaces.Services;
 using Shared.ViewModels.CommentReports;
 
 namespace Shared.Repositories
 {
     public class RepositoryCommentReport : ParentRepository<CommentReport>, IRepositoryCommentReport
     {
-        #region Properties
-
-        /// <summary>
-        ///     Provides access to database.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-        
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -29,13 +19,12 @@ namespace Shared.Repositories
         public RepositoryCommentReport(
             IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
-            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
 
         #region Methods
-        
+
         /// <summary>
         ///     Search comment reports by using specific conditions.
         /// </summary>
@@ -64,13 +53,82 @@ namespace Shared.Repositories
 
             // Comment body is specified.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
-                commentReports = SearchPropertyText(commentReports, x => x.Body,
-                    conditions.Body);
-            
+            {
+                var szBody = conditions.Body;
+                switch (szBody.Mode)
+                {
+                    case TextComparision.Contain:
+                        commentReports = commentReports.Where(x => x.Body.Contains(szBody.Value));
+                        break;
+                    case TextComparision.Equal:
+                        commentReports = commentReports.Where(x => x.Body.Equals(szBody.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        commentReports =
+                            commentReports.Where(
+                                x => x.Body.Equals(szBody.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        commentReports = commentReports.Where(x => x.Body.StartsWith(szBody.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        commentReports =
+                            commentReports.Where(
+                                x => x.Body.StartsWith(szBody.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        commentReports = commentReports.Where(x => x.Body.EndsWith(szBody.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        commentReports =
+                            commentReports.Where(
+                                x => x.Body.EndsWith(szBody.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        commentReports = commentReports.Where(x => x.Body.ToLower().Contains(szBody.Value.ToLower()));
+                        break;
+                }
+                return commentReports;
+            }
+
             // Comment reason is specified.
             if (conditions.Reason != null && !string.IsNullOrEmpty(conditions.Reason.Value))
-                commentReports = SearchPropertyText(commentReports, x => x.Reason,
-                    conditions.Reason);
+            {
+                var szReason = conditions.Reason;
+                switch (szReason.Mode)
+                {
+                    case TextComparision.Contain:
+                        commentReports = commentReports.Where(x => x.Reason.Contains(szReason.Value));
+                        break;
+                    case TextComparision.Equal:
+                        commentReports = commentReports.Where(x => x.Reason.Equals(szReason.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        commentReports =
+                            commentReports.Where(
+                                x => x.Reason.Equals(szReason.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        commentReports = commentReports.Where(x => x.Reason.StartsWith(szReason.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        commentReports =
+                            commentReports.Where(
+                                x => x.Reason.StartsWith(szReason.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        commentReports = commentReports.Where(x => x.Reason.EndsWith(szReason.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        commentReports =
+                            commentReports.Where(
+                                x => x.Reason.EndsWith(szReason.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        commentReports = commentReports.Where(x => x.Reason.ToLower().Contains(szReason.Value.ToLower()));
+                        break;
+                }
+            }
 
             // Created is specified.
             if (conditions.Created != null)

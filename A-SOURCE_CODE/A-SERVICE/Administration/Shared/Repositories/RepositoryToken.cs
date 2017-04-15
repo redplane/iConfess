@@ -1,8 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using iConfess.Database.Interfaces;
 using iConfess.Database.Models.Tables;
+using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
-using Shared.Interfaces.Services;
 using Shared.ViewModels.Token;
 
 namespace Shared.Repositories
@@ -18,7 +19,6 @@ namespace Shared.Repositories
         public RepositoryToken(
             IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
         {
-            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -43,7 +43,41 @@ namespace Shared.Repositories
 
             // Code has been specified.
             if (conditions.Code != null && !string.IsNullOrEmpty(conditions.Code.Value))
-                tokens = SearchPropertyText(tokens, x => x.Code, conditions.Code);
+            {
+                var szCode = conditions.Code;
+                switch (szCode.Mode)
+                {
+                    case TextComparision.Contain:
+                        tokens = tokens.Where(x => x.Code.Contains(szCode.Value));
+                        break;
+                    case TextComparision.Equal:
+                        tokens = tokens.Where(x => x.Code.Equals(szCode.Value));
+                        break;
+                    case TextComparision.EqualIgnoreCase:
+                        tokens =
+                            tokens.Where(x => x.Code.Equals(szCode.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.StartsWith:
+                        tokens = tokens.Where(x => x.Code.StartsWith(szCode.Value));
+                        break;
+                    case TextComparision.StartsWithIgnoreCase:
+                        tokens =
+                            tokens.Where(
+                                x => x.Code.StartsWith(szCode.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    case TextComparision.EndsWith:
+                        tokens = tokens.Where(x => x.Code.EndsWith(szCode.Value));
+                        break;
+                    case TextComparision.EndsWithIgnoreCase:
+                        tokens =
+                            tokens.Where(
+                                x => x.Code.EndsWith(szCode.Value, StringComparison.InvariantCultureIgnoreCase));
+                        break;
+                    default:
+                        tokens = tokens.Where(x => x.Code.ToLower().Contains(szCode.Value.ToLower()));
+                        break;
+                }
+            }
 
             // Issued range is specified.
             if (conditions.Issued != null)
@@ -69,15 +103,6 @@ namespace Shared.Repositories
             return tokens;
         }
 
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///     Database context which provides access to database.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-        
         #endregion
     }
 }

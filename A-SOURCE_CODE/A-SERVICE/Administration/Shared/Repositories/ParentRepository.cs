@@ -46,7 +46,7 @@ namespace Shared.Repositories
         /// <returns></returns>
         public IQueryable<T> Search()
         {
-            return _dbSet.AsQueryable();
+            return _dbSet;
         }
 
         /// <summary>
