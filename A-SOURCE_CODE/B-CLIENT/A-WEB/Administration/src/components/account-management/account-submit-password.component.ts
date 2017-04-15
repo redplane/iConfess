@@ -56,7 +56,7 @@ export class AccountSubmitPasswordComponent {
             })
             .catch((response: Response) => {
                 // Proceed common response.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 }

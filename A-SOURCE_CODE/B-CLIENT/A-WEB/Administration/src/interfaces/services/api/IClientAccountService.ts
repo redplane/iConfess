@@ -1,6 +1,6 @@
 import {SearchAccountsViewModel} from "../../../viewmodels/accounts/SearchAccountsViewModel";
 import {LoginViewModel} from "../../../viewmodels/accounts/LoginViewModel";
-import {Account} from "../../../models/Account";
+import {Account} from "../../../models/entities/Account";
 import {SubmitPasswordViewModel} from "../../../viewmodels/accounts/SubmitPasswordViewModel";
 import {Response} from "@angular/http";
 

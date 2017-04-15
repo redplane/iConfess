@@ -1,4 +1,4 @@
-import {Account} from "../../models/Account";
+import {Account} from "../../models/entities/Account";
 
 /*
 * Category and its detailed information.

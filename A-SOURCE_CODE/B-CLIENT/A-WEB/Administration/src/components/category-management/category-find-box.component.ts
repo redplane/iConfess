@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientDataConstraintService} from "../../services/ClientDataConstraintService";
-import {Account} from "../../models/Account";
+import {Account} from "../../models/entities/Account";
 import {Pagination} from "../../viewmodels/Pagination";
 import {TextSearch} from "../../viewmodels/TextSearch";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";

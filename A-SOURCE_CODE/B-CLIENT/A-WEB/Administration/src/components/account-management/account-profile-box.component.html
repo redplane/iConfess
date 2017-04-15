@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <label>Joined</label>
                     <div class="form-control">
-                        {{clientTimeService.findUnixTime(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
+                        {{clientTimeService.getUtc(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <div class="form-group">
                     <label>Last modified</label>
                     <div class="form-control">
-                        {{clientTimeService.findUnixTime(account.lastModified) | amDateFormat: 'YYYY-MM-DD'}}
+                        {{clientTimeService.getUtc(account.lastModified) | amDateFormat: 'YYYY-MM-DD'}}
                     </div>
                 </div>
             </div>

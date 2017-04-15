@@ -2,18 +2,15 @@ import {Component, Inject, OnInit, ViewChild} from "@angular/core";
 import {ModalDirective} from "ng2-bootstrap";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientCommonService} from "../../services/ClientCommonService";
-import {ClientApiService} from "../../services/ClientApiService";
 import {SearchPostReportsViewModel} from "../../viewmodels/post-report/SearchPostReportsViewModel";
-import {SearchPostReportsResultViewModel} from "../../viewmodels/post-report/SearchPostReportsResultViewModel";
-import {PostReport} from "../../models/PostReport";
+import {PostReport} from "../../models/entities/PostReport";
 import {PostReportSortProperty} from "../../enumerations/order/PostReportSortProperty";
 import {Pagination} from "../../viewmodels/Pagination";
 import {SortDirection} from "../../enumerations/SortDirection";
 import {UnixDateRange} from "../../viewmodels/UnixDateRange";
 import {Response} from "@angular/http";
-import {AccountProfileBoxComponent} from "../account-management/account-profile-box.component";
-import {Account} from "../../models/Account";
-import {Post} from "../../models/Post";
+import {Account} from "../../models/entities/Account";
+import {Post} from "../../models/entities/Post";
 import {SearchCommentsDetailsViewModel} from "../../viewmodels/comment/SearchCommentsDetailsViewModel";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {SearchResult} from "../../models/SearchResult";
@@ -23,14 +20,14 @@ import {IClientCommentService} from "../../interfaces/services/api/IClientCommen
 import {IClientPostReportService} from "../../interfaces/services/api/IClientPostReportService";
 import {IClientPostService} from "../../interfaces/services/api/IClientPostService";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
+import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
 
 @Component({
     selector: 'post-report-management',
     templateUrl: 'post-report-management.component.html',
     providers: [
         ClientConfigurationService,
-        ClientCommonService,
-        AccountProfileBoxComponent
+        ClientCommonService
     ]
 })
 
@@ -45,7 +42,7 @@ export class PostReportManagementComponent implements OnInit {
     public findPostReportConditions: SearchPostReportsViewModel;
 
     // Find post reports search result
-    public postReportsSearchResult: SearchPostReportsResultViewModel;
+    public postReportsSearchResult: SearchResult<SearchPostReportsViewModel>;
 
     // Result of finding comments of a specific post.
     public getCommentDetailsResult: SearchResult<CommentDetailsViewModel>;
@@ -75,14 +72,14 @@ export class PostReportManagementComponent implements OnInit {
     // Initiate instance of component.
     public constructor(public clientConfigurationService: ClientConfigurationService,
                        public clientCommonService: ClientCommonService,
-                       public clientApiService: ClientApiService,
+                       @Inject("IClientApiService") public clientApiService: IClientApiService,
                        @Inject("IClientTimeService") public clientTimeService: IClientTimeService,
                        @Inject("IClientPostReportService") public clientPostReportService: IClientPostReportService,
                        @Inject("IClientPostService") public clientPostService: IClientPostService,
                        @Inject("IClientCommentService") public clientCommentService: IClientCommentService,
                        @Inject("IClientAccountService") public clientAccountService: IClientAccountService) {
         // Initiate post reports search result.
-        this.postReportsSearchResult = new SearchPostReportsResultViewModel();
+        this.postReportsSearchResult = new SearchResult<SearchPostReportsViewModel>();
     }
 
     //#endregion
@@ -118,28 +115,28 @@ export class PostReportManagementComponent implements OnInit {
         this.isLoading = true;
 
         this.clientPostReportService.getPostReports(condition)
-            .then((response: Response) => {
+            .then((x: Response) => {
+
                 // Response is invalid.
-                if (response == null)
+                if (x == null)
                     return;
 
-                let result = response.json();
-                this.postReportsSearchResult.postReports = result['postReports'];
-                this.postReportsSearchResult.total = result['total'];
+                // Find post reports search result.
+                this.postReportsSearchResult = <SearchResult<SearchPostReportsViewModel>> x.json();
 
                 // Cancel loading state.
                 this.isLoading = false;
             })
-            .catch((response: Response) => {
+            .catch((x: Response) => {
                 // Response is invalid.
-                if (response == null)
+                if (x == null)
                     return;
 
                 // Cancel loading state.
                 this.isLoading = false;
 
                 // Handle common business.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(x);
             });
     }
 
@@ -190,7 +187,7 @@ export class PostReportManagementComponent implements OnInit {
             .catch((response: Response) => {
 
                 // Proceed common business handling.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
 
                 // Cancel the loading state.
                 this.isLoading = false;
@@ -234,7 +231,7 @@ export class PostReportManagementComponent implements OnInit {
                 this.isSearchingPost = false;
 
                 // Handle the common errors.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 
@@ -275,7 +272,7 @@ export class PostReportManagementComponent implements OnInit {
                 this.isSearchingComments = false;
 
                 // Proceed common handling process.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             })
     }
 
@@ -317,7 +314,7 @@ export class PostReportManagementComponent implements OnInit {
                 // Hide the profile box.
                 this.profileBox.hide();
 
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 

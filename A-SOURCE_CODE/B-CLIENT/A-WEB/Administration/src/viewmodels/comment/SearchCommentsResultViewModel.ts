@@ -1,4 +1,4 @@
-import {Comment} from '../../models/Comment'
+import {Comment} from '../../models/entities/Comment'
 
 export class SearchCommentsResultViewModel{
     // Comments which can be used for binding to view.

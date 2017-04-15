@@ -1,7 +1,7 @@
 import {Inject, Component, EventEmitter} from "@angular/core";
 import {ClientDataConstraintService} from "../../services/ClientDataConstraintService";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Account} from "../../models/Account";
+import {Account} from "../../models/entities/Account";
 import {Response} from "@angular/http";
 import {ClientApiService} from "../../services/ClientApiService";
 import {ClientToastrService} from "../../services/ClientToastrService";
@@ -73,7 +73,7 @@ export class AccountForgotPasswordComponent {
             })
             .catch((response: Response) => {
                 // Proceed common response analyzation.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
 
                 // Cancel component loading state.
                 this.isLoading = false;

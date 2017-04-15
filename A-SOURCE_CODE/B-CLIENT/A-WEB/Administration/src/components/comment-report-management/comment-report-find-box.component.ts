@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from "@angular/core";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Account} from "../../models/Account";
+import {Account} from "../../models/entities/Account";
 import {SearchCommentReportsViewModel} from "../../viewmodels/comment-report/SearchCommentReportsViewModel";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {TextSearch} from "../../viewmodels/TextSearch";

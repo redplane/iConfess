@@ -1,23 +1,38 @@
 import {IClientCategoryService} from "../../interfaces/services/api/IClientCategoryService";
 import {Injectable, Inject} from '@angular/core';
 import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
-import {ClientApiService} from "../ClientApiService";
 import {UnixDateRange} from "../../viewmodels/UnixDateRange";
-import {Category} from "../../models/Category";
+import {Category} from "../../models/entities/Category";
 import {IClientAuthenticationService} from "../../interfaces/services/api/IClientAuthenticationService";
+import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
 
 /*
-* Service which handles category business.
-* */
+ * Service which handles category business.
+ * */
 @Injectable()
 export class ClientCategoryService implements IClientCategoryService {
+
+    //#region Properties
+
+    // Url which is for searching for categories.
+    public urlSearchCategory: string = "api/category/find";
+
+    // Url which is for deleting for categories.
+    public urlDeleteCategory: string = "api/category";
+
+    // Url which is for changing for category detail.
+    public urlChangeCategoryDetail: string = "api/category";
+
+    // Url which is for initiating category.
+    public urlInitiateCategory: string = "api/category";
+
+    //#endregion
 
     //#region Constructor
 
     // Initiate instance of category service.
-    public constructor(
-        @Inject("IClientAuthenticationService")public clientAuthenticationService: IClientAuthenticationService,
-        public clientApiService: ClientApiService){
+    public constructor(@Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
+                       @Inject("IClientApiService") public clientApiService: IClientApiService) {
     }
 
     //#endregion
@@ -36,40 +51,43 @@ export class ClientCategoryService implements IClientCategoryService {
 
         return this.clientApiService.post(
             this.clientAuthenticationService.findClientAuthenticationToken(),
-            this.clientApiService.apiFindCategory,
+            `${this.clientApiService.getBaseUrl()}/${this.urlSearchCategory}`,
             null,
-            conditions)
-            .toPromise();
+            conditions);
     }
 
     // Find categories by using specific conditions and delete 'em.
-    public deleteCategories(findCategoriesConditions: SearchCategoriesViewModel){
+    public deleteCategories(findCategoriesConditions: SearchCategoriesViewModel) {
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.delete(
             this.clientAuthenticationService.findClientAuthenticationToken(),
-            this.clientApiService.apiDeleteCategory,
+            `${this.clientApiService.getBaseUrl()}/${this.urlDeleteCategory}`,
             null,
-            findCategoriesConditions)
-            .toPromise();
+            findCategoriesConditions);
     }
 
     // Change category detail information by searching its index.
-    public editCategoryDetails(id: number, category: Category){
+    public editCategoryDetails(id: number, category: Category) {
         // Request to api to obtain list of available categories in system.
-        return this.clientApiService.put(this.clientAuthenticationService.findClientAuthenticationToken(),
-            this.clientApiService.apiChangeCategoryDetail, {index: id}, category)
-            .toPromise();
+        return this.clientApiService.put(
+            this.clientAuthenticationService.findClientAuthenticationToken(),
+            `${this.clientApiService.getBaseUrl()}/${this.urlChangeCategoryDetail}`,
+            {index: id}, category);
     }
 
     // Initiate category into system.
-    public initiateCategory(category: any) : any {
+    public initiateCategory(category: any): any {
+        // Initiate url.
+        let url = `${this.clientApiService.getBaseUrl()}/${this.urlInitiateCategory}`;
+
         // Request to api to obtain list of available categories in system.
-        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(),
-            this.clientApiService.apiInitiateCategory, null, category)
-            .toPromise();
+        return this.clientApiService.post(
+            this.clientAuthenticationService.findClientAuthenticationToken(),
+            url, null, category);
     }
+
     // Reset categories search conditions.
-    public resetFindCategoriesConditions(): SearchCategoriesViewModel{
+    public resetFindCategoriesConditions(): SearchCategoriesViewModel {
 
         // Initiate find categories conditions.
         let conditions = new SearchCategoriesViewModel();

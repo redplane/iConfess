@@ -2,11 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Inject, Output} from '@angular/c
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
-import {ClientApiService} from "../../services/ClientApiService";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
-import {TextSearch} from "../../viewmodels/TextSearch";
-import {Pagination} from "../../viewmodels/Pagination";
 
 @Component({
     selector: 'account-search-box',

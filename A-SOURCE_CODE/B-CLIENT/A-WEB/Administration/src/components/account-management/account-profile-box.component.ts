@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Inject} from "@angular/core";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
-import {Account} from "../../models/Account";
+import {Account} from "../../models/entities/Account";
 import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
 
 @Component({

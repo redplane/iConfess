@@ -72,9 +72,9 @@
                         <td></td>
                         <td>{{category.name}}</td>
                         <td>{{category.creator.nickname}}</td>
-                        <td>{{clientTimeService.findUnixTime(category.created).toUTCString()}}</td>
+                        <td>{{clientTimeService.getUtc(category.created).toUTCString()}}</td>
                         <td>
-                            <span *ngIf="category.lastModified != null">{{clientTimeService.findUnixTime(category.lastModified).toUTCString()}}</span>
+                            <span *ngIf="category.lastModified != null">{{clientTimeService.getUtc(category.lastModified).toUTCString()}}</span>
                             <span *ngIf="category.lastModified == null">---</span>
                         </td>
                         <td>

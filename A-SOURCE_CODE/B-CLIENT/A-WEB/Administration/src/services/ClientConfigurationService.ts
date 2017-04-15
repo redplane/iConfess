@@ -3,7 +3,7 @@ import {Dictionary} from "../viewmodels/Dictionary";
 import {SortDirection} from "../enumerations/SortDirection";
 import {CategorySortProperty} from "../enumerations/order/CategorySortProperty";
 import {AccountSortProperty} from "../enumerations/order/AccountSortProperty";
-import {Account} from "../models/Account";
+import {Account} from "../models/entities/Account";
 import {AccountStatuses} from "../enumerations/AccountStatuses";
 import {SelectionItem} from "../models/SelectionItem";
 import {CommentReportSortProperty} from "../enumerations/order/CommentReportSortProperty";

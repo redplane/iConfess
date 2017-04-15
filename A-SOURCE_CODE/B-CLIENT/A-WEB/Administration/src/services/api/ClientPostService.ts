@@ -1,17 +1,27 @@
 import {Inject, Injectable} from "@angular/core";
 import {SearchPostsViewModel} from "../../viewmodels/post/SearchPostsViewModel";
-import {ClientApiService} from "../ClientApiService";
 import {Response} from "@angular/http";
 import {IClientPostService} from "../../interfaces/services/api/IClientPostService";
 import {IClientAuthenticationService} from "../../interfaces/services/api/IClientAuthenticationService";
+import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
 
 @Injectable()
 export class ClientPostService implements IClientPostService{
 
+    //#region Properties
+
+    // Search posts.
+    public urlSearchPosts: string = "api/post/find";
+
+    // Search post details.
+    public urlSearchPostDetails: string = "api/post/details";
+
+    //#endregion
+
     //#region Constructor
 
     // Initiate instance of category service.
-    public constructor(private clientApiService: ClientApiService,
+    public constructor(@Inject("IClientApiService") private clientApiService: IClientApiService,
                        @Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService){
     }
 
@@ -29,22 +39,27 @@ export class ClientPostService implements IClientPostService{
             localConditions.pagination.index = 0;
 
 
+        // Initiate url.
+        let url = `${this.clientApiService.getBaseUrl()}/${this.urlSearchPosts}`;
+
         // Request to api to obtain list of available categories in system.
-        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(),
-            this.clientApiService.apiFindPost,
+        return this.clientApiService.post(
+            this.clientAuthenticationService.findClientAuthenticationToken(),
+            url,
             null,
-            localConditions).toPromise();
+            localConditions);
     }
 
     // Find post details.
     public getPostDetails(index: number): Promise<Response>{
         // Build full url.
-        let url = `${this.clientApiService.apiFindPostDetails}?index=${index}`;
+        let url = `${this.clientApiService.getBaseUrl()}/${this.urlSearchPostDetails}?index=${index}`;
 
         // Request to api to obtain list of available categories in system.
-        return this.clientApiService.get(this.clientAuthenticationService.findClientAuthenticationToken(),
+        return this.clientApiService.get(
+            this.clientAuthenticationService.findClientAuthenticationToken(),
             url,
-            null).toPromise();
+            null);
     }
 
     //#endregion

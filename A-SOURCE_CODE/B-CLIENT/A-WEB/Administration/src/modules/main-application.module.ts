@@ -149,8 +149,14 @@ const appRoutes: Routes = [
             provide: "IClientAuthenticationService",
             useClass: ClientAuthenticationService
         },
-        ClientApiService,
-        ClientToastrService,
+        {
+            provide: "IClientToastrService",
+            useClass: ClientToastrService
+        },
+        {
+            provide: "IClientApiService",
+            useClass: ClientApiService
+        }
     ],
     bootstrap: [
         MainApplicationComponent

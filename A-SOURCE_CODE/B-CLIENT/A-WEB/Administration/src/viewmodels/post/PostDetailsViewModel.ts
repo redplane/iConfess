@@ -1,5 +1,5 @@
-import {Account} from "../../models/Account";
-import {Category} from "../../models/Category";
+import {Account} from "../../models/entities/Account";
+import {Category} from "../../models/entities/Category";
 export class PostDetailsViewModel{
 
     // Id of post.

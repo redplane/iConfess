@@ -1,5 +1,5 @@
-import {Post} from "../../models/Post";
-import {Account} from "../../models/Account";
+import {Post} from "../../models/entities/Post";
+import {Account} from "../../models/entities/Account";
 
 /*
 * Post report view model which is included in find post report.

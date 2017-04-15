@@ -55,7 +55,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let postReport of postReportsSearchResult.postReports; let i = index">
+                    <tr *ngFor="let postReport of postReportsSearchResult.records; let i = index">
                         <td class="text-center">{{clientCommonService.findRecordStartIndexFromPagination(findPostReportConditions.pagination) + i + 1}}</td>
                         <td class="text-center">
                             <a href="javascript:void(0);" (click)="clickOpenPostDetailBox(postReport.post.id, postDetailBox)">
@@ -76,7 +76,7 @@
                         </td>
                         <td class="text-center">{{postReport.body}}</td>
                         <td class="text-center">{{postReport.reason}}</td>
-                        <td class="text-center">{{clientTimeService.findUnixTime(postReport.created).toUTCString()}}</td>
+                        <td class="text-center">{{clientTimeService.getUtc(postReport.created).toUTCString()}}</td>
                         <td>
                             <button class="btn btn-danger btn-flat"
                                     (click)="clickDeletePostReport(postReport, deletePostReportModal)">

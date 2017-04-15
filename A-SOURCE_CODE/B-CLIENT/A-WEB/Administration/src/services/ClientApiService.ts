@@ -1,115 +1,50 @@
 import {Inject, Injectable} from "@angular/core";
-import {TokenViewModel} from "../viewmodels/accounts/TokenViewModel";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
-import {ClientToastrService} from "./ClientToastrService";
 import {Router} from "@angular/router";
 import {IClientAuthenticationService} from "../interfaces/services/api/IClientAuthenticationService";
+import {IClientToastrService} from "../interfaces/services/IClientToastrService";
+import {IClientApiService} from "../interfaces/services/api/IClientApiService";
 
 /*
 * Service which handles hyperlink of api.
 * */
 @Injectable()
-export class ClientApiService{
+export class ClientApiService implements IClientApiService{
+
+    //#region Properties
 
     // Api which web application will consume the service.
     private apiUrl = "http://confession.azurewebsites.net";
     // private apiUrl = "http://localhost:2101";
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Hyperlink which is used for searching for categories.
-    public apiFindCategory : string;
-
-    // Hyperlink which is used for searching for categories for deleting 'em.
-    public apiDeleteCategory : string;
-
-    // Hyperlink which is used for changing category information.
-    public apiChangeCategoryDetail: string;
-
-    // Hyperlink which is used for initiating category information.
-    public apiInitiateCategory: string;
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Hyperlink which is used for searching for accounts.
-    public apiFindAccount : string;
-
-    // Hyperlink which is used for logging an user into system.
-    public apiLogin : string;
-
-    // Url which is used for changing account information.
-    public apiChangeAccountInfo: string;
-
-    // Url which is used for requesting password change
-    public apiRequestChangePassword: string;
-
-    // Url which is used for summarizing accounts by specifying statuses.
-    public apiSummaryAccountStatus: string;
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Hyperlink which is used for searching for tokens.
-    public apiRequestSubmitPassword: string;
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Hyperlink which is used for searching for posts.
-    public apiFindPost: string;
-
-    // Hyperlink which is used for searching post details.
-    public apiFindPostDetails: string;
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Hyperlink which is used for searching for post reports.
-    public apiFindPostReport: string;
-
-    // Hyperlink which is used for deleting post reports.
-    public apiDeletePostReport: string;
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Hyperlink which is used for searching for post reports.
-    public apiSearchComment: string;
-
-    // Hyperlink which is used for searching for comment details.
-    public apiSearchCommentDetails: string;
-    //////////////////////////////////////////////////////////////////////////////////////
     // Key in local storage which access token should be stored.
     public accessTokenStorage: string;
 
+    //#endregion
+
+    //#region Constructor
+
     // Initiate service with settings.
     public constructor(public clientRequestService: Http,
-                       public clientNotificationService: ClientToastrService,
+                       @Inject("IClientToastrService") public clientToastrService: IClientToastrService,
                        @Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
                        public clientRoutingService: Router){
-
-        // Find category api url.
-        this.apiFindCategory = `${this.apiUrl}/api/category/find`;
-        this.apiDeleteCategory = `${this.apiUrl}/api/category`;
-        this.apiChangeCategoryDetail = `${this.apiUrl}/api/category`;
-        this.apiInitiateCategory = `${this.apiUrl}/api/category`;
-
-        // Account api.
-        this.apiFindAccount = `${this.apiUrl}/api/account/find`;
-        this.apiLogin = `${this.apiUrl}/api/account/login`;
-        this.apiChangeAccountInfo = `${this.apiUrl}/api/account`;
-        this.apiRequestChangePassword = `${this.apiUrl}/api/account/lost_password`;
-        this.apiRequestSubmitPassword = `${this.apiUrl}/api/account/lost_password`;
-        this.apiSummaryAccountStatus = `${this.apiUrl}/api/account/summary/status`;
-
-        // Post api.
-        this.apiFindPost = `${this.apiUrl}/api/post/find`;
-        this.apiFindPostDetails = `${this.apiUrl}/api/post/details`;
-
-        // Comment api.
-        this.apiSearchComment = `${this.apiUrl}/api/comment/find`;
-        this.apiSearchCommentDetails = `${this.apiUrl}/api/comments/details`;
-
-        // Post report api.
-        this.apiFindPostReport = `${this.apiUrl}/api/report/post/find`;
-        this.apiDeletePostReport = `${this.apiUrl}/api/report/post`;
 
         // Key of local storage in which access token should be stored.
         this.accessTokenStorage = 'iConfess';
     }
 
+    //#endregion
+
+    //#region Methods
+
+    // Get base url.
+    public getBaseUrl(): string{
+        return this.apiUrl;
+    }
+
     // Send 'GET' to service.
-    public get(clientAuthenticationToken: string, url: string, parameters: any) : any {
+    public get(clientAuthenticationToken: string, url: string, parameters: any) : Promise<Response> {
 
         // Parameters are specified. Reconstruct 'em.
         if (parameters != null)
@@ -128,11 +63,12 @@ export class ClientApiService{
         });
 
         // Request to api to obtain list of available categories in system.
-        return this.clientRequestService.get(url, clientRequestOptions);
+        return this.clientRequestService.get(url, clientRequestOptions)
+            .toPromise();
     }
 
     // Send 'POST' to service.
-    public post(clientAuthenticationToken: string, url: string, parameters: any, body: any) : any {
+    public post(clientAuthenticationToken: string, url: string, parameters: any, body: any) : Promise<Response> {
 
         // Parameters are specified. Reconstruct 'em.
         if (parameters != null)
@@ -152,11 +88,12 @@ export class ClientApiService{
         });
 
         // Request to api to obtain list of available categories in system.
-        return this.clientRequestService.post(url, null, clientRequestOptions);
+        return this.clientRequestService.post(url, null, clientRequestOptions)
+            .toPromise();
     }
 
     // Send 'PUT' to service.
-    public put(clientAuthenticationToken: string, url: string, parameters: any, body: any) : any {
+    public put(clientAuthenticationToken: string, url: string, parameters: any, body: any) : Promise<Response> {
 
         // Parameters are specified. Reconstruct 'em.
         if (parameters != null)
@@ -175,11 +112,12 @@ export class ClientApiService{
         });
 
         // Request to api to obtain list of available categories in system.
-        return this.clientRequestService.put(url, null, clientRequestOptions);
+        return this.clientRequestService.put(url, null, clientRequestOptions)
+            .toPromise();
     }
 
     // Send 'PUT' to service.
-    public delete(clientAuthenticationToken: string, url: string, parameters: any, body: any) : any {
+    public delete(clientAuthenticationToken: string, url: string, parameters: any, body: any) : Promise<Response> {
 
         // Parameters are specified. Reconstruct 'em.
         if (parameters != null)
@@ -198,11 +136,12 @@ export class ClientApiService{
         });
 
         // Request to api to obtain list of available categories in system.
-        return this.clientRequestService.delete(url, clientRequestOptions);
+        return this.clientRequestService.delete(url, clientRequestOptions)
+            .toPromise();
     }
 
     // Common function to proceed invalid response.
-    public proceedHttpNonSolidResponse(response : Response){
+    public handleInvalidResponse(response : Response): void{
 
         // Find response information of request.
         let information = response.json();
@@ -221,7 +160,7 @@ export class ClientApiService{
                 this.clientAuthenticationService.clearAuthenticationToken();
 
                 // Display the error message.
-                this.clientNotificationService.error(information['message'], 'System');
+                this.clientToastrService.error(information['message'], 'System', null);
 
                 // Redirect user back to login page.
                 this.clientRoutingService.navigate(['/']);
@@ -231,18 +170,18 @@ export class ClientApiService{
             // This status is about request doesn't have enough permission to access service function.
             case 403:
                 // Display the error message.
-                this.clientNotificationService.error(information['message'], 'System');
+                this.clientToastrService.error(information['message'], 'System', null);
                 break;
 
             // Something went wrong with the service.
             case 500:
                 // Display the error message.
-                this.clientNotificationService.error('Service malfunctioned. Please try again');
+                this.clientToastrService.error('Service malfunctioned. Please try again', 'System', null);
                 break;
 
             // For default error. Just display messages sent back from service.
             default:
-                this.clientNotificationService.error(information['message'], 'System');
+                this.clientToastrService.error(information['message'], 'System', null);
                 break;
         }
     }
@@ -253,4 +192,6 @@ export class ClientApiService{
             return [key, parameters[key]].map(encodeURIComponent).join("=");
         }).join("&");
     }
+
+    //#endregion
 }

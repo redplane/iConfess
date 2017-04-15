@@ -15,12 +15,12 @@
             </tr>
             <tr>
                 <th>Created</th>
-                <td>{{_timeService.findUnixTime(category.created).toUTCString()}}</td>
+                <td>{{clientTimeService.getUtc(category.created).toUTCString()}}</td>
             </tr>
             <tr>
                 <th>Last modified</th>
                 <td>
-                    <span *ngIf="category.lastModified != null">{{_timeService.findUnixTime(category.lastModified).toUTCString()}}</span>
+                    <span *ngIf="category.lastModified != null">{{clientTimeService.getUtc(category.lastModified).toUTCString()}}</span>
                     <span *ngIf="category.lastModified == null">---</span>
                 </td>
             </tr>

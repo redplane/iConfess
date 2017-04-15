@@ -2,10 +2,9 @@ import {Component, EventEmitter, Inject} from "@angular/core";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {Response} from "@angular/http";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientApiService} from "../../services/ClientApiService";
 import {SearchPostReportsViewModel} from "../../viewmodels/post-report/SearchPostReportsViewModel";
-import {Account} from "../../models/Account";
-import {Post} from "../../models/Post";
+import {Account} from "../../models/entities/Account";
+import {Post} from "../../models/entities/Post";
 import {TextSearch} from "../../viewmodels/TextSearch";
 import {TextSearchMode} from "../../enumerations/TextSearchMode";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
@@ -13,6 +12,7 @@ import {Pagination} from "../../viewmodels/Pagination";
 import {SearchPostsViewModel} from "../../viewmodels/post/SearchPostsViewModel";
 import {IClientPostService} from "../../interfaces/services/api/IClientPostService";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
+import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
 
 @Component({
     selector: 'post-report-find-box',
@@ -54,7 +54,7 @@ export class PostReportFindBoxComponent {
     public constructor(public clientConfigurationService: ClientConfigurationService,
                        @Inject("IClientAccountService") public clientAccountService: IClientAccountService,
                        @Inject("IClientPostService") public clientPostService: IClientPostService,
-                       public clientApiService: ClientApiService,
+                       @Inject("IClientApiService") public clientApiService: IClientApiService,
                        public formBuilder: FormBuilder) {
 
         // Find post report control group.
@@ -121,7 +121,7 @@ export class PostReportFindBoxComponent {
             })
             .catch((response: any) => {
                 // Handle failed response.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 
@@ -160,7 +160,7 @@ export class PostReportFindBoxComponent {
             })
             .catch((response: any) => {
                 // Handle failed response.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 
@@ -198,7 +198,7 @@ export class PostReportFindBoxComponent {
             })
             .catch((response: any) => {
                 // Handle failed response.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 

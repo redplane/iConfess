@@ -1,13 +1,13 @@
 import {Injectable, Inject} from '@angular/core';
-import {ClientApiService} from "../ClientApiService";
 import 'rxjs/add/operator/toPromise';
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
-import {Account} from "../../models/Account";
+import {Account} from "../../models/entities/Account";
 import {SubmitPasswordViewModel} from "../../viewmodels/accounts/SubmitPasswordViewModel";
 import {Response} from "@angular/http";
 import {IClientAuthenticationService} from "../../interfaces/services/api/IClientAuthenticationService";
+import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
 
 /*
  * Service which handles category business.
@@ -15,10 +15,29 @@ import {IClientAuthenticationService} from "../../interfaces/services/api/IClien
 @Injectable()
 export class ClientAccountService implements IClientAccountService {
 
+    //#region Properties
+
+    // Url which is used for signing user into system.
+    public urlLogin: string = "api/account/login";
+
+    // Url which is used for searching accounts in the system.
+    public urlSearchAccount: string = "api/account/find";
+
+    // Url which is used for changing account information.
+    public urlChangeAccountInfo: string = "api/account";
+
+    // Url which is used for requesting password change.
+    public urlRequestChangePassword = "api/account/forgot-password";
+
+    // Url which is used for submitting password change.
+    public urlSubmitPasswordReset = "api/account/forgot-password";
+
+    //#endregion
+
     //#region Constructor
 
     // Initiate instance of category service.
-    public constructor(private clientApiService: ClientApiService,
+    public constructor(@Inject("IClientApiService") public clientApiService: IClientApiService,
                        @Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService){
     }
 
@@ -37,15 +56,15 @@ export class ClientAccountService implements IClientAccountService {
 
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(),
-            this.clientApiService.apiFindAccount,
+            `${this.clientApiService.getBaseUrl()}/${this.urlSearchAccount}`,
             null,
-            conditions).toPromise();
+            conditions);
     }
 
     // Sign an account into system.
     public login(loginViewModel: LoginViewModel): Promise<Response> {
-        return this.clientApiService.post(null, this.clientApiService.apiLogin, null, loginViewModel)
-            .toPromise();
+        return this.clientApiService.post(null,
+            `${this.clientApiService.getBaseUrl()}/${this.urlLogin}`, null, loginViewModel);
     }
 
     // Change account information in service.
@@ -56,9 +75,10 @@ export class ClientAccountService implements IClientAccountService {
             id: index
         };
 
-        return this.clientApiService.put(this.clientAuthenticationService.findClientAuthenticationToken(),
-            this.clientApiService.apiChangeAccountInfo, urlParameters, information)
-            .toPromise();
+        return this.clientApiService.put(
+            this.clientAuthenticationService.findClientAuthenticationToken(),
+            `${this.clientApiService.getBaseUrl()}/${this.urlChangeAccountInfo}`,
+            urlParameters, information);
     }
 
     // Request service to send an email which is for changing account password.
@@ -68,16 +88,20 @@ export class ClientAccountService implements IClientAccountService {
             email: email
         };
 
-        return this.clientApiService.get(this.clientAuthenticationService.findClientAuthenticationToken(),
-            this.clientApiService.apiRequestChangePassword, urlParameters)
-            .toPromise();
+        return this.clientApiService.get(
+            this.clientAuthenticationService.findClientAuthenticationToken(),
+            `${this.clientApiService.getBaseUrl()}/${this.urlRequestChangePassword}`,
+            urlParameters);
     }
 
     // Request service to change password by using specific token.
     public submitPasswordReset(submitPasswordViewModel: SubmitPasswordViewModel): Promise<Response>{
-        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(),
-        this.clientApiService.apiRequestSubmitPassword, null, submitPasswordViewModel)
-            .toPromise();
+        return this.clientApiService
+            .post(
+                this.clientAuthenticationService.findClientAuthenticationToken(),
+                `${this.clientApiService.getBaseUrl()}/${this.urlSubmitPasswordReset}`,
+                null,
+                submitPasswordViewModel);
     }
 
     //#endregion

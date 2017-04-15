@@ -1,16 +1,16 @@
 import {Component, Inject, OnInit} from '@angular/core'
 import {Response} from "@angular/http";
-import {ClientApiService} from "../../services/ClientApiService";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientToastrService} from "../../services/ClientToastrService";
 import {CategoryDetailsViewModel} from "../../viewmodels/category/CategoryDetailsViewModel";
 import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
-import {Category} from "../../models/Category";
+import {Category} from "../../models/entities/Category";
 import {Pagination} from "../../viewmodels/Pagination";
 import {ModalDirective} from "ng2-bootstrap";
 import {SearchResult} from "../../models/SearchResult";
 import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
 import {IClientCategoryService} from "../../interfaces/services/api/IClientCategoryService";
+import {IClientToastrService} from "../../interfaces/services/IClientToastrService";
+import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
 
 @Component({
     selector: 'category-management',
@@ -43,8 +43,8 @@ export class CategoryManagementComponent implements OnInit {
     // Initiate component with dependency injections.
     public constructor(@Inject("IClientCategoryService") public clientCategoryService: IClientCategoryService,
                        public clientConfigurationService: ClientConfigurationService,
-                       public clientApiService: ClientApiService,
-                       public clientNotificationService: ClientToastrService,
+                       @Inject("IClientApiService") public clientApiService: IClientApiService,
+                       @Inject("IClientToastrService") public clientToastrService: IClientToastrService,
                        @Inject("IClientTimeService") public clientTimeService: IClientTimeService) {
 
         // Initiate categories search result.
@@ -97,7 +97,7 @@ export class CategoryManagementComponent implements OnInit {
                     this.isLoading = false;
 
                     // Proceed common invalid response.
-                    this.clientApiService.proceedHttpNonSolidResponse(response);
+                    this.clientApiService.handleInvalidResponse(response);
                 });
         }
 
@@ -167,7 +167,7 @@ export class CategoryManagementComponent implements OnInit {
                 let information = response.json();
 
                 // Display notification to client screen.
-                this.clientNotificationService.success(`${information['name']} has been created successfully`, 'System');
+                this.clientToastrService.success(`${information['name']} has been created successfully`, 'System', null);
 
                 // Close the modal.
                 initiateCategoryModal.hide();
@@ -180,7 +180,7 @@ export class CategoryManagementComponent implements OnInit {
                 this.isLoading = false;
 
                 // Proceed common function to handle invalid process.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 
@@ -209,7 +209,7 @@ export class CategoryManagementComponent implements OnInit {
                 this.isLoading = false;
 
                 // Call common function to handle error response.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 

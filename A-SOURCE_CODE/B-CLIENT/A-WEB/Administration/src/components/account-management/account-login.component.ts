@@ -8,6 +8,7 @@ import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
 import {ClientAuthenticationToken} from "../../models/ClientAuthenticationToken";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 import {IClientAuthenticationService} from "../../interfaces/services/api/IClientAuthenticationService";
+import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
 
 @Component({
     selector: 'account-login',
@@ -32,9 +33,8 @@ export class AccountLoginComponent{
     //#region Constructor
 
     // Initiate component with default settings.
-    public constructor(public clientApiService: ClientApiService,
+    public constructor(@Inject("IClientApiService") public clientApiService: IClientApiService,
                        @Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
-                       public clientNotificationService: ClientToastrService,
                        @Inject("IClientAccountService") public clientAccountService: IClientAccountService,
                        public clientRoutingService: Router,
                        public formBuilder: FormBuilder){
@@ -77,7 +77,7 @@ export class AccountLoginComponent{
                 this.isLoading = false;
 
                 // Proceed the common logic handling.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 

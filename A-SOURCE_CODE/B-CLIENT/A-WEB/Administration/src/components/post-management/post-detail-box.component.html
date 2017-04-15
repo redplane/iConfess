@@ -38,7 +38,7 @@
                 <span class="username">
                       {{commentDetails.owner.nickname}}
                     <span class="text-muted pull-right">
-                        {{clientTimeService.findUnixTime(commentDetails.created) | amDateFormat: 'YYYY-MM-DD'}}
+                        {{clientTimeService.getUtc(commentDetails.created) | amDateFormat: 'YYYY-MM-DD'}}
                     </span>
                 </span>
                 <span>{{commentDetails.content}}</span>

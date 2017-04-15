@@ -4,7 +4,7 @@ import {ModalDirective} from "ng2-bootstrap";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {ClientApiService} from "../../services/ClientApiService";
 import {ClientCommonService} from "../../services/ClientCommonService";
-import {Account} from "../../models/Account";
+import {Account} from "../../models/entities/Account";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {Pagination} from "../../viewmodels/Pagination";
@@ -12,6 +12,7 @@ import {AccountSummaryStatusViewModel} from "../../viewmodels/accounts/AccountSu
 import {SearchResult} from "../../models/SearchResult";
 import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
+import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
 
 @Component({
     selector: 'account-management',
@@ -56,7 +57,7 @@ export class AccountManagementComponent implements OnInit {
     public constructor(private clientConfigurationService: ClientConfigurationService,
                        @Inject("IClientAccountService") private clientAccountService: IClientAccountService,
                        private clientCommonService: ClientCommonService,
-                       private clientApiService: ClientApiService,
+                       @Inject("IClientApiService") private clientApiService: IClientApiService,
                        @Inject("IClientTimeService") private clientTimeService: IClientTimeService) {
 
         // Initiate search conditions.
@@ -92,7 +93,7 @@ export class AccountManagementComponent implements OnInit {
                 this.isLoading = false;
 
                 // Proceed non-solid response handling.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
 
             });
     }
@@ -138,7 +139,7 @@ export class AccountManagementComponent implements OnInit {
                 this.changeAccountInfoModal.hide();
 
                 // Handle common error response.
-                this.clientApiService.proceedHttpNonSolidResponse(response);
+                this.clientApiService.handleInvalidResponse(response);
             });
     }
 
