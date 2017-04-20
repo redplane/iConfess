@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using iConfess.Admin.Attributes;
 using iConfess.Admin.Interfaces.Providers;
@@ -115,6 +116,18 @@ namespace iConfess.Admin.Controllers
         #endregion
 
         #region Methods
+        
+        /// <summary>
+        /// Get profile.
+        /// </summary>
+        /// <returns></returns>
+        [Route("profile")]
+        [HttpGet]
+        public HttpResponseMessage GetProfile()
+        {
+            var account = Request.Properties[ClaimTypes.Actor];
+            return Request.CreateResponse(HttpStatusCode.OK, account);
+        }
 
         /// <summary>
         ///     Check account information and sign user into system as the information is valid.
@@ -208,7 +221,7 @@ namespace iConfess.Admin.Controllers
         ///     Submit request to service to receive an instruction email about finding account password.
         /// </summary>
         /// <returns></returns>
-        [Route("lost_password")]
+        [Route("forgot-password")]
         [HttpGet]
         [AllowAnonymous]
         public async Task<HttpResponseMessage> RequestFindLostPassword(
@@ -305,7 +318,7 @@ namespace iConfess.Admin.Controllers
         ///     Submit a new password which will replace the old password
         /// </summary>
         /// <returns></returns>
-        [Route("lost_password")]
+        [Route("submit-password")]
         [HttpPost]
         [AllowAnonymous]
         public async Task<HttpResponseMessage> SubmitAlternativePassword([FromBody] ResetPasswordViewModel parameters)
@@ -561,39 +574,7 @@ namespace iConfess.Admin.Controllers
             // Tell the client about account whose information has been modified.
             return Request.CreateResponse(HttpStatusCode.OK, target);
         }
-
-        [Route("summary/status")]
-        [HttpPost]
-        public async Task<HttpResponseMessage> SummarizeAccountByStatus([FromBody] AccountSummaryStatusViewModel parameters)
-        {
-            if (parameters == null)
-            {
-                parameters = new AccountSummaryStatusViewModel();
-                Validate(parameters);
-            }
-
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest,
-                    FindValidationMessage(ModelState, nameof(parameters)));
-
-            // Search accounts in database.
-            var condition = new SearchAccountViewModel();
-            condition.Joined = parameters.Joined;
-            condition.LastModified = parameters.LastModified;
-
-            var accounts = UnitOfWork.RepositoryAccounts.Search();
-            accounts = UnitOfWork.RepositoryAccounts.Search(accounts, condition);
-
-            // Group account by status.
-            var collections = accounts.GroupBy(x => x.Status)
-                .Select(x => new AccountStatusSummary
-                {
-                    Status = x.Key,
-                    Total = x.Count()
-                });
-
-            return Request.CreateResponse(HttpStatusCode.OK, collections);
-        }
+        
 
         #endregion
     }

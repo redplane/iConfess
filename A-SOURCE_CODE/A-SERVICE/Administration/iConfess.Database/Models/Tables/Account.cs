@@ -70,90 +70,105 @@ namespace iConfess.Database.Models.Tables
         ///     One account can create many categories.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<Category> Categories { get; set; }
 
         /// <summary>
         ///     One account can send many comments.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<Comment> OutgoingComments { get; set; }
 
         /// <summary>
         ///     One account can follow many categories.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<FollowCategory> FollowCategories { get; set; }
 
         /// <summary>
         ///     One account can follow many posts.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<FollowPost> FollowPosts { get; set; }
 
         /// <summary>
         ///     One account can broadcast many comment notifications.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<NotificationComment> OutgoingNotificationComments { get; set; }
 
         /// <summary>
         ///     One account can receive many comment notifications.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<NotificationComment> IncomingNotificationComments { get; set; }
 
         /// <summary>
         ///     One account can broadcast many post notification.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<NotificationPost> OutgoingNotificationPosts { get; set; }
 
         /// <summary>
         ///     One account can receive many post notification.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<NotificationPost> IncomingNotificationPosts { get; set; }
 
         /// <summary>
         ///     One account can write many posts.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<Post> OutgoingPosts { get; set; }
 
         /// <summary>
         ///     One account can report many comments.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<CommentReport> OutgoingReportedComments { get; set; }
 
         /// <summary>
         ///     One account can be reported about its many comments.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<CommentReport> IncomingReportedComments { get; set; }
 
         /// <summary>
         ///     One account can report many posts.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<PostReport> OutgoingReportedPosts { get; set; }
 
         /// <summary>
         ///     One account can be reported about its many posts.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<PostReport> IncomingReportedPosts { get; set; }
 
         /// <summary>
         ///     One account can broadcast many signalr connections to the server.
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<SignalrConnection> OutgoingSignalrConnections { get; set; }
 
         /// <summary>
         ///     One account can have many tokens
         /// </summary>
         [JsonIgnore]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<Token> Tokens { get; set; }
 
         #endregion
