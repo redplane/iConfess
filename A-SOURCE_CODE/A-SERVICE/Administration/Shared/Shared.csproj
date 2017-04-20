@@ -173,12 +173,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\iConfess.Database\iConfess.Database.csproj">
-      <Project>{0c4b39be-cf91-47d4-be5b-31e6afe16667}</Project>
-      <Name>iConfess.Database</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\HttpMessages.resx">
