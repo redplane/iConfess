@@ -1,4 +1,4 @@
-﻿using iConfess.Database.Enumerations;
+﻿using Database.Enumerations;
 
 namespace Administration.Models.Statistics
 {

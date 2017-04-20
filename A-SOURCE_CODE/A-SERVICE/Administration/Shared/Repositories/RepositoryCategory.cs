@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using iConfess.Database.Interfaces;
-using iConfess.Database.Models.Tables;
+using Database.Interfaces;
+using Database.Models.Tables;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Categories;

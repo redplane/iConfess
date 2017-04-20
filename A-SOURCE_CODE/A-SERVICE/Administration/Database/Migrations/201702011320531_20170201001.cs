@@ -1,8 +1,7 @@
-namespace iConfess.Database.Migrations
+using System.Data.Entity.Migrations;
+
+namespace Database.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class _20170201001 : DbMigration
     {
         public override void Up()

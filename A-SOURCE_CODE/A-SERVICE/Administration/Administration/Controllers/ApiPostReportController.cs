@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Administration.Attributes;
 using Administration.ViewModels.ApiPostReport;
-using iConfess.Database.Models.Tables;
+using Database.Models.Tables;
 using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;

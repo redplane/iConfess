@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using iConfess.Database.Enumerations;
+using Database.Enumerations;
 using Newtonsoft.Json;
 
-namespace iConfess.Database.Models.Tables
+namespace Database.Models.Tables
 {
     public class Account
     {

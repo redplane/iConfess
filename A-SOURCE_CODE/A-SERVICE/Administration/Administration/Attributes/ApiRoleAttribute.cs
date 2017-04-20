@@ -6,8 +6,8 @@ using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using iConfess.Database.Enumerations;
-using iConfess.Database.Models.Tables;
+using Database.Enumerations;
+using Database.Models.Tables;
 using Shared.Resources;
 
 namespace Administration.Attributes

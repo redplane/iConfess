@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Autofac;
-using iConfess.Database.Models.Tables;
+using Database.Models.Tables;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Shared.Enumerations;

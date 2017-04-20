@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Web.Http;
 using Administration.Interfaces.Providers;
 using Autofac;
-using iConfess.Database.Enumerations;
+using Database.Enumerations;
 using JWT;
 using log4net;
 using Microsoft.AspNet.SignalR;

@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using iConfess.Database.Interfaces;
+using Database.Interfaces;
 using Shared.Interfaces.Repositories;
 using Shared.Services;
 

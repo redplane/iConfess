@@ -7,7 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Autofac;
-using iConfess.Database.Enumerations;
+using Database.Enumerations;
 using Shared.Interfaces.Services;
 using Shared.Resources;
 
@@ -16,7 +16,7 @@ namespace Administration.Attributes
     public class ApiAuthorizeAttribute : AuthorizationFilterAttribute
     {
         #region Properties
-        
+
         /// <summary>
         /// Autofac lifetime scope.
         /// </summary>
@@ -148,7 +148,7 @@ namespace Administration.Attributes
                     else
                         properties.Add(ClaimTypes.Actor, account);
 
-                    
+
                 }
             }
             catch

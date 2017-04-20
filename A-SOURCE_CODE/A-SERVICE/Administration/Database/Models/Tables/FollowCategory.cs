@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace iConfess.Database.Models.Tables
+namespace Database.Models.Tables
 {
     public class FollowCategory
     {

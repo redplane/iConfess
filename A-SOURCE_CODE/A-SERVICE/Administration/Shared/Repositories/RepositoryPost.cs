@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using iConfess.Database.Interfaces;
-using iConfess.Database.Models.Tables;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Posts;
 using Shared.Enumerations;
 using System;
+using Database.Interfaces;
+using Database.Models.Tables;
 
 namespace Shared.Repositories
 {

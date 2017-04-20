@@ -7,7 +7,7 @@ namespace Shared.ViewModels.Token
         /// <summary>
         /// List of searched tokens.
         /// </summary>
-        public IQueryable<iConfess.Database.Models.Tables.Token> Tokens { get; set; }
+        public IQueryable<Database.Models.Tables.Token> Tokens { get; set; }
 
         /// <summary>
         /// Total tokens which have been searched.

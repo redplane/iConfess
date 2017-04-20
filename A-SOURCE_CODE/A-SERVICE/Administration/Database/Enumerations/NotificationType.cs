@@ -1,4 +1,4 @@
-﻿namespace iConfess.Database.Enumerations
+﻿namespace Database.Enumerations
 {
     public enum NotificationType
     {

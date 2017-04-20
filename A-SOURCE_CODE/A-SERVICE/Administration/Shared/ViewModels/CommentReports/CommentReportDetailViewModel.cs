@@ -1,4 +1,4 @@
-﻿using iConfess.Database.Models.Tables;
+﻿using Database.Models.Tables;
 
 namespace Shared.ViewModels.CommentReports
 {

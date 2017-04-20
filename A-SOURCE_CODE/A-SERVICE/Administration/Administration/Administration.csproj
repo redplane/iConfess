@@ -283,7 +283,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iConfess.Database\iConfess.Database.csproj">
+    <ProjectReference Include="..\Database\Database.csproj">
       <Project>{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}</Project>
       <Name>iConfess.Database</Name>
     </ProjectReference>

@@ -7,8 +7,8 @@
     <ProjectGuid>{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>iConfess.Database</RootNamespace>
-    <AssemblyName>iConfess.Database</AssemblyName>
+    <RootNamespace>Database</RootNamespace>
+    <AssemblyName>Database</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

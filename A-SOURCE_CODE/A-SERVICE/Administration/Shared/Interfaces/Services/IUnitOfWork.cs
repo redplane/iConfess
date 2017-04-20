@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using iConfess.Database.Interfaces;
+using Database.Interfaces;
 using Shared.Interfaces.Repositories;
 
 namespace Shared.Interfaces.Services

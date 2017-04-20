@@ -1,10 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
-using iConfess.Database.Interfaces;
-using iConfess.Database.Models.Tables;
+using Database.Interfaces;
+using Database.Models.Tables;
 
-namespace iConfess.Database.Models.Contextes
+namespace Database.Models.Contextes
 {
     public class SqlServerDataContext : DbContext, IDbContextWrapper
     {

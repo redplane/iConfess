@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using iConfess.Database.Models.Tables;
+using Database.Models.Tables;
 using Shared.ViewModels.Categories;
 
 namespace Shared.Interfaces.Repositories

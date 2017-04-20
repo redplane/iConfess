@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Administration.Attributes;
-using iConfess.Database.Enumerations;
+using Database.Enumerations;
 using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Administration.SignalrHubs

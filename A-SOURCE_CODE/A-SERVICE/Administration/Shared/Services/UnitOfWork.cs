@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using iConfess.Database.Interfaces;
+using Database.Interfaces;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;

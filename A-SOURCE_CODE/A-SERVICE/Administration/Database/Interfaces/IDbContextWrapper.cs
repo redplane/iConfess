@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Threading.Tasks;
 
-namespace iConfess.Database.Interfaces
+namespace Database.Interfaces
 {
     public interface IDbContextWrapper : IDisposable
     {
