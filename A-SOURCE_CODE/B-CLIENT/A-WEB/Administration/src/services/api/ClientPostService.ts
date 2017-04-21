@@ -44,7 +44,7 @@ export class ClientPostService implements IClientPostService{
 
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.post(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             url,
             null,
             localConditions);
@@ -57,7 +57,7 @@ export class ClientPostService implements IClientPostService{
 
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.get(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             url,
             null);
     }

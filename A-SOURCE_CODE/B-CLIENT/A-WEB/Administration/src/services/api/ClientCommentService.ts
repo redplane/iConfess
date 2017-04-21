@@ -33,7 +33,7 @@ export class ClientCommentService implements IClientCommentService{
     // Search for comments by using specific conditions.
     public getComments(conditions: SearchCommentsViewModel): Promise<Response>{
         return this.clientApiService.post(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlSearchComment}`,
             null, conditions);
     }
@@ -41,7 +41,7 @@ export class ClientCommentService implements IClientCommentService{
     // Search for a specific comment's detail.
     public getCommentDetails(conditions: SearchCommentsDetailsViewModel): Promise<Response>{
         return this.clientApiService.post(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlSearchCommentDetails}`,
             null, conditions);
     }

@@ -32,7 +32,7 @@ export class ClientPostReportService implements IClientPostReportService{
     // Find post reports by using specific conditions.
     public getPostReports(conditions: SearchPostReportsViewModel): Promise<Response>{
         return this.clientApiService.post(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlSearchPostReport}`,
             null, conditions);
     }
@@ -40,7 +40,7 @@ export class ClientPostReportService implements IClientPostReportService{
     // Delete post reports by using specific conditions.
     public deletePostReports(conditions: SearchPostReportsViewModel): Promise<Response>{
         return this.clientApiService.delete(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlDeletePostReport}`,
             null, conditions);
     }

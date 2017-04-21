@@ -3,6 +3,7 @@
 * */
 import {AccountStatuses} from "../enumerations/AccountStatuses";
 import {Pagination} from "../viewmodels/Pagination";
+
 export class ClientCommonService{
 
     // Find the start record index by calculating page index and page records.

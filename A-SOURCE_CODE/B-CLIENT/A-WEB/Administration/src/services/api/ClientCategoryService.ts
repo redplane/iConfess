@@ -50,7 +50,7 @@ export class ClientCategoryService implements IClientCategoryService {
             conditions.pagination.index = 0;
 
         return this.clientApiService.post(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlSearchCategory}`,
             null,
             conditions);
@@ -60,7 +60,7 @@ export class ClientCategoryService implements IClientCategoryService {
     public deleteCategories(findCategoriesConditions: SearchCategoriesViewModel) {
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.delete(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlDeleteCategory}`,
             null,
             findCategoriesConditions);
@@ -70,7 +70,7 @@ export class ClientCategoryService implements IClientCategoryService {
     public editCategoryDetails(id: number, category: Category) {
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.put(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlChangeCategoryDetail}`,
             {index: id}, category);
     }
@@ -82,7 +82,7 @@ export class ClientCategoryService implements IClientCategoryService {
 
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.post(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             url, null, category);
     }
 

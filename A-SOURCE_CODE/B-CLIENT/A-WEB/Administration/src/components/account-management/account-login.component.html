@@ -1,12 +1,17 @@
 <link rel="stylesheet" href="./src/styles/shared.css"/>
 
 <div class="account-login-box-container col-lg-6 col-md-10 col-sm-10 col-xs-12 col-lg-push-3 col-md-push-1 col-sm-push-1 col-xs-push-0">
-    <form [formGroup]="loginBox"
+    <form #loginPanel="ngForm"
           class="box box-primary"
-          #clientLoginBox="ngForm"
           novalidate
 
-          (submit)="clickLogin()">
+          (submit)="clickLogin($event)">
+
+        <!--Login box overlay. This will be displayed when component is busy-->
+        <div class="overlay"
+             *ngIf="isBusy">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
 
         <!-- Title -->
         <div class="box-header">
@@ -18,12 +23,13 @@
         <div class="box-body">
             <!-- Email -->
             <div class="form-group has-feedback">
-                <input [(ngModel)]="loginViewModel.email"
-                       formControlName="email"
+                <input #email="ngModel"
+                       name="email"
                        type="email"
                        class="form-control"
                        placeholder="Email"
                        autofocus="true"
+                       [(ngModel)]="loginViewModel.email"
                        [readonly]="isLoading"
 
                        required="required"
@@ -33,22 +39,23 @@
 
                 <!-- Email validation messages -->
                 <div class="validation-summary"
-                     *ngIf="!loginBox.controls.email.valid && loginBox.controls.email.dirty">
+                     *ngIf="!email.valid && email.dirty">
                     <ul>
-                        <li *ngIf="loginBox.controls.email.hasError('required')">Email is required.</li>
-                        <li *ngIf="loginBox.controls.email.hasError('pattern')">Email format is invalid.</li>
+                        <li *ngIf="email.hasError('required')">Email is required.</li>
+                        <li *ngIf="email.hasError('pattern')">Email format is invalid.</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Password -->
             <div class="form-group has-feedback">
-                <input [(ngModel)]="loginViewModel.password"
-                       formControlName="password"
+                <input #password="ngModel"
+                       name="password"
                        type="password"
                        class="form-control"
                        placeholder="Password"
                        [readonly]="isLoading"
+                       [(ngModel)]="loginViewModel.password"
 
                        required="required"
                        minlength="6"
@@ -57,10 +64,10 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                 <div class="validation-summary"
-                     *ngIf="!loginBox.controls.password.valid && loginBox.controls.password.dirty">
+                     *ngIf="!password.valid && password.dirty">
                     <ul>
-                        <li *ngIf="loginBox.controls.password.hasError('required')">Password is required.</li>
-                        <li *ngIf="loginBox.controls.password.hasError('pattern')">Password format is invalid.</li>
+                        <li *ngIf="password.hasError('required')">Password is required.</li>
+                        <li *ngIf="password.hasError('pattern')">Password format is invalid.</li>
                     </ul>
                 </div>
             </div>
@@ -74,11 +81,10 @@
         <!-- Footer -->
         <div class="box-footer">
             <!-- Login button -->
-            <button type="submit"
-                    class="btn btn-primary btn-block btn-flat"
-                    [disabled]="!loginBox.valid || isLoading">
-                <span>Sign In</span>
-            </button>
+            <input type="submit"
+                   class="btn btn-primary btn-block btn-flat"
+                   [disabled]="!loginPanel.valid || isLoading"
+                   value="Sign In">
         </div>
     </form>
 </div>

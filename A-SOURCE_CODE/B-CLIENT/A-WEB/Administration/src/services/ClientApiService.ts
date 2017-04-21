@@ -157,7 +157,7 @@ export class ClientApiService implements IClientApiService{
             // This status is about invalid authentication information has been passed to service.
             case 401:
                 // Clear the local storage.
-                this.clientAuthenticationService.clearAuthenticationToken();
+                this.clientAuthenticationService.clearToken();
 
                 // Display the error message.
                 this.clientToastrService.error(information['message'], 'System', null);

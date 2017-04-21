@@ -1,4 +1,4 @@
-export class ClientAuthenticationToken{
+export class AuthenticationToken{
 
     // Access token which is used for api calling.
     public token: string;
@@ -7,5 +7,8 @@ export class ClientAuthenticationToken{
     public type: string;
 
     // When the token should be expired.
-    public expire: number;
+    public expireIn: number;
+
+    // What time the token should be expired.
+    public expireAt: number;
 }

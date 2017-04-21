@@ -32,6 +32,9 @@ export class ClientAccountService implements IClientAccountService {
     // Url which is used for submitting password change.
     public urlSubmitPasswordReset = "api/account/forgot-password";
 
+    // Url which is for getting self profile.
+    public urlGetProfile = "api/account/profile";
+
     //#endregion
 
     //#region Constructor
@@ -55,7 +58,7 @@ export class ClientAccountService implements IClientAccountService {
             conditions.pagination.index = 0;
 
         // Request to api to obtain list of available categories in system.
-        return this.clientApiService.post(this.clientAuthenticationService.findClientAuthenticationToken(),
+        return this.clientApiService.post(this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlSearchAccount}`,
             null,
             conditions);
@@ -76,7 +79,7 @@ export class ClientAccountService implements IClientAccountService {
         };
 
         return this.clientApiService.put(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlChangeAccountInfo}`,
             urlParameters, information);
     }
@@ -89,7 +92,7 @@ export class ClientAccountService implements IClientAccountService {
         };
 
         return this.clientApiService.get(
-            this.clientAuthenticationService.findClientAuthenticationToken(),
+            this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlRequestChangePassword}`,
             urlParameters);
     }
@@ -98,10 +101,20 @@ export class ClientAccountService implements IClientAccountService {
     public submitPasswordReset(submitPasswordViewModel: SubmitPasswordViewModel): Promise<Response>{
         return this.clientApiService
             .post(
-                this.clientAuthenticationService.findClientAuthenticationToken(),
+                this.clientAuthenticationService.getTokenCode(),
                 `${this.clientApiService.getBaseUrl()}/${this.urlSubmitPasswordReset}`,
                 null,
                 submitPasswordViewModel);
+    }
+
+    // Request service to return account profile.
+    public getClientProfile(): Promise<Response>{
+        return this.clientApiService
+            .post(
+                this.clientAuthenticationService.getTokenCode(),
+                `${this.clientApiService.getBaseUrl()}/${this.urlGetProfile}`,
+                null,
+                null);
     }
 
     //#endregion
