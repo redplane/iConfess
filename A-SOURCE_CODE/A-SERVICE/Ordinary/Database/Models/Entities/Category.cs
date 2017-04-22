@@ -13,7 +13,7 @@ namespace Database.Models.Entities
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(CreatorIndex))]
-        public virtual Account Creator { get; set; }
+        public Account Creator { get; set; }
 
         #endregion
 
@@ -34,7 +34,6 @@ namespace Database.Models.Entities
         /// <summary>
         ///     Name of category.
         /// </summary>
-        [Required]
         public string Name { get; set; }
 
         /// <summary>

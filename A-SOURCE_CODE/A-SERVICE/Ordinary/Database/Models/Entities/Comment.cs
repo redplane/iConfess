@@ -49,14 +49,14 @@ namespace Database.Models.Entities
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(OwnerIndex))]
-        public virtual Account Owner { get; set; }
+        public Account Owner { get; set; }
 
         /// <summary>
         ///     One comment can only belong to one post.
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(PostIndex))]
-        public virtual Post Post { get; set; }
+        public Post Post { get; set; }
 
         #endregion
     }

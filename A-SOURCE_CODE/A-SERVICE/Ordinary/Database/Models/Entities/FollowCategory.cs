@@ -6,7 +6,7 @@ namespace Database.Models.Entities
     public class FollowCategory
     {
         #region Properties
-        
+
         /// <summary>
         ///     Owner of following relationship.
         /// </summary>
@@ -31,14 +31,14 @@ namespace Database.Models.Entities
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(OwnerIndex))]
-        public virtual Account Owner { get; set; }
+        public Account Owner { get; set; }
 
         /// <summary>
         ///     Which is being watched.
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(CategoryIndex))]
-        public virtual Category Category { get; set; }
+        public Category Category { get; set; }
 
         #endregion
     }

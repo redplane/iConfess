@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Database.Enumerations;
 using Newtonsoft.Json;
 
@@ -18,6 +19,13 @@ namespace Database.Models.Entities
         #endregion
 
         #region Properties
+
+        /// <summary>
+        ///     Id of token.
+        /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         /// <summary>
         ///     Who this token belongs to.

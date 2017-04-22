@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Database.Enumerations;
 using Newtonsoft.Json;
 
 namespace Database.Models.Entities
 {
-    public class NotificationPost
+    public class CommentNotification
     {
         #region Properties
 
@@ -16,27 +17,32 @@ namespace Database.Models.Entities
         public int Id { get; set; }
 
         /// <summary>
-        ///     Post which is notified.
+        ///     Comment which causes notification broadcasted.
+        /// </summary>
+        public int CommentIndex { get; set; }
+
+        /// <summary>
+        ///     Post which comment belongs to.
         /// </summary>
         public int PostIndex { get; set; }
 
         /// <summary>
-        ///     Who should receive the notification.
+        ///     Owner of notification.
         /// </summary>
         public int RecipientIndex { get; set; }
 
         /// <summary>
-        ///     Who caused the notification broadcasted.
+        ///     Who causes the notification broadcasted.
         /// </summary>
         public int BroadcasterIndex { get; set; }
 
         /// <summary>
-        ///     Type of notification (CRUD)
+        ///     Notification type.
         /// </summary>
-        public int Type { get; set; }
+        public NotificationKinds Type { get; set; }
 
         /// <summary>
-        ///     Whether the owner seen the post or not.
+        ///     Whether notification owner has seen the notification or not.
         /// </summary>
         public bool IsSeen { get; set; }
 
@@ -50,25 +56,32 @@ namespace Database.Models.Entities
         #region Relationships
 
         /// <summary>
-        ///     Post which is notified.
-        /// </summary>
-        [JsonIgnore]
-        [ForeignKey(nameof(PostIndex))]
-        public Post Post { get; set; }
-
-        /// <summary>
-        ///     Who broadcasted the notification.
+        ///     Who should receive the notification.
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(RecipientIndex))]
         public Account Recipient { get; set; }
 
         /// <summary>
-        ///     Who should receive the notification.
+        ///     Who broadcasted the notification.
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(BroadcasterIndex))]
         public Account Broadcaster { get; set; }
+
+        /// <summary>
+        ///     Comment which is notified.
+        /// </summary>
+        [JsonIgnore]
+        [ForeignKey(nameof(CommentIndex))]
+        public Comment Comment { get; set; }
+
+        /// <summary>
+        ///     Which post comment belongs to.
+        /// </summary>
+        [JsonIgnore]
+        [ForeignKey(nameof(PostIndex))]
+        public Post Post { get; set; }
 
         #endregion
     }

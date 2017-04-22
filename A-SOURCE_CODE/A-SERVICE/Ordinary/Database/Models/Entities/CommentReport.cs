@@ -1,18 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace Database.Models.Entities
 {
     public class CommentReport
     {
         #region Properties
-
-        /// <summary>
-        ///     Id of report (Auto incremented)
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
 
         /// <summary>
         ///     Comment which is reported.
@@ -48,6 +41,38 @@ namespace Database.Models.Entities
         ///     When the report was created.
         /// </summary>
         public double Created { get; set; }
+
+        #endregion
+
+        #region Relationships
+
+        /// <summary>
+        ///     One report can only belongs to one comment.
+        /// </summary>
+        [JsonIgnore]
+        [ForeignKey(nameof(CommentIndex))]
+        public Comment Comment { get; set; }
+
+        /// <summary>
+        ///     One report can only belongs to one post.
+        /// </summary>
+        [JsonIgnore]
+        [ForeignKey(nameof(PostIndex))]
+        public Post Post { get; set; }
+
+        /// <summary>
+        ///     Account which owns the comment
+        /// </summary>
+        [JsonIgnore]
+        [ForeignKey(nameof(CommentOwnerIndex))]
+        public Account CommentOwner { get; set; }
+
+        /// <summary>
+        ///     One report belongs to one specific account.
+        /// </summary>
+        [JsonIgnore]
+        [ForeignKey(nameof(CommentReporterIndex))]
+        public Account CommentReporter { get; set; }
 
         #endregion
     }

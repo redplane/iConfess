@@ -6,7 +6,7 @@ namespace Database.Models.Entities
     public class FollowPost
     {
         #region Properties
-        
+
         /// <summary>
         ///     Who is the follower of post.
         /// </summary>
@@ -31,14 +31,14 @@ namespace Database.Models.Entities
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(FollowerIndex))]
-        public virtual Account Follower { get; set; }
+        public Account Follower { get; set; }
 
         /// <summary>
         ///     Post which is being monitored by this relationship.
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(PostIndex))]
-        public virtual Post Post { get; set; }
+        public Post Post { get; set; }
 
         #endregion
     }

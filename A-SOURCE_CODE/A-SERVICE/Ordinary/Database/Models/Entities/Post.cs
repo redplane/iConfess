@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
@@ -54,14 +55,50 @@ namespace Database.Models.Entities
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(OwnerIndex))]
-        public virtual Account Owner { get; set; }
+        public Account Owner { get; set; }
 
         /// <summary>
         ///     Category which post belongs to.
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(CategoryIndex))]
-        public virtual Category Category { get; set; }
+        public Category Category { get; set; }
+
+        /// <summary>
+        ///     List of comment belongs to the post.
+        /// </summary>
+        [JsonIgnore]
+        public ICollection<Comment> Comments { get; set; }
+
+        /// <summary>
+        ///     One post can be monitored by follow post.
+        /// </summary>
+        [JsonIgnore]
+        public ICollection<FollowPost> FollowPosts { get; set; }
+
+        /// <summary>
+        ///     Which notification comment post belongs to.
+        /// </summary>
+        [JsonIgnore]
+        public ICollection<CommentNotification> NotificationComments { get; set; }
+
+        /// <summary>
+        ///     Which notification post the post belongs to.
+        /// </summary>
+        [JsonIgnore]
+        public ICollection<PostNotification> NotificationPosts { get; set; }
+
+        /// <summary>
+        ///     One post can have many reports about its comments.
+        /// </summary>
+        [JsonIgnore]
+        public ICollection<CommentReport> ReportedComments { get; set; }
+
+        /// <summary>
+        ///     One post can have many reports about it.
+        /// </summary>
+        [JsonIgnore]
+        public ICollection<PostReport> PostReports { get; set; }
 
         #endregion
     }
