@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using Shared.ViewModels.CommentReports;
 
 namespace Shared.Interfaces.Repositories

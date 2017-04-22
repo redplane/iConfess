@@ -69,7 +69,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="JWT, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JWT.2.3.1\lib\net45\JWT.dll</HintPath>
+      <HintPath>..\packages\JWT.2.3.2\lib\net45\JWT.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -285,7 +285,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj">
       <Project>{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}</Project>
-      <Name>iConfess.Database</Name>
+      <Name>Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{5227a0f6-c8cd-4a8b-b8bb-870bde42f88b}</Project>

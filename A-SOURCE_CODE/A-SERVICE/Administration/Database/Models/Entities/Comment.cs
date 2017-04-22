@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Database.Models.Tables
+namespace Database.Models.Entities
 {
     public class Comment
     {
@@ -58,18 +57,6 @@ namespace Database.Models.Tables
         [JsonIgnore]
         [ForeignKey(nameof(PostIndex))]
         public Post Post { get; set; }
-
-        /// <summary>
-        ///     The notification comment belongs to.
-        /// </summary>
-        [JsonIgnore]
-        public ICollection<NotificationComment> NotificationComments { get; set; }
-
-        /// <summary>
-        ///     One comment can have many reports.
-        /// </summary>
-        [JsonIgnore]
-        public ICollection<CommentReport> ReportedComments { get; set; }
 
         #endregion
     }

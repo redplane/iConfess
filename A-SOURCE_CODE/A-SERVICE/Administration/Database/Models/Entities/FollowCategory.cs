@@ -1,17 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Database.Models.Tables
+namespace Database.Models.Entities
 {
     public class FollowCategory
     {
         #region Properties
-
-        /// <summary>
-        ///     Id of following relationship
-        /// </summary>
-        public int Id { get; set; }
-
+        
         /// <summary>
         ///     Owner of following relationship.
         /// </summary>

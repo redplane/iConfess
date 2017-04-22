@@ -6,7 +6,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Administration.SignalrHubs
 {
-    [SignalrAuthorize(AccountRole.Admin)]
+    [SignalrAuthorize(Roles.Admin)]
     [HubName("SystemMessage")]
     public class SystemMessageHub : ParentHub
     {

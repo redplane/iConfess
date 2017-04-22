@@ -116,7 +116,7 @@ namespace Administration.Attributes
                     #region Account status validation
 
                     // Account is waiting for confirmation.
-                    if (account.Status == AccountStatus.Pending)
+                    if (account.Status == Statuses.Pending)
                     {
                         // Anonymous request is allowed.
                         if (IsAllowAnonymousRequest(httpActionContext))
@@ -128,7 +128,7 @@ namespace Administration.Attributes
                     }
 
                     // Account is forbidden to access function.
-                    if (account.Status == AccountStatus.Disabled)
+                    if (account.Status == Statuses.Disabled)
                     {
                         // Anonymous request is allowed.
                         if (IsAllowAnonymousRequest(httpActionContext))

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Database.Models.Tables
+namespace Database.Models.Entities
 {
     public class FollowPost
     {

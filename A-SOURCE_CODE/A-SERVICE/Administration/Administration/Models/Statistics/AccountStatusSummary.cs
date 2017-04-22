@@ -7,7 +7,7 @@ namespace Administration.Models.Statistics
         /// <summary>
         /// Status of account.
         /// </summary>
-        public AccountStatus Status { get; set; }
+        public Statuses Status { get; set; }
 
         /// <summary>
         /// Total account which match specific status.

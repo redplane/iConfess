@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using Shared.Interfaces.Services;
 
 namespace Administration.Services

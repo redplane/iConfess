@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Database.Interfaces;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.PostReports;
@@ -35,14 +35,6 @@ namespace Shared.Repositories
         public IQueryable<PostReport> Search(IQueryable<PostReport> postReports,
             SearchPostReportViewModel conditions)
         {
-            // Id is specified.
-            if (conditions.Id != null)
-                postReports = postReports.Where(x => x.Id == conditions.Id.Value);
-
-            // Post index is specified.
-            if (conditions.PostIndex != null)
-                postReports = postReports.Where(x => x.PostIndex == conditions.PostIndex.Value);
-
             // Owner index is specified.
             if (conditions.PostOwnerIndex != null)
                 postReports = postReports.Where(x => x.PostOwnerIndex == conditions.PostOwnerIndex.Value);

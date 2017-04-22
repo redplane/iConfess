@@ -1,6 +1,6 @@
 ﻿namespace Database.Enumerations
 {
-    public enum AccountRole
+    public enum Roles
     {
         Admin,
         Ordinary

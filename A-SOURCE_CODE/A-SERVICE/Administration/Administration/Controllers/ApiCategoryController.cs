@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Administration.Attributes;
 using Administration.ViewModels.ApiCategory;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using log4net;
 using Shared.Enumerations;
 using Shared.Interfaces.Services;
@@ -294,7 +294,7 @@ namespace Administration.Controllers
                 #region Records search
 
                 // Initiate search result.
-                var searchResult = new SearchResult<CategoryViewModel>();
+                var searchResult = new SearchResult<IQueryable<CategoryViewModel>>();
 
                 // Search all categories.
                 var categories = UnitOfWork.RepositoryCategories.Search();

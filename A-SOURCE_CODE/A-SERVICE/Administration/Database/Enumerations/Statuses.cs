@@ -1,6 +1,6 @@
 ﻿namespace Database.Enumerations
 {
-    public enum AccountStatus
+    public enum Statuses
     {
         Disabled,
         Pending,

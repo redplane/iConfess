@@ -33,7 +33,7 @@ namespace Shared.ViewModels.Accounts
         ///     Account status.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public AccountStatus? Status { get; set; }
+        public Statuses? Status { get; set; }
 
         /// <summary>
         ///     When the account was created.

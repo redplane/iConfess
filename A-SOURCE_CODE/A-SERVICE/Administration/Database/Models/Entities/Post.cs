@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Database.Models.Tables
+namespace Database.Models.Entities
 {
     public class Post
     {
@@ -80,13 +80,13 @@ namespace Database.Models.Tables
         ///     Which notification comment post belongs to.
         /// </summary>
         [JsonIgnore]
-        public ICollection<NotificationComment> NotificationComments { get; set; }
+        public ICollection<CommentNotification> NotificationComments { get; set; }
 
         /// <summary>
         ///     Which notification post the post belongs to.
         /// </summary>
         [JsonIgnore]
-        public ICollection<NotificationPost> NotificationPosts { get; set; }
+        public ICollection<PostNotification> NotificationPosts { get; set; }
 
         /// <summary>
         ///     One post can have many reports about its comments.

@@ -24,7 +24,7 @@ namespace Shared.ViewModels.Accounts
         /// <summary>
         ///     Account status.
         /// </summary>
-        public AccountStatus[] Statuses { get; set; }
+        public Statuses[] Statuses { get; set; }
 
         /// <summary>
         ///     Time when account joined.

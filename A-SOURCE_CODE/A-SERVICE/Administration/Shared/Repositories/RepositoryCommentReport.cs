@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Database.Interfaces;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.CommentReports;
@@ -34,10 +34,6 @@ namespace Shared.Repositories
         public IQueryable<CommentReport> Search(IQueryable<CommentReport> commentReports,
             SearchCommentReportViewModel conditions)
         {
-            // Index is specified.
-            if (conditions.Id != null)
-                commentReports = commentReports.Where(x => x.Id == conditions.Id.Value);
-
             // Comment index is specified.
             if (conditions.CommentIndex != null)
                 commentReports = commentReports.Where(x => x.CommentIndex == conditions.CommentIndex.Value);

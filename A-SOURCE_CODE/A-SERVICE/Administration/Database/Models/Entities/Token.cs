@@ -1,7 +1,9 @@
-﻿using Database.Enumerations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Database.Enumerations;
 using Newtonsoft.Json;
 
-namespace Database.Models.Tables
+namespace Database.Models.Entities
 {
     public class Token
     {
@@ -11,11 +13,19 @@ namespace Database.Models.Tables
         ///     One category have one owner.
         /// </summary>
         [JsonIgnore]
+        [ForeignKey(nameof(OwnerIndex))]
         public Account Owner { get; set; }
 
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Id of token.
+        /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         /// <summary>
         ///     Who this token belongs to.

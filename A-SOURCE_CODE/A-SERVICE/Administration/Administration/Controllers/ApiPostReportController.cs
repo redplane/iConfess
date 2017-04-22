@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Administration.Attributes;
 using Administration.ViewModels.ApiPostReport;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
@@ -234,7 +234,6 @@ namespace Administration.Controllers
                           && postReport.PostReporterIndex == reporter.Id
                     select new PostReportViewModel
                     {
-                        Id = postReport.Id,
                         Post = post,
                         Owner = owner,
                         Reporter = reporter,
@@ -247,7 +246,7 @@ namespace Administration.Controllers
                 postReportDetails = UnitOfWork.RepositoryPostReports.Sort(postReportDetails, parameters.Direction, parameters.Sort);
 
                 // Initiate search result
-                var searchResult = new SearchResult<PostReportViewModel>();
+                var searchResult = new SearchResult<IQueryable<PostReportViewModel>>();
                 searchResult.Total = await postReportDetails.CountAsync();
                 searchResult.Records = UnitOfWork.RepositoryPostReports.Paginate(postReportDetails, parameters.Pagination);
                 

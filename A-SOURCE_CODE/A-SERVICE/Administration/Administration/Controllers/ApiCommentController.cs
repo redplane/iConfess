@@ -8,7 +8,7 @@ using System.Web.Http;
 using Administration.Attributes;
 using Administration.ViewModels.ApiComment;
 using Database.Enumerations;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
@@ -19,7 +19,7 @@ namespace Administration.Controllers
 {
     [RoutePrefix("api/comment")]
     [ApiAuthorize]
-    [ApiRole(AccountRole.Admin)]
+    [ApiRole(Roles.Admin)]
     public class ApiCommentController : ApiParentController
     {
         #region Controllers
@@ -166,7 +166,7 @@ namespace Administration.Controllers
                 condition.Id = index;
 
                 // Account can only change its comment as it is not an administrator.
-                if (account.Role != AccountRole.Admin)
+                if (account.Role != Roles.Admin)
                     condition.OwnerIndex = account.Id;
 
                 // Search categories by using specific conditions.
@@ -238,7 +238,7 @@ namespace Administration.Controllers
                 #region Search & delete records
 
                 // Account can only delete its own comment as it is not an administrator.
-                if (account.Role != AccountRole.Admin)
+                if (account.Role != Roles.Admin)
                     conditions.OwnerIndex = account.Id;
 
                 // Search all comments in database.
@@ -319,7 +319,7 @@ namespace Administration.Controllers
                 var comments = UnitOfWork.RepositoryComments.Search();
                 comments = UnitOfWork.RepositoryComments.Search(comments, conditions);
 
-                var searchResult = new SearchResult<Comment>();
+                var searchResult = new SearchResult<IQueryable<Comment>>();
                 searchResult.Total = await comments.CountAsync();
                 searchResult.Records = UnitOfWork.RepositoryComments.Paginate(comments, conditions.Pagination);
 
@@ -445,7 +445,7 @@ namespace Administration.Controllers
 
                 #region Pagination
                 
-                var searchResult = new SearchResult<CommentDetailViewModel>();
+                var searchResult = new SearchResult<IQueryable<CommentDetailViewModel>>();
 
                 searchResult.Total = await commentsDetails.CountAsync();
                 searchResult.Records = UnitOfWork.RepositoryComments.Paginate(commentsDetails, conditions.Pagination);

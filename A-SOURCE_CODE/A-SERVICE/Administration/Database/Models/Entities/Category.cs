@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Database.Models.Tables
+namespace Database.Models.Entities
 {
     public class Category
     {
@@ -24,7 +23,6 @@ namespace Database.Models.Tables
         /// <summary>
         ///     Name of category.
         /// </summary>
-        [Required]
         public string Name { get; set; }
 
         /// <summary>
@@ -47,19 +45,7 @@ namespace Database.Models.Tables
         [JsonIgnore]
         [ForeignKey(nameof(CreatorIndex))]
         public Account Creator { get; set; }
-
-        /// <summary>
-        ///     Relationship between the account following this category with this one.
-        /// </summary>
-        [JsonIgnore]
-        public ICollection<FollowCategory> FollowCategories { get; set; }
-
-        /// <summary>
-        ///     One category can contains many posts.
-        /// </summary>
-        [JsonIgnore]
-        public ICollection<Post> Posts { get; set; }
-
+        
         #endregion
     }
 }
