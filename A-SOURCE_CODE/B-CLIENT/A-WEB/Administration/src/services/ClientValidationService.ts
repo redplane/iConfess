@@ -1,4 +1,7 @@
-export class ClientValidationService{
+import {IDictionary} from "../interfaces/IDictionary";
+import {IClientValidationService} from "../interfaces/services/IClientValidationService";
+
+export class ClientValidationService implements IClientValidationService{
 
     public validationDictionary : any = {
             'INFORMATION_REQUIRED': 'required'
@@ -6,12 +9,12 @@ export class ClientValidationService{
 
     /*
     * Build a structure of validation messages sent back from web service.
-    * Such as: conditions.pagination.records
+    * Such as: conditions.pagination.records (Used by .net core web service)
     * */
-    public findPropertiesValidationMessages(parameter: any): any{
+    private getNetCoreValidation(modelState: any): any{
 
         // Find list of keys in object.
-        let keys = Object.keys(parameter);
+        let keys = Object.keys(modelState);
 
         // Initiate properties list after refinement.
         let properties = {};
@@ -27,11 +30,11 @@ export class ClientValidationService{
                 continue;
 
             // Find key in list of keys.
-            let camelCaseKey = this.findCamelCasePropertyName(keys[i]);
+            let camelCaseKey = this.getCamelCasePropertyName(keys[i]);
 
 
             // Find validation message of the specific key.
-            this.findPropertyValidationMessages(properties, camelCaseKey, parameter[key]);
+            this.getPropertyValidationMessages(properties, camelCaseKey, modelState[key]);
         }
 
         return properties;
@@ -42,7 +45,7 @@ export class ClientValidationService{
      * Such as: conditions.pagination.records
      * Scope: one property.
      * */
-    public findPropertyValidationMessages(sourceProperty: any, property: string, value: any): any{
+    private getPropertyValidationMessages(sourceProperty: any, property: string, value: any): any{
 
         // Split property by character .
         let keys = property.split('.');
@@ -63,7 +66,7 @@ export class ClientValidationService{
             if (key == null || key.length < 1)
                 continue;
 
-            key = this.findCamelCasePropertyName(key);
+            key = this.getCamelCasePropertyName(key);
 
             // Key already exists in the source property.
             if (pointer[key] != null){
@@ -76,7 +79,7 @@ export class ClientValidationService{
         }
 
         // Find the last key of object.
-        let lastKey = this.findCamelCasePropertyName(keys[lastIndex]);
+        let lastKey = this.getCamelCasePropertyName(keys[lastIndex]);
 
         // Key hasn't been specified.
         if (pointer[lastKey] == null){
@@ -112,7 +115,7 @@ export class ClientValidationService{
      *  }
      * }
      * */
-    public findFrontendValidationModel(propertyValidationMap: any, model: any, parameter:any): void {
+    public getFrontendValidationModel(model: any, parameter:any, dictionary: IDictionary<string>): void {
 
         // Invalid parameter.
         if (parameter == null)
@@ -122,10 +125,14 @@ export class ClientValidationService{
 
             let errorsList = {};
 
-            for (var index = 0; index < parameter.length; index++){
-                var property = parameter[index];
+            for (let index = 0; index < parameter.length; index++){
+                let property = parameter[index];
 
-                errorsList[propertyValidationMap[property]] = true;
+                // Dictionary already contains the translation key.
+                if (dictionary.containsKey(property))
+                    errorsList[dictionary.item(property)] = true;
+                else
+                    errorsList[property] = true;
 
                 // Mark propery as it has been changed.
                 model.markAsDirty();
@@ -138,13 +145,13 @@ export class ClientValidationService{
         }
 
         // Find all properties of parameter.
-        var properties = Object.keys(parameter);
+        let properties = Object.keys(parameter);
 
         // Iterate through every property of object. (Root is validationModel)
-        for (var i = 0; i < properties.length; i++){
+        for (let i = 0; i < properties.length; i++){
 
             // Find the key which is currently iterated.
-            var key = properties[i];
+            let key = properties[i];
 
             // Initiate a controls object which contains the iterated property name.
             if (model['controls'] == null) {
@@ -161,14 +168,14 @@ export class ClientValidationService{
 
             console.log(`key = ${key}`);
             //model['controls'][key] = {};
-            this.findFrontendValidationModel(propertyValidationMap, model['controls'][key], parameter[key]);
+            this.getFrontendValidationModel(model['controls'][key], parameter[key], dictionary);
         }
     };
 
     /*
     * Find property name in camel-case.
     * */
-    public findCamelCasePropertyName(propertyName: string){
+    public getCamelCasePropertyName(propertyName: string){
             return propertyName.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) => {
                 if (+match === 0)
                     return '';

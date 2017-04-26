@@ -4,7 +4,7 @@ using Shared.ViewModels.Posts;
 using Shared.Enumerations;
 using System;
 using Database.Interfaces;
-using Database.Models.Tables;
+using Database.Models.Entities;
 
 namespace Shared.Repositories
 {

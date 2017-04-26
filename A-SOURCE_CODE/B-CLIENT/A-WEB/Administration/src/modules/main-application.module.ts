@@ -35,6 +35,7 @@ import {ClientPostReportService} from "../services/api/ClientPostReportService";
 import {ClientApiService} from "../services/ClientApiService";
 import {ClientToastrService} from "../services/ClientToastrService";
 import {ClientAuthenticationService} from "../services/api/ClientAuthenticationService";
+import {ClientValidationService} from "../services/ClientValidationService";
 
 // Routing configuration.
 const appRoutes: Routes = [
@@ -121,42 +122,16 @@ const appRoutes: Routes = [
 
     ],
     providers: [
-        {
-            provide: "IClientAccountService",
-            useClass: ClientAccountService
-        },
-        {
-            provide: "IClientCategoryService",
-            useClass: ClientCategoryService
-        },
-        {
-            provide: "IClientCommentService",
-            useClass: ClientCommentService
-        },
-        {
-            provide: "IClientPostService",
-            useClass: ClientPostService
-        },
-        {
-            provide: "IClientPostReportService",
-            useClass: ClientPostReportService
-        },
-        {
-            provide: "IClientTimeService",
-            useClass: ClientTimeService
-        },
-        {
-            provide: "IClientAuthenticationService",
-            useClass: ClientAuthenticationService
-        },
-        {
-            provide: "IClientToastrService",
-            useClass: ClientToastrService
-        },
-        {
-            provide: "IClientApiService",
-            useClass: ClientApiService
-        }
+        {provide: "IClientAccountService", useClass: ClientAccountService},
+        {provide: "IClientCategoryService", useClass: ClientCategoryService},
+        {provide: "IClientCommentService", useClass: ClientCommentService},
+        {provide: "IClientPostService", useClass: ClientPostService},
+        {provide: "IClientPostReportService", useClass: ClientPostReportService},
+        {provide: "IClientTimeService", useClass: ClientTimeService},
+        {provide: "IClientAuthenticationService", useClass: ClientAuthenticationService},
+        {provide: "IClientToastrService", useClass: ClientToastrService},
+        {provide: "IClientApiService", useClass: ClientApiService},
+        {provide: "IClientValidationService", useClass: ClientValidationService}
     ],
     bootstrap: [
         MainApplicationComponent

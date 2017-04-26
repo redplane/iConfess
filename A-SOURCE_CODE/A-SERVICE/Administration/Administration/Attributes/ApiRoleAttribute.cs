@@ -7,7 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Database.Enumerations;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using Shared.Resources;
 
 namespace Administration.Attributes
@@ -19,7 +19,7 @@ namespace Administration.Attributes
         /// <summary>
         ///     List of roles which can access to controller/method.
         /// </summary>
-        private readonly AccountRole[] _accountRoles;
+        private readonly Roles[] _roleses;
 
         #endregion
 
@@ -28,19 +28,19 @@ namespace Administration.Attributes
         /// <summary>
         ///     Initiate attribute with specific role.
         /// </summary>
-        /// <param name="accountRole"></param>
-        public ApiRoleAttribute(AccountRole accountRole)
+        /// <param name="roles"></param>
+        public ApiRoleAttribute(Roles roles)
         {
-            _accountRoles = new[] {accountRole};
+            _roleses = new[] {roles};
         }
 
         /// <summary>
         ///     Initiate attribute with specific roles.
         /// </summary>
-        /// <param name="accountRoles"></param>
-        public ApiRoleAttribute(AccountRole[] accountRoles)
+        /// <param name="roleses"></param>
+        public ApiRoleAttribute(Roles[] roleses)
         {
-            _accountRoles = accountRoles;
+            _roleses = roleses;
         }
 
         #endregion
@@ -90,11 +90,11 @@ namespace Administration.Attributes
 
                 #region Role validation
 
-                if ((_accountRoles == null) || (_accountRoles.Length < 1))
+                if ((_roleses == null) || (_roleses.Length < 1))
                     throw new Exception("No role has been specified.");
 
                 // No role is suitable to access the method.
-                if (!_accountRoles.Any(x => x == account.Role))
+                if (!_roleses.Any(x => x == account.Role))
                     httpActionContext.Response =
                         httpActionContext.Request.CreateErrorResponse(HttpStatusCode.Forbidden,
                             HttpMessages.RoleIsInsufficient);

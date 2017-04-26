@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Administration.Attributes;
 using Database.Enumerations;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
@@ -19,7 +19,7 @@ namespace Administration.Controllers
 {
     [RoutePrefix("api/report/comment")]
     [ApiAuthorize]
-    [ApiRole(AccountRole.Admin)]
+    [ApiRole(Roles.Admin)]
     public class ApiCommentReportController : ApiParentController
     {
         #region Constructors
@@ -181,7 +181,7 @@ namespace Administration.Controllers
                 #region Record delete
 
                 // Account can only delete the reports whose reporter is the requester.
-                if (account.Role != AccountRole.Admin)
+                if (account.Role != Roles.Admin)
                     parameters.CommentReporterIndex = account.Id;
 
                 // Search comment reports by using specific conditions.
@@ -197,7 +197,6 @@ namespace Administration.Controllers
                 // Nothing is changed.
                 if (totalRecords < 1)
                 {
-                    _log.Error($"No comment (ID: {parameters.Id}) is found");
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound,
                         HttpMessages.CommentReportNotFound);
                 }
@@ -251,7 +250,7 @@ namespace Administration.Controllers
                 #region Comment report search
 
                 // Account can only see the comments which it is their reporter.
-                if (account.Role != AccountRole.Admin)
+                if (account.Role != Roles.Admin)
                     condition.CommentReporterIndex = account.Id;
 
                 // Search comment reports with specific conditions.
@@ -280,7 +279,6 @@ namespace Administration.Controllers
                                                         && (commentReport.CommentIndex == comment.Id)
                                                   select new CommentReportDetailViewModel
                                                   {
-                                                      Id = commentReport.Id,
                                                       Comment = comment,
                                                       Post = post,
                                                       Body = commentReport.Body,
@@ -293,7 +291,7 @@ namespace Administration.Controllers
                 #region Comment report search
                 
                 // Initiate result.
-                var result = new SearchResult<CommentReportDetailViewModel>();
+                var result = new SearchResult<IQueryable<CommentReportDetailViewModel>>();
 
                 // Count the total records first.
                 result.Total = await commentReports.CountAsync();
@@ -338,12 +336,9 @@ namespace Administration.Controllers
                 var commentReports = UnitOfWork.RepositoryCommentReports.Search();
 
                 // Account can only see the comments which it is their reporter.
-                if (account.Role != AccountRole.Admin)
+                if (account.Role != Roles.Admin)
                     commentReports = commentReports.Where(x => x.CommentReporterIndex == account.Id);
-
-                // Search the comment by using id.
-                commentReports = commentReports.Where(x => x.Id == index);
-
+                
                 // Search all accounts.
                 var accounts = UnitOfWork.RepositoryAccounts.Search();
 
@@ -365,7 +360,6 @@ namespace Administration.Controllers
                           && (commentReport.CommentIndex == comment.Id)
                     select new CommentReportDetailViewModel
                     {
-                        Id = commentReport.Id,
                         Comment = comment,
                         Post = post,
                         Body = commentReport.Body,

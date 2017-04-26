@@ -14,7 +14,7 @@ using Administration.Models;
 using Administration.SignalrHubs;
 using Administration.ViewModels.ApiAccount;
 using Database.Enumerations;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using JWT;
 using log4net;
 using Microsoft.AspNet.SignalR;
@@ -174,14 +174,14 @@ namespace Administration.Controllers
                 }
 
                 // Account is pending.
-                if (account.Status == AccountStatus.Pending)
+                if (account.Status == Statuses.Pending)
                 {
                     _log.Info($"Account [Email: {parameters.Email}] is waiting for approval");
                     return Request.CreateErrorResponse(HttpStatusCode.Forbidden, HttpMessages.AccountIsPending);
                 }
 
                 // Account is disabled.
-                if (account.Status == AccountStatus.Disabled)
+                if (account.Status == Statuses.Disabled)
                 {
                     _log.Info($"Account [Email: {parameters.Email}] is disabled");
                     return Request.CreateErrorResponse(HttpStatusCode.Forbidden, HttpMessages.AccountIsPending);
@@ -249,7 +249,7 @@ namespace Administration.Controllers
                     Mode = TextComparision.Equal,
                     Value = parameter.Email
                 };
-                conditions.Statuses = new[] { AccountStatus.Active };
+                conditions.Statuses = new[] { Statuses.Active };
 
                 // Search account information from database.
                 var accounts = UnitOfWork.RepositoryAccounts.Search();
@@ -406,7 +406,7 @@ namespace Administration.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("find")]
-        [ApiRole(AccountRole.Admin)]
+        [ApiRole(Roles.Admin)]
         [HttpPost]
         public async Task<HttpResponseMessage> FindAccounts([FromBody] SearchAccountViewModel conditions)
         {
@@ -431,7 +431,7 @@ namespace Administration.Controllers
             #region Search account
 
             // Initiate search result.
-            var result = new SearchResult<Account>();
+            var result = new SearchResult<IList<Account>>();
             
             // Find all accounts in database.
             var accounts = UnitOfWork.RepositoryAccounts.Search();
@@ -449,7 +449,7 @@ namespace Administration.Controllers
             accounts = UnitOfWork.RepositoryAccounts.Paginate(accounts, conditions.Pagination);
 
             // Take accounts list.
-            result.Records = accounts;
+            result.Records = await accounts.ToListAsync();
 
             // Search for accounts in database.
             return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -459,7 +459,7 @@ namespace Administration.Controllers
 
 #if SIGNALR_SAMPLE
         [Route("register")]
-        [ApiRole(AccountRole.Ordinary)]
+        [ApiRole(Roles.Ordinary)]
         [HttpPost]
         public async Task<HttpResponseMessage> RegisterAccount()
         {
@@ -474,7 +474,7 @@ namespace Administration.Controllers
             var connectionIndexes = await (from account in accounts
                                            from signalrConnection in signalrConnections
                                            where
-                                           account.Role == AccountRole.Admin && account.Status == AccountStatus.Active &&
+                                           account.Role == Roles.Admin && account.Status == Statuses.Active &&
                                            account.Id == signalrConnection.OwnerIndex
                                            select signalrConnection.Index).ToListAsync();
 

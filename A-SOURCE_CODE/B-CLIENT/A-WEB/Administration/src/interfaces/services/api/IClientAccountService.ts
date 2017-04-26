@@ -26,5 +26,8 @@ export interface IClientAccountService {
     // Submit new password to service.
     submitPasswordReset(submitPasswordViewModel: SubmitPasswordViewModel): Promise<Response>
 
+    // Get requester profile.
+    getClientProfile(): Promise<Response>;
+
     //#endregion
 }

@@ -34,14 +34,14 @@ export class AccountManagementComponent implements OnInit {
     // List of accounts.
     public searchResult: SearchResult<Account>;
 
-    // Account which is being selected for editing.
-    private selectedAccount: Account;
+    // Account which is being selected for editing / being deleted.
+    private account: Account;
 
     // List of conditions to search for accounts.
     private conditions: SearchAccountsViewModel;
 
     // Whether components are busy or not.
-    private isLoading: boolean;
+    private isBusy: boolean;
 
     // Account status enumeration.
     private accountStatuses = AccountStatuses;
@@ -68,61 +68,67 @@ export class AccountManagementComponent implements OnInit {
 
         // Initiate account statuses summary.
         this.summaries = new Array<AccountSummaryStatusViewModel>();
+
+        // Initiate account instance to prevent it from being null.
+        this.account = new Account();
     }
 
     //#endregion
 
     // Callback which is fired when search button of category search box is clicked.
     public clickSearch(): void {
-        // Freeze the find box.
-        this.isLoading = true;
+
+        // Make component be busy.
+        this.isBusy = true;
 
         this.clientAccountService.getAccounts(this.conditions)
-            .then((response: Response | any) => {
+            .then((x: Response) => {
 
                 // Find list of accounts which has been found from service.
-                let findAccountsResult = response.json();
-                this.searchResult = <SearchResult<Account>> findAccountsResult;
+                this.searchResult = <SearchResult<Account>> x.json();
 
                 // Cancel loading.
-                this.isLoading = false;
+                this.isBusy = false;
             })
-            .catch((response: Response | any) => {
+            .catch((x: Response) => {
 
                 // Cancel loading.
-                this.isLoading = false;
+                this.isBusy = false;
 
                 // Proceed non-solid response handling.
-                this.clientApiService.handleInvalidResponse(response);
+                this.clientApiService.handleInvalidResponse(x);
 
             });
     }
 
     // Callback which is fired when change account information button is clicked.
-    public clickChangeAccountInfo(account: Account, changeAccountInfoModal: ModalDirective) {
-        this.selectedAccount = account;
-        changeAccountInfoModal.show();
+    public clickChangeAccountInfo(account: Account): void {
+        // Update account information which should be edited.
+        this.account = account;
+
+        // Display modal.
+        this.changeAccountInfoModal.show();
     }
 
     // Callback which is fired when change account information ok button is clicked.
-    public clickConfirmChangeAccountDetail(): void {
+    public clickConfirmAccountInfo(): void {
 
         // No account has been selected for edit.
-        if (this.selectedAccount == null) {
+        if (this.account == null) {
             // Close the dialog.
             this.changeAccountInfoModal.hide();
             return;
         }
 
         // Set components to loading state.
-        this.isLoading = true;
+        this.isBusy = true;
 
         // Send request to service to change account information.
-        this.clientAccountService.editUserProfile(this.selectedAccount.id, this.selectedAccount)
+        this.clientAccountService.editUserProfile(this.account.id, this.account)
             .then((response: Response) => {
 
                 // Cancel loading.
-                this.isLoading = false;
+                this.isBusy = false;
 
                 // Close the dialog.
                 this.changeAccountInfoModal.hide();
@@ -133,7 +139,7 @@ export class AccountManagementComponent implements OnInit {
             .catch((response: Response) => {
 
                 // Cancel loading process.
-                this.isLoading = false;
+                this.isBusy = false;
 
                 // Close the dialog.
                 this.changeAccountInfoModal.hide();
@@ -146,6 +152,9 @@ export class AccountManagementComponent implements OnInit {
     // Callback which is fired when paging item is clicked.
     public clickPageChange(parameters: any): void {
 
+        if (parameters == null || parameters['page'] == null)
+            return;
+
         // Update page index.
         this.conditions.pagination.index = parameters['page'];
 
@@ -154,7 +163,7 @@ export class AccountManagementComponent implements OnInit {
     }
 
     // Check whether account search result is available or not.
-    public isAccountSearchResultAvailable(): boolean {
+    public isResultAvailable(): boolean {
 
         // Check search result.
         let result = this.searchResult;
@@ -162,16 +171,13 @@ export class AccountManagementComponent implements OnInit {
             return false;
 
         // No account has been found,
-        if (result.records == null || result.records.length < 1)
-            return false;
-
-        return true;
+        return !(result.records == null || result.records.length < 1);
     }
 
     // Called when component has been successfully rendered.
     public ngOnInit(): void {
         // Components are not busy loading.
-        this.isLoading = false;
+        this.isBusy = false;
 
         // Initiate category search conditions.
         this.conditions = new SearchAccountsViewModel();
@@ -190,5 +196,8 @@ export class AccountManagementComponent implements OnInit {
             accountStatuses.push(this.clientConfigurationService.accountStatusSelections.item(key));
         }
         this.conditions.statuses = accountStatuses;
+
+        // Load all accounts from service.
+        this.clickSearch();
     }
 }

@@ -1,14 +1,12 @@
-import {Component, Inject} from "@angular/core";
+import {Component, Inject, ViewChild} from "@angular/core";
 import {Response} from "@angular/http";
 import {Router} from "@angular/router";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {ClientApiService} from "../../services/ClientApiService";
-import {ClientToastrService} from "../../services/ClientToastrService";
+import {FormBuilder, FormGroup, NgForm} from "@angular/forms";
 import {LoginViewModel} from "../../viewmodels/accounts/LoginViewModel";
-import {ClientAuthenticationToken} from "../../models/ClientAuthenticationToken";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 import {IClientAuthenticationService} from "../../interfaces/services/api/IClientAuthenticationService";
 import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
+import {AuthenticationToken} from "../../models/AuthenticationToken";
 
 @Component({
     selector: 'account-login',
@@ -20,13 +18,14 @@ export class AccountLoginComponent{
     //#region Properties
 
     // Whether login function is being executed or not.
-    private isLoading: boolean;
+    private isBusy: boolean;
 
     // Login view model.
     private loginViewModel: LoginViewModel;
 
     // Login form group.
-    public loginBox: FormGroup;
+    @ViewChild("loginPanel")
+    public loginPanel: NgForm;
 
     //#endregion
 
@@ -36,13 +35,7 @@ export class AccountLoginComponent{
     public constructor(@Inject("IClientApiService") public clientApiService: IClientApiService,
                        @Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
                        @Inject("IClientAccountService") public clientAccountService: IClientAccountService,
-                       public clientRoutingService: Router,
-                       public formBuilder: FormBuilder){
-
-        this.loginBox = this.formBuilder.group({
-            email: [''],
-            password: ['']
-        });
+                       public clientRoutingService: Router){
 
         this.loginViewModel = new LoginViewModel();
     }
@@ -52,29 +45,32 @@ export class AccountLoginComponent{
     //#region Methods
 
     // Callback is fired when login button is clicked.
-    public clickLogin(){
+    public clickLogin(event: Event){
+
+        // Prevent default behaviour.
+        event.preventDefault();
 
         // Make component be loaded.
-        this.isLoading = true;
+        this.isBusy = true;
 
         // Call service api to authenticate do authentication.
         this.clientAccountService.login(this.loginViewModel)
-            .then((response: Response) => {
-                // Convert response from service to ClientAuthenticationToken data type.
-                let clientAuthenticationDetail = <ClientAuthenticationToken> response.json();
+            .then((x: Response) => {
+                // Convert response from service to AuthenticationToken data type.
+                let clientAuthenticationDetail = <AuthenticationToken> x.json();
 
                 // Save the client authentication information.
-                this.clientAuthenticationService.initiateLocalAuthenticationToken(clientAuthenticationDetail);
+                this.clientAuthenticationService.setToken(clientAuthenticationDetail);
 
                 // Redirect user to account management page.
                 this.clientRoutingService.navigate(['/account-management']);
 
                 // Cancel loading process.
-                this.isLoading = false;
+                this.isBusy = false;
             })
             .catch((response: Response) =>{
                 // Unfreeze the UI.
-                this.isLoading = false;
+                this.isBusy = false;
 
                 // Proceed the common logic handling.
                 this.clientApiService.handleInvalidResponse(response);

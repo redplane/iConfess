@@ -6,11 +6,6 @@ namespace Shared.ViewModels.CommentReports
     public class SearchCommentReportViewModel
     {
         /// <summary>
-        ///     Comment report index.
-        /// </summary>
-        public int? Id { get; set; }
-
-        /// <summary>
         ///     Index of comment which should be reported.
         /// </summary>
         public int? CommentIndex { get; set; }

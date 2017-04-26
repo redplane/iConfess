@@ -1,14 +1,9 @@
-﻿using Database.Models.Tables;
+﻿using Database.Models.Entities;
 
 namespace Administration.ViewModels.ApiPostReport
 {
     public class PostReportViewModel
     {
-        /// <summary>
-        /// Index of post report.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Post index.
         /// </summary>

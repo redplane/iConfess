@@ -1,5 +1,5 @@
 import {IClientAuthenticationService} from "../../interfaces/services/api/IClientAuthenticationService";
-import {ClientAuthenticationToken} from "../../models/ClientAuthenticationToken";
+import {AuthenticationToken} from "../../models/AuthenticationToken";
 import {Injectable} from "@angular/core";
 
 /*
@@ -8,45 +8,81 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class ClientAuthenticationService implements IClientAuthenticationService{
 
-    // Key in local storage where authentication token should be stored at.
-    private _authenticationKey : string;
+    //#region Properties
 
-    // Key in local storage indicates when the authentication token should be expired.
-    private _authenticationExpire: number;
+    // Key in local storage where authentication token should be stored at.
+    private tokenStorageKey : string;
+
+    //#endregion
+
+    //#region Methods
 
     // The the name of key which is used for sotring authentication information.
-    public findAuthenticationStorageKey(): string{
-        return this._authenticationKey;
-    }
-
-    // When should the token be expired.
-    public findAuthenticationExpire(): number{
-        return this._authenticationExpire;
+    public getTokenKey(): string{
+        return this.tokenStorageKey;
     }
 
     // Find client authentication token from local storage.
-    public findClientAuthenticationToken(): string {
+    public getTokenCode(): string {
 
         // Find information from local storage with given key.
-        let clientAuthenticationToken = localStorage.getItem(this._authenticationKey);
+        let authenticationToken = this.getToken();
+
+        // Token is not valid.
+        if (authenticationToken == null){
+            // Clear token from local storage.
+            this.clearToken();
+            return "";
+        }
 
         // Parse the information into authentication class.
-        return clientAuthenticationToken;
+        return authenticationToken.token;
     }
 
     // Save authentication information into local storage.
-    public initiateLocalAuthenticationToken(clientAuthenticationToken: ClientAuthenticationToken): void {
+    public setToken(authenticationToken: AuthenticationToken): void {
+
         // Save the authentication information into local storage
-        localStorage.setItem(this._authenticationKey, clientAuthenticationToken.token);
+        localStorage.setItem(this.tokenStorageKey, JSON.stringify(authenticationToken));
     }
 
     // Clear authentication token from local storage.
-    public clearAuthenticationToken(): void{
-        localStorage.removeItem(this._authenticationKey);
+    public clearToken(): void{
+        localStorage.removeItem(this.tokenStorageKey);
     }
+
+    // Get token which is stored inside local storage.
+    public getToken(): AuthenticationToken{
+
+        // Get token which is stored inside local storage.
+        let item = localStorage.getItem(this.tokenStorageKey);
+
+        // Item is not valid.
+        if (item == null || item.length < 1)
+            return null;
+
+        // Cast item to authentication token.
+        let authToken = <AuthenticationToken> JSON.parse(item);
+
+        // Authentication is not valid.
+        if (authToken == null || (authToken.expireAt > Date.now()))
+            return null;
+
+        // Token is empty.
+        let code = authToken.token;
+        if (code == null || code.length < 1)
+            return null;
+
+        return authToken;
+    }
+    //#endregion
+
+    //#region Constructor
 
     // Initiate service with IoC.
     public constructor(){
-        this._authenticationKey = "iConfessAuthenticationToken";
+        this.tokenStorageKey = "iConfess.Administration";
     }
+
+    //#endregion
 }

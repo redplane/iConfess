@@ -61,7 +61,7 @@ namespace Administration.Attributes
         /// <summary>
         ///     Roles which can access to controller/method.
         /// </summary>
-        public AccountRole[] Roles { get; set; }
+        public Roles[] Roles { get; set; }
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace Administration.Attributes
         /// Initiate attribute with a specific role.
         /// </summary>
         /// <param name="role"></param>
-        public SignalrAuthorizeAttribute(AccountRole role)
+        public SignalrAuthorizeAttribute(Roles role)
         {
             Roles = new[] {role};
         }
@@ -87,7 +87,7 @@ namespace Administration.Attributes
         /// Initiate attribute with specific roles.
         /// </summary>
         /// <param name="roles"></param>
-        public SignalrAuthorizeAttribute(AccountRole[] roles)
+        public SignalrAuthorizeAttribute(Roles[] roles)
         {
             Roles = roles;
         }
@@ -232,14 +232,14 @@ namespace Administration.Attributes
             #region Account status validation
 
             // Account is waiting for confirmation.
-            if (account.Status == AccountStatus.Pending)
+            if (account.Status == Statuses.Pending)
             {
                 InitiateErrorMessage(Log, "(SignalR) Account is pending");
                 return false;
             }
 
             // Account is forbidden to access function.
-            if (account.Status == AccountStatus.Disabled)
+            if (account.Status == Statuses.Disabled)
             {
                 InitiateErrorMessage(Log, "(SignalR) Account is disabled");
                 return false;

@@ -8,7 +8,7 @@ using System.Web.Http;
 using Administration.Attributes;
 using Administration.ViewModels.ApiPost;
 using Database.Enumerations;
-using Database.Models.Tables;
+using Database.Models.Entities;
 using log4net;
 using Shared.Interfaces.Services;
 using Shared.Resources;
@@ -20,7 +20,7 @@ namespace Administration.Controllers
 {
     [RoutePrefix("api/post")]
     [ApiAuthorize]
-    [ApiRole(AccountRole.Admin)]
+    [ApiRole(Roles.Admin)]
     public class ApiPostController : ApiParentController
     {
         #region Controllers
@@ -195,7 +195,7 @@ namespace Administration.Controllers
                 condition.Id = index;
 
                 // If account is not admin. It can only change its own posts.
-                if (account.Role != AccountRole.Admin)
+                if (account.Role != Roles.Admin)
                     condition.OwnerIndex = account.Id;
 
                 // Search all posts in database.
@@ -238,7 +238,7 @@ namespace Administration.Controllers
         /// <returns></returns>
         [Route("")]
         [HttpDelete]
-        [ApiRole(AccountRole.Admin)]
+        [ApiRole(Roles.Admin)]
         public async Task<HttpResponseMessage> DeletePosts([FromBody] SearchPostViewModel conditions)
         {
             try
@@ -303,7 +303,7 @@ namespace Administration.Controllers
         /// <returns></returns>
         [Route("find")]
         [HttpPost]
-        [ApiRole(AccountRole.Admin)]
+        [ApiRole(Roles.Admin)]
         public async Task<HttpResponseMessage> FindPosts([FromBody] SearchPostViewModel conditions)
         {
             try
@@ -324,7 +324,7 @@ namespace Administration.Controllers
                 #endregion
 
                 // Initiate search result.
-                var searchResult = new SearchResult<Post>();
+                var searchResult = new SearchResult<IQueryable<Post>>();
 
                 // Search posts by using specific conditions.
                 var posts = _unitOfWork.RepositoryPosts.Search();
@@ -351,7 +351,7 @@ namespace Administration.Controllers
         /// <returns></returns>
         [Route("details")]
         [HttpGet]
-        [ApiRole(AccountRole.Admin)]
+        [ApiRole(Roles.Admin)]
         public async Task<HttpResponseMessage> FindPostDetails([FromUri] int index)
         {
             try

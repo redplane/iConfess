@@ -1,14 +1,9 @@
-﻿using Database.Models.Tables;
+﻿using Database.Models.Entities;
 
 namespace Shared.ViewModels.CommentReports
 {
     public class CommentReportDetailViewModel
     {
-        /// <summary>
-        ///     Id of report (Auto incremented)
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         ///     Comment which is reported.
         /// </summary>

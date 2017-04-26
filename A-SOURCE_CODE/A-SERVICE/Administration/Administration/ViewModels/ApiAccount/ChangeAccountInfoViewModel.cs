@@ -12,6 +12,6 @@ namespace Administration.ViewModels.ApiAccount
         /// <summary>
         /// Status of account.
         /// </summary>
-        public AccountStatus? Status { get; set; }
+        public Statuses? Status { get; set; }
     }
 }

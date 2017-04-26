@@ -1,4 +1,4 @@
-﻿using Database.Models.Tables;
+﻿using Database.Models.Entities;
 
 namespace Administration.ViewModels.ApiComment
 {
