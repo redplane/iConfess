@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Database.Interfaces;
 using Database.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Database.Models.Contextes
@@ -106,7 +108,7 @@ namespace Database.Models.Contextes
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Use model builder to specify composite primary keys.
-            // Composite primary keys configuration.
+            // Composite primary keys configuration
             modelBuilder.Entity<FollowCategory>().HasKey(x => new {x.OwnerIndex, x.CategoryIndex});
             modelBuilder.Entity<FollowPost>().HasKey(x => new {x.FollowerIndex, x.PostIndex});
             modelBuilder.Entity<CommentReport>()
@@ -116,6 +118,11 @@ namespace Database.Models.Contextes
             // This is for remove pluralization naming convention in database defined by Entity Framework.
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
                 entity.Relational().TableName = entity.DisplayName();
+
+            // Disable cascade delete.
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            
         }
 
         #endregion

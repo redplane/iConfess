@@ -31,14 +31,14 @@ namespace Database.Models.Entities
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(OwnerIndex))]
-        public Account Owner { get; set; }
+        public virtual Account Owner { get; set; }
 
         /// <summary>
         ///     Which is being watched.
         /// </summary>
         [JsonIgnore]
         [ForeignKey(nameof(CategoryIndex))]
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
 
         #endregion
     }
