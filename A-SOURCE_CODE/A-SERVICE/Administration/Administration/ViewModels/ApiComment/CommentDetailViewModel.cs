@@ -5,7 +5,7 @@ namespace Administration.ViewModels.ApiComment
     public class CommentDetailViewModel
     {
         /// <summary>
-        ///     Index of comment (Auto incremented)
+        ///     Page of comment (Auto incremented)
         /// </summary>
         public int Id { get; set; }
 

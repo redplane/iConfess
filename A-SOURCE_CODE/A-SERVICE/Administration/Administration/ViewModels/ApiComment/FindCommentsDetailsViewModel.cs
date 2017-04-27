@@ -12,12 +12,12 @@ namespace Administration.ViewModels.ApiComment
         public int? Id { get; set; }
 
         /// <summary>
-        ///     Index of comment owner.
+        ///     Page of comment owner.
         /// </summary>
         public int? OwnerIndex { get; set; }
 
         /// <summary>
-        ///     Index of post which comment belongs to.
+        ///     Page of post which comment belongs to.
         /// </summary>
         public int? PostIndex { get; set; }
 

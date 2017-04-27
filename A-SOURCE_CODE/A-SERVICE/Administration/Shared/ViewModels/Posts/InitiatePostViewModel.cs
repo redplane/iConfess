@@ -3,7 +3,7 @@
     public class InitiatePostViewModel
     {
         /// <summary>
-        /// Index of category which post should belong to.
+        /// Page of category which post should belong to.
         /// </summary>
         public int CategoryIndex { get; set; }
 

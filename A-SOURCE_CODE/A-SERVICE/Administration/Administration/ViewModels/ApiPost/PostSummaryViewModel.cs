@@ -8,7 +8,7 @@
         public double StartDate { get; set; }
 
         /// <summary>
-        /// Index of category which posts belong to.
+        /// Page of category which posts belong to.
         /// </summary>
         public int? CategoryIndex { get; set; }
 

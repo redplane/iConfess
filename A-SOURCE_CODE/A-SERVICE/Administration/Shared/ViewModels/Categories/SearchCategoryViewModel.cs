@@ -8,12 +8,12 @@ namespace Shared.ViewModels.Categories
     public class SearchCategoryViewModel
     {
         /// <summary>
-        ///     Index of category.
+        ///     Page of category.
         /// </summary>
         public int? Id { get; set; }
 
         /// <summary>
-        ///     Index of creator.
+        ///     Page of creator.
         /// </summary>
         public int? CreatorIndex { get; set; }
 

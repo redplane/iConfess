@@ -7,7 +7,7 @@ namespace Shared.ViewModels.Accounts
     public class SearchAccountViewModel
     {
         /// <summary>
-        ///     Index of account.
+        ///     Page of account.
         /// </summary>
         public int? Id { get; set; }
 

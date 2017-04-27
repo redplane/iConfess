@@ -11,12 +11,12 @@ namespace Shared.ViewModels.Posts
         public int? Id { get; set; }
 
         /// <summary>
-        ///     Index of post owner.
+        ///     Page of post owner.
         /// </summary>
         public int? OwnerIndex { get; set; }
 
         /// <summary>
-        ///     Index of category which post belongs to.
+        ///     Page of category which post belongs to.
         /// </summary>
         public int? CategoryIndex { get; set; }
 

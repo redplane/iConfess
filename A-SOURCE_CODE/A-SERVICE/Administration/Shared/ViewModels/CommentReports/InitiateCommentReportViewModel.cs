@@ -6,7 +6,7 @@ namespace Shared.ViewModels.CommentReports
     public class InitiateCommentReportViewModel
     {
         /// <summary>
-        ///     Index of comment which should be reported.
+        ///     Page of comment which should be reported.
         /// </summary>
         public int CommentIndex { get; set; }
 

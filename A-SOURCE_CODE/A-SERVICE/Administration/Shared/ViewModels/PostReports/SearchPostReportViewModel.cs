@@ -6,22 +6,22 @@ namespace Shared.ViewModels.PostReports
     public class SearchPostReportViewModel
     {
         /// <summary>
-        ///     Index of post report.
+        ///     Page of post report.
         /// </summary>
         public int? Id { get; set; }
 
         /// <summary>
-        ///     Index of post which is reported.
+        ///     Page of post which is reported.
         /// </summary>
         public int? PostIndex { get; set; }
 
         /// <summary>
-        ///     Index of post owner.
+        ///     Page of post owner.
         /// </summary>
         public int? PostOwnerIndex { get; set; }
 
         /// <summary>
-        ///     Index of report.
+        ///     Page of report.
         /// </summary>
         public int? PostReporterIndex { get; set; }
 

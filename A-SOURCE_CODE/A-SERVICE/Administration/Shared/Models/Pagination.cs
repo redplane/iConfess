@@ -7,13 +7,9 @@ namespace Shared.Models
     public class Pagination
     {
         /// <summary>
-        ///     Index of result page.
-        ///     Min: 0
-        ///     Max: (infinite)
+        /// Page user is current viewing.
         /// </summary>
-        [Range(UiControlConstrains.MinPageRecords, UiControlConstrains.MaxPageRecords,
-             ErrorMessageResourceType = typeof(HttpValidationMessages), ErrorMessageResourceName = "InvalidPageRecord")]
-        public int Index { get; set; }
+        public int Page { get; set; }
 
         /// <summary>
         ///     Maximum records can be displayed per page.

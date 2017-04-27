@@ -43,7 +43,7 @@ namespace Shared.Repositories
         /// <returns></returns>
         public IQueryable<Account> Search(IQueryable<Account> accounts, SearchAccountViewModel conditions)
         {
-            // Index has been identified.
+            // Page has been identified.
             if (conditions.Id != null)
                 accounts = accounts.Where(x => x.Id == conditions.Id.Value);
 

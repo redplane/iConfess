@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Shared.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Interfaces.Services;
 using Shared.Models;
@@ -21,7 +20,13 @@ namespace Shared.Services
         {
             if (pagination == null)
                 return list;
-            return list.Skip(pagination.Index * pagination.Records).Take(pagination.Records);
+
+            // Calculate page index.
+            var index = pagination.Page - 1;
+            if (index < 0)
+                index = 0;
+
+            return list.Skip(index * pagination.Records).Take(pagination.Records);
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ namespace Shared.ViewModels.SignalrConnections
         #region Properties
 
         /// <summary>
-        /// Index of connection.
+        /// Page of connection.
         /// </summary>
         public TextSearch Index { get; set; }
 
