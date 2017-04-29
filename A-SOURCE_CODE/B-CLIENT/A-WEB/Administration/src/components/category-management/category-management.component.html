@@ -32,7 +32,7 @@
         <div class="text-center">
             <pagination [totalItems]="categorySearchResult.total"
                         [itemsPerPage]="findCategoriesViewModel.pagination.records"
-                        [(ngModel)]="findCategoriesViewModel.pagination.index"
+                        [(ngModel)]="findCategoriesViewModel.pagination.page"
                         [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
                         [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
                         [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
@@ -104,7 +104,7 @@
         <div class="text-center">
             <pagination [totalItems]="categorySearchResult.total"
                         [itemsPerPage]="findCategoriesViewModel.pagination.records"
-                        [(ngModel)]="findCategoriesViewModel.pagination.index"
+                        [(ngModel)]="findCategoriesViewModel.pagination.page"
                         [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
                         [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
                         [previousText]="clientConfigurationService.ngPaginationSettings.previousText"

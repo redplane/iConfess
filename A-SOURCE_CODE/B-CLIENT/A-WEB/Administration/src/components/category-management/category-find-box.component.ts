@@ -119,7 +119,7 @@ export class CategoryFindBoxComponent {
 
         // Initiate pagination.
         let pagination = new Pagination();
-        pagination.index = 0;
+        pagination.page = 0;
         pagination.records = this.clientConfigurationService.getMaxPageRecords();
 
         // Pagination update.

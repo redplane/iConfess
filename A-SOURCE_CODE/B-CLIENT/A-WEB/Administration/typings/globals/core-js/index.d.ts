@@ -106,9 +106,9 @@ interface Array<T> {
     /**
       * Returns the this object after filling the section identified by start and end with value
       * @param value value to fill array section with
-      * @param start index to start filling the array at. If start is negative, it is treated as
+      * @param start page to start filling the array at. If start is negative, it is treated as
       * length+start where length is the length of the array.
-      * @param end index to stop filling the array at. If end is negative, it is treated as
+      * @param end page to stop filling the array at. If end is negative, it is treated as
       * length+end.
       */
     fill(value: T, start?: number, end?: number): T[];
@@ -972,16 +972,16 @@ interface ArrayConstructor {
     unshift<T>(array: ArrayLike<T>, ...items: T[]): number;
 
     /**
-      * Returns the index of the first occurrence of a value in an array.
+      * Returns the page of the first occurrence of a value in an array.
       * @param searchElement The value to locate in the array.
-      * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0.
+      * @param fromIndex The array page at which to begin the search. If fromIndex is omitted, the search starts at page 0.
       */
     indexOf<T>(array: ArrayLike<T>, searchElement: T, fromIndex?: number): number;
 
     /**
-      * Returns the index of the last occurrence of a specified value in an array.
+      * Returns the page of the last occurrence of a specified value in an array.
       * @param searchElement The value to locate in the array.
-      * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at the last index in the array.
+      * @param fromIndex The array page at which to begin the search. If fromIndex is omitted, the search starts at the last page in the array.
       */
     lastIndexOf<T>(array: ArrayLike<T>, earchElement: T, fromIndex?: number): number;
 
@@ -1088,9 +1088,9 @@ interface ArrayConstructor {
     /**
       * Returns the this object after filling the section identified by start and end with value
       * @param value value to fill array section with
-      * @param start index to start filling the array at. If start is negative, it is treated as
+      * @param start page to start filling the array at. If start is negative, it is treated as
       * length+start where length is the length of the array.
-      * @param end index to stop filling the array at. If end is negative, it is treated as
+      * @param end page to stop filling the array at. If end is negative, it is treated as
       * length+end.
       */
     fill<T>(array: ArrayLike<T>, value: T, start?: number, end?: number): T[];

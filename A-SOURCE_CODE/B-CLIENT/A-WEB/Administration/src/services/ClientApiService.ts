@@ -14,9 +14,9 @@ export class ClientApiService implements IClientApiService{
     //#region Properties
 
     // Api which web application will consume the service.
-    private apiUrl = "http://confession.azurewebsites.net";
-    // private apiUrl = "http://localhost:2101";
-
+    // private apiUrl = "http://confession.azurewebsites.net";
+    private apiUrl = "http://localhost:2101";
+    // private apiUrl = 'http://10.16.134.201:45457';
     // Key in local storage which access token should be stored.
     public accessTokenStorage: string;
 

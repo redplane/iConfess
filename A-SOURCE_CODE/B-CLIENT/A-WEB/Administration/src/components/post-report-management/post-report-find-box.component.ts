@@ -103,7 +103,7 @@ export class PostReportFindBoxComponent {
 
         // Initiate pagination.
         let pagination = new Pagination();
-        pagination.index = 0;
+        pagination.page = 0;
         pagination.records = this.clientConfigurationService.getMaxPageRecords();
 
         // Pagination update.
@@ -142,7 +142,7 @@ export class PostReportFindBoxComponent {
 
         // Initiate pagination.
         let pagination = new Pagination();
-        pagination.index = 0;
+        pagination.page = 0;
         pagination.records = this.clientConfigurationService.getMaxPageRecords();
 
         // Pagination update.
@@ -177,7 +177,7 @@ export class PostReportFindBoxComponent {
 
         // Initiate pagination.
         let pagination = new Pagination();
-        pagination.index = 0;
+        pagination.page = 0;
         pagination.records = this.clientConfigurationService.getMaxPageRecords();
 
         // Title update.

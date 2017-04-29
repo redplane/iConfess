@@ -53,7 +53,7 @@ export class PostDetailBoxComponent implements OnInit{
         let condition = new SearchPostsViewModel();
         let pagination = new Pagination();
 
-        pagination.index = 0;
+        pagination.page = 0;
         pagination.records = this.clientConfigurationService.getMinPageRecords();
         condition.pagination = pagination;
 

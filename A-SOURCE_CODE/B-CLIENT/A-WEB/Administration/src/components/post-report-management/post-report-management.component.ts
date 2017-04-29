@@ -95,7 +95,7 @@ export class PostReportManagementComponent implements OnInit {
 
         // Update pagination.
         let pagination = new Pagination();
-        pagination.index = 0;
+        pagination.page = 0;
         pagination.records = this.clientConfigurationService.getMaxPageRecords();
         this.findPostReportConditions.pagination = pagination;
 
@@ -246,7 +246,7 @@ export class PostReportManagementComponent implements OnInit {
             return;
 
         let pagination = new Pagination();
-        pagination.index = page;
+        pagination.page = page;
         pagination.records = this.clientConfigurationService.getMinPageRecords();
 
         let searchCommentsDetailsCondition = new SearchCommentsDetailsViewModel();

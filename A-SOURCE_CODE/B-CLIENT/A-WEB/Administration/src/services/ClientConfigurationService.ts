@@ -20,9 +20,6 @@ export class ClientConfigurationService {
     // Modes of text search.
     public textSearchModes: Dictionary<TextSearchMode>;
 
-    // Pagination settings of ng2-bootstrap.
-    public ngPaginationSettings: any;
-
     // List of direction which can be used in records sorting.
     public sortDirections: Dictionary<SortDirection>;
 
@@ -52,54 +49,45 @@ export class ClientConfigurationService {
         // Initiate list of text search modes.
         this.textSearchModes = this.initiateTextSearchModes();
 
-        // Initate default settings of ng2-bootstrap pagination control.
-        this.ngPaginationSettings = {
-            rotate: true, //if true current page will in the middle of views list
-            firstText: '<<',
-            previousText: '<',
-            nextText: '>',
-            lastText: '>>'
-        };
-
         // Initiate sort directions list.
         this.sortDirections = new Dictionary<SortDirection>();
-        this.sortDirections.insert('Ascending', SortDirection.Ascending);
-        this.sortDirections.insert('Descending', SortDirection.Descending);
+        this.sortDirections.add('Ascending', SortDirection.Ascending);
+        this.sortDirections.add('Descending', SortDirection.Descending);
 
         // Initiate account sort properties.
         this.accountSortProperties = new Dictionary<AccountSortProperty>();
-        this.accountSortProperties.insert('Index', AccountSortProperty.index);
-        this.accountSortProperties.insert('Email', AccountSortProperty.email);
-        this.accountSortProperties.insert('Nickname', AccountSortProperty.nickname);
-        this.accountSortProperties.insert('Status', AccountSortProperty.status);
-        this.accountSortProperties.insert('Joined', AccountSortProperty.joined);
-        this.accountSortProperties.insert('Last modified', AccountSortProperty.lastModified);
+        this.accountSortProperties.add('Index', AccountSortProperty.index);
+        this.accountSortProperties.add('Email', AccountSortProperty.email);
+        this.accountSortProperties.add('Nickname', AccountSortProperty.nickname);
+        this.accountSortProperties.add('Status', AccountSortProperty.status);
+        this.accountSortProperties.add('Joined', AccountSortProperty.joined);
+        this.accountSortProperties.add('Last modified', AccountSortProperty.lastModified);
 
         // Initiate list of account statuses.
         this.accountStatusSelections = this.initializeAccountSelections();
 
         // Initiate category sort properties.
         this.categorySortProperties = new Dictionary<CategorySortProperty>();
-        this.categorySortProperties.insert('Index', CategorySortProperty.index);
-        this.categorySortProperties.insert('Creator', CategorySortProperty.creatorIndex);
-        this.categorySortProperties.insert('Name', CategorySortProperty.name);
-        this.categorySortProperties.insert('Created', CategorySortProperty.created);
-        this.categorySortProperties.insert('Last modified', CategorySortProperty.lastModified);
+        this.categorySortProperties.add('Index', CategorySortProperty.index);
+        this.categorySortProperties.add('Creator', CategorySortProperty.creatorIndex);
+        this.categorySortProperties.add('Name', CategorySortProperty.name);
+        this.categorySortProperties.add('Created', CategorySortProperty.created);
+        this.categorySortProperties.add('Last modified', CategorySortProperty.lastModified);
 
         // Initiate post sort properties.
         this.postSortProperties = new Dictionary<PostSortProperty>();
-        this.postSortProperties.insert('Index', PostSortProperty.id);
-        this.postSortProperties.insert('Owner', PostSortProperty.ownerIndex);
-        this.postSortProperties.insert('Category', PostSortProperty.categoryIndex);
-        this.postSortProperties.insert('Created', PostSortProperty.created);
+        this.postSortProperties.add('Index', PostSortProperty.id);
+        this.postSortProperties.add('Owner', PostSortProperty.ownerIndex);
+        this.postSortProperties.add('Category', PostSortProperty.categoryIndex);
+        this.postSortProperties.add('Created', PostSortProperty.created);
 
         // Initiate post report sort properties list.
         this.postReportSortProperties = new Dictionary<PostReportSortProperty>();
-        this.postReportSortProperties.insert('Index', PostReportSortProperty.id);
-        this.postReportSortProperties.insert('Post', PostReportSortProperty.postIndex);
-        this.postReportSortProperties.insert('Post owner', PostReportSortProperty.postOwnerIndex);
-        this.postReportSortProperties.insert('Post reporter', PostReportSortProperty.postReporterIndex);
-        this.postReportSortProperties.insert('Created', PostReportSortProperty.created);
+        this.postReportSortProperties.add('Index', PostReportSortProperty.id);
+        this.postReportSortProperties.add('Post', PostReportSortProperty.postIndex);
+        this.postReportSortProperties.add('Post owner', PostReportSortProperty.postOwnerIndex);
+        this.postReportSortProperties.add('Post reporter', PostReportSortProperty.postReporterIndex);
+        this.postReportSortProperties.add('Created', PostReportSortProperty.created);
 
         // Initiate list of comment report sort properties.
         this.commentReportSortProperties = this.initiateCommentReportSortProperties();
@@ -107,21 +95,21 @@ export class ClientConfigurationService {
 
     // Maximum number of records which can be displayed on page.
     public getMaxPageRecords(): number {
-        return this.pageRecords[this.pageRecords.length - 1];
+        return 20;
     }
 
     // Get minimum number of records can be displayed per page.
     public getMinPageRecords(): number{
-        return this.pageRecords[0];
+        return 5;
     }
 
     // Initiate list of account statuses selection.
     private initializeAccountSelections(): Dictionary<AccountStatuses> {
         let accountStatusItems = new Dictionary<AccountStatuses>();
 
-        accountStatusItems.insert('Inactive', AccountStatuses.Disabled);
-        accountStatusItems.insert('Pending', AccountStatuses.Pending);
-        accountStatusItems.insert('Active', AccountStatuses.Active);
+        accountStatusItems.add('Inactive', AccountStatuses.Disabled);
+        accountStatusItems.add('Pending', AccountStatuses.Pending);
+        accountStatusItems.add('Active', AccountStatuses.Active);
 
         return accountStatusItems;
     }
@@ -131,8 +119,8 @@ export class ClientConfigurationService {
 
         // Initiate properties list.
         let commentReportSortProperties = new Dictionary<CommentReportSortProperty>();
-        commentReportSortProperties.insert('Index', CommentReportSortProperty.Index);
-        commentReportSortProperties.insert('Created', CommentReportSortProperty.Index);
+        commentReportSortProperties.add('Index', CommentReportSortProperty.Index);
+        commentReportSortProperties.add('Created', CommentReportSortProperty.Index);
 
         return commentReportSortProperties;
     }
@@ -142,9 +130,9 @@ export class ClientConfigurationService {
 
         // Initiate text search modes.
         let textSearchModes = new Dictionary<TextSearchMode>();
-        textSearchModes.insert('Equals', TextSearchMode.equals);
-        textSearchModes.insert('Equals case-insensitively', TextSearchMode.equalsIgnoreCase);
-        textSearchModes.insert('Contains', TextSearchMode.contains);
+        textSearchModes.add('Equals', TextSearchMode.equals);
+        textSearchModes.add('Equals case-insensitively', TextSearchMode.equalsIgnoreCase);
+        textSearchModes.add('Contains', TextSearchMode.contains);
         return textSearchModes;
     }
 }

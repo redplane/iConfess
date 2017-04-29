@@ -50,12 +50,12 @@ export class ClientAccountService implements IClientAccountService {
 
     // Find categories by using specific conditions.
     public getAccounts(findAccountsViewModel: SearchAccountsViewModel): Promise<Response> {
-        // Page index should be decrease by one.
+        // Page page should be decrease by one.
         let conditions = Object.assign({}, findAccountsViewModel);
         conditions['pagination'] = Object.assign({}, findAccountsViewModel.pagination);
-        conditions.pagination.index -= 1;
-        if (conditions.pagination.index < 0)
-            conditions.pagination.index = 0;
+        conditions.pagination.page -= 1;
+        if (conditions.pagination.page < 0)
+            conditions.pagination.page = 0;
 
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.post(this.clientAuthenticationService.getTokenCode(),

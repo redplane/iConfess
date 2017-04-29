@@ -31,12 +31,12 @@ export class ClientPostService implements IClientPostService{
 
     // Find categories by using specific conditions.
     public getPosts(conditions: SearchPostsViewModel): Promise<Response> {
-        // Page index should be decrease by one.
+        // Page page should be decrease by one.
         let localConditions = Object.assign({}, conditions);
         localConditions['pagination'] = Object.assign({}, localConditions.pagination);
-        localConditions.pagination.index -= 1;
-        if (localConditions.pagination.index < 0)
-            localConditions.pagination.index = 0;
+        localConditions.pagination.page -= 1;
+        if (localConditions.pagination.page < 0)
+            localConditions.pagination.page = 0;
 
 
         // Initiate url.

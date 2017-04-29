@@ -8,12 +8,6 @@
     </div>
 </div>
 
-<ul class="nav nav-tabs nav-justified">
-    <li role="presentation"
-        class="active disabled" *ngFor="let item of accountStatusesSummary">
-        <a href="javascript:void(0);">{{item.status}}</a></li>
-</ul>
-
 <!-- Content container -->
 <div class="row">
     <div class="col-lg-12">
@@ -54,10 +48,8 @@
                 <table class="table table-responsive table-striped table-condensed table-hover">
                     <thead>
                     <tr>
-                        <th></th>
                         <th>Email</th>
                         <th>Nickname</th>
-                        <th>Status</th>
                         <th>Joined</th>
                         <th>Last modified</th>
                         <th></th>
@@ -65,21 +57,11 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let account of searchResult.records; let i = index">
-                        <td>{{(clientCommonService.findRecordStartIndex(conditions.pagination.index,
-                            conditions.pagination.records, true) + i + 1)}}
-                        </td>
                         <td>
                             <a href="javascript:void(0);"
                                (click)="clickChangeAccountInfo(account)">{{account.email}}</a>
                         </td>
                         <td>{{account.nickname}}</td>
-                        <td>
-                            <b [class.text-danger]="account.status == accountStatuses.Disabled"
-                               [class.text-warning]="account.status == accountStatuses.Pending"
-                               [class.text-primary]="account.status == accountStatuses.Active">
-                                {{clientCommonService.findAccountStatusDisplay(account.status)}}
-                            </b>
-                        </td>
                         <td>
                             {{ clientTimeService.getUtc(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
                         </td>
@@ -98,19 +80,12 @@
                 </table>
             </div>
 
-            <div class="box-footer" *ngIf="isResultAvailable()">
+            <div class="box-footer">
                 <div class="col-lg-12">
                     <div class="text-center">
-                        <pagination [totalItems]="searchResult.total"
-                                    [itemsPerPage]="conditions.pagination.records"
-                                    [(ngModel)]="conditions.pagination.index"
-                                    [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
-                                    [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
-                                    [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
-                                    [nextText]="clientConfigurationService.ngPaginationSettings.nextText"
-                                    [lastText]="clientConfigurationService.ngPaginationSettings.lastText"
-                                    (pageChanged)="clickPageChange($event)"
-                                    [disabled]="isLoading"></pagination>
+                        <ngx-numeric-paginator [options]="clientCommonService.getPaginationOptions()"
+                                               [total-items]="searchResult.total">
+                        </ngx-numeric-paginator>
                     </div>
                 </div>
             </div>
@@ -143,8 +118,8 @@
                     <label>Status</label>
                     <select class="form-control"
                             [(ngModel)]="account.status">
-                        <option *ngFor="let key of clientConfigurationService.accountStatusSelections.keys()"
-                                [value]="clientConfigurationService.accountStatusSelections.item(key)">{{key}}
+                        <option *ngFor="let item of clientCommonService.getAccountStatuses()"
+                                [value]="item.value">{{item.value}}
                         </option>
                     </select>
                 </div>

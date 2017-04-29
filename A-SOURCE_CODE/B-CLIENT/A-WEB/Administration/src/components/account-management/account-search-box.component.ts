@@ -7,11 +7,7 @@ import {IClientAccountService} from "../../interfaces/services/api/IClientAccoun
 
 @Component({
     selector: 'account-search-box',
-    templateUrl: 'account-search-box.component.html',
-    providers: [
-        FormBuilder,
-        ClientConfigurationService
-    ]
+    templateUrl: 'account-search-box.component.html'
 })
 
 export class AccountSearchBoxComponent implements OnInit {
@@ -41,7 +37,6 @@ export class AccountSearchBoxComponent implements OnInit {
 
     // Initiate component with default dependency injection.
     public constructor(private formBuilder: FormBuilder,
-                       private clientConfigurationService: ClientConfigurationService,
                        @Inject("IClientAccountService") private clientAccountService: IClientAccountService) {
 
         // Form control of find category box.

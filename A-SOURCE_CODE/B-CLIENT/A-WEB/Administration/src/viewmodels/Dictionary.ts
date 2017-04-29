@@ -1,62 +1,106 @@
 import {IDictionary} from "../interfaces/IDictionary";
+import {KeyValuePair} from "../models/KeyValuePair";
+
+// Dictionary class.
 export class Dictionary<T> implements IDictionary<T> {
-    private items: { [index: string]: T } = {};
 
-    // Number of items in the dictionary.
-    private count: number = 0;
+    //#region Properties
 
-    // Check whether dictionary contains a specific key or not.
-    public containsKey(key: string): boolean {
-        return this.items.hasOwnProperty(key);
+    // List of dictionary keys.
+
+    // List of key value pair in dictionary
+    private keyValuePairs: Array<KeyValuePair<T>>;
+
+    //#endregion
+
+    //#region Constructor
+
+    // Initiate dictionary with default settings.
+    public constructor(){
+        // Initiate key-value pairs list.
+        this.keyValuePairs = new Array<KeyValuePair<T>>();
     }
 
-    // Count the number of key-value pairs in dictionary
-    public getCount(): number {
-        return this.count;
-    }
+    //#endregion
 
-    // Insert a key-value pair into dictionary.
-    public insert(key: string, value: T) {
-        this.items[key] = value;
-        this.count++;
-    }
+    //#region Methods
 
-    // Remove a key-value pair by searching for specific key.
-    public remove(key: string): T {
-        var val = this.items[key];
-        delete this.items[key];
-        this.count--;
-        return val;
-    }
-
-    // Find item by searching key.
-    public item(key: string): T {
-        return this.items[key];
-    }
-
-    // Find list of keys in dictionary.
-    public keys(): string[] {
-        var keySet: string[] = [];
-
-        for (var prop in this.items) {
-            if (this.items.hasOwnProperty(prop)) {
-                keySet.push(prop);
-            }
+    // Insert a new key-value pair into dictionary.
+    public add(key: string, value: T): void {
+        // Key exists.
+        if (this.containsKey(key)) {
+            throw Error(`${key} exists in dictionary`);
         }
 
-        return keySet;
+        let keyValuePair = new KeyValuePair<T>();
+        keyValuePair.key = key;
+        keyValuePair.value = value;
+        this.keyValuePairs.push(keyValuePair);
     }
 
-    // Find list of values in dictionary.
-    public values(): T[] {
-        var values: T[] = [];
+    // Remove a record by using specific key.
+    public remove(key: string) {
+        // Find the key in key-value pairs.
+        let results = this.keyValuePairs
+            .filter((x: KeyValuePair<T>) => {
+                return x.key == key;
+            })
+            .map((x: KeyValuePair<T>) => {
+                return this.keyValuePairs.indexOf(x);
+            });
 
-        for (var prop in this.items) {
-            if (this.items.hasOwnProperty(prop)) {
-                values.push(this.items[prop]);
-            }
-        }
-
-        return values;
+        for (let index = 0; index < results.length; index++)
+            this.keyValuePairs.splice(index, 1);
     }
+
+    // Get all keys in dictionary.
+    public keys(): Array<string> {
+        return this.keyValuePairs.map((x: KeyValuePair<T>) => {
+            return x.key;
+        });
+    }
+
+    // Get all values in dictionary.
+    public values(): Array<T> {
+        return this.keyValuePairs.map((x: KeyValuePair<T>) => {
+            return x.value;
+        });
+    }
+
+    // Check whether the designated key has been registered or not.
+    public containsKey(key: string) {
+        // Find item using key.
+        let item = this.getKeyItem(key);
+        if (item == null)
+            return false;
+
+        return true;
+    }
+
+    // Find key item.
+    public getKeyItem(key: string): T {
+        // Array doesn't contain key value pair before.
+        if (this.keyValuePairs == null || this.keyValuePairs.length < 1)
+            return null;
+
+        // Filter key-value pairs using key name.
+        let results = this.keyValuePairs.filter((x: KeyValuePair<T>) => {
+            return x.key == key
+        });
+
+        // Key doesn't exist.
+        if (results == null || results.length < 1)
+            return null;
+
+        return results[0].value;
+    }
+
+    // Get list of key-value pairs in dictionary.
+    public getKeyValuePairs(): Array<KeyValuePair<T>>{
+        return this.keyValuePairs;
+    }
+
+    //#endregion
+
 }
+

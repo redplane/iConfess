@@ -2,8 +2,6 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Response} from "@angular/http";
 import {ModalDirective} from "ng2-bootstrap";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientApiService} from "../../services/ClientApiService";
-import {ClientCommonService} from "../../services/ClientCommonService";
 import {Account} from "../../models/entities/Account";
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
@@ -13,14 +11,11 @@ import {SearchResult} from "../../models/SearchResult";
 import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
 import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
+import {IClientCommonService} from "../../interfaces/services/IClientCommonService";
 
 @Component({
     selector: 'account-management',
-    templateUrl: 'account-management.component.html',
-    providers: [
-        ClientConfigurationService,
-        ClientCommonService
-    ]
+    templateUrl: 'account-management.component.html'
 })
 
 export class AccountManagementComponent implements OnInit {
@@ -54,9 +49,8 @@ export class AccountManagementComponent implements OnInit {
     //#region Constructor
 
     // Initiate component with injections.
-    public constructor(private clientConfigurationService: ClientConfigurationService,
-                       @Inject("IClientAccountService") private clientAccountService: IClientAccountService,
-                       private clientCommonService: ClientCommonService,
+    public constructor(@Inject("IClientAccountService") private clientAccountService: IClientAccountService,
+                       @Inject('IClientCommonService') private clientCommonService: IClientCommonService,
                        @Inject("IClientApiService") private clientApiService: IClientApiService,
                        @Inject("IClientTimeService") private clientTimeService: IClientTimeService) {
 
@@ -156,7 +150,7 @@ export class AccountManagementComponent implements OnInit {
             return;
 
         // Update page index.
-        this.conditions.pagination.index = parameters['page'];
+        this.conditions.pagination.page = parameters['page'];
 
         // Search.
         this.clickSearch();
@@ -184,18 +178,18 @@ export class AccountManagementComponent implements OnInit {
 
         // Initiate pagination.
         let pagination = new Pagination();
-        pagination.index = 1;
-        pagination.records = this.clientConfigurationService.getMaxPageRecords();
+        pagination.page = 1;
+        pagination.records = this.clientCommonService.getMaxPageRecords();
         this.conditions.pagination = pagination;
 
         // Initiate account statuses.
-        let accountStatuses = new Array<AccountStatuses>();
-        for (let index = 0; index < this.clientConfigurationService.accountStatusSelections.keys().length; index++) {
-            // Find the key.
-            let key = this.clientConfigurationService.accountStatusSelections.keys()[index];
-            accountStatuses.push(this.clientConfigurationService.accountStatusSelections.item(key));
-        }
-        this.conditions.statuses = accountStatuses;
+        // let accountStatuses = new Array<AccountStatuses>();
+        // for (let index = 0; index < this.clientConfigurationService.accountStatusSelections.keys().length; index++) {
+        //     // Find the key.
+        //     let key = this.clientConfigurationService.accountStatusSelections.keys()[index];
+        //     accountStatuses.push(this.clientConfigurationService.accountStatusSelections.item(key));
+        // }
+        // this.conditions.statuses = accountStatuses;
 
         // Load all accounts from service.
         this.clickSearch();

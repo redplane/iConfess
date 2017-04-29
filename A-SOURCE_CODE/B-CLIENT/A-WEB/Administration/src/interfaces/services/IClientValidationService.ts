@@ -9,7 +9,7 @@ export interface IClientValidationService{
      * Input:
      * input = {
      * 	pagination:{
-     * 		index: ['INFORMATION_REQUIRED'],
+     * 		page: ['INFORMATION_REQUIRED'],
      * 		records: ['RECORD_MIN_INVALID','RECORD_MAX_INVALID']
      * 		}
      * 	};
@@ -19,7 +19,7 @@ export interface IClientValidationService{
      *  controls:{
      *      pagination:{
      *          controls:{
-     *              index:{
+     *              page:{
      *                  required: true
      *              },
      *              records:{

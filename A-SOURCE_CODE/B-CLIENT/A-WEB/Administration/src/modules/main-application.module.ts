@@ -36,38 +36,18 @@ import {ClientApiService} from "../services/ClientApiService";
 import {ClientToastrService} from "../services/ClientToastrService";
 import {ClientAuthenticationService} from "../services/api/ClientAuthenticationService";
 import {ClientValidationService} from "../services/ClientValidationService";
+import {ClientCommonService} from "../services/ClientCommonService";
+import {NgxNumericPaginatorModule} from 'ngx-numeric-paginator';
 
 // Routing configuration.
 const appRoutes: Routes = [
-    {
-        path: '',
-        component: AccountLoginComponent
-    },
-    {
-        path: 'account-management',
-        component: AccountManagementComponent,
-
-    },
-    {
-        path: 'category-management',
-        component: CategoryManagementComponent
-    },
-    {
-        path: 'comment-report-management',
-        component: CommentReportManagementComponent
-    },
-    {
-        path: 'post-report-management',
-        component: PostReportManagementComponent
-    },
-    {
-        path: 'forgot-password',
-        component: AccountForgotPasswordComponent
-    },
-    {
-        path: 'submit-password',
-        component: AccountSubmitPasswordComponent
-    }
+    {path: '', component: AccountLoginComponent},
+    {path: 'account-management', component: AccountManagementComponent,},
+    {path: 'category-management', component: CategoryManagementComponent},
+    {path: 'comment-report-management', component: CommentReportManagementComponent},
+    {path: 'post-report-management', component: PostReportManagementComponent},
+    {path: 'forgot-password', component: AccountForgotPasswordComponent},
+    {path: 'submit-password', component: AccountSubmitPasswordComponent}
 ];
 
 
@@ -87,11 +67,10 @@ const appRoutes: Routes = [
         // Moment module.
         MomentModule,
 
-        // Chart module.
-        ChartsModule,
-
         // Initiate application routing configuration.
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes),
+
+        NgxNumericPaginatorModule
     ],
     declarations: [
         MainApplicationComponent,
@@ -131,7 +110,8 @@ const appRoutes: Routes = [
         {provide: "IClientAuthenticationService", useClass: ClientAuthenticationService},
         {provide: "IClientToastrService", useClass: ClientToastrService},
         {provide: "IClientApiService", useClass: ClientApiService},
-        {provide: "IClientValidationService", useClass: ClientValidationService}
+        {provide: "IClientValidationService", useClass: ClientValidationService},
+        {provide: 'IClientCommonService', useClass: ClientCommonService}
     ],
     bootstrap: [
         MainApplicationComponent

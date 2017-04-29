@@ -43,7 +43,7 @@
                 defaultExtension: 'js'
             },
             'angular-in-memory-web-api': {
-                main: './index.js',
+                main: './page.js',
                 defaultExtension: 'js'
             },
             'ng2-select':{
@@ -59,7 +59,7 @@
                 defaultExtension: 'js'
             },
             'angular2-moment': {
-                main: './index.js',
+                main: './page.js',
                 defaultExtension: 'js'
             }
         }

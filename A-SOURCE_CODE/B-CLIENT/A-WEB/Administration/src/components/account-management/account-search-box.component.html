@@ -42,17 +42,17 @@
                          role="group"
                          aria-label="...">
 
-                        <div *ngFor="let key of clientConfigurationService.accountStatusSelections.keys();"
-                             class="btn-group"
-                             role="group">
-                            <button type="button"
-                                    class="btn btn-default"
-                                    [class.btn-default]="conditions.statuses.indexOf(clientConfigurationService.accountStatusSelections.item(key)) == -1"
-                                    [class.btn-primary]="conditions.statuses.indexOf(clientConfigurationService.accountStatusSelections.item(key)) != -1"
-                                    (click)="toggleStatuses(clientConfigurationService.accountStatusSelections.item(key))">
-                                <span>{{key}}</span>
-                            </button>
-                        </div>
+                        <!--<div *ngFor="let key of clientConfigurationService.accountStatusSelections.keys();"-->
+                             <!--class="btn-group"-->
+                             <!--role="group">-->
+                            <!--<button type="button"-->
+                                    <!--class="btn btn-default"-->
+                                    <!--[class.btn-default]="conditions.statuses.indexOf(clientConfigurationService.accountStatusSelections.item(key)) == -1"-->
+                                    <!--[class.btn-primary]="conditions.statuses.indexOf(clientConfigurationService.accountStatusSelections.item(key)) != -1"-->
+                                    <!--(click)="toggleStatuses(clientConfigurationService.accountStatusSelections.item(key))">-->
+                                <!--<span>{{key}}</span>-->
+                            <!--</button>-->
+                        <!--</div>-->
                     </div>
 
                 </div>
@@ -64,20 +64,6 @@
                            placeholder="Nickname"
                            formControlName="nickname"
                            [(ngModel)]="conditions.nickname.value"/>
-                </div>
-
-                <!-- Pagination -->
-                <div class="form-group"
-                     formGroupName="pagination">
-                    <label>Records</label>
-                    <select class="form-control"
-                            formControlName="records"
-                            [(ngModel)]="conditions.pagination.records">
-                        <option *ngFor="let item of clientConfigurationService.pageRecords; let i = index"
-                                [value]="clientConfigurationService.pageRecords[i]">
-                            {{clientConfigurationService.pageRecords[i]}}
-                        </option>
-                    </select>
                 </div>
             </div>
 
@@ -157,37 +143,9 @@
                     </div>
 
                     <div class="col-lg-6">
-                        <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-folder" aria-hidden="true"></i>
-                                </span>
-
-                            <select class="form-control"
-                                    formControlName="sort"
-                                    [(ngModel)]="conditions.sort">
-                                <option *ngFor="let key of clientConfigurationService.accountSortProperties.keys()"
-                                        [value]="clientConfigurationService.accountSortProperties.item(key)">
-                                    {{key}}
-                                </option>
-                            </select>
-                        </div>
                     </div>
 
                     <div class="col-lg-6">
-                        <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-sort" aria-hidden="true"></i>
-                                </span>
-
-                            <select class="form-control"
-                                    formControlName="direction"
-                                    [(ngModel)]="conditions.direction">
-                                <option *ngFor="let key of clientConfigurationService.sortDirections.keys()"
-                                        [value]="clientConfigurationService.sortDirections.item(key)">
-                                    {{key}}
-                                </option>
-                            </select>
-                        </div>
                     </div>
                 </div>
 

@@ -215,8 +215,8 @@ export class CategoryManagementComponent implements OnInit {
 
     // Callback which is fired when page selection is changed.
     public clickPageChange(pagination: any): void{
-        // Update pagination index.
-        this.findCategoriesViewModel.pagination.index = pagination.page;
+        // Update pagination page.
+        this.findCategoriesViewModel.pagination.page = pagination.page;
 
         // Call search function.
         this.clickSearch();
@@ -229,7 +229,7 @@ export class CategoryManagementComponent implements OnInit {
 
         // Refactoring pagination.
         let pagination = new Pagination();
-        pagination.index = 1;
+        pagination.page = 1;
         pagination.records = this.clientConfigurationService.getMaxPageRecords();
         this.findCategoriesViewModel.pagination = pagination;
     }

@@ -1,23 +1,30 @@
+// Dictionary interface which is used implementing key-value data type.
+import {KeyValuePair} from "../models/KeyValuePair";
+
 export interface IDictionary<T> {
 
-    // Insert a key into dictionary.
-    insert(key: string, value: T);
+    //#region Methods
 
-    // Check whether key has already been in the dictionary.
+    // Add a key-value record to dictionary.
+    add(key: string, value: T): void;
+
+    // Remove record by using key.
+    remove(key: string): void;
+
+    // Whether dictionary contains key or not.
     containsKey(key: string): boolean;
 
-    // Count number of key-value pairs in dictionary.
-    getCount(): number;
-
-    // Find item by using key.
-    item(key: string): T;
-
-    // Find list of keys in dictionary.
+    // Get all keys in dictionary.
     keys(): string[];
 
-    // Remove an item from dictionary by using key.
-    remove(key: string): T;
-
-    // Find dictionary values list.
+    // Get all value in dictionary.
     values(): T[];
+
+    // Get list of key value pairs in dictionary.
+    getKeyValuePairs(): Array<KeyValuePair<T>>;
+
+    // Find key item.
+    getKeyItem(key: string): T;
+
+    //#endregion
 }

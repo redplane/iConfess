@@ -94,7 +94,7 @@ export class ClientValidationService implements IClientValidationService{
      * Input:
      * input = {
      * 	pagination:{
-     * 		index: ['INFORMATION_REQUIRED'],
+     * 		page: ['INFORMATION_REQUIRED'],
      * 		records: ['RECORD_MIN_INVALID','RECORD_MAX_INVALID']
      * 		}
      * 	};
@@ -104,7 +104,7 @@ export class ClientValidationService implements IClientValidationService{
      *  controls:{
      *      pagination:{
      *          controls:{
-     *              index:{
+     *              page:{
      *                  required: true
      *              },
      *              records:{
@@ -130,7 +130,7 @@ export class ClientValidationService implements IClientValidationService{
 
                 // Dictionary already contains the translation key.
                 if (dictionary.containsKey(property))
-                    errorsList[dictionary.item(property)] = true;
+                    errorsList[dictionary.getKeyItem(property)] = true;
                 else
                     errorsList[property] = true;
 

@@ -37,8 +37,8 @@ export class MainApplicationComponent implements OnInit{
 
     // Callback which is fired when component has been loaded successfully.
     public ngOnInit(): void {
-        this.unauthenticatedUrls.insert("/", true);
-        this.unauthenticatedUrls.insert("/forgot-password", true);
-        this.unauthenticatedUrls.insert("/submit-password", true);
+        this.unauthenticatedUrls.add("/", true);
+        this.unauthenticatedUrls.add("/forgot-password", true);
+        this.unauthenticatedUrls.add("/submit-password", true);
     }
 }

@@ -42,12 +42,12 @@ export class ClientCategoryService implements IClientCategoryService {
     // Find categories by using specific conditions.
     public getCategories(categorySearch: SearchCategoriesViewModel) {
 
-        // Page index should be decrease by one.
+        // Page page should be decrease by one.
         let conditions = Object.assign({}, categorySearch);
         conditions['pagination'] = Object.assign({}, categorySearch.pagination);
-        conditions.pagination.index -= 1;
-        if (conditions.pagination.index < 0)
-            conditions.pagination.index = 0;
+        conditions.pagination.page -= 1;
+        if (conditions.pagination.page < 0)
+            conditions.pagination.page = 0;
 
         return this.clientApiService.post(
             this.clientAuthenticationService.getTokenCode(),
@@ -66,7 +66,7 @@ export class ClientCategoryService implements IClientCategoryService {
             findCategoriesConditions);
     }
 
-    // Change category detail information by searching its index.
+    // Change category detail information by searching its page.
     public editCategoryDetails(id: number, category: Category) {
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.put(

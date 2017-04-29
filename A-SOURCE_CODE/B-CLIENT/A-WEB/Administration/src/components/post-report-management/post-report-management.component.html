@@ -17,7 +17,7 @@
         <div class="text-center">
             <pagination [totalItems]="postReportsSearchResult.total"
                         [itemsPerPage]="findPostReportConditions.pagination.records"
-                        [(ngModel)]="findPostReportConditions.pagination.index"
+                        [(ngModel)]="findPostReportConditions.pagination.page"
                         [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
                         [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
                         [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
@@ -99,7 +99,7 @@
         <div class="text-center">
             <pagination [totalItems]="postReportsSearchResult.total"
                         [itemsPerPage]="findPostReportConditions.pagination.records"
-                        [(ngModel)]="findPostReportConditions.pagination.index"
+                        [(ngModel)]="findPostReportConditions.pagination.page"
                         [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
                         [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
                         [previousText]="clientConfigurationService.ngPaginationSettings.previousText"

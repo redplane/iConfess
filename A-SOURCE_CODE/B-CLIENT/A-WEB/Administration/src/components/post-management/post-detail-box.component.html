@@ -51,7 +51,7 @@
                  *ngIf="hasComments()">
                 <pagination [totalItems]="getCommentsDetailsResult.total"
                             [itemsPerPage]="clientConfigurationService.getMinPageRecords()"
-                            [(ngModel)]="searchPostDetailCondition.pagination.index"
+                            [(ngModel)]="searchPostDetailCondition.pagination.page"
                             [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
                             [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
                             [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
