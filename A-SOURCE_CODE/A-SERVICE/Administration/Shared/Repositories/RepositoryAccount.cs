@@ -112,7 +112,7 @@ namespace Shared.Repositories
             }
 
             // Statuses have been defined.
-            if (conditions.Statuses != null)
+            if (conditions.Statuses != null && conditions.Statuses.Length > 0)
             {
                 // Construct the statuses as a list.
                 var statuses = conditions.Statuses.ToList();
