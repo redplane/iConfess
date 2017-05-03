@@ -35,12 +35,7 @@ namespace Shared.ViewModels.Categories
         /// <summary>
         ///     Which property should be used for sorting categories.
         /// </summary>
-        public CategoriesSort Sort { get; set; }
-
-        /// <summary>
-        ///     Whether records should be sorted ascendingly or decendingly.
-        /// </summary>
-        public SortDirection Direction { get; set; }
+        public Sorting<CategoriesSort> Sorting { get; set; }
 
         /// <summary>
         ///     Pagination information.

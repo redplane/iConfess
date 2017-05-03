@@ -2,7 +2,7 @@
 {
     public enum CategoriesSort
     {
-        Index,
+        Id,
         CreatorIndex,
         Name,
         Created,

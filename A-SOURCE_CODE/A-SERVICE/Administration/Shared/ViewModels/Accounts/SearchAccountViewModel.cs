@@ -35,16 +35,11 @@ namespace Shared.ViewModels.Accounts
         ///     Time when account was lastly modified.
         /// </summary>
         public UnixDateRange LastModified { get; set; }
-
+        
         /// <summary>
-        ///     Which property should be used for sorting.
+        /// Sorting property.
         /// </summary>
-        public AccountsSort Sort { get; set; }
-
-        /// <summary>
-        ///     Whether accounts should be sorted asc or desc.
-        /// </summary>
-        public SortDirection Direction { get; set; }
+        public Sorting<AccountsSort> Sorting { get; set; }
 
         /// <summary>
         ///     Pagination of records filter.

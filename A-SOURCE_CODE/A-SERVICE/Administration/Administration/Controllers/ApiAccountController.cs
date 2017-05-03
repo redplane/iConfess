@@ -440,7 +440,8 @@ namespace Administration.Controllers
             accounts = UnitOfWork.RepositoryAccounts.Search(accounts, conditions);
 
             // Sort accounts
-            accounts = UnitOfWork.RepositoryAccounts.Sort(accounts, conditions.Direction, conditions.Sort);
+            var sorting = conditions.Sorting;
+            accounts = UnitOfWork.RepositoryAccounts.Sort(accounts, sorting.Direction, sorting.Property);
 
             // Count total condition matched account number.
             result.Total = await accounts.CountAsync();

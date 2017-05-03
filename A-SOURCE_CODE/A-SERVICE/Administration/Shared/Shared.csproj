@@ -120,6 +120,7 @@
     <Compile Include="Interfaces\Repositories\IRepositorySignalrConnection.cs" />
     <Compile Include="Interfaces\Services\ITimeService.cs" />
     <Compile Include="Models\Pagination.cs" />
+    <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\TextSearch.cs" />
     <Compile Include="Repositories\ParentRepository.cs" />
     <Compile Include="Repositories\RepositoryCommentReport.cs" />
