@@ -7,7 +7,7 @@ using Shared.Models;
 
 namespace Shared.Services
 {
-    public class GeneralRepositoryService : IGeneralRepositoryService
+    public class CommonRepository : ICommonRepository
     {
         /// <summary>
         ///     Do pagination on a specific list.

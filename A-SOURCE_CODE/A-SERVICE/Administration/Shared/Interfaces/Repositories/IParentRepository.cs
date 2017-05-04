@@ -7,7 +7,7 @@ using Shared.Models;
 
 namespace Shared.Interfaces.Repositories
 {
-    public interface IParentRepository<T> : IGeneralRepositoryService
+    public interface IParentRepository<T> : ICommonRepository
     {
         #region Methods
 

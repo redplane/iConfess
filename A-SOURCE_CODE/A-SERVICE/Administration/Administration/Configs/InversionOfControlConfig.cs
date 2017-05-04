@@ -71,7 +71,7 @@ namespace Administration.Configs
             containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>().SingleInstance();
 
             // Handle common businesses of repositories.
-            containerBuilder.RegisterType<GeneralRepositoryService>().As<GeneralRepositoryService>().SingleInstance();
+            containerBuilder.RegisterType<CommonRepository>().As<CommonRepository>().SingleInstance();
 
             // System email service.
             var systemEmailService = new SendGridService();

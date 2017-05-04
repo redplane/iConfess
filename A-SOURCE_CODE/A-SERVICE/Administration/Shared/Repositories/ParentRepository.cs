@@ -8,7 +8,7 @@ using Shared.Services;
 
 namespace Shared.Repositories
 {
-    public class ParentRepository<T> : GeneralRepositoryService, IParentRepository<T> where T : class
+    public class ParentRepository<T> : CommonRepository, IParentRepository<T> where T : class
     {
         #region Constructors
 
@@ -18,19 +18,13 @@ namespace Shared.Repositories
         /// <param name="dbContextWrapper"></param>
         public ParentRepository(IDbContextWrapper dbContextWrapper)
         {
-            _dbContextWrapper = dbContextWrapper;
             _dbSet = dbContextWrapper.Set<T>();
         }
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        ///     Database context wrapper.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
+        
         /// <summary>
         ///     Database set.
         /// </summary>

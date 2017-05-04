@@ -107,7 +107,7 @@
     <Compile Include="Interfaces\Repositories\IRepositoryToken.cs" />
     <Compile Include="Interfaces\Services\IEncryptionService.cs" />
     <Compile Include="Interfaces\Services\IIdentityService.cs" />
-    <Compile Include="Interfaces\Services\IGeneralRepositoryService.cs" />
+    <Compile Include="Interfaces\Services\ICommonRepository.cs" />
     <Compile Include="Interfaces\Services\ISystemEmailService.cs" />
     <Compile Include="Interfaces\Services\ITemplateService.cs" />
     <Compile Include="Interfaces\Services\IUnitOfWork.cs" />
@@ -129,7 +129,7 @@
     <Compile Include="Repositories\RepositorySignalrConnection.cs" />
     <Compile Include="Repositories\RepositoryToken.cs" />
     <Compile Include="Services\EncryptionService.cs" />
-    <Compile Include="Services\GeneralRepositoryService.cs" />
+    <Compile Include="Services\CommonRepository.cs" />
     <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Services\UnitOfWork.cs" />
     <Compile Include="Models\UnixDateRange.cs" />

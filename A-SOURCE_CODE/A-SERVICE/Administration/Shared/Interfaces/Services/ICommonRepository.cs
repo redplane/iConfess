@@ -5,7 +5,7 @@ using Shared.Models;
 
 namespace Shared.Interfaces.Services
 {
-    public interface IGeneralRepositoryService
+    public interface ICommonRepository
     {
         /// <summary>
         ///     Do pagination on a specific list.
