@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Database.Interfaces;
 using Database.Models.Contextes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -143,7 +144,15 @@ namespace Ordinary
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
+                TokenValidationParameters = tokenValidationParameters,
+                Events = new JwtBearerEvents()
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var a = context.Ticket.Principal;
+                        return Task.CompletedTask;
+                    }
+                }
             });
             
         
