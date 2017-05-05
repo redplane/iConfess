@@ -149,6 +149,7 @@ namespace Ordinary
                 {
                     OnTokenValidated = context =>
                     {
+                        var unitOfWork = context.HttpContext.RequestServices.GetService<IUnitOfWork>();
                         var a = context.Ticket.Principal;
                         return Task.CompletedTask;
                     }
