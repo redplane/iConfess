@@ -7,6 +7,7 @@ using Database.Enumerations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -22,6 +23,7 @@ using Shared.ViewModels.Accounts;
 namespace Ordinary.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(ActiveAuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AccountController : Controller
     {
         #region Constructors
@@ -108,13 +110,11 @@ namespace Ordinary.Controllers
             #region Identity initialization
 
             // Find current time on the system.
-            var systemTime = DateTime.UtcNow;
+            var systemTime = DateTime.Now;
             var jwtExpiration = systemTime.AddSeconds(_jwtConfiguration.Expiration);
 
             // Initialize identity.
             var identity = (ClaimsIdentity)_identityService.InitiateIdentity(account);
-            identity.AddClaim(new Claim(ClaimTypes.Expiration, $"{_jwtConfiguration.Expiration}", ClaimValueTypes.Integer));
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Iat, systemTime.ToString("yyyy-MM-dd"), ClaimValueTypes.DateTime));
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.AuthTime,
                 $"{_systemTimeService.DateTimeUtcToUnix(jwtExpiration)}", ClaimValueTypes.Double));
 
@@ -131,6 +131,18 @@ namespace Ordinary.Controllers
             #endregion
 
             return Ok(jwt);
+        }
+
+        /// <summary>
+        /// Find personal profile.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("personal-profile")]
+        public IActionResult FindProfile()
+        {
+            var identity = (ClaimsIdentity) Request.HttpContext.User.Identity;
+            var claims = identity.Claims.ToList();
+            return Ok(claims);
         }
 
         #endregion

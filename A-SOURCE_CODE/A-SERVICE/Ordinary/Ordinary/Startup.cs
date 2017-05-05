@@ -1,6 +1,7 @@
 ﻿using System;
 using Database.Interfaces;
 using Database.Models.Contextes;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -88,6 +89,7 @@ namespace Ordinary
                     //only allow authenticated users
                     var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(new []{JwtBearerDefaults.AuthenticationScheme})
                     .Build();
 
                     x.Filters.Add(new AuthorizeFilter(policy));

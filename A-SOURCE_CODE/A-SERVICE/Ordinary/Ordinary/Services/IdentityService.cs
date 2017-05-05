@@ -35,6 +35,8 @@ namespace Ordinary.Services
         /// <returns></returns>
         public string InitiateToken(Claim [] claims, JwtConfiguration jwtConfiguration)
         {
+            var systemTime = DateTime.Now;
+
             // Create the JWT and write it to a string
             var jwt = new JwtSecurityToken(jwtConfiguration.Issuer, jwtConfiguration.Audience, claims, null,
                 null, jwtConfiguration.SigningCredentials);
