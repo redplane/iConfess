@@ -141,7 +141,7 @@ namespace Ordinary.Controllers
         public IActionResult FindProfile()
         {
             var identity = (ClaimsIdentity) Request.HttpContext.User.Identity;
-            var claims = identity.Claims.ToList();
+            var claims = identity.Claims.ToDictionary(x => x.Type, x => x.Value);
             return Ok(claims);
         }
 
