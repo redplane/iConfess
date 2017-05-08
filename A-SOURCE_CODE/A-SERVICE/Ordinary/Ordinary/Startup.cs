@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using Database.Enumerations;
 using Database.Interfaces;
 using Database.Models.Contextes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +17,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using Ordinary.Authentications.Handlers;
+using Ordinary.Authentications.Requirements;
 using Ordinary.Interfaces.Services;
 using Ordinary.Models;
 using Ordinary.Services;
@@ -25,7 +29,6 @@ namespace Ordinary
 {
     public class Startup
     {
-        
         #region Properties
 
         /// <summary>
@@ -50,7 +53,7 @@ namespace Ordinary
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-        
+
         /// <summary>
         ///     This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
@@ -68,6 +71,11 @@ namespace Ordinary
             services.AddScoped<IEncryptionService, EncryptionService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<ITimeService, TimeService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Requirement handler.
+            services.AddScoped<IAuthorizationHandler, SolidAccountRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, RoleRequirementHandler>();
 
             // Load jwt configuration from setting files.
             services.Configure<JwtConfiguration>(Configuration.GetSection(nameof(JwtConfiguration)));
@@ -78,24 +86,35 @@ namespace Ordinary
             corsBuilder.AllowAnyMethod();
             corsBuilder.AllowAnyOrigin();
             corsBuilder.AllowCredentials();
-            
+
             // Add cors configuration to service configuration.
             services.AddCors(options => { options.AddPolicy("AllowAll", corsBuilder.Build()); });
             services.AddOptions();
-            
+
+            services.AddAuthorization(
+                x =>
+                    x.AddPolicy("IsAdmin", option => option.AddRequirements(new RoleRequirement(new[] { Roles.Admin }))));
+
             // Add framework services.
             services
                 .AddMvc(x =>
                 {
                     //only allow authenticated users
                     var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .AddAuthenticationSchemes(new []{JwtBearerDefaults.AuthenticationScheme})
-                    .Build();
+                        .RequireAuthenticatedUser()
+                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                        .AddRequirements(new SolidAccountRequirement())
+                        .Build();
 
                     x.Filters.Add(new AuthorizeFilter(policy));
                 })
-                .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
+                .AddJsonOptions(
+                    options =>
+                    {
+                        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    });
+
+            
 
         }
 
@@ -106,14 +125,14 @@ namespace Ordinary
         /// <param name="env"></param>
         /// <param name="loggerFactory"></param>
         /// <param name="serviceProvider"></param>
-        public void Configure(IApplicationBuilder app, 
-            IHostingEnvironment env, 
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
             ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             // Enable logging.
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
+
             // Find JWT configuration in config file.
             var jwtConfiguration = serviceProvider.GetService<IOptions<JwtConfiguration>>().Value;
 
@@ -142,21 +161,12 @@ namespace Ordinary
             // Use JWT Bearer authentication in the system.
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
-                AutomaticAuthenticate = true,
+                AutomaticAuthenticate = false,
                 AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters,
-                Events = new JwtBearerEvents()
-                {
-                    OnTokenValidated = context =>
-                    {
-                        var unitOfWork = context.HttpContext.RequestServices.GetService<IUnitOfWork>();
-                        var a = context.Ticket.Principal;
-                        return Task.CompletedTask;
-                    }
-                }
+                TokenValidationParameters = tokenValidationParameters
             });
-            
-        
+
+
             // Enable cors.
             app.UseCors("AllowAll");
 

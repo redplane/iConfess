@@ -138,13 +138,53 @@ namespace Ordinary.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("personal-profile")]
+        [Authorize("IsAdmin")]
         public IActionResult FindProfile()
         {
             var identity = (ClaimsIdentity) Request.HttpContext.User.Identity;
+            var a = (ClaimsIdentity) HttpContext.User.Identity;
             var claims = identity.Claims.ToDictionary(x => x.Type, x => x.Value);
             return Ok(claims);
         }
 
+        /// <summary>
+        /// Base on specific information to create an account in database.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Register([FromBody] RegisterAccountViewModel parameters)
+        {
+            #region Parameters validation
+
+            // Parameters haven't been initialized. Initialize 'em.
+            if (parameters == null)
+            {
+                parameters = new RegisterAccountViewModel();
+                TryValidateModel(parameters);
+            }
+
+            // Parameters are invalid. Send errors back to client.
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            #endregion
+
+            #region Search account
+
+            // Initiate search account condition.
+            var condition = new SearchAccountViewModel();
+            condition.Email = new TextSearch();
+            condition.Email.Mode = TextComparision.EqualIgnoreCase;
+            condition.Email.Value = parameters.Email;
+
+            // Search accounts.
+            var accounts = _unitOfWork.RepositoryAccounts.Search();
+            accounts = _unitOfWork.RepositoryAccounts.Search(accounts, condition);
+
+            var account = await accounts.FirstOrDefaultAsync();
+            
+
+            #endregion
+        }
         #endregion
 
         #region Properties
