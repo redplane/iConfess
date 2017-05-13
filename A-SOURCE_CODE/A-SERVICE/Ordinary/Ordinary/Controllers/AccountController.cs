@@ -7,10 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Database.Enumerations;
 using Database.Models.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -21,7 +18,6 @@ using Shared.Enumerations;
 using Shared.Interfaces.Services;
 using Shared.Models;
 using Shared.Resources;
-using Shared.Services;
 using Shared.ViewModels.Accounts;
 
 namespace Ordinary.Controllers
@@ -54,7 +50,6 @@ namespace Ordinary.Controllers
             _systemTimeService = systemTimeService;
             _jwtConfiguration = jwtConfigurationOptions.Value;
             _applicationSettings = applicationSettings.Value;
-
         }
 
         #endregion
@@ -100,7 +95,7 @@ namespace Ordinary.Controllers
             condition.Password.Value = _encryptionService.Md5Hash(parameters.Password);
             condition.Password.Mode = TextSearchMode.EqualIgnoreCase;
 
-            condition.Statuses = new[] { Statuses.Active };
+            condition.Statuses = new[] {Statuses.Active};
 
             // Find accounts with defined condition above.
             var accounts = _unitOfWork.RepositoryAccounts.Search();
@@ -120,10 +115,9 @@ namespace Ordinary.Controllers
             var jwtExpiration = systemTime.AddSeconds(_jwtConfiguration.Expiration);
 
             // Initialize identity.
-            var identity = (ClaimsIdentity)_identityService.InitiateIdentity(account);
+            var identity = (ClaimsIdentity) _identityService.InitiateIdentity(account);
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.AuthTime,
                 $"{_systemTimeService.DateTimeUtcToUnix(jwtExpiration)}", ClaimValueTypes.Double));
-
 
             #endregion
 
@@ -140,19 +134,19 @@ namespace Ordinary.Controllers
         }
 
         /// <summary>
-        /// Find personal profile.
+        ///     Find personal profile.
         /// </summary>
         /// <returns></returns>
         [HttpGet("personal-profile")]
         public IActionResult FindProfile()
         {
-            var identity = (ClaimsIdentity)Request.HttpContext.User.Identity;
+            var identity = (ClaimsIdentity) Request.HttpContext.User.Identity;
             var claims = identity.Claims.ToDictionary(x => x.Type, x => x.Value);
             return Ok(claims);
         }
 
         /// <summary>
-        /// Base on specific information to create an account in database.
+        ///     Base on specific information to create an account in database.
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> Register([FromBody] RegisterAccountViewModel parameters)
@@ -189,7 +183,7 @@ namespace Ordinary.Controllers
             // Account exists in system.
             if (account != null)
             {
-                Response.StatusCode = (int)HttpStatusCode.Conflict;
+                Response.StatusCode = (int) HttpStatusCode.Conflict;
                 return Json(new HttpResponse(HttpMessages.AccountIsInUse));
             }
 
@@ -214,7 +208,7 @@ namespace Ordinary.Controllers
         }
 
         /// <summary>
-        /// Request service to send an instruction email to help user to reset his/her password.
+        ///     Request service to send an instruction email to help user to reset his/her password.
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
@@ -236,7 +230,7 @@ namespace Ordinary.Controllers
             // Initiate search conditions.
             var conditions = new SearchAccountViewModel();
             conditions.Email = new TextSearch(TextSearchMode.EndsWithIgnoreCase, parameter.Email);
-            conditions.Statuses = new[] { Statuses.Active };
+            conditions.Statuses = new[] {Statuses.Active};
 
             // Search user in database.
             var accounts = _unitOfWork.RepositoryAccounts.Search();
@@ -276,12 +270,17 @@ namespace Ordinary.Controllers
             return Ok();
         }
 
+        /// <summary>
+        ///     Submit password by using forgot password token.
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public async Task<IActionResult> SubmitPassword(
-            [FromQuery] [Required(ErrorMessageResourceType = typeof(HttpMessages),
+            [FromQuery] [Required(ErrorMessageResourceType = typeof(HttpValidationMessages),
                 ErrorMessageResourceName = "InformationIsRequired")] string code,
             [FromBody] SubmitPasswordResetViewModel parameter)
         {
-
             #region Model validation
 
             if (parameter == null)
@@ -307,13 +306,13 @@ namespace Ordinary.Controllers
 
             // Find token.
             var result = from account in accounts
-                              from token in tokens
-                              where account.Id == token.OwnerIndex && token.Expired < epochSystemTime
-                              select new SearchAccountTokenResult
-                              {
-                                  Token = token,
-                                  Account = account
-                              };
+                from token in tokens
+                where account.Id == token.OwnerIndex && token.Expired < epochSystemTime
+                select new SearchAccountTokenResult
+                {
+                    Token = token,
+                    Account = account
+                };
 
             // No active token is found.
             if (!await result.AnyAsync())
@@ -337,6 +336,7 @@ namespace Ordinary.Controllers
 
             return Ok();
         }
+
         #endregion
 
         #region Properties
@@ -352,25 +352,24 @@ namespace Ordinary.Controllers
         private readonly IEncryptionService _encryptionService;
 
         /// <summary>
-        /// Service which handles identity businesses.
+        ///     Service which handles identity businesses.
         /// </summary>
         private readonly IIdentityService _identityService;
 
         /// <summary>
-        /// Service which handles time on system.
+        ///     Service which handles time on system.
         /// </summary>
         private readonly ITimeService _systemTimeService;
 
         /// <summary>
-        /// Configuration information of JWT.
+        ///     Configuration information of JWT.
         /// </summary>
         private readonly JwtConfiguration _jwtConfiguration;
 
         /// <summary>
-        /// Collection of settings in application.
+        ///     Collection of settings in application.
         /// </summary>
         private readonly ApplicationSetting _applicationSettings;
-
 
         #endregion
     }
