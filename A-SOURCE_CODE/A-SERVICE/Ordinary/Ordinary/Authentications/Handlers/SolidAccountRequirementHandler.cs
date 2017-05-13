@@ -90,7 +90,7 @@ namespace Ordinary.Authentications.Handlers
             var condition = new SearchAccountViewModel();
             condition.Email = new TextSearch();
             condition.Email.Value = email;
-            condition.Email.Mode = TextComparision.Equal;
+            condition.Email.Mode = TextSearchMode.Equal;
 
             // Find accounts based on conditions.
             var accounts = _unitOfWork.RepositoryAccounts.Search();

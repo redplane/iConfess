@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Categories;
@@ -15,9 +15,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with database context.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryCategory(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
         }
 
@@ -47,28 +47,28 @@ namespace Shared.Repositories
                 var szName = conditions.Name;
                 switch (szName.Mode)
                 {
-                    case TextComparision.Contain:
+                    case TextSearchMode.Contain:
                         categories = categories.Where(x => x.Name.Contains(szName.Value));
                         break;
-                    case TextComparision.Equal:
+                    case TextSearchMode.Equal:
                         categories = categories.Where(x => x.Name.Equals(szName.Value));
                         break;
-                    case TextComparision.EqualIgnoreCase:
+                    case TextSearchMode.EqualIgnoreCase:
                         categories =
                             categories.Where(x => x.Name.Equals(szName.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.StartsWith:
+                    case TextSearchMode.StartsWith:
                         categories = categories.Where(x => x.Name.StartsWith(szName.Value));
                         break;
-                    case TextComparision.StartsWithIgnoreCase:
+                    case TextSearchMode.StartsWithIgnoreCase:
                         categories =
                             categories.Where(
                                 x => x.Name.StartsWith(szName.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.EndsWith:
+                    case TextSearchMode.EndsWith:
                         categories = categories.Where(x => x.Name.EndsWith(szName.Value));
                         break;
-                    case TextComparision.EndsWithIgnoreCase:
+                    case TextSearchMode.EndsWithIgnoreCase:
                         categories =
                             categories.Where(
                                 x => x.Name.EndsWith(szName.Value, StringComparison.CurrentCultureIgnoreCase));

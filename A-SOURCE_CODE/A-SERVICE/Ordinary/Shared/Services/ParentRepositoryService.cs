@@ -78,28 +78,28 @@ namespace Shared.Services
 
             switch (search.Mode)
             {
-                case TextComparision.Contain:
+                case TextSearchMode.Contain:
                     records = records.Where(x => property(x).Contains(search.Value));
                     break;
-                case TextComparision.Equal:
+                case TextSearchMode.Equal:
                     records = records.Where(x => property(x).Equals(search.Value));
                     break;
-                case TextComparision.EqualIgnoreCase:
+                case TextSearchMode.EqualIgnoreCase:
                     records =
                         records.Where(x => property(x).Equals(search.Value, StringComparison.CurrentCultureIgnoreCase));
                     break;
-                case TextComparision.StartsWith:
+                case TextSearchMode.StartsWith:
                     records = records.Where(x => property(x).StartsWith(search.Value));
                     break;
-                case TextComparision.StartsWithIgnoreCase:
+                case TextSearchMode.StartsWithIgnoreCase:
                     records =
                         records.Where(
                             x => property(x).StartsWith(search.Value, StringComparison.CurrentCultureIgnoreCase));
                     break;
-                case TextComparision.EndsWith:
+                case TextSearchMode.EndsWith:
                     records = records.Where(x => property(x).EndsWith(search.Value));
                     break;
-                case TextComparision.EndsWithIgnoreCase:
+                case TextSearchMode.EndsWithIgnoreCase:
                     records =
                         records.Where(
                             x => property(x).EndsWith(search.Value, StringComparison.CurrentCultureIgnoreCase));

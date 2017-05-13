@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Database.Interfaces;
 using Database.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -8,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Database.Models.Contextes
 {
-    public class RelationalDatabaseContext : DbContext, IDbContextWrapper
+    public class RelationalDatabaseContext : DbContext
     {
         #region Constructors
 

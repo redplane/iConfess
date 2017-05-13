@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.PostReports;
@@ -16,9 +16,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with inversion of control.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryPostReport(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
         }
 
@@ -49,29 +49,29 @@ namespace Shared.Repositories
                 var szBody = conditions.Body;
                 switch (szBody.Mode)
                 {
-                    case TextComparision.Contain:
+                    case TextSearchMode.Contain:
                         postReports = postReports.Where(x => x.Body.Contains(szBody.Value));
                         break;
-                    case TextComparision.Equal:
+                    case TextSearchMode.Equal:
                         postReports = postReports.Where(x => x.Body.Equals(szBody.Value));
                         break;
-                    case TextComparision.EqualIgnoreCase:
+                    case TextSearchMode.EqualIgnoreCase:
                         postReports =
                             postReports.Where(
                                 x => x.Body.Equals(szBody.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.StartsWith:
+                    case TextSearchMode.StartsWith:
                         postReports = postReports.Where(x => x.Body.StartsWith(szBody.Value));
                         break;
-                    case TextComparision.StartsWithIgnoreCase:
+                    case TextSearchMode.StartsWithIgnoreCase:
                         postReports =
                             postReports.Where(
                                 x => x.Body.StartsWith(szBody.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.EndsWith:
+                    case TextSearchMode.EndsWith:
                         postReports = postReports.Where(x => x.Body.EndsWith(szBody.Value));
                         break;
-                    case TextComparision.EndsWithIgnoreCase:
+                    case TextSearchMode.EndsWithIgnoreCase:
                         postReports =
                             postReports.Where(
                                 x => x.Body.EndsWith(szBody.Value, StringComparison.CurrentCultureIgnoreCase));
@@ -87,29 +87,29 @@ namespace Shared.Repositories
                 var szReason = conditions.Reason;
                 switch (szReason.Mode)
                 {
-                    case TextComparision.Contain:
+                    case TextSearchMode.Contain:
                         postReports = postReports.Where(x => x.Reason.Contains(szReason.Value));
                         break;
-                    case TextComparision.Equal:
+                    case TextSearchMode.Equal:
                         postReports = postReports.Where(x => x.Reason.Equals(szReason.Value));
                         break;
-                    case TextComparision.EqualIgnoreCase:
+                    case TextSearchMode.EqualIgnoreCase:
                         postReports =
                             postReports.Where(
                                 x => x.Reason.Equals(szReason.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.StartsWith:
+                    case TextSearchMode.StartsWith:
                         postReports = postReports.Where(x => x.Reason.StartsWith(szReason.Value));
                         break;
-                    case TextComparision.StartsWithIgnoreCase:
+                    case TextSearchMode.StartsWithIgnoreCase:
                         postReports =
                             postReports.Where(
                                 x => x.Reason.StartsWith(szReason.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.EndsWith:
+                    case TextSearchMode.EndsWith:
                         postReports = postReports.Where(x => x.Reason.EndsWith(szReason.Value));
                         break;
-                    case TextComparision.EndsWithIgnoreCase:
+                    case TextSearchMode.EndsWithIgnoreCase:
                         postReports =
                             postReports.Where(
                                 x => x.Reason.EndsWith(szReason.Value, StringComparison.CurrentCultureIgnoreCase));

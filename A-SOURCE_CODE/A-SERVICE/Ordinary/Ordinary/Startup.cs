@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Security.Claims;
 using Database.Enumerations;
-using Database.Interfaces;
 using Database.Models.Contextes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -67,7 +65,7 @@ namespace Ordinary
 
             // Injections configuration.
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IDbContextWrapper, RelationalDatabaseContext>();
+            services.AddTransient<DbContext, RelationalDatabaseContext>();
             services.AddScoped<IEncryptionService, EncryptionService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<ITimeService, TimeService>();
@@ -79,6 +77,7 @@ namespace Ordinary
 
             // Load jwt configuration from setting files.
             services.Configure<JwtConfiguration>(Configuration.GetSection(nameof(JwtConfiguration)));
+            services.Configure<ApplicationSetting>(Configuration.GetSection(nameof(ApplicationSetting)));
 
             // Cors configuration.
             var corsBuilder = new CorsPolicyBuilder();
@@ -90,11 +89,7 @@ namespace Ordinary
             // Add cors configuration to service configuration.
             services.AddCors(options => { options.AddPolicy("AllowAll", corsBuilder.Build()); });
             services.AddOptions();
-
-            services.AddAuthorization(
-                x =>
-                    x.AddPolicy("IsAdmin", option => option.AddRequirements(new RoleRequirement(new[] { Roles.Admin }))));
-
+            
             // Add framework services.
             services
                 .AddMvc(x =>
@@ -113,9 +108,6 @@ namespace Ordinary
                     {
                         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     });
-
-            
-
         }
 
         /// <summary>

@@ -4,6 +4,8 @@ namespace Shared.Models
 {
     public class TextSearch
     {
+        #region Properties
+
         /// <summary>
         ///     Value of text.
         /// </summary>
@@ -12,6 +14,28 @@ namespace Shared.Models
         /// <summary>
         ///     Mode of text filter
         /// </summary>
-        public TextComparision Mode { get; set; }
+        public TextSearchMode Mode { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initiate class with default settings.
+        /// </summary>
+        public TextSearch() { }
+
+        /// <summary>
+        /// Initiate class with settings.
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="value"></param>
+        public TextSearch(TextSearchMode mode, string value)
+        {
+            Mode = mode;
+            Value = value;
+        }
+
+        #endregion
     }
 }

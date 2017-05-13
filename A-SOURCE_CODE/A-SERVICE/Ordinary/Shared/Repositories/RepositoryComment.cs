@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Comments;
@@ -10,25 +10,15 @@ namespace Shared.Repositories
 {
     public class RepositoryComment : ParentRepository<Comment>, IRepositoryComment
     {
-        #region Properties
-
-        /// <summary>
-        ///     Provides functions to access to database.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
         ///     Initiate repository with database context.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryComment(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -62,29 +52,29 @@ namespace Shared.Repositories
                 var szContent = conditions.Content;
                 switch (szContent.Mode)
                 {
-                    case TextComparision.Contain:
+                    case TextSearchMode.Contain:
                         comments = comments.Where(x => x.Content.Contains(szContent.Value));
                         break;
-                    case TextComparision.Equal:
+                    case TextSearchMode.Equal:
                         comments = comments.Where(x => x.Content.Equals(szContent.Value));
                         break;
-                    case TextComparision.EqualIgnoreCase:
+                    case TextSearchMode.EqualIgnoreCase:
                         comments =
                             comments.Where(
                                 x => x.Content.Equals(szContent.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.StartsWith:
+                    case TextSearchMode.StartsWith:
                         comments = comments.Where(x => x.Content.StartsWith(szContent.Value));
                         break;
-                    case TextComparision.StartsWithIgnoreCase:
+                    case TextSearchMode.StartsWithIgnoreCase:
                         comments =
                             comments.Where(
                                 x => x.Content.StartsWith(szContent.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.EndsWith:
+                    case TextSearchMode.EndsWith:
                         comments = comments.Where(x => x.Content.EndsWith(szContent.Value));
                         break;
-                    case TextComparision.EndsWithIgnoreCase:
+                    case TextSearchMode.EndsWithIgnoreCase:
                         comments =
                             comments.Where(
                                 x => x.Content.EndsWith(szContent.Value, StringComparison.CurrentCultureIgnoreCase));

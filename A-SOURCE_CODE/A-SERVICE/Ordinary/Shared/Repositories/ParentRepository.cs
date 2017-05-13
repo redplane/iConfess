@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Database.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces.Repositories;
 using Shared.Services;
@@ -14,22 +13,16 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with database context wrapper.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
-        public ParentRepository(IDbContextWrapper dbContextWrapper)
+        /// <param name="dbContext"></param>
+        public ParentRepository(DbContext dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
-            _dbSet = dbContextWrapper.Set<T>();
+            _dbSet = dbContext.Set<T>();
         }
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        ///     Database context wrapper.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
+        
         /// <summary>
         ///     Database set.
         /// </summary>
