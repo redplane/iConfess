@@ -41,12 +41,7 @@ namespace Administration.Services
         /// Address which is shown in from box.
         /// </summary>
         public string From { get; set; }
-
-        /// <summary>
-        /// Base url of SendGrid service.
-        /// </summary>
-        private const string BaseUrl = "https://api.sendgrid.com/api";
-
+        
         #endregion
 
         #region Constructors
@@ -129,7 +124,6 @@ namespace Administration.Services
             // TODO: Refactored implementation.
             // Initiate SendGrid client.
             var sendGridClient = new SendGridClient(ApiKey);
-            var to = new EmailAddress("test@example.com", "Example User");
             var plainTextContent = "Hello, Email!";
             var htmlContent = "<strong>Hello, Email!</strong>";
             var msg = MailHelper.CreateMultipleEmailsToMultipleRecipients(new EmailAddress(), recipients.Select(x => new EmailAddress{Email = x}).ToList(), new List<string>{"Subject"},  "", plainTextContent, data);
