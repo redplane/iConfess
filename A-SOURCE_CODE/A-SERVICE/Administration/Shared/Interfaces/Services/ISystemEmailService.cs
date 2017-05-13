@@ -1,15 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Shared.Enumerations;
 
 namespace Shared.Interfaces.Services
 {
     public interface ISystemEmailService
     {
-        /// <summary>
-        /// Key which is used for api requests.
-        /// </summary>
-        string ApiKey { get; set; }
-        
+        #region Methods
+
         /// <summary>
         /// Load email by template from a specific path.
         /// </summary>
@@ -32,5 +30,15 @@ namespace Shared.Interfaces.Services
         /// <param name="html"></param>
         /// <returns></returns>
         void Send(string[] recipients, string subject, string html);
+
+        /// <summary>
+        /// Send email asynchronously by using pre-defined template.
+        /// </summary>
+        /// <param name="recipients"></param>
+        /// <param name="mailTemplate"></param>
+        /// <param name="data"></param>
+        Task SendAsync(string[] recipients, string mailTemplate, List<Dictionary<string, string>> data);
+
+        #endregion
     }
 }

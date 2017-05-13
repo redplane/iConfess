@@ -1,7 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Threading.Tasks;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using Shared.Enumerations;
 using Shared.Interfaces.Services;
 
@@ -15,6 +23,11 @@ namespace Administration.Services
         #region Properties
 
         /// <summary>
+        /// Api key which is used for accessing into SendGrid service.
+        /// </summary>
+        private string _apiKey;
+
+        /// <summary>
         ///     Collection of email templates.
         /// </summary>
         private readonly IDictionary<SystemEmail, string> _emails;
@@ -22,12 +35,17 @@ namespace Administration.Services
         /// <summary>
         /// Api key which is for requests.
         /// </summary>
-        public string ApiKey { get; set; }
+        public string ApiKey => ConfigurationManager.AppSettings["SendGridApiKey"];
 
         /// <summary>
         /// Address which is shown in from box.
         /// </summary>
         public string From { get; set; }
+
+        /// <summary>
+        /// Base url of SendGrid service.
+        /// </summary>
+        private const string BaseUrl = "https://api.sendgrid.com/api";
 
         #endregion
 
@@ -36,9 +54,10 @@ namespace Administration.Services
         /// <summary>
         ///     Initiate service with default settings.
         /// </summary>
-        public SendGridService()
+        public SendGridService(string apiKey)
         {
             _emails = new Dictionary<SystemEmail, string>();
+            _apiKey = apiKey;
         }
 
         #endregion
@@ -97,7 +116,26 @@ namespace Administration.Services
             // Init SmtpClient and send
             var smtpClient = new SmtpClient();
             smtpClient.Send(mailMessage);
-        } 
+        }
+
+        /// <summary>
+        /// Send email asynchronously by using pre-defined template.
+        /// </summary>
+        /// <param name="recipients"></param>
+        /// <param name="mailTemplate"></param>
+        /// <param name="data"></param>
+        public async Task SendAsync(string[] recipients, string mailTemplate, List<Dictionary<string, string>> data)
+        {
+            // TODO: Refactored implementation.
+            // Initiate SendGrid client.
+            var sendGridClient = new SendGridClient(ApiKey);
+            var to = new EmailAddress("test@example.com", "Example User");
+            var plainTextContent = "Hello, Email!";
+            var htmlContent = "<strong>Hello, Email!</strong>";
+            var msg = MailHelper.CreateMultipleEmailsToMultipleRecipients(new EmailAddress(), recipients.Select(x => new EmailAddress{Email = x}).ToList(), new List<string>{"Subject"},  "", plainTextContent, data);
+            var response = await sendGridClient.SendEmailAsync(msg);
+        }
+
         #endregion
     }
 }
