@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -13,22 +13,22 @@ namespace Shared.Repositories
         #region Properties
 
         /// <summary>
-        ///     Database dbContextWrapper.
+        ///     Database dbContext.
         /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
+        private readonly DbContext _dbContext;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        ///     Initiate signalr connection repository with database dbContextWrapper.
+        ///     Initiate signalr connection repository with database dbContext.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositorySignalrConnection(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
+            _dbContext = dbContext;
         }
 
         #endregion

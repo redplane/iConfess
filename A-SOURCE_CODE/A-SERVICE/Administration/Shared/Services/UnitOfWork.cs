@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+using System.Data.Entity;
 using System.Threading.Tasks;
-using Database.Interfaces;
-using Shared.Enumerations;
-using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
 using Shared.Interfaces.Services;
-using Shared.Models;
 using Shared.Repositories;
 
 namespace Shared.Services
@@ -19,15 +14,15 @@ namespace Shared.Services
         /// <summary>
         ///     Initiate unit of work with database context provided by Entity Framework.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
-        public UnitOfWork(IDbContextWrapper dbContextWrapper)
+        /// <param name="dbContext"></param>
+        public UnitOfWork(DbContext dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
+            _dbContext = dbContext;
         }
 
         #endregion
 
-        #region Variables
+        #region Properties
 
         /// <summary>
         ///     Whether the instance has been disposed or not.
@@ -37,11 +32,7 @@ namespace Shared.Services
         /// <summary>
         ///     Provide methods to access confession database.
         /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
-        #endregion
-
-        #region Properties
+        private readonly DbContext _dbContext;
 
         /// <summary>
         ///     Provide access to accounts database.
@@ -84,19 +75,11 @@ namespace Shared.Services
         private IRepositorySignalrConnection _repositorySignalrConnection;
 
         /// <summary>
-        ///     Provide methods to access confession database.
-        /// </summary>
-        public IDbContextWrapper Context
-        {
-            get { return _dbContextWrapper; }
-        }
-
-        /// <summary>
         ///     Provides functions to access account database.
         /// </summary>
         public IRepositoryAccount RepositoryAccounts
         {
-            get { return _repositoryAccounts ?? (_repositoryAccounts = new RepositoryAccount(_dbContextWrapper)); }
+            get { return _repositoryAccounts ?? (_repositoryAccounts = new RepositoryAccount(_dbContext)); }
         }
 
         /// <summary>
@@ -104,10 +87,7 @@ namespace Shared.Services
         /// </summary>
         public IRepositoryCategory RepositoryCategories
         {
-            get
-            {
-                return _repositoryCategories ?? (_repositoryCategories = new RepositoryCategory(_dbContextWrapper));
-            }
+            get { return _repositoryCategories ?? (_repositoryCategories = new RepositoryCategory(_dbContext)); }
         }
 
         /// <summary>
@@ -115,7 +95,7 @@ namespace Shared.Services
         /// </summary>
         public IRepositoryComment RepositoryComments
         {
-            get { return _repositoryComment ?? (_repositoryComment = new RepositoryComment(_dbContextWrapper)); }
+            get { return _repositoryComment ?? (_repositoryComment = new RepositoryComment(_dbContext)); }
         }
 
 
@@ -123,14 +103,14 @@ namespace Shared.Services
         ///     Provides functions to access to post reports database.
         /// </summary>
         public IRepositoryPostReport RepositoryPostReports
-            => _repositoryPostReport ?? (_repositoryPostReport = new RepositoryPostReport(_dbContextWrapper));
+            => _repositoryPostReport ?? (_repositoryPostReport = new RepositoryPostReport(_dbContext));
 
         /// <summary>
         ///     Provides functions to access post database.
         /// </summary>
         public IRepositoryPost RepositoryPosts
         {
-            get { return _repositoryPost ?? (_repositoryPost = new RepositoryPost(_dbContextWrapper)); }
+            get { return _repositoryPost ?? (_repositoryPost = new RepositoryPost(_dbContext)); }
         }
 
         /// <summary>
@@ -141,7 +121,7 @@ namespace Shared.Services
             get
             {
                 return _repositorySignalrConnection ??
-                       (_repositorySignalrConnection = new RepositorySignalrConnection(_dbContextWrapper));
+                       (_repositorySignalrConnection = new RepositorySignalrConnection(_dbContext));
             }
         }
 
@@ -150,15 +130,15 @@ namespace Shared.Services
         /// </summary>
         public IRepositoryCommentReport RepositoryCommentReports => _repositoryCommentReport ??
                                                                     (_repositoryCommentReport =
-                                                                        new RepositoryCommentReport(_dbContextWrapper))
-            ;
+                                                                        new RepositoryCommentReport(_dbContext))
+        ;
 
         /// <summary>
         ///     Provides function to access token database.
         /// </summary>
         public IRepositoryToken RepositoryTokens
         {
-            get { return _repositoryToken ?? (_repositoryToken = new RepositoryToken(_dbContextWrapper)); }
+            get { return _repositoryToken ?? (_repositoryToken = new RepositoryToken(_dbContext)); }
         }
 
         #endregion
@@ -171,7 +151,7 @@ namespace Shared.Services
         /// <returns></returns>
         public int Commit()
         {
-            return _dbContextWrapper.Commit();
+            return _dbContext.SaveChanges();
         }
 
         /// <summary>
@@ -180,7 +160,7 @@ namespace Shared.Services
         /// <returns></returns>
         public async Task<int> CommitAsync()
         {
-            return await _dbContextWrapper.CommitAsync();
+            return await _dbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -195,7 +175,7 @@ namespace Shared.Services
 
             // Object is being disposed.
             if (disposing)
-                _dbContextWrapper.Dispose();
+                _dbContext.Dispose();
 
             _disposed = true;
         }
@@ -208,7 +188,7 @@ namespace Shared.Services
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         #endregion
     }
 }

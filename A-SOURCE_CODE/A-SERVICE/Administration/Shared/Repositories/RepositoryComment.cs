@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -15,7 +15,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Provides functions to access to database.
         /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
+        private readonly DbContext _dbContext;
 
         #endregion
 
@@ -24,11 +24,11 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with database context.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryComment(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
+            _dbContext = dbContext;
         }
 
         #endregion

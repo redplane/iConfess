@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
@@ -16,7 +16,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Database context which provides access to database.
         /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
+        private readonly DbContext _dbContext;
 
         #endregion
 
@@ -25,11 +25,10 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with dependency injection.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryAccount(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion

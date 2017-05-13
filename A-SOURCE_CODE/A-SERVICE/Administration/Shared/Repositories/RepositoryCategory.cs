@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -15,9 +15,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with database context.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryCategory(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
         }
 
@@ -55,7 +55,8 @@ namespace Shared.Repositories
                         break;
                     case TextComparision.EqualIgnoreCase:
                         categories =
-                            categories.Where(x => x.Name.Equals(szName.Value, StringComparison.InvariantCultureIgnoreCase));
+                            categories.Where(
+                                x => x.Name.Equals(szName.Value, StringComparison.InvariantCultureIgnoreCase));
                         break;
                     case TextComparision.StartsWith:
                         categories = categories.Where(x => x.Name.StartsWith(szName.Value));

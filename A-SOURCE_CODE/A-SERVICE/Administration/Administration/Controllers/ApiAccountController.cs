@@ -566,7 +566,7 @@ namespace Administration.Controllers
             target.LastModified = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
 
             // Save changes into database.
-            await UnitOfWork.Context.CommitAsync();
+            await UnitOfWork.CommitAsync();
 
             #endregion
 

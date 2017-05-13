@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -12,8 +13,7 @@ using Administration.Services;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
-using Database.Interfaces;
-using Database.Models.Contextes;
+using Database.Models.Contexts;
 using log4net.Config;
 using Microsoft.AspNet.SignalR;
 using Shared.Enumerations;
@@ -49,7 +49,7 @@ namespace Administration.Configs
             #region Unit of work & Database context
 
             // Database context initialization.
-            containerBuilder.RegisterType<SqlServerDataContext>().As<IDbContextWrapper>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<RelationalDataContext>().As<DbContext>().InstancePerLifetimeScope();
 
             // Unit of work registration.
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
