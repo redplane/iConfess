@@ -101,15 +101,13 @@
     <Compile Include="Constants\Regexes.cs" />
     <Compile Include="Enumerations\NumericComparision.cs" />
     <Compile Include="Enumerations\Order\TokenSort.cs" />
-    <Compile Include="Enumerations\SystemEmail.cs" />
     <Compile Include="Enumerations\TextComparision.cs" />
     <Compile Include="Interfaces\Repositories\IParentRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryToken.cs" />
     <Compile Include="Interfaces\Services\IEncryptionService.cs" />
     <Compile Include="Interfaces\Services\IIdentityService.cs" />
     <Compile Include="Interfaces\Services\ICommonRepository.cs" />
-    <Compile Include="Interfaces\Services\ISystemEmailService.cs" />
-    <Compile Include="Interfaces\Services\ITemplateService.cs" />
+    <Compile Include="Interfaces\Services\IMailService.cs" />
     <Compile Include="Interfaces\Services\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryAccount.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryCategory.cs" />
@@ -119,7 +117,10 @@
     <Compile Include="Interfaces\Repositories\IRepositoryPostReport.cs" />
     <Compile Include="Interfaces\Repositories\IRepositorySignalrConnection.cs" />
     <Compile Include="Interfaces\Services\ITimeService.cs" />
+    <Compile Include="Models\MailTemplate.cs" />
+    <Compile Include="Models\MailTemplateConfig.cs" />
     <Compile Include="Models\Pagination.cs" />
+    <Compile Include="Models\PathInfo.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\TextSearch.cs" />
     <Compile Include="Repositories\ParentRepository.cs" />
@@ -130,7 +131,6 @@
     <Compile Include="Repositories\RepositoryToken.cs" />
     <Compile Include="Services\EncryptionService.cs" />
     <Compile Include="Services\CommonRepository.cs" />
-    <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Services\UnitOfWork.cs" />
     <Compile Include="Models\UnixDateRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

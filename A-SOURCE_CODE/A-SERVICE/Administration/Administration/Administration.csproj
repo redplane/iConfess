@@ -121,12 +121,11 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Mustache, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mustache.1.0.1\lib\net452\Mustache.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Nustache.Core, Version=1.16.0.4, Culture=neutral, PublicKeyToken=efd6f3d8f76ecd9f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nustache.1.16.0.4\lib\net20\Nustache.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -219,7 +218,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Emails\iConfess-ForgotPassword.html" />
+    <Content Include="AppData\Mails\iConfess-ForgotPassword.html" />
+    <Content Include="AppData\SendGrid.json" />
     <None Include="Properties\PublishProfiles\confession - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\confession - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Olive - FTP %282%29.pubxml" />
@@ -249,6 +249,7 @@
     <Compile Include="Interfaces\Services\IConfigurationService.cs" />
     <Compile Include="Interfaces\Services\INotificationService.cs" />
     <Compile Include="Middlewares\BearerAuthenticationMiddleware.cs" />
+    <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\JwtResponse.cs" />
     <Compile Include="Models\Messages\CommentMessage.cs" />
     <Compile Include="Models\Messages\CommentReportMessage.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Providers\BearerAuthenticationProvider.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\IdentityService.cs" />
+    <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\SendGridService.cs" />
     <Compile Include="SignalrHubs\ParentHub.cs" />

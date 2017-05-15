@@ -43,7 +43,6 @@ namespace Administration.Controllers
         /// <param name="encryptionService"></param>
         /// <param name="identityService"></param>
         /// <param name="systemEmailService"></param>
-        /// <param name="templateService"></param>
         /// <param name="configurationService"></param>
         /// <param name="unitOfWork"></param>
         /// <param name="log"></param>
@@ -52,8 +51,7 @@ namespace Administration.Controllers
             ITimeService timeService,
             IEncryptionService encryptionService,
             IIdentityService identityService,
-            ISystemEmailService systemEmailService,
-            ITemplateService templateService,
+            IMailService systemEmailService,
             IConfigurationService configurationService,
             IUnitOfWork unitOfWork, ILog log) : base(unitOfWork)
         {
@@ -62,7 +60,6 @@ namespace Administration.Controllers
             _encryptionService = encryptionService;
             _identityService = identityService;
             _systemEmailService = systemEmailService;
-            _templateService = templateService;
             _configurationService = configurationService;
             _log = log;
         }
@@ -94,13 +91,8 @@ namespace Administration.Controllers
         /// <summary>
         ///     Service which handling email send operation.
         /// </summary>
-        private readonly ISystemEmailService _systemEmailService;
-
-        /// <summary>
-        ///     Service which handling template operations.
-        /// </summary>
-        private readonly ITemplateService _templateService;
-
+        private readonly IMailService _systemEmailService;
+        
         /// <summary>
         ///     Service which handles configurations.
         /// </summary>
@@ -290,14 +282,11 @@ namespace Administration.Controllers
                     token = token.Code
                 };
 
+
+
                 // Search email raw content.
-                var emailRawContent = _systemEmailService.LoadEmailContent(SystemEmail.ForgotPassword);
-                var htmlEmailContent = _templateService.Render(emailRawContent, data);
-
-                // Send an email to recipient about the token.
-                _systemEmailService.Send(new[] { account.Email },
-                    HttpMessages.TitleEmailForgotPassword, htmlEmailContent);
-
+                await _systemEmailService.SendAsync(new[] {parameter.Email}, Constants.MailForgotPasswordInstruction, data);
+                
                 // Save changes into database.
                 await UnitOfWork.CommitAsync();
 
