@@ -202,6 +202,9 @@ namespace Ordinary.Controllers
             // Save changes asychronously.
             await _unitOfWork.CommitAsync();
 
+            // TODO: Implement instruction email.
+            // TODO: Implement notification service which notifies administrators about the registration.
+
             #endregion
 
             return Ok();

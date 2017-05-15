@@ -1,0 +1,10 @@
+﻿{
+  "mail-forgot-password-instruction": {
+    "subject": "(iConfess) Forgot password instruction",
+    "path": {
+      "url": "~/AppData/Mails/iConfess-ForgotPassword.html",
+      "isAbsolute": false
+    },
+    "isHtml": true
+  }
+}
