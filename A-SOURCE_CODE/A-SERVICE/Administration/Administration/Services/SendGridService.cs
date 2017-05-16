@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -88,8 +87,6 @@ namespace Administration.Services
             if (mailTemplate == null)
                 return;
             
-
-            // TODO: Refactored implementation.
             // Initiate SendGrid client.
             var sendGridClient = new SendGridClient(ApiKey);
 
