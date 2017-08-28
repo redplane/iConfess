@@ -29,12 +29,12 @@ namespace Shared.ViewModels.Accounts
         /// <summary>
         ///     Time when account joined.
         /// </summary>
-        public UnixDateRange Joined { get; set; }
+        public DoubleRange Joined { get; set; }
 
         /// <summary>
         ///     Time when account was lastly modified.
         /// </summary>
-        public UnixDateRange LastModified { get; set; }
+        public DoubleRange LastModified { get; set; }
         
         /// <summary>
         /// Sorting property.

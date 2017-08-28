@@ -29,7 +29,7 @@ namespace Administration.ViewModels.ApiComment
         /// <summary>
         ///     Time range when comment was created.
         /// </summary>
-        public UnixDateRange Created { get; set; }
+        public DoubleRange Created { get; set; }
 
         /// <summary>
         /// Which property should be used for sorting.
@@ -44,7 +44,7 @@ namespace Administration.ViewModels.ApiComment
         /// <summary>
         ///     Time range when comment was lastly modified.
         /// </summary>
-        public UnixDateRange LastModified { get; set; }
+        public DoubleRange LastModified { get; set; }
 
         /// <summary>
         ///     Records pagination.

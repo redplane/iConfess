@@ -33,7 +33,7 @@ namespace Shared.ViewModels.Posts
         /// <summary>
         ///     When the post was created.
         /// </summary>
-        public UnixDateRange Created { get; set; }
+        public DoubleRange Created { get; set; }
 
         /// <summary>
         /// Record sort direction.
@@ -48,7 +48,7 @@ namespace Shared.ViewModels.Posts
         /// <summary>
         ///     When the post was lastly modified.
         /// </summary>
-        public UnixDateRange LastModified { get; set; }
+        public DoubleRange LastModified { get; set; }
 
         /// <summary>
         ///     Pagination information.

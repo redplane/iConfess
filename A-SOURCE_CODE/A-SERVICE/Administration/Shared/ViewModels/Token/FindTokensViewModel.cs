@@ -24,12 +24,12 @@ namespace Shared.ViewModels.Token
         /// <summary>
         /// When the token was issued.
         /// </summary>
-        public UnixDateRange Issued { get; set; }
+        public DoubleRange Issued { get; set; }
 
         /// <summary>
         /// When the token should be expired.
         /// </summary>
-        public UnixDateRange Expired { get; set; }
+        public DoubleRange Expired { get; set; }
 
         /// <summary>
         /// Which property should be used for sorting.

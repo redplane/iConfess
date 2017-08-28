@@ -43,7 +43,7 @@ namespace Shared.ViewModels.CommentReports
         /// <summary>
         ///     When the comment should be created.
         /// </summary>
-        public UnixDateRange Created { get; set; }
+        public DoubleRange Created { get; set; }
 
         /// <summary>
         ///     Pagination information.

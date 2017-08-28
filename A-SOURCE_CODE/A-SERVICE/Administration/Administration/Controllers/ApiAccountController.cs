@@ -11,6 +11,7 @@ using Administration.Attributes;
 using Administration.Interfaces.Providers;
 using Administration.Interfaces.Services;
 using Administration.Models;
+using Administration.Models.Constants;
 using Administration.SignalrHubs;
 using Administration.ViewModels.ApiAccount;
 using Database.Enumerations;
@@ -285,7 +286,7 @@ namespace Administration.Controllers
 
 
                 // Search email raw content.
-                await _systemEmailService.SendAsync(new[] {parameter.Email}, Constants.MailForgotPasswordInstruction, data);
+                await _systemEmailService.SendAsync(new[] {parameter.Email}, Basics.MailForgotPasswordInstruction, data);
                 
                 // Save changes into database.
                 await UnitOfWork.CommitAsync();

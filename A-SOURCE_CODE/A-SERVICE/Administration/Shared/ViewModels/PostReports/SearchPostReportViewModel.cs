@@ -38,7 +38,7 @@ namespace Shared.ViewModels.PostReports
         /// <summary>
         ///     When the report was created.
         /// </summary>
-        public UnixDateRange Created { get; set; }
+        public DoubleRange Created { get; set; }
 
         /// <summary>
         /// Direction of result sorting.

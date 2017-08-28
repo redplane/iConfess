@@ -1,0 +1,12 @@
+﻿{
+	"exchange": "",
+	"kindOfQueue": "fanout",
+	"durable": true,
+	"autoDelete": true,
+	"autoAcknowlege": true,
+	"name": "account-registration",
+	"routingKey": "",
+	"isNoLocal": false,
+	"isExclusive": false,
+	"consumerTag": ""
+}

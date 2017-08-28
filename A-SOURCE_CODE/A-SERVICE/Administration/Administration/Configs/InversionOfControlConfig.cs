@@ -73,6 +73,12 @@ namespace Administration.Configs
             // Handle common businesses of repositories.
             containerBuilder.RegisterType<CommonRepository>().As<CommonRepository>().SingleInstance();
 
+            // Handle file business.
+            containerBuilder.RegisterType<FileService>().As<IFileService>().SingleInstance();
+            
+            // Handle queue business.
+            containerBuilder.RegisterType<QueueService>().As<IQueueService>().SingleInstance();
+
             // System email service.
             var systemEmailService = new SendGridService();
             var sendGridMailConfigurationFile =

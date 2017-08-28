@@ -1,6 +1,6 @@
 ﻿namespace Shared.Models
 {
-    public class UnixDateRange
+    public class DoubleRange
     {
         /// <summary>
         ///     When the date starts.

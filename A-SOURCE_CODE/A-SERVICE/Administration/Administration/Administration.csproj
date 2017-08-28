@@ -85,6 +85,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IdentityModel.Logging, Version=1.1.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Logging.1.1.3\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
       <Private>True</Private>
@@ -131,6 +134,9 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.5.0.0\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid, Version=9.2.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\Sendgrid.9.2.0\lib\net452\SendGrid.dll</HintPath>
@@ -219,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppData\Mails\iConfess-ForgotPassword.html" />
+    <None Include="AppData\Queues\q-account-registration.json" />
     <Content Include="AppData\SendGrid.json" />
     <None Include="Properties\PublishProfiles\confession - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\confession - Web Deploy.pubxml" />
@@ -249,7 +256,7 @@
     <Compile Include="Interfaces\Services\IConfigurationService.cs" />
     <Compile Include="Interfaces\Services\INotificationService.cs" />
     <Compile Include="Middlewares\BearerAuthenticationMiddleware.cs" />
-    <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\Constants\Basics.cs" />
     <Compile Include="Models\JwtResponse.cs" />
     <Compile Include="Models\Messages\CommentMessage.cs" />
     <Compile Include="Models\Messages\CommentReportMessage.cs" />
@@ -261,9 +268,12 @@
     <Compile Include="Interfaces\Providers\IBearerAuthenticationProvider.cs" />
     <Compile Include="Providers\BearerAuthenticationProvider.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\IdentityService.cs" />
+    <Compile Include="Interfaces\Services\IQueueService.cs" />
     <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\QueueService.cs" />
     <Compile Include="Services\SendGridService.cs" />
     <Compile Include="SignalrHubs\ParentHub.cs" />
     <Compile Include="SignalrHubs\SystemMessageHub.cs" />
