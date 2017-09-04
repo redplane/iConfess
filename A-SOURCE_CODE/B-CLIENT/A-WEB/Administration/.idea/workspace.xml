@@ -17,7 +17,6 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="SharingThought" />
   </component>
@@ -26,7 +25,7 @@
       <file leaf-file-name="account-management.component.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/account-management/account-management.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2261">
+            <state relative-caret-position="1862">
               <caret line="133" column="5" lean-forward="false" selection-start-line="133" selection-start-column="5" selection-end-line="133" selection-end-column="53" />
               <folding />
             </state>
@@ -36,7 +35,7 @@
       <file leaf-file-name="category-management.component.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/category-management/category-management.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1666">
+            <state relative-caret-position="1372">
               <caret line="98" column="79" lean-forward="false" selection-start-line="98" selection-start-column="79" selection-end-line="98" selection-end-column="79" />
               <folding />
             </state>
@@ -46,7 +45,7 @@
       <file leaf-file-name="category-delete-box.component.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/category-management/category-delete-box.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
+            <state relative-caret-position="392">
               <caret line="30" column="18" lean-forward="false" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
@@ -58,7 +57,7 @@
       <file leaf-file-name="category-delete-box.component.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/category-management/category-delete-box.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="14">
               <caret line="1" column="65" lean-forward="false" selection-start-line="1" selection-start-column="65" selection-end-line="1" selection-end-column="65" />
               <folding />
             </state>
@@ -68,7 +67,7 @@
       <file leaf-file-name="category-management.component.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/category-management/category-management.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1734">
+            <state relative-caret-position="1428">
               <caret line="120" column="29" lean-forward="false" selection-start-line="120" selection-start-column="29" selection-end-line="120" selection-end-column="29" />
               <folding>
                 <element signature="e#0#66#0" expanded="true" />
@@ -78,11 +77,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientApiService.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ClientApiService.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/services/ClientApiService.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="123" column="15" lean-forward="false" selection-start-line="123" selection-start-column="12" selection-end-line="123" selection-end-column="15" />
+            <state relative-caret-position="420">
+              <caret line="113" column="75" lean-forward="true" selection-start-line="113" selection-start-column="75" selection-end-line="113" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tsconfig.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tsconfig.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="70">
+              <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -91,7 +100,7 @@
       <file leaf-file-name="ClientCategoryService.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/services/api/ClientCategoryService.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
+            <state relative-caret-position="686">
               <caret line="55" column="40" lean-forward="false" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="40" />
               <folding />
             </state>
@@ -101,7 +110,7 @@
       <file leaf-file-name="IClientApiService.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/interfaces/services/api/IClientApiService.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
+            <state relative-caret-position="266">
               <caret line="19" column="10" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="10" />
               <folding />
             </state>
@@ -111,18 +120,8 @@
       <file leaf-file-name="main-application.module.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/modules/main-application.module.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="884">
+            <state relative-caret-position="728">
               <caret line="92" column="34" lean-forward="false" selection-start-line="92" selection-start-column="34" selection-end-line="92" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="category-detail-box.component.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/category-management/category-detail-box.component.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="55" lean-forward="false" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -145,7 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>style/sj</find>
       <find>style/s</find>
       <find>style/sh</find>
       <find>style/sha</find>
@@ -175,6 +173,7 @@
       <find>category-detail-box</find>
       <find>urlDeleteCategory</find>
       <find>selectCategory</find>
+      <find>compilerOptions</find>
     </findStrings>
     <replaceStrings>
       <replace>clientConfigurationService</replace>
@@ -197,7 +196,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAuthenticationService.ts" />
         <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAccountService.ts" />
         <option value="$PROJECT_DIR$/src/components/shared/navigation-bar.component.ts" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-login.component.ts" />
@@ -248,6 +246,7 @@
         <option value="$PROJECT_DIR$/src/components/category-management/category-management.component.html" />
         <option value="$PROJECT_DIR$/src/components/category-management/category-management.component.ts" />
         <option value="$PROJECT_DIR$/src/services/api/ClientCategoryService.ts" />
+        <option value="$PROJECT_DIR$/tsconfig.json" />
       </list>
     </option>
   </component>
@@ -281,182 +280,19 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="viewmodels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="viewmodels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="category" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="viewmodels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="accounts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="post-report-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="category-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iConfess.Admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Administration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="account-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
+          <expand>
+            <path>
+              <item name="iConfess.Admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Administration" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -469,7 +305,7 @@
     <property name="SearchEverywhereHistoryKey" value="ClientApiSer&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientApiService.ts&#10;category-man&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-management.component.ts&#10;ClientCategory&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/api/ClientCategoryService.ts&#10;main-a&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;account-&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.ts&#10;account&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;category-deta&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-detail-box.component.ts&#10;category-manage&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-management.component.ts&#10;category-initiate&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-initiate-box.component.html&#10;category-management&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-management.component.html&#10;account-managem&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;ng2&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/node_modules/ng2-multi-selector/ng2-multi-selector.module.ts&#10;category-sear&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-search-box.component.ts&#10;category-searc&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-search-box.component.ts&#10;category-manag&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-management.component.ts&#10;account-management&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;account-s&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-search-box.component.html&#10;account-se&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-search-box.component.ts&#10;account-sear&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-search-box.component.html&#10;account.&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;ClientApi&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientApiService.ts&#10;ClientCate&#9;null&#9;null&#10;category-managemen&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-management.component.ts&#10;clientComm&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientCommonService.ts&#10;category-mana&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-management.component.ts&#10;AccountStatuse&#9;null&#9;null&#10;account-prof&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.ts&#10;lodash/index.&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/node_modules/@types/lodash/index.d.ts&#10;account-profi&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.ts&#10;account-ma&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;account-p&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.ts&#10;account-profile&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-profile-box.component.html&#10;account-mana&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;acc&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.html&#10;IClientCo&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/interfaces/services/IClientCommonService.ts&#10;client&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientCommonService.ts&#10;SearchAccounts&#9;null&#9;null&#10;ClientConf&#9;null&#9;null&#10;category-m&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/category-management/category-management.component.ts&#10;main-appli&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/main-application.component.ts&#10;main-ap&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;ClientCommonS&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientCommonService.ts&#10;clientconfigu&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/services/ClientConfigurationService.ts&#10;index&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/index.html&#10;main-appl&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/modules/main-application.module.ts&#10;ClientAccount&#9;null&#9;null&#10;account-manage&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/src/components/account-management/account-management.component.ts&#10;pack&#9;FILE&#9;file://E:/Programming/Net Framework/Web/.Net Framework/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/package.json&#10;package&#9;FILE&#9;file://E:/Programming/DotNet/Web/Fullstack/ASP.NET Core/iConfess/A-SOURCE_CODE/B-CLIENT/A-WEB/Administration/package.json&#10;packages&#9;null&#9;null" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -499,8 +335,13 @@
     </option>
   </component>
   <component name="RunManager" selected="Node.js.webpack.dev.js">
-    <configuration default="false" name="webpack.dev.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="webpack.dev.js" working-dir="$PROJECT_DIR$/config">
-      <method />
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
     </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
@@ -555,15 +396,6 @@
       <option name="filePath" />
       <method />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
       <command value="run" />
       <scripts />
@@ -584,9 +416,7 @@
       <recursive>false</recursive>
       <method />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Node.js.webpack.dev.js" />
-    </list>
+    <configuration name="webpack.dev.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="webpack.dev.js" working-dir="$PROJECT_DIR$/config" />
     <recent_temporary>
       <list size="1">
         <item index="0" class="java.lang.String" itemvalue="Node.js.webpack.dev.js" />
@@ -807,11 +637,12 @@
       <workItem from="1493566401875" duration="9492000" />
       <workItem from="1493632866075" duration="7000" />
       <workItem from="1494613028855" duration="25000" />
+      <workItem from="1504534800691" duration="921000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="779876000" />
+    <option name="totallyTimeSpent" value="780797000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -824,15 +655,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1924" height="1056" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2782194" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27783668" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39150944" sideWeight="0.5431918" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3214683" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2502781" sideWeight="0.4568082" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24972129" sideWeight="0.4568082" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39822024" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -840,202 +673,199 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3214683" sideWeight="0.4944238" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="processedProjectFiles" value="true" />
+    <option name="version" value="1" />
     <option name="exactExcludedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/components/shared/sidebar.component.js" />
-        <option value="$PROJECT_DIR$/src/components/shared/sidebar.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/shared/navigation-bar.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/shared/navigation-bar.component.js" />
+        <option value="$PROJECT_DIR$/src/vendor.js" />
+        <option value="$PROJECT_DIR$/src/vendor.js.map" />
+        <option value="$PROJECT_DIR$/src/polyfills.js" />
+        <option value="$PROJECT_DIR$/src/polyfills.js.map" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/src/main.js.map" />
+        <option value="$PROJECT_DIR$/src/models/SearchResult.js" />
+        <option value="$PROJECT_DIR$/src/models/SearchResult.js.map" />
+        <option value="$PROJECT_DIR$/src/models/ToastrOption.js" />
+        <option value="$PROJECT_DIR$/src/models/ToastrOption.js.map" />
+        <option value="$PROJECT_DIR$/src/models/Sorting.js" />
+        <option value="$PROJECT_DIR$/src/models/Sorting.js.map" />
+        <option value="$PROJECT_DIR$/src/models/SelectionItem.js" />
+        <option value="$PROJECT_DIR$/src/models/SelectionItem.js.map" />
+        <option value="$PROJECT_DIR$/src/models/KeyValuePair.js" />
+        <option value="$PROJECT_DIR$/src/models/KeyValuePair.js.map" />
+        <option value="$PROJECT_DIR$/src/models/AuthenticationToken.js" />
+        <option value="$PROJECT_DIR$/src/models/AuthenticationToken.js.map" />
+        <option value="$PROJECT_DIR$/src/models/Dictionary.js" />
+        <option value="$PROJECT_DIR$/src/models/Dictionary.js.map" />
+        <option value="$PROJECT_DIR$/src/models/entities/Comment.js" />
+        <option value="$PROJECT_DIR$/src/models/entities/Comment.js.map" />
+        <option value="$PROJECT_DIR$/src/models/entities/PostReport.js" />
+        <option value="$PROJECT_DIR$/src/models/entities/PostReport.js.map" />
+        <option value="$PROJECT_DIR$/src/models/entities/Post.js" />
+        <option value="$PROJECT_DIR$/src/models/entities/Post.js.map" />
+        <option value="$PROJECT_DIR$/src/models/entities/Account.js" />
+        <option value="$PROJECT_DIR$/src/models/entities/Account.js.map" />
+        <option value="$PROJECT_DIR$/src/models/entities/CommentReport.js" />
+        <option value="$PROJECT_DIR$/src/models/entities/CommentReport.js.map" />
+        <option value="$PROJECT_DIR$/src/models/entities/Category.js" />
+        <option value="$PROJECT_DIR$/src/models/entities/Category.js.map" />
+        <option value="$PROJECT_DIR$/src/modules/main-application.module.js" />
+        <option value="$PROJECT_DIR$/src/modules/main-application.module.js.map" />
+        <option value="$PROJECT_DIR$/src/services/ClientDataConstraintService.js" />
+        <option value="$PROJECT_DIR$/src/services/ClientDataConstraintService.js.map" />
+        <option value="$PROJECT_DIR$/src/services/ClientTimeService.js" />
+        <option value="$PROJECT_DIR$/src/services/ClientTimeService.js.map" />
+        <option value="$PROJECT_DIR$/src/services/ClientToastrService.js" />
+        <option value="$PROJECT_DIR$/src/services/ClientToastrService.js.map" />
+        <option value="$PROJECT_DIR$/src/services/ClientCommonService.js" />
+        <option value="$PROJECT_DIR$/src/services/ClientCommonService.js.map" />
+        <option value="$PROJECT_DIR$/src/services/ClientConfigurationService.js" />
+        <option value="$PROJECT_DIR$/src/services/ClientConfigurationService.js.map" />
+        <option value="$PROJECT_DIR$/src/services/ClientValidationService.js" />
+        <option value="$PROJECT_DIR$/src/services/ClientValidationService.js.map" />
+        <option value="$PROJECT_DIR$/src/services/ClientApiService.js" />
+        <option value="$PROJECT_DIR$/src/services/ClientApiService.js.map" />
+        <option value="$PROJECT_DIR$/src/services/api/ClientPostService.js" />
+        <option value="$PROJECT_DIR$/src/services/api/ClientPostService.js.map" />
+        <option value="$PROJECT_DIR$/src/services/api/ClientPostReportService.js" />
+        <option value="$PROJECT_DIR$/src/services/api/ClientPostReportService.js.map" />
         <option value="$PROJECT_DIR$/src/services/api/ClientAuthenticationService.js" />
-        <option value="$PROJECT_DIR$/src/services/api/ClientCategoryService.js" />
+        <option value="$PROJECT_DIR$/src/services/api/ClientAuthenticationService.js.map" />
         <option value="$PROJECT_DIR$/src/services/api/ClientCommentService.js" />
         <option value="$PROJECT_DIR$/src/services/api/ClientCommentService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/api/ClientPostReportService.js" />
-        <option value="$PROJECT_DIR$/src/services/api/ClientPostService.js.map" />
         <option value="$PROJECT_DIR$/src/services/api/ClientAccountService.js" />
-        <option value="$PROJECT_DIR$/src/services/api/ClientCategoryService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/api/ClientAuthenticationService.js.map" />
         <option value="$PROJECT_DIR$/src/services/api/ClientAccountService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/api/ClientPostReportService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/api/ClientPostService.js" />
-        <option value="$PROJECT_DIR$/src/services/ClientDataConstraintService.js" />
-        <option value="$PROJECT_DIR$/src/services/ClientApiService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/ClientToastrService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/ClientValidationService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/ClientCommonService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/ClientValidationService.js" />
-        <option value="$PROJECT_DIR$/src/services/ClientConfigurationService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/ClientConfigurationService.js" />
-        <option value="$PROJECT_DIR$/src/services/ClientApiService.js" />
-        <option value="$PROJECT_DIR$/src/services/ClientDataConstraintService.js.map" />
-        <option value="$PROJECT_DIR$/src/services/ClientCommonService.js" />
-        <option value="$PROJECT_DIR$/src/services/ClientTimeService.js" />
-        <option value="$PROJECT_DIR$/src/services/ClientToastrService.js" />
-        <option value="$PROJECT_DIR$/src/services/ClientTimeService.js.map" />
-        <option value="$PROJECT_DIR$/src/modules/main-application.module.js.map" />
-        <option value="$PROJECT_DIR$/src/modules/main-application.module.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/Sections.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/ToastrPosition.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/ToastrPosition.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/Sections.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/AccountStatuses.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/SortDirection.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/TextSearchMode.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/AccountStatuses.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/SortDirection.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/TextSearchMode.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/AccountSortProperty.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/CategorySortProperty.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/CommentsDetailsSortProperty.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/CommentReportSortProperty.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/CommentReportSortProperty.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/PostReportSortProperty.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/PostSortProperty.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/CommentsDetailsSortProperty.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/PostReportSortProperty.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/CategorySortProperty.js" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/AccountSortProperty.js.map" />
-        <option value="$PROJECT_DIR$/src/enumerations/order/PostSortProperty.js.map" />
-        <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-management.component.js" />
-        <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-find-box.component.js" />
-        <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-find-box.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-management.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/main-application.component.js.map" />
+        <option value="$PROJECT_DIR$/src/services/api/ClientCategoryService.js" />
+        <option value="$PROJECT_DIR$/src/services/api/ClientCategoryService.js.map" />
         <option value="$PROJECT_DIR$/src/components/main-application.component.js" />
+        <option value="$PROJECT_DIR$/src/components/main-application.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/shared/sidebar.component.js" />
+        <option value="$PROJECT_DIR$/src/components/shared/sidebar.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/shared/navigation-bar.component.js" />
+        <option value="$PROJECT_DIR$/src/components/shared/navigation-bar.component.js.map" />
         <option value="$PROJECT_DIR$/src/components/post-management/post-detail-box.component.js" />
         <option value="$PROJECT_DIR$/src/components/post-management/post-detail-box.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-profile-box.component.js" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-forgot-password.component.js" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-management.component.js" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-profile-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-management.component.js.map" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-search-box.component.js" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-search-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-forgot-password.component.js" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-forgot-password.component.js.map" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-submit-password.component.js" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-search-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-submit-password.component.js.map" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-login.component.js" />
         <option value="$PROJECT_DIR$/src/components/account-management/account-login.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-management.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/account-management/account-submit-password.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/category-management/category-management.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/category-management/category-initiate-box.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/category-management/category-detail-box.component.js.map" />
-        <option value="$PROJECT_DIR$/src/components/category-management/category-initiate-box.component.js" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-profile-box.component.js" />
+        <option value="$PROJECT_DIR$/src/components/account-management/account-profile-box.component.js.map" />
         <option value="$PROJECT_DIR$/src/components/category-management/category-detail-box.component.js" />
+        <option value="$PROJECT_DIR$/src/components/category-management/category-detail-box.component.js.map" />
         <option value="$PROJECT_DIR$/src/components/category-management/category-management.component.js" />
-        <option value="$PROJECT_DIR$/src/components/comment-report-management/comment-report-management.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/category-management/category-management.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/category-management/category-delete-box.component.js" />
+        <option value="$PROJECT_DIR$/src/components/category-management/category-delete-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/category-management/category-search-box.component.js" />
+        <option value="$PROJECT_DIR$/src/components/category-management/category-search-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/category-management/category-initiate-box.component.js" />
+        <option value="$PROJECT_DIR$/src/components/category-management/category-initiate-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-find-box.component.js" />
+        <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-find-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-management.component.js" />
+        <option value="$PROJECT_DIR$/src/components/post-report-management/post-report-management.component.js.map" />
         <option value="$PROJECT_DIR$/src/components/comment-report-management/comment-report-management.component.js" />
-        <option value="$PROJECT_DIR$/src/components/comment-report-management/comment-report-find-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/components/comment-report-management/comment-report-management.component.js.map" />
         <option value="$PROJECT_DIR$/src/components/comment-report-management/comment-report-find-box.component.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/comment/CommentDetailsViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/comment/SearchCommentsViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/components/comment-report-management/comment-report-find-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/IDictionary.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/IDictionary.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/IClientValidationService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/IClientValidationService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/IClientTimeService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/IClientTimeService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/IClientCommonService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/IClientCommonService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/IClientToastrService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/IClientToastrService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientApiService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientApiService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientCategoryService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientCategoryService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientPostReportService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientPostReportService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientPostService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientPostService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAccountService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAccountService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAuthenticationService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAuthenticationService.js.map" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientCommentService.js" />
+        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientCommentService.js.map" />
+        <option value="$PROJECT_DIR$/src/validators/TextPropertyComparisionValidator.js" />
+        <option value="$PROJECT_DIR$/src/validators/TextPropertyComparisionValidator.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/UnixDateRange.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/UnixDateRange.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/TextSearch.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/TextSearch.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/Pagination.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/Pagination.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/post/PostDetailsViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/post/PostDetailsViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/post/SearchPostsViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/post/SearchPostsViewModel.js.map" />
         <option value="$PROJECT_DIR$/src/viewmodels/comment/SearchCommentsDetailsViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/comment/CommentDetailsViewModel.js.map" />
         <option value="$PROJECT_DIR$/src/viewmodels/comment/SearchCommentsDetailsViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/comment/SearchCommentsViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/comment/SearchCommentsViewModel.js.map" />
         <option value="$PROJECT_DIR$/src/viewmodels/comment/SearchCommentsResultViewModel.js" />
         <option value="$PROJECT_DIR$/src/viewmodels/comment/SearchCommentsResultViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/comment/SearchCommentsViewModel.js" />
-        <option value="$PROJECT_DIR$/src/validators/TextPropertyComparisionValidator.js.map" />
-        <option value="$PROJECT_DIR$/src/validators/TextPropertyComparisionValidator.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/comment/CommentDetailsViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/comment/CommentDetailsViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/accounts/SubmitPasswordViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/accounts/SubmitPasswordViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/accounts/LoginViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/accounts/LoginViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/accounts/SearchAccountsViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/accounts/SearchAccountsViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/accounts/TokenViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/accounts/TokenViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/category/CategoryDetailsViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/category/CategoryDetailsViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/category/SearchCategoriesViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/category/SearchCategoriesViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/category/InitiateCategoryViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/category/InitiateCategoryViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsResultViewModel.js" />
+        <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsResultViewModel.js.map" />
+        <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsViewModel.js" />
         <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsViewModel.js.map" />
         <option value="$PROJECT_DIR$/src/viewmodels/post-report/PostReportViewModel.js" />
         <option value="$PROJECT_DIR$/src/viewmodels/post-report/PostReportViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsResultViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/post-report/SearchPostReportsResultViewModel.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/IDictionary.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/IDictionary.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/IClientCommonService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/IClientToastrService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/IClientCommonService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/IClientToastrService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/IClientTimeService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/IClientValidationService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/IClientTimeService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/IClientValidationService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientApiService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientCommentService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientPostService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientPostReportService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientCommentService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAccountService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAccountService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientCategoryService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAuthenticationService.js" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientPostReportService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientApiService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientCategoryService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientAuthenticationService.js.map" />
-        <option value="$PROJECT_DIR$/src/interfaces/services/api/IClientPostService.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/accounts/SubmitPasswordViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/accounts/SearchAccountsViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/accounts/LoginViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/accounts/TokenViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/accounts/TokenViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/accounts/SearchAccountsViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/accounts/SubmitPasswordViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/accounts/LoginViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/UnixDateRange.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/UnixDateRange.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/TextSearch.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/Pagination.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/Pagination.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/TextSearch.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/post/SearchPostsViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/post/PostDetailsViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/post/PostDetailsViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/post/SearchPostsViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/category/SearchCategoriesViewModel.js" />
-        <option value="$PROJECT_DIR$/src/viewmodels/category/SearchCategoriesViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/category/CategoryDetailsViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/category/CategoryDetailsViewModel.js" />
         <option value="$PROJECT_DIR$/src/viewmodels/comment-report/SearchCommentReportsViewModel.js" />
         <option value="$PROJECT_DIR$/src/viewmodels/comment-report/SearchCommentReportsViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/main.js" />
-        <option value="$PROJECT_DIR$/src/polyfills.js" />
-        <option value="$PROJECT_DIR$/src/vendor.js" />
-        <option value="$PROJECT_DIR$/src/main.js.map" />
-        <option value="$PROJECT_DIR$/src/vendor.js.map" />
-        <option value="$PROJECT_DIR$/src/polyfills.js.map" />
-        <option value="$PROJECT_DIR$/src/models/ToastrOption.js" />
-        <option value="$PROJECT_DIR$/src/models/ToastrOption.js.map" />
-        <option value="$PROJECT_DIR$/src/models/SelectionItem.js.map" />
-        <option value="$PROJECT_DIR$/src/models/AuthenticationToken.js" />
-        <option value="$PROJECT_DIR$/src/models/SearchResult.js.map" />
-        <option value="$PROJECT_DIR$/src/models/AuthenticationToken.js.map" />
-        <option value="$PROJECT_DIR$/src/models/SelectionItem.js" />
-        <option value="$PROJECT_DIR$/src/models/SearchResult.js" />
-        <option value="$PROJECT_DIR$/src/models/entities/Post.js.map" />
-        <option value="$PROJECT_DIR$/src/models/entities/Comment.js.map" />
-        <option value="$PROJECT_DIR$/src/models/entities/Account.js" />
-        <option value="$PROJECT_DIR$/src/models/entities/CommentReport.js.map" />
-        <option value="$PROJECT_DIR$/src/models/entities/PostReport.js" />
-        <option value="$PROJECT_DIR$/src/models/entities/Category.js" />
-        <option value="$PROJECT_DIR$/src/models/entities/Comment.js" />
-        <option value="$PROJECT_DIR$/src/models/entities/CommentReport.js" />
-        <option value="$PROJECT_DIR$/src/models/entities/Post.js" />
-        <option value="$PROJECT_DIR$/src/models/entities/Account.js.map" />
-        <option value="$PROJECT_DIR$/src/models/entities/Category.js.map" />
-        <option value="$PROJECT_DIR$/src/models/entities/PostReport.js.map" />
-        <option value="$PROJECT_DIR$/src/models/KeyValuePair.js" />
-        <option value="$PROJECT_DIR$/src/models/KeyValuePair.js.map" />
-        <option value="$PROJECT_DIR$/src/models/Dictionary.js" />
-        <option value="$PROJECT_DIR$/src/models/Dictionary.js.map" />
-        <option value="$PROJECT_DIR$/node_modules/ng2-multi-selector/ng2-multi-selector.component.js.map" />
-        <option value="$PROJECT_DIR$/node_modules/ng2-multi-selector/ng2-multi-selector.module.js.map" />
-        <option value="$PROJECT_DIR$/node_modules/ng2-multi-selector/ng2-multi-selector.component.js" />
-        <option value="$PROJECT_DIR$/node_modules/ng2-multi-selector/ng2-multi-selector.module.js" />
-        <option value="$PROJECT_DIR$/src/models/Sorting.js" />
-        <option value="$PROJECT_DIR$/src/models/Sorting.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/category/InitiateCategoryViewModel.js.map" />
-        <option value="$PROJECT_DIR$/src/viewmodels/category/InitiateCategoryViewModel.js" />
-        <option value="$PROJECT_DIR$/src/components/category-management/category-delete-box.component.js" />
-        <option value="$PROJECT_DIR$/src/components/category-management/category-delete-box.component.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/Sections.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/Sections.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/SortDirection.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/SortDirection.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/ToastrPosition.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/ToastrPosition.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/AccountStatuses.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/AccountStatuses.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/TextSearchMode.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/TextSearchMode.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/AccountSortProperty.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/AccountSortProperty.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/PostReportSortProperty.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/PostReportSortProperty.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/CategorySortProperty.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/CategorySortProperty.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/CommentReportSortProperty.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/CommentReportSortProperty.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/PostSortProperty.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/PostSortProperty.js.map" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/CommentsDetailsSortProperty.js" />
+        <option value="$PROJECT_DIR$/src/enumerations/order/CommentsDetailsSortProperty.js.map" />
       </list>
     </option>
   </component>
@@ -1057,13 +887,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/account-management/account-login.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/account-management/account-forgot-password.component.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1321,7 +1144,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/category-management/category-detail-box.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="252">
           <caret line="18" column="55" lean-forward="false" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
           <folding />
         </state>
@@ -1336,7 +1159,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/account-management/account-management.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2261">
+        <state relative-caret-position="1862">
           <caret line="133" column="5" lean-forward="false" selection-start-line="133" selection-start-column="5" selection-end-line="133" selection-end-column="53" />
           <folding />
         </state>
@@ -1344,7 +1167,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/main-application.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
+        <state relative-caret-position="728">
           <caret line="92" column="34" lean-forward="false" selection-start-line="92" selection-start-column="34" selection-end-line="92" selection-end-column="34" />
           <folding />
         </state>
@@ -1352,7 +1175,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/category-management/category-management.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1666">
+        <state relative-caret-position="1372">
           <caret line="98" column="79" lean-forward="false" selection-start-line="98" selection-start-column="79" selection-end-line="98" selection-end-column="79" />
           <folding />
         </state>
@@ -1360,7 +1183,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/category-management/category-delete-box.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
+        <state relative-caret-position="14">
           <caret line="1" column="65" lean-forward="false" selection-start-line="1" selection-start-column="65" selection-end-line="1" selection-end-column="65" />
           <folding />
         </state>
@@ -1368,7 +1191,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/category-management/category-delete-box.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
+        <state relative-caret-position="392">
           <caret line="30" column="18" lean-forward="false" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
@@ -1378,7 +1201,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/services/api/ClientCategoryService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
+        <state relative-caret-position="686">
           <caret line="55" column="40" lean-forward="false" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="40" />
           <folding />
         </state>
@@ -1386,7 +1209,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interfaces/services/api/IClientApiService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
+        <state relative-caret-position="266">
           <caret line="19" column="10" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="10" />
           <folding />
         </state>
@@ -1394,7 +1217,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/category-management/category-management.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1734">
+        <state relative-caret-position="1428">
           <caret line="120" column="29" lean-forward="false" selection-start-line="120" selection-start-column="29" selection-end-line="120" selection-end-column="29" />
           <folding>
             <element signature="e#0#66#0" expanded="true" />
@@ -1405,8 +1228,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/services/ClientApiService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="123" column="15" lean-forward="false" selection-start-line="123" selection-start-column="12" selection-end-line="123" selection-end-column="15" />
+        <state relative-caret-position="420">
+          <caret line="113" column="75" lean-forward="true" selection-start-line="113" selection-start-column="75" selection-end-line="113" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
           <folding />
         </state>
       </provider>
