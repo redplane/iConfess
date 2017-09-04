@@ -1,23 +1,21 @@
-import {Component, EventEmitter, Inject} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
 import {CategoryDetailsViewModel} from "../../viewmodels/category/CategoryDetailsViewModel";
+import * as _ from "lodash";
+
 
 @Component({
-    selector: 'category-detail',
-    inputs: ['category'],
-    outputs: ['clickRemoveCategory', 'clickChangeCategoryInfo'],
-    templateUrl: 'category-detail-box.component.html'
+    selector: 'category-detail-box',
+    templateUrl: 'category-detail-box.component.html',
+    exportAs: 'category-detail-box'
 })
 
 export class CategoryDetailBoxComponent{
 
     //#region Properties
 
-    // Event emitter which is fired when a category is clicked to be removed.
-    private clickRemoveCategory: EventEmitter<any>;
-
-    // Event emitter which is fired when a category is clicked to be changed.
-    private clickChangeCategoryInfo: EventEmitter<any>;
+    // Category details which should be displayed on box.
+    private details: CategoryDetailsViewModel;
 
     //#endregion
 
@@ -25,22 +23,21 @@ export class CategoryDetailBoxComponent{
 
     // Initiate category detail box with dependency injections.
     public constructor(@Inject("IClientTimeService") public clientTimeService: IClientTimeService){
-        this.clickRemoveCategory = new EventEmitter();
-        this.clickChangeCategoryInfo = new EventEmitter();
+        this.details = new CategoryDetailsViewModel();
     }
 
     //#endregion
 
     //#region Methods
 
-    // Fired when a category is clicked to be removed.
-    public deleteCategory(category: CategoryDetailsViewModel): void{
-        this.clickRemoveCategory.emit(category);
+    // Set detail information and attach to component.
+    public setDetails(details: CategoryDetailsViewModel): void{
+        this.details = _.cloneDeep(details);
     }
 
-    // Fired when a category is clicked to be changed.
-    public changeCategoryInfo(category: CategoryDetailsViewModel): void{
-        this.clickChangeCategoryInfo.emit(category);
+    // Get detail information attached to component.
+    public getDetails(): CategoryDetailsViewModel{
+        return this.details;
     }
 
     //#endregion

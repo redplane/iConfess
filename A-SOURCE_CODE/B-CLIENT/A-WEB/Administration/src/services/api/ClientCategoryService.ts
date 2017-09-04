@@ -40,15 +40,9 @@ export class ClientCategoryService implements IClientCategoryService {
     //Region Methods
 
     // Find categories by using specific conditions.
-    public getCategories(categorySearch: SearchCategoriesViewModel) {
+    public getCategories(conditions: SearchCategoriesViewModel) {
 
         // Page page should be decrease by one.
-        let conditions = Object.assign({}, categorySearch);
-        conditions['pagination'] = Object.assign({}, categorySearch.pagination);
-        conditions.pagination.page -= 1;
-        if (conditions.pagination.page < 0)
-            conditions.pagination.page = 0;
-
         return this.clientApiService.post(
             this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlSearchCategory}`,
@@ -57,13 +51,13 @@ export class ClientCategoryService implements IClientCategoryService {
     }
 
     // Find categories by using specific conditions and delete 'em.
-    public deleteCategories(findCategoriesConditions: SearchCategoriesViewModel) {
+    public deleteCategories(conditions: SearchCategoriesViewModel) {
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.delete(
             this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlDeleteCategory}`,
             null,
-            findCategoriesConditions);
+            conditions);
     }
 
     // Change category detail information by searching its page.
@@ -84,23 +78,6 @@ export class ClientCategoryService implements IClientCategoryService {
         return this.clientApiService.post(
             this.clientAuthenticationService.getTokenCode(),
             url, null, category);
-    }
-
-    // Reset categories search conditions.
-    public resetFindCategoriesConditions(): SearchCategoriesViewModel {
-
-        // Initiate find categories conditions.
-        let conditions = new SearchCategoriesViewModel();
-
-        if (conditions == null)
-            conditions = new SearchCategoriesViewModel();
-
-        conditions.creatorIndex = null;
-        conditions.name = null;
-        conditions.created = new UnixDateRange();
-        conditions.lastModified = new UnixDateRange();
-
-        return conditions;
     }
 
     //#endregion

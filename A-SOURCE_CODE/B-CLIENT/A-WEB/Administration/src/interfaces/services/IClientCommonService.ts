@@ -2,6 +2,7 @@ import {Pagination} from "../../viewmodels/Pagination";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {NgxPaginatorOption} from "ngx-numeric-paginator/ngx-paginator-option";
 import {KeyValuePair} from "../../models/KeyValuePair";
+import {SortDirection} from "../../enumerations/SortDirection";
 
 export interface IClientCommonService{
 
@@ -21,4 +22,7 @@ export interface IClientCommonService{
 
     // Search account statuses by using keyword.
     getAccountStatuses(keyword: string): Array<KeyValuePair<AccountStatuses>>;
+
+    // Get sort directions.
+    getSortDirections(keyword: string): Array<KeyValuePair<SortDirection>>;
 }

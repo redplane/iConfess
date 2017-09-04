@@ -1,6 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core'
+import {Component, Inject, OnInit, ViewChild} from '@angular/core'
 import {Response} from "@angular/http";
-import {ClientConfigurationService} from "../../services/ClientConfigurationService";
 import {CategoryDetailsViewModel} from "../../viewmodels/category/CategoryDetailsViewModel";
 import {SearchCategoriesViewModel} from "../../viewmodels/category/SearchCategoriesViewModel";
 import {Category} from "../../models/entities/Category";
@@ -11,30 +10,58 @@ import {IClientTimeService} from "../../interfaces/services/IClientTimeService";
 import {IClientCategoryService} from "../../interfaces/services/api/IClientCategoryService";
 import {IClientToastrService} from "../../interfaces/services/IClientToastrService";
 import {IClientApiService} from "../../interfaces/services/api/IClientApiService";
+import {SortDirection} from "../../enumerations/SortDirection";
+import {CategorySortProperty} from "../../enumerations/order/CategorySortProperty";
+import {IClientCommonService} from "../../interfaces/services/IClientCommonService";
+import {Sorting} from "../../models/Sorting";
+import {CategoryInitiateBoxComponent} from "./category-initiate-box.component";
+import {CategoryDetailBoxComponent} from "./category-detail-box.component";
+import {CategoryDeleteBoxComponent} from "./category-delete-box.component";
 
 @Component({
     selector: 'category-management',
-    templateUrl: 'category-management.component.html',
-    providers: [
-        ClientConfigurationService,
-    ],
+    templateUrl: 'category-management.component.html'
 })
 
 export class CategoryManagementComponent implements OnInit {
 
     //#region Properties
 
+    // Modal which contains category initiator.
+    @ViewChild('initiateCategoryInfoModal')
+    public initiateCategoryInfoModal: ModalDirective;
+
+    // Initiator contains fields to initiate category.
+    @ViewChild('categoryInitiatorContent')
+    public categoryInitiatorContent: CategoryInitiateBoxComponent;
+
+    // Editor contains fields to edit category.
+    @ViewChild('categoryDetailBox')
+    public categoryDetailBox: CategoryDetailBoxComponent;
+
+    // Edit modal container.
+    @ViewChild('categoryDetailModal')
+    public categoryDetailModal: ModalDirective;
+
+    // Component contains information which is for deleting box.
+    @ViewChild('categoryDeleteBox')
+    public categoryDeleteBox: CategoryDeleteBoxComponent;
+
+    // Modal which contains component for deleting category.
+    @ViewChild('deleteCategoryModal')
+    public deleteCategoryModal: ModalDirective;
+
     // List of categories responded from service.
-    private categorySearchResult: SearchResult<CategoryDetailsViewModel>;
+    private searchResult: SearchResult<CategoryDetailsViewModel>;
 
     // Whether records are being searched or not.
-    private isLoading: boolean;
+    private isBusy: boolean;
 
     // Conditions which are used for searching categories.
-    private findCategoriesViewModel: SearchCategoriesViewModel;
+    private conditions: SearchCategoriesViewModel;
 
-    // Category which is currently selected to be edited/deleted.
-    private selectCategoryDetail : CategoryDetailsViewModel;
+    // List of accouts which are used for selecting.
+    private accounts: Array<Account>;
 
     //#endregion
 
@@ -42,13 +69,28 @@ export class CategoryManagementComponent implements OnInit {
 
     // Initiate component with dependency injections.
     public constructor(@Inject("IClientCategoryService") public clientCategoryService: IClientCategoryService,
-                       public clientConfigurationService: ClientConfigurationService,
                        @Inject("IClientApiService") public clientApiService: IClientApiService,
                        @Inject("IClientToastrService") public clientToastrService: IClientToastrService,
-                       @Inject("IClientTimeService") public clientTimeService: IClientTimeService) {
+                       @Inject("IClientTimeService") public clientTimeService: IClientTimeService,
+                       @Inject('IClientCommonService') public clientCommonService: IClientCommonService) {
+
+        // Initiate search condition.
+        let conditions = new SearchCategoriesViewModel();
+        let sorting = new Sorting<CategorySortProperty>();
+        sorting.direction = SortDirection.Ascending;
+        sorting.property = CategorySortProperty.index;
+        conditions.sorting = sorting;
+
+        let pagination = new Pagination();
+        pagination.page = 1;
+        pagination.records = this.clientCommonService.getMaxPageRecords();
+        conditions.pagination = pagination;
+
+        // Update initial conditions.
+        this.conditions = conditions;
 
         // Initiate categories search result.
-        this.categorySearchResult = new SearchResult<CategoryDetailsViewModel>();
+        this.searchResult = new SearchResult<CategoryDetailsViewModel>();
     }
 
     //#endregion
@@ -56,128 +98,152 @@ export class CategoryManagementComponent implements OnInit {
     //#region Methods
 
     // Callback is fired when a category is created to be removed.
-    public clickRemoveCategory(categoryDetail: CategoryDetailsViewModel, deleteCategoryConfirmModal: any): void {
+    public clickRemoveCategory(categoryDetail: CategoryDetailsViewModel): void {
 
         // Category detail is not valid.
         if (categoryDetail == null)
             return;
 
-        // Update category information into box.
-        this.selectCategoryDetail = categoryDetail;
+        console.log(categoryDetail);
 
-        // Open delete category confirmation box.
-        deleteCategoryConfirmModal.show();
+        // Set the detail first.
+        this.categoryDeleteBox.setDetails(categoryDetail);
+
+        // Show the modal.
+        this.deleteCategoryModal.show();
     }
 
     // This callback is called when user confirms to delete the selected category.
-    public clickConfirmDeleteCategory(deleteCategoryConfirmModal: ModalDirective ){
+    public clickConfirmDeleteCategory() {
 
         // Find category by using specific conditions.
-        let findCategoriesConditions = new SearchCategoriesViewModel();
-        findCategoriesConditions.id = this.selectCategoryDetail.id;
-
-        // No category detail is selected.
-        if (this.selectCategoryDetail != null){
-
-            // Make the loading start.
-            this.isLoading = true;
-
-            // Call category service to delete the selected category.
-            this.clientCategoryService.deleteCategories(findCategoriesConditions)
-                .then((response: Response | any) => {
-
-                    // Cancel loading state.
-                    this.isLoading = false;
-
-                    // Reload the categories list.
-                    this.clickSearch();
-                })
-                .catch((response:any) => {
-                    // Cancel loading.
-                    this.isLoading = false;
-
-                    // Proceed common invalid response.
-                    this.clientApiService.handleInvalidResponse(response);
-                });
+        let details = this.categoryDeleteBox.getDetails();
+        if (details == null){
+            return;
         }
 
+        // Make the loading start.
+        this.isBusy = true;
 
-        // Close the modal first.
-        deleteCategoryConfirmModal.hide();
+        // Initiate search category view model.
+        let conditions = new SearchCategoriesViewModel();
+        conditions.id = details.id;
+
+        // Call category service to delete the selected category.
+        this.clientCategoryService.deleteCategories(conditions)
+            .then((x: Response | any) => {
+
+                // Cancel loading state.
+                this.isBusy = false;
+
+                // Close the modal.
+                this.deleteCategoryModal.hide();
+
+                // Reload the categories list.
+                this.clickSearch();
+            })
+            .catch((response: any) => {
+                // Cancel loading.
+                this.isBusy = false;
+
+                // Proceed common invalid response.
+                this.clientApiService.handleInvalidResponse(response);
+            });
+
+
     }
 
     // Callback which is fired when change category detail button is clicked.
-    public clickChangeCategoryDetail(categoryDetail: CategoryDetailsViewModel, changeCategoryDetailModal: ModalDirective){
+    public clickChangeCategoryDetail(categoryDetail: CategoryDetailsViewModel) {
 
         // Category detail is invalid.
         if (categoryDetail == null)
             return;
 
-        // Copy the category detail to selected category detail.
-        this.selectCategoryDetail = categoryDetail;
+        // Set details to editor.
+        this.categoryDetailBox.setDetails(categoryDetail);
 
         // Display the change category detail box.
-        changeCategoryDetailModal.show();
+        this.categoryDetailModal.show();
     }
 
     // Callback which is fired when change category detail action is confirmed.
-    public clickConfirmChangeCategoryDetail(changeCategoryInfoModal: ModalDirective){
+    public clickConfirmChangeCategoryDetail() {
 
         // Selected category detail is invalid.
-        if (this.selectCategoryDetail == null)
+        let details = this.categoryDetailBox.getDetails();
+
+        // Category details is not valid.
+        if (details == null) {
             return;
+        }
 
         // Initiate category information.
         let category = new Category();
-        category.id = this.selectCategoryDetail.id;
-        category.name = this.selectCategoryDetail.name;
-
-        // Close the change category info modal.
-        changeCategoryInfoModal.hide();
+        category.id = details.id;
+        category.name = details.name;
 
         // Start loading.
-        this.isLoading = true;
+        this.isBusy = true;
 
         // Call service to update category information.
         this.clientCategoryService.editCategoryDetails(category.id, category)
-            .then((response: Response | any) => {
+            .then((x: Response | any) => {
+                // Close the modal.
+                this.categoryDetailModal.hide();
+
+                // Clear busy state.
+                this.isBusy = false;
+
                 // Reload the categories list.
                 this.clickSearch();
             })
             .catch((response: Response | any) => {
                 // Cancel loading.
-                this.isLoading = false;
+                this.isBusy = false;
             });
 
     }
 
     // Callback which is fired when a category should be created into system.
-    public clickInitiateCategory(category: any, initiateCategoryModal: ModalDirective): void{
+    public clickInitiateCategory(): void {
 
-        // Make content be loaded.
-        this.isLoading = true;
+        // Display category initial modal.
+        this.initiateCategoryInfoModal.show();
+    }
+
+    // This callback is fired when confirm button is clicked which tells client to send request to service to create a new category.
+    public clickConfirmInitiateCategory(): void {
+
+        // Find category defined in initiator dialog.
+        let category = this.categoryInitiatorContent.getInitiator();
+
+        // Invalid category detected.
+        if (category == null) {
+            return;
+        }
 
         // Call service to initiate category.
         this.clientCategoryService.initiateCategory(category)
-            .then((response: Response | any) => {
+            .then((x: Response | any) => {
                 // Cancel content loading.
-                this.isLoading = false;
+                this.isBusy = false;
 
                 // Parse information of response.
-                let information = response.json();
+                let category = <Category> x.json();
 
                 // Display notification to client screen.
-                this.clientToastrService.success(`${information['name']} has been created successfully`, 'System', null);
+                this.clientToastrService.success(`${category.name} has been created successfully`, 'System', null);
 
                 // Close the modal.
-                initiateCategoryModal.hide();
+                this.initiateCategoryInfoModal.hide();
 
                 // Reload search results.
                 this.clickSearch();
             })
             .catch((response: Response | any) => {
                 // Cancel content loading.
-                this.isLoading = false;
+                this.isBusy = false;
 
                 // Proceed common function to handle invalid process.
                 this.clientApiService.handleInvalidResponse(response);
@@ -188,25 +254,22 @@ export class CategoryManagementComponent implements OnInit {
     public clickSearch(): void {
 
         // Freeze the find box.
-        this.isLoading = true;
-
-        // Reset the selected category detail.
-        this.selectCategoryDetail = null;
+        this.isBusy = true;
 
         // Find categories by using specific conditions.
-        this.clientCategoryService.getCategories(this.findCategoriesViewModel)
-            .then((response: Response)=> {
+        this.clientCategoryService.getCategories(this.conditions)
+            .then((x: Response) => {
 
                 // Update categories list.
-                this.categorySearchResult = response.json();
+                this.searchResult = <SearchResult<CategoryDetailsViewModel>> x.json();
 
                 // Unfreeze the category find box.
-                this.isLoading = false;
+                this.isBusy = false;
             })
             .catch((response: Response | any) => {
 
                 // Unlock screen components.
-                this.isLoading = false;
+                this.isBusy = false;
 
                 // Call common function to handle error response.
                 this.clientApiService.handleInvalidResponse(response);
@@ -214,24 +277,18 @@ export class CategoryManagementComponent implements OnInit {
     }
 
     // Callback which is fired when page selection is changed.
-    public clickPageChange(pagination: any): void{
+    public selectPage(page: number): void {
         // Update pagination page.
-        this.findCategoriesViewModel.pagination.page = pagination.page;
+        this.conditions.pagination.page = page;
 
         // Call search function.
         this.clickSearch();
     }
-    
+
     // This callback is fired when category management component is initiated.
     public ngOnInit() {
-        // Initiate category search conditions.
-        this.findCategoriesViewModel = new SearchCategoriesViewModel();
-
-        // Refactoring pagination.
-        let pagination = new Pagination();
-        pagination.page = 1;
-        pagination.records = this.clientConfigurationService.getMaxPageRecords();
-        this.findCategoriesViewModel.pagination = pagination;
+        // Search for categories using specific conditions.
+        this.clickSearch();
     }
 
     //#endregion

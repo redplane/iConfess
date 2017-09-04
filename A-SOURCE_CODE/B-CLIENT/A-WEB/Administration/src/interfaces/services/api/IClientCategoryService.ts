@@ -8,7 +8,7 @@ export interface IClientCategoryService{
     //#region Methods
 
     // Find categories by using specific conditions.
-    getCategories(categorySearch: SearchCategoriesViewModel): Promise<Response>;
+    getCategories(conditions: SearchCategoriesViewModel): Promise<Response>;
 
     // Find categories by using specific conditions and delete 'em all.
     deleteCategories(conditions: SearchCategoriesViewModel): Promise<Response>;
@@ -18,9 +18,6 @@ export interface IClientCategoryService{
 
     // Initiate category into system.
     initiateCategory(category: any) : Promise<Response>;
-
-    // Reset categories search conditions.
-    resetFindCategoriesConditions(): SearchCategoriesViewModel;
 
     //#endregion
 }

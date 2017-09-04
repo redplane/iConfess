@@ -49,14 +49,7 @@ export class ClientAccountService implements IClientAccountService {
     //#region Methods
 
     // Find categories by using specific conditions.
-    public getAccounts(findAccountsViewModel: SearchAccountsViewModel): Promise<Response> {
-        // Page page should be decrease by one.
-        let conditions = Object.assign({}, findAccountsViewModel);
-        conditions['pagination'] = Object.assign({}, findAccountsViewModel.pagination);
-        conditions.pagination.page -= 1;
-        if (conditions.pagination.page < 0)
-            conditions.pagination.page = 0;
-
+    public getAccounts(conditions: SearchAccountsViewModel): Promise<Response> {
         // Request to api to obtain list of available categories in system.
         return this.clientApiService.post(this.clientAuthenticationService.getTokenCode(),
             `${this.clientApiService.getBaseUrl()}/${this.urlSearchAccount}`,

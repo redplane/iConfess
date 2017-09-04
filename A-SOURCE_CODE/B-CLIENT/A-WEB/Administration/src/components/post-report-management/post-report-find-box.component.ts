@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject} from "@angular/core";
+import {Component, EventEmitter, Inject, Input} from "@angular/core";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {Response} from "@angular/http";
 import {ClientConfigurationService} from "../../services/ClientConfigurationService";
@@ -17,7 +17,6 @@ import {IClientApiService} from "../../interfaces/services/api/IClientApiService
 @Component({
     selector: 'post-report-find-box',
     templateUrl: 'post-report-find-box.component.html',
-    inputs: ['conditions', 'isLoading'],
     outputs:['search'],
     providers: [
         ClientConfigurationService
@@ -29,6 +28,7 @@ export class PostReportFindBoxComponent {
     //#region Properties
 
     // Conditions which are used for finding post report.
+    @Input('conditions')
     public conditions: SearchPostReportsViewModel;
 
     // Find post report control group.
@@ -46,6 +46,9 @@ export class PostReportFindBoxComponent {
     // Find post report emitter
     private search: EventEmitter<SearchPostReportsViewModel>;
 
+    // Whether component is busy or not.
+    @Input('is-busy')
+    private isBusy: boolean;
     //#endregion
 
     //#region Constructor

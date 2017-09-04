@@ -4,6 +4,12 @@ import {ClientConfigurationService} from "../../services/ClientConfigurationServ
 import {SearchAccountsViewModel} from "../../viewmodels/accounts/SearchAccountsViewModel";
 import {AccountStatuses} from "../../enumerations/AccountStatuses";
 import {IClientAccountService} from "../../interfaces/services/api/IClientAccountService";
+import {IClientCommonService} from "../../interfaces/services/IClientCommonService";
+import {AccountSortProperty} from "../../enumerations/order/AccountSortProperty";
+import {SortDirection} from "../../enumerations/SortDirection";
+import {Dictionary} from "../../models/Dictionary";
+import {IDictionary} from "../../interfaces/IDictionary";
+import {KeyValuePair} from "../../models/KeyValuePair";
 
 @Component({
     selector: 'account-search-box',
@@ -22,49 +28,39 @@ export class AccountSearchBoxComponent implements OnInit {
     @Output('search')
     private search: EventEmitter<any>;
 
-    // Form contains controls which are for searching accounts.
-    private findAccountBox: FormGroup;
-
     // Collection of conditions which are used for searching categories.
     @Input('conditions')
     private conditions: SearchAccountsViewModel;
 
     // List of accounts which can be selected.
     public accounts: Array<Account>;
+
+    // List of properties which can be used for sorting.
+    private sortProperties: IDictionary<AccountSortProperty>;
+
     //#endregion
 
     //#region Constructor
 
     // Initiate component with default dependency injection.
-    public constructor(private formBuilder: FormBuilder,
-                       @Inject("IClientAccountService") private clientAccountService: IClientAccountService) {
-
-        // Form control of find category box.
-        this.findAccountBox = formBuilder.group({
-            email: [''],
-            nickname: [''],
-            joined: formBuilder.group({
-                from: [''],
-                to: ['']
-            }),
-            lastModified: formBuilder.group({
-                from: [''],
-                to: ['']
-            }),
-            pagination: formBuilder.group({
-                index: [0],
-                records: [10]
-            }),
-            sort: [null],
-            direction: [null]
-        });
+    public constructor(@Inject("IClientAccountService") public clientAccountService: IClientAccountService,
+                       @Inject('IClientCommonService') public clientCommonService: IClientCommonService) {
 
         // Initiate event emitters.
         this.search = new EventEmitter();
         this.accounts = new Array<Account>();
 
-        // Initiate search conditions.
-        this.conditions = new SearchAccountsViewModel();
+        // Initiate list of properties which can be used for sorting.
+        let sortProperties = new Dictionary<AccountSortProperty>();
+        sortProperties.add('Index', AccountSortProperty.index);
+        sortProperties.add('Email', AccountSortProperty.email);
+        sortProperties.add('Nickname', AccountSortProperty.nickname);
+        sortProperties.add('Status', AccountSortProperty.status);
+        sortProperties.add('Joined', AccountSortProperty.joined);
+        sortProperties.add('Last modified', AccountSortProperty.lastModified);
+
+        this.sortProperties = sortProperties;
+
     }
 
     //#endregion
@@ -94,6 +90,11 @@ export class AccountSearchBoxComponent implements OnInit {
     // Callback which is fired when search button is clicked.
     public clickSearch(): void {
         this.search.emit();
+    }
+
+    // Callback which is fired when statuses selection is updated.
+    public updateStatuses(statuses: Array<KeyValuePair<AccountStatuses>>): void{
+        this.conditions.statuses = statuses.map((x: KeyValuePair<AccountStatuses>) => {return x.value});
     }
 
     /*

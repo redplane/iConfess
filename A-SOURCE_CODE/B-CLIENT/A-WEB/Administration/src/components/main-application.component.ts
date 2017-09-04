@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Dictionary} from "../viewmodels/Dictionary";
+import {Dictionary} from "../models/Dictionary";
 
 @Component({
     selector: 'main-application',

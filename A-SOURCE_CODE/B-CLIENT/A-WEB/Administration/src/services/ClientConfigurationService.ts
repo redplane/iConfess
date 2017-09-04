@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {Dictionary} from "../viewmodels/Dictionary";
 import {SortDirection} from "../enumerations/SortDirection";
 import {CategorySortProperty} from "../enumerations/order/CategorySortProperty";
 import {AccountSortProperty} from "../enumerations/order/AccountSortProperty";
@@ -10,6 +9,7 @@ import {CommentReportSortProperty} from "../enumerations/order/CommentReportSort
 import {TextSearchMode} from "../enumerations/TextSearchMode";
 import {PostSortProperty} from "../enumerations/order/PostSortProperty";
 import {PostReportSortProperty} from "../enumerations/order/PostReportSortProperty";
+import {Dictionary} from "../models/Dictionary";
 
 @Injectable()
 export class ClientConfigurationService {

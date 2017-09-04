@@ -4,8 +4,11 @@ import {SortDirection} from "../../enumerations/SortDirection";
 import {CategorySortProperty} from "../../enumerations/order/CategorySortProperty";
 import {TextSearchMode} from "../../enumerations/TextSearchMode";
 import {TextSearch} from "../TextSearch";
+import {Sorting} from "../../models/Sorting";
 
 export class SearchCategoriesViewModel{
+
+    //#region Properties
 
     // Index of category.
     public id: number;
@@ -25,11 +28,12 @@ export class SearchCategoriesViewModel{
     // Results pagination.
     public pagination: Pagination;
 
-    // Results sorting.
-    public direction: SortDirection;
+    // Property and direction of sorting.
+    public sorting: Sorting<CategorySortProperty>;
 
-    // Property which is used for sorting.
-    public sort: CategorySortProperty;
+    //#endregion
+
+    //#region Constructor
 
     // Initiate view model with properties.
     public constructor(){
@@ -38,7 +42,8 @@ export class SearchCategoriesViewModel{
         this.created = new UnixDateRange();
         this.lastModified = new UnixDateRange();
         this.pagination = new Pagination();
-        this.direction = SortDirection.Ascending;
-        this.sort = CategorySortProperty.index;
+        this.sorting = new Sorting<CategorySortProperty>();
     }
+
+    //#endregion
 }

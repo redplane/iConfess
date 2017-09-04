@@ -9,7 +9,7 @@ import {CategoryDetailBoxComponent} from '../components/category-management/cate
 import {CategoryInitiateBoxComponent} from '../components/category-management/category-initiate-box.component';
 import {AccountForgotPasswordComponent} from '../components/account-management/account-forgot-password.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CategoryFindBoxComponent} from "../components/category-management/category-find-box.component";
+import {CategorySearchBoxComponent} from "../components/category-management/category-search-box.component";
 import {HttpModule, JsonpModule} from '@angular/http';
 import {ModalModule, PaginationModule, TypeaheadModule} from 'ng2-bootstrap';
 import {RouterModule, Routes} from '@angular/router';
@@ -25,7 +25,6 @@ import {SelectModule} from "ng2-select";
 import {MomentModule} from "angular2-moment";
 import {AccountProfileBoxComponent} from "../components/account-management/account-profile-box.component";
 import {PostDetailBoxComponent} from "../components/post-management/post-detail-box.component";
-import {ChartsModule} from "ng2-charts";
 import {ClientTimeService} from "../services/ClientTimeService";
 import {ClientAccountService} from "../services/api/ClientAccountService";
 import {ClientCategoryService} from "../services/api/ClientCategoryService";
@@ -38,6 +37,8 @@ import {ClientAuthenticationService} from "../services/api/ClientAuthenticationS
 import {ClientValidationService} from "../services/ClientValidationService";
 import {ClientCommonService} from "../services/ClientCommonService";
 import {NgxNumericPaginatorModule} from 'ngx-numeric-paginator';
+import {Ng2MultiSelectorModule} from 'ng2-multi-selector';
+import {CategoryDeleteBoxComponent} from "../components/category-management/category-delete-box.component";
 
 // Routing configuration.
 const appRoutes: Routes = [
@@ -70,7 +71,8 @@ const appRoutes: Routes = [
         // Initiate application routing configuration.
         RouterModule.forRoot(appRoutes),
 
-        NgxNumericPaginatorModule
+        NgxNumericPaginatorModule,
+        Ng2MultiSelectorModule
     ],
     declarations: [
         MainApplicationComponent,
@@ -86,8 +88,9 @@ const appRoutes: Routes = [
 
         CategoryManagementComponent,
         CategoryDetailBoxComponent,
-        CategoryFindBoxComponent,
+        CategorySearchBoxComponent,
         CategoryInitiateBoxComponent,
+        CategoryDeleteBoxComponent,
 
         PostReportManagementComponent,
         PostReportFindBoxComponent,

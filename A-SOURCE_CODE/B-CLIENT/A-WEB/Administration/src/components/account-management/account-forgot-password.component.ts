@@ -11,7 +11,7 @@ import {IClientAccountService} from "../../interfaces/services/api/IClientAccoun
 @Component({
     selector: 'account-forgot-password-box',
     templateUrl: 'account-forgot-password.component.html',
-    inputs: ['isLoading'],
+    inputs: ['isBusy'],
     providers:[
         ClientDataConstraintService
     ]

@@ -4,7 +4,7 @@
 
         <!-- Category information find box -->
         <post-report-find-box #postReportFindBox
-                              [isLoading]="isLoading"
+                              [is-busy]="isLoading"
                               [conditions]="findPostReportConditions"
                               (search)="clickSearch($event)"></post-report-find-box>
     </div>

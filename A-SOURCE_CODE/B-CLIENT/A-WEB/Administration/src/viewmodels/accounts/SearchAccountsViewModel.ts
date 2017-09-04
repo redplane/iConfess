@@ -4,8 +4,11 @@ import {UnixDateRange} from "../UnixDateRange";
 import {AccountSortProperty} from "../../enumerations/order/AccountSortProperty";
 import {Pagination} from "../Pagination";
 import {SortDirection} from "../../enumerations/SortDirection";
+import {Sorting} from "../../models/Sorting";
 
 export class SearchAccountsViewModel{
+
+    //#region Properties
 
     // Email which is used for registering account.
     public email: TextSearch;
@@ -26,10 +29,11 @@ export class SearchAccountsViewModel{
     public pagination: Pagination;
 
     // Results sorting.
-    public direction: SortDirection;
+    public sorting: Sorting<AccountSortProperty>;
 
-    // Property which is used for sorting.
-    public sort: AccountSortProperty;
+    //#endregion
+
+    //#region Constructor
 
     // Initiate find accounts view model with default settings.
     public constructor(){
@@ -39,7 +43,8 @@ export class SearchAccountsViewModel{
         this.joined = new UnixDateRange();
         this.lastModified = new UnixDateRange();
         this.pagination = new Pagination();
-        this.direction = SortDirection.Ascending;
-        this.sort = AccountSortProperty.index;
+        this.sorting = new Sorting<AccountSortProperty>();
     }
+
+    //#endregion
 }

@@ -1,51 +1,41 @@
-import {Component, EventEmitter} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {ClientConfigurationService} from "../../services/ClientConfigurationService";
-import {ClientAccountService} from "../../services/api/ClientAccountService";
-import {ClientDataConstraintService} from "../../services/ClientDataConstraintService";
+import {Component, ViewChild} from '@angular/core';
+import {InitiateCategoryViewModel} from "../../viewmodels/category/InitiateCategoryViewModel";
+import {NgForm} from "@angular/forms";
 
 @Component({
     selector: 'category-initiate-box',
     templateUrl: 'category-initiate-box.component.html',
-    inputs:['isLoading'],
-    outputs:['initiateCategory'],
-    providers: [
-        FormBuilder,
-
-        ClientDataConstraintService,
-        ClientConfigurationService,
-        ClientAccountService
-    ]
+    exportAs: 'category-initiate-box'
 })
 
 export class CategoryInitiateBoxComponent {
 
-    // Whether records are being loaded from server or not.
-    public isLoading: boolean;
+    // Category initiator.
+    private initiator: InitiateCategoryViewModel;
 
-    // Event which is emitted when search button is clicked.
-    private initiateCategory: EventEmitter<any>;
+    // Form which contains input fields.
+    @ViewChild('categoryInitiatorComponent')
+    private categoryInitiatorComponent: NgForm;
 
-    // Category find box which contains category.
-    private initiateCategoryBox: FormGroup;
+    //#region Constructor
 
     // Initiate component with default dependency injection.
-    public constructor(private formBuilder: FormBuilder,
-                       public clientDataConstraintService: ClientDataConstraintService) {
-
-        // Form control of find category box.
-        this.initiateCategoryBox = this.formBuilder.group({
-            name: [null]
-        });
-
-        // Initiate event emitters.
-        this.initiateCategory = new EventEmitter()
-
-        this.isLoading = false;
+    public constructor() {
+        // Initiate initiator.
+        this.initiator = new InitiateCategoryViewModel();
     }
 
-    // Callback which is fired when confirm button is clicked.
-    public clickInitiateCategory(category: any): void {
-        this.initiateCategory.emit(category);
+    //#endregion
+
+    //#region Methods
+
+    // Get initiator information.
+    public getInitiator(): InitiateCategoryViewModel{
+        return this.initiator;
     }
+
+    public getForm(): NgForm{
+        return this.categoryInitiatorComponent;
+    }
+    //#endregion
 }

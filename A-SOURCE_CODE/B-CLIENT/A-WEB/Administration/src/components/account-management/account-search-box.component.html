@@ -1,162 +1,133 @@
-<form [formGroup]="findAccountBox"
-      class="box box-default collapsed-box"
-      (submit)="clickSearch()">
+<!--1st Column-->
+<div class="col-lg-6">
 
-    <!-- Overlay which is used for blocking box. -->
-    <div class="overlay"
-         *ngIf="isLoading">
-        <i class="fa fa-refresh fa-spin"></i>
+    <!-- Email address -->
+    <div class="form-group">
+        <label>Email</label>
+        <input name="email"
+               class="form-control"
+               placeholder="Email"
+               [(ngModel)]="conditions.email.value">
+
     </div>
 
-    <div class="box-header">
-        <span class="glyphicon glyphicon-search"></span>
-        <span> Account search</span>
+    <!-- Account statuses -->
+    <div class="form-group">
+        <label>Statuses</label>
 
-        <button type="button"
-                class="btn btn-box-tool pull-right"
-                data-widget="collapse">
-            <i class="fa fa-minus"></i>
-        </button>
+        <div class="btn-group btn-group-justified"
+             role="group"
+             aria-label="...">
+
+            <ng2-multi-selector [items]="clientCommonService.getAccountStatuses()"
+                                [key]="'key'"
+                                [display-property]="'key'"
+                                [is-search-box-available]="false"
+                                [is-clear-button-available]="true"
+                                [separation-character]="' - '"
+                                (update-items)="updateStatuses($event)">
+            </ng2-multi-selector>
+        </div>
+
     </div>
 
-    <div class="box-body">
+    <!-- Nickname -->
+    <div class="form-group">
+        <label>Name</label>
+        <input name="nickname"
+               class="form-control"
+               placeholder="Nickname"
+               [(ngModel)]="conditions.nickname.value"/>
+    </div>
+</div>
 
-        <div class="row">
-            <div class="col-lg-6">
+<!--2nd Column-->
+<div class="col-lg-6">
 
-                <!-- Email address -->
-                <div class="form-group">
-                    <label>Email</label>
-                    <input class="form-control"
-                           placeholder="Email"
-                           formControlName="email"
-                           [(ngModel)]="conditions.email.value">
+    <!-- Joined -->
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <label>Joined</label>
+        </div>
 
-                </div>
-
-                <!-- Account statuses -->
-                <div class="form-group">
-                    <label>Statuses</label>
-
-                    <div class="btn-group btn-group-justified"
-                         role="group"
-                         aria-label="...">
-
-                        <!--<div *ngFor="let key of clientConfigurationService.accountStatusSelections.keys();"-->
-                             <!--class="btn-group"-->
-                             <!--role="group">-->
-                            <!--<button type="button"-->
-                                    <!--class="btn btn-default"-->
-                                    <!--[class.btn-default]="conditions.statuses.indexOf(clientConfigurationService.accountStatusSelections.item(key)) == -1"-->
-                                    <!--[class.btn-primary]="conditions.statuses.indexOf(clientConfigurationService.accountStatusSelections.item(key)) != -1"-->
-                                    <!--(click)="toggleStatuses(clientConfigurationService.accountStatusSelections.item(key))">-->
-                                <!--<span>{{key}}</span>-->
-                            <!--</button>-->
-                        <!--</div>-->
-                    </div>
-
-                </div>
-
-                <!-- Nickname -->
-                <div class="form-group">
-                    <label>Name</label>
-                    <input class="form-control"
-                           placeholder="Nickname"
-                           formControlName="nickname"
-                           [(ngModel)]="conditions.nickname.value"/>
-                </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                    </span>
+                <input name="joinFrom"
+                       class="form-control"
+                       type="date"
+                       [(ngModel)]="conditions.joined.from"/>
             </div>
+        </div>
 
-            <div class="col-lg-6">
-
-                <!-- Joined -->
-                <div class="row form-group">
-                    <div class="col-lg-12">
-                        <label>Joined</label>
-                    </div>
-
-                    <div class="col-lg-6"
-                         formGroupName="joined">
-                        <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-hourglass-start" aria-hidden="true"></i>
-                                </span>
-                            <input class="form-control"
-                                   type="date"
-                                   formControlName="from"
-                                   [(ngModel)]="conditions.joined.from"/>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6"
-                         formGroupName="joined">
-                        <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-hourglass-end"
-                                       aria-hidden="true"></i>
-                                </span>
-                            <input class="form-control"
-                                   type="date"
-                                   formControlName="to"
-                                   [(ngModel)]="conditions.joined.to"/>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Last modified -->
-                <div class="row form-group">
-                    <div class="col-lg-12">
-                        <label>Last modified</label>
-                    </div>
-
-                    <div class="col-lg-6"
-                         formGroupName="lastModified">
-                        <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-hourglass-start" aria-hidden="true"></i>
-                                </span>
-                            <input class="form-control"
-                                   type="date"
-                                   formControlName="from"
-                                   [(ngModel)]="conditions.lastModified.from"/>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6"
-                         formGroupName="lastModified">
-                        <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-hourglass-end" aria-hidden="true"></i>
-                                </span>
-                            <input class="form-control"
-                                   type="date"
-                                   formControlName="to"
-                                   [(ngModel)]="conditions.lastModified.to"/>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sorting -->
-                <div class="row form-group">
-                    <div class="col-lg-12">
-                        <label>Sorting</label>
-                    </div>
-
-                    <div class="col-lg-6">
-                    </div>
-
-                    <div class="col-lg-6">
-                    </div>
-                </div>
-
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-hourglass-end"
+                           aria-hidden="true"></i>
+                    </span>
+                <input name="joinTo"
+                       class="form-control"
+                       type="date"
+                       [(ngModel)]="conditions.joined.to"/>
             </div>
         </div>
     </div>
 
-    <div class="box-footer">
-        <button type="submit"
-                class="btn btn-primary btn-flat">
-            <span class="glyphicon glyphicon-search"></span>
-        </button>
+    <!-- Last modified -->
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <label>Last modified</label>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                    </span>
+                <input name="lastModifiedFrom"
+                       class="form-control"
+                       type="date"
+                       [(ngModel)]="conditions.lastModified.from"/>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                    </span>
+                <input name="lastModifiedTo"
+                       class="form-control"
+                       type="date"
+                       [(ngModel)]="conditions.lastModified.to"/>
+            </div>
+        </div>
     </div>
-</form>
+
+    <!-- Sorting -->
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <label>Sorting</label>
+        </div>
+
+        <div class="col-lg-6">
+            <select class="form-control"
+                    [(ngModel)]="conditions.sorting.property">
+                <option *ngFor="let item of sortProperties.getKeyValuePairs()"
+                        [value]="item.value">{{item.key}}</option>
+            </select>
+        </div>
+
+        <div class="col-lg-6">
+            <select class="form-control"
+                    [(ngModel)]="conditions.sorting.direction">
+                <option *ngFor="let item of clientCommonService.getSortDirections(null)"
+                        [value]="item.value">{{item.key}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+

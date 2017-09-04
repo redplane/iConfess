@@ -1,12 +1,40 @@
 <!-- Account search box -->
-<div class="row">
+<form name="account-search"
+      class="row"
+      novalidate
+      (submit)="clickSearch()">
     <div class="col-lg-12">
-        <account-search-box [conditions]="conditions"
-                            [is-loading]="isLoading"
-                            (search)="clickSearch()">
-        </account-search-box>
+        <div class="box box-default">
+            <!-- Loading overlay -->
+            <div class="overlay"
+                 *ngIf="isBusy">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+            <div class="box-header with-border">
+                <span>
+                    <b class="glyphicon glyphicon-search" aria-hidden="true"></b> Search accounts
+                </span>
+                <button type="button"
+                        class="btn btn-box-tool pull-right" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <div class="box-body">
+                <account-search-box [conditions]="conditions"
+                                    [is-loading]="isBusy"
+                                    (search)="clickSearch()">
+                </account-search-box>
+            </div>
+            <div class="box-footer">
+                <div class="text-center">
+                    <input type="submit"
+                           class="btn btn-primary btn-flat"
+                           value="Search">
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</form>
 
 <!-- Content container -->
 <div class="row">
@@ -14,7 +42,7 @@
         <div class="box box-default">
             <!-- Loading overlay -->
             <div class="overlay"
-                 *ngIf="isLoading">
+                 *ngIf="isBusy">
                 <i class="fa fa-refresh fa-spin"></i>
             </div>
 
@@ -45,27 +73,29 @@
 
             <div class="box-body">
                 <!--Accounts management table-->
-                <table class="table table-responsive table-striped table-condensed table-hover">
+                <table class="table table-responsive table-condensed">
                     <thead>
                     <tr>
-                        <th>Email</th>
-                        <th>Nickname</th>
-                        <th>Joined</th>
-                        <th>Last modified</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Nickname</th>
+                        <th class="text-center">Joined</th>
+                        <th class="text-center">Last modified</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let account of searchResult.records; let i = index">
-                        <td>
+                        <td class="text-center">
                             <a href="javascript:void(0);"
                                (click)="clickChangeAccountInfo(account)">{{account.email}}</a>
                         </td>
-                        <td>{{account.nickname}}</td>
-                        <td>
+                        <td class="text-center"
+                            [class.text-danger]="account.status == AccountStatuses.Disabled"
+                            [class.text-warning]="account.status == AccountStatuses.Pending">{{account.nickname}}</td>
+                        <td class="text-center">
                             {{ clientTimeService.getUtc(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
                         </td>
-                        <td>
+                        <td class="text-center">
                             <span *ngIf="account.lastModified != null">
                                 {{clientTimeService.getUtc(account.joined) | amDateFormat: 'YYYY-MM-DD'}}
                             </span>
@@ -73,7 +103,6 @@
                             <span *ngIf="account.lastModified == null">
                                 N/A
                             </span>
-
                         </td>
                     </tr>
                     </tbody>
@@ -84,7 +113,9 @@
                 <div class="col-lg-12">
                     <div class="text-center">
                         <ngx-numeric-paginator [options]="clientCommonService.getPaginationOptions()"
-                                               [total-items]="searchResult.total">
+                                               [page]="conditions.pagination.page"
+                                               [total-items]="searchResult.total"
+                                               (select-page)="selectPage($event)">
                         </ngx-numeric-paginator>
                     </div>
                 </div>
@@ -94,42 +125,40 @@
 </div>
 
 <!-- Change account information modal dialog -->
-<div #changeAccountInfoModal="bs-modal"
+<div #profileBoxContainer="bs-modal"
      bsModal
      class="modal fade"
      tabindex="-1"
      role="dialog"
-     aria-hidden="true">
+     aria-hidden="true"
+     [config]="{backdrop: 'static', keyboard: false}">
 
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <span>Change account detail information</span>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-
-                    <!-- Account nickname -->
-                    <label>Nickname</label>
-                    <input class="form-control"
-                           [(ngModel)]="account.nickname"/>
-
-                    <!-- Account status -->
-                    <label>Status</label>
-                    <select class="form-control"
-                            [(ngModel)]="account.status">
-                        <option *ngFor="let item of clientCommonService.getAccountStatuses()"
-                                [value]="item.value">{{item.value}}
-                        </option>
-                    </select>
+            <div class="box box-default">
+                <!-- Loading overlay -->
+                <div class="overlay"
+                     *ngIf="isBusy">
+                    <i class="fa fa-refresh fa-spin"></i>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <div class="text-center">
-                    <button class="btn btn-flat btn-primary"
-                            (click)="clickConfirmAccountInfo()">
-                        <span class="glyphicon glyphicon-check"></span>
-                    </button>
+
+                <div class="box-header with-border">
+                    <span><b class="glyphicon glyphicon-search" aria-hidden="true"></b> Profile information</span>
+                </div>
+                <div class="box-body">
+                    <account-profile-box #profileBox="account-profile-box"></account-profile-box>
+                </div>
+                <div class="box-footer">
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-flat"
+                                (click)="clickConfirmAccountInfo()">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                        <button class="btn btn-default btn-flat"
+                                (click)="profileBoxContainer.hide()">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

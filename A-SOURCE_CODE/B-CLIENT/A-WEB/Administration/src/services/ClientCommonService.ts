@@ -7,8 +7,9 @@ import {Injectable} from "@angular/core";
 import {IClientCommonService} from "../interfaces/services/IClientCommonService";
 import {NgxPaginatorOption} from "ngx-numeric-paginator/ngx-paginator-option";
 import {IDictionary} from "../interfaces/IDictionary";
-import {Dictionary} from "../viewmodels/Dictionary";
 import {KeyValuePair} from "../models/KeyValuePair";
+import {Dictionary} from "../models/Dictionary";
+import {SortDirection} from "../enumerations/SortDirection";
 
 @Injectable()
 export class ClientCommonService implements IClientCommonService {
@@ -20,6 +21,9 @@ export class ClientCommonService implements IClientCommonService {
 
     // List of account statuses.
     private accountStatuses: IDictionary<AccountStatuses>;
+
+    // List of sorting modes.
+    private sortDirections: IDictionary<SortDirection>;
 
     //#endregion
 
@@ -119,6 +123,17 @@ export class ClientCommonService implements IClientCommonService {
         }
 
         return result;
+    }
+
+    // Get sort directions.
+    public getSortDirections(keyword: string): Array<KeyValuePair<SortDirection>>{
+        if (this.sortDirections == null){
+            this.sortDirections = new Dictionary<SortDirection>();
+            this.sortDirections.add('Ascending', SortDirection.Ascending);
+            this.sortDirections.add('Descending', SortDirection.Descending);
+        }
+
+        return this.sortDirections.getKeyValuePairs();
     }
 
     //#endregion
