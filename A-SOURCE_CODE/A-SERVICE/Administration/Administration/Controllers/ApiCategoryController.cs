@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -294,7 +295,7 @@ namespace Administration.Controllers
                 #region Records search
 
                 // Initiate search result.
-                var searchResult = new SearchResult<IQueryable<CategoryViewModel>>();
+                var searchResult = new SearchResult<IList<CategoryViewModel>>();
 
                 // Search all categories.
                 var categories = UnitOfWork.RepositoryCategories.Search();
@@ -325,11 +326,12 @@ namespace Administration.Controllers
                 #endregion
 
                 // Sort the results.
-                UnitOfWork.RepositoryCategories.Sort(apiCategories, conditions.Direction, conditions.Sort);
+                var sorting = conditions.Sorting;
+                apiCategories = UnitOfWork.RepositoryCategories.Sort(apiCategories, sorting.Direction, sorting.Property);
 
                 // Update result.
                 searchResult.Total = await apiCategories.CountAsync();
-                searchResult.Records = UnitOfWork.RepositoryCategories.Paginate(apiCategories, conditions.Pagination);
+                searchResult.Records = await UnitOfWork.RepositoryCategories.Paginate(apiCategories, conditions.Pagination).ToListAsync();
 
                 return Request.CreateResponse(HttpStatusCode.OK, searchResult);
             }

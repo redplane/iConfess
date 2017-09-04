@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Token;
@@ -15,9 +15,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with dependency injection.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryToken(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
         }
 
@@ -47,28 +47,28 @@ namespace Shared.Repositories
                 var szCode = conditions.Code;
                 switch (szCode.Mode)
                 {
-                    case TextComparision.Contain:
+                    case TextSearchMode.Contain:
                         tokens = tokens.Where(x => x.Code.Contains(szCode.Value));
                         break;
-                    case TextComparision.Equal:
+                    case TextSearchMode.Equal:
                         tokens = tokens.Where(x => x.Code.Equals(szCode.Value));
                         break;
-                    case TextComparision.EqualIgnoreCase:
+                    case TextSearchMode.EqualIgnoreCase:
                         tokens =
                             tokens.Where(x => x.Code.Equals(szCode.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.StartsWith:
+                    case TextSearchMode.StartsWith:
                         tokens = tokens.Where(x => x.Code.StartsWith(szCode.Value));
                         break;
-                    case TextComparision.StartsWithIgnoreCase:
+                    case TextSearchMode.StartsWithIgnoreCase:
                         tokens =
                             tokens.Where(
                                 x => x.Code.StartsWith(szCode.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.EndsWith:
+                    case TextSearchMode.EndsWith:
                         tokens = tokens.Where(x => x.Code.EndsWith(szCode.Value));
                         break;
-                    case TextComparision.EndsWithIgnoreCase:
+                    case TextSearchMode.EndsWithIgnoreCase:
                         tokens =
                             tokens.Where(
                                 x => x.Code.EndsWith(szCode.Value, StringComparison.CurrentCultureIgnoreCase));

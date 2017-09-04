@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.SignalrConnections;
@@ -10,25 +10,10 @@ namespace Shared.Repositories
 {
     public class RepositorySignalrConnection : ParentRepository<SignalrConnection>, IRepositorySignalrConnection
     {
-        #region Properties
-
-        /// <summary>
-        ///     Database dbContextWrapper.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
-        #endregion
-
         #region Constructors
 
-        /// <summary>
-        ///     Initiate signalr connection repository with database dbContextWrapper.
-        /// </summary>
-        /// <param name="dbContextWrapper"></param>
-        public RepositorySignalrConnection(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+        public RepositorySignalrConnection(DbContext dbContext) : base(dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -53,28 +38,28 @@ namespace Shared.Repositories
                 var szIndex = conditions.Index;
                 switch (szIndex.Mode)
                 {
-                    case TextComparision.Contain:
+                    case TextSearchMode.Contain:
                         connections = connections.Where(x => x.Index.Contains(szIndex.Value));
                         break;
-                    case TextComparision.Equal:
+                    case TextSearchMode.Equal:
                         connections = connections.Where(x => x.Index.Equals(szIndex.Value));
                         break;
-                    case TextComparision.EqualIgnoreCase:
+                    case TextSearchMode.EqualIgnoreCase:
                         connections =
                             connections.Where(x => x.Index.Equals(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.StartsWith:
+                    case TextSearchMode.StartsWith:
                         connections = connections.Where(x => x.Index.StartsWith(szIndex.Value));
                         break;
-                    case TextComparision.StartsWithIgnoreCase:
+                    case TextSearchMode.StartsWithIgnoreCase:
                         connections =
                             connections.Where(
                                 x => x.Index.StartsWith(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
-                    case TextComparision.EndsWith:
+                    case TextSearchMode.EndsWith:
                         connections = connections.Where(x => x.Index.EndsWith(szIndex.Value));
                         break;
-                    case TextComparision.EndsWithIgnoreCase:
+                    case TextSearchMode.EndsWithIgnoreCase:
                         connections =
                             connections.Where(
                                 x => x.Index.EndsWith(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));

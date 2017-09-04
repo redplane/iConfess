@@ -1,16 +1,16 @@
 using System.Data.Entity.Migrations;
-using Database.Models.Contextes;
+using Database.Models.Contexts;
 
 namespace Database.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<SqlServerDataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<RelationalDataContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(SqlServerDataContext context)
+        protected override void Seed(RelationalDataContext context)
         {
             //  This method will be called after migrating to the latest version.
 

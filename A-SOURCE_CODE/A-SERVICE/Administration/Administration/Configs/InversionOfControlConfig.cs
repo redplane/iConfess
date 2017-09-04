@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -12,8 +13,7 @@ using Administration.Services;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
-using Database.Interfaces;
-using Database.Models.Contextes;
+using Database.Models.Contexts;
 using log4net.Config;
 using Microsoft.AspNet.SignalR;
 using Shared.Enumerations;
@@ -49,7 +49,7 @@ namespace Administration.Configs
             #region Unit of work & Database context
 
             // Database context initialization.
-            containerBuilder.RegisterType<SqlServerDataContext>().As<IDbContextWrapper>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<RelationalDataContext>().As<DbContext>().InstancePerLifetimeScope();
 
             // Unit of work registration.
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
@@ -71,19 +71,25 @@ namespace Administration.Configs
             containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>().SingleInstance();
 
             // Handle common businesses of repositories.
-            containerBuilder.RegisterType<GeneralRepositoryService>().As<GeneralRepositoryService>().SingleInstance();
+            containerBuilder.RegisterType<CommonRepository>().As<CommonRepository>().SingleInstance();
+
+            // Handle file business.
+            containerBuilder.RegisterType<FileService>().As<IFileService>().SingleInstance();
+            
+            // Handle queue business.
+            containerBuilder.RegisterType<QueueService>().As<IQueueService>().SingleInstance();
 
             // System email service.
             var systemEmailService = new SendGridService();
-            LoadSystemEmails(systemEmailService);
+            var sendGridMailConfigurationFile =
+                HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SendGridMailTemplateConfiguration"]);
+            systemEmailService.LoadEmailConfiguration(sendGridMailConfigurationFile);
             containerBuilder.RegisterType<SendGridService>()
-                .As<ISystemEmailService>()
+                .As<IMailService>()
                 .OnActivating(x => x.ReplaceInstance(systemEmailService))
                 .SingleInstance();
-
-            // Template service.
-            containerBuilder.RegisterType<TemplateService>().As<ITemplateService>().SingleInstance();
-
+            
+            // Initiate signalr authorize attribute.
             containerBuilder.RegisterType<SignalrAuthorizeAttribute>().InstancePerLifetimeScope();
 
             #endregion
@@ -135,42 +141,7 @@ namespace Administration.Configs
 
             return bearerAuthenticationProvider;
         }
-
-        /// <summary>
-        ///     Read settings from configuration files and bind to static list for future use.
-        /// </summary>
-        /// <param name="systemEmailService"></param>
-        private static void LoadSystemEmails(ISystemEmailService systemEmailService)
-        {
-            // Load api key
-            var apiKey = ConfigurationManager.AppSettings["EmailApiKey"];
-            if (string.IsNullOrEmpty(apiKey))
-                throw new Exception("API key is required");
-            systemEmailService.ApiKey = apiKey;
-
-            #region Load emails list 
-
-            // Search emails list.
-            var emailsList = Enum.GetValues(typeof(SystemEmail));
-
-            // Search and load email list defined in the enumerations.
-            for (var index = 0; index < emailsList.Length; index++)
-            {
-                // Key of email configuration.
-                var key = $"{nameof(SystemEmail)}.{emailsList.GetValue(index)}";
-
-                // Key doesn't exist.
-                var value = ConfigurationManager.AppSettings[key];
-                if (string.IsNullOrEmpty(value))
-                    continue;
-
-                var fileName = HttpContext.Current.Server.MapPath(value);
-                systemEmailService.LoadEmail((SystemEmail) index, fileName);
-            }
-
-            #endregion
-        }
-
+        
         #endregion
     }
 }

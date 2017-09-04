@@ -2,35 +2,28 @@
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using Database.Interfaces;
 using Shared.Interfaces.Repositories;
 using Shared.Services;
 
 namespace Shared.Repositories
 {
-    public class ParentRepository<T> : GeneralRepositoryService, IParentRepository<T> where T : class
+    public class ParentRepository<T> : CommonRepository, IParentRepository<T> where T : class
     {
         #region Constructors
 
         /// <summary>
         ///     Initiate repository with database context wrapper.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
-        public ParentRepository(IDbContextWrapper dbContextWrapper)
+        /// <param name="dbContext"></param>
+        public ParentRepository(DbContext dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
-            _dbSet = dbContextWrapper.Set<T>();
+            _dbSet = dbContext.Set<T>();
         }
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        ///     Database context wrapper.
-        /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
-
+        
         /// <summary>
         ///     Database set.
         /// </summary>

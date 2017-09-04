@@ -19,7 +19,7 @@ namespace Shared.ViewModels.SignalrConnections
         /// <summary>
         /// Range of created time.
         /// </summary>
-        public UnixDateRange Created { get; set; }
+        public DoubleRange Created { get; set; }
 
         #endregion
     }

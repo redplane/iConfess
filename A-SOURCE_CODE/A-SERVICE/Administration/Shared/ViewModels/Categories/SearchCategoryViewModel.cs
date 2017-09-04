@@ -25,22 +25,17 @@ namespace Shared.ViewModels.Categories
         /// <summary>
         ///     When the category was created.
         /// </summary>
-        public UnixDateRange Created { get; set; }
+        public DoubleRange Created { get; set; }
 
         /// <summary>
         ///     When the category was lastly modified.
         /// </summary>
-        public UnixDateRange LastModified { get; set; }
+        public DoubleRange LastModified { get; set; }
 
         /// <summary>
         ///     Which property should be used for sorting categories.
         /// </summary>
-        public CategoriesSort Sort { get; set; }
-
-        /// <summary>
-        ///     Whether records should be sorted ascendingly or decendingly.
-        /// </summary>
-        public SortDirection Direction { get; set; }
+        public Sorting<CategoriesSort> Sorting { get; set; }
 
         /// <summary>
         ///     Pagination information.

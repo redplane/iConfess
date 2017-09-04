@@ -3,7 +3,7 @@ using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Posts;
 using Shared.Enumerations;
 using System;
-using Database.Interfaces;
+using System.Data.Entity;
 using Database.Models.Entities;
 
 namespace Shared.Repositories
@@ -16,7 +16,7 @@ namespace Shared.Repositories
         ///     Initiate repository with inversion of control.
         /// </summary>
         public RepositoryPost(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
         }
 

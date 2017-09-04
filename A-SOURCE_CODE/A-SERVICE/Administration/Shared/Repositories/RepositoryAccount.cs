@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
 using Shared.Enumerations;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Accounts;
 
@@ -15,7 +16,7 @@ namespace Shared.Repositories
         /// <summary>
         ///     Database context which provides access to database.
         /// </summary>
-        private readonly IDbContextWrapper _dbContextWrapper;
+        private readonly DbContext _dbContext;
 
         #endregion
 
@@ -24,11 +25,10 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with dependency injection.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryAccount(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
-            _dbContextWrapper = dbContextWrapper;
         }
 
         #endregion
@@ -118,6 +118,58 @@ namespace Shared.Repositories
                 var statuses = conditions.Statuses.ToList();
                 accounts = accounts.Where(x => statuses.Contains(x.Status));
             }
+
+            //// Find sorting property.
+            //var sorting = conditions.Sorting;
+            //switch (sorting.Direction)
+            //{
+            //    case SortDirection.Decending:
+            //        switch (sorting.Property)
+            //        {
+            //            case AccountsSort.Email:
+            //                accounts = accounts.OrderByDescending(x => x.Email);
+            //                break;
+            //            case AccountsSort.Nickname:
+            //                accounts = accounts.OrderByDescending(x => x.Nickname);
+            //                break;
+            //            case AccountsSort.Status:
+            //                accounts = accounts.OrderByDescending(x => x.Status);
+            //                break;
+            //            case AccountsSort.Joined:
+            //                accounts = accounts.OrderByDescending(x => x.Joined);
+            //                break;
+            //            case AccountsSort.LastModified:
+            //                accounts = accounts.OrderByDescending(x => x.LastModified);
+            //                break;
+            //            default:
+            //                accounts = accounts.OrderByDescending(x => x.Id);
+            //                break;
+            //        }
+            //        break;
+            //    default:
+            //        switch (sorting.Property)
+            //        {
+            //            case AccountsSort.Email:
+            //                accounts = accounts.OrderBy(x => x.Email);
+            //                break;
+            //            case AccountsSort.Nickname:
+            //                accounts = accounts.OrderBy(x => x.Nickname);
+            //                break;
+            //            case AccountsSort.Status:
+            //                accounts = accounts.OrderBy(x => x.Status);
+            //                break;
+            //            case AccountsSort.Joined:
+            //                accounts = accounts.OrderBy(x => x.Joined);
+            //                break;
+            //            case AccountsSort.LastModified:
+            //                accounts = accounts.OrderBy(x => x.LastModified);
+            //                break;
+            //            default:
+            //                accounts = accounts.OrderBy(x => x.Id);
+            //                break;
+            //        }
+            //        break;
+            //}
 
             // Joined has been defined.
             if (conditions.Joined != null)

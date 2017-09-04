@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -16,9 +16,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with inversion of control.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryPostReport(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
         }
 

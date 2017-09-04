@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Shared.Interfaces.Repositories;
-using Database.Interfaces;
 
 namespace Shared.Interfaces.Services
 {
@@ -47,12 +46,7 @@ namespace Shared.Interfaces.Services
         ///     Provides functions to access token database.
         /// </summary>
         IRepositoryToken RepositoryTokens { get; }
-
-        /// <summary>
-        ///     iConfess database context.
-        /// </summary>
-        IDbContextWrapper Context { get; }
-
+        
         #endregion
 
         #region Methods

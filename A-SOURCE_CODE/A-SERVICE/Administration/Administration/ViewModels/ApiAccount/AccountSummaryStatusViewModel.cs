@@ -7,11 +7,11 @@ namespace Administration.ViewModels.ApiAccount
         /// <summary>
         /// Time range when account had been created.
         /// </summary>
-        public UnixDateRange Joined { get; set; }
+        public DoubleRange Joined { get; set; }
 
         /// <summary>
         /// Time range when account was lastly modified.
         /// </summary>
-        public UnixDateRange LastModified { get; set; }
+        public DoubleRange LastModified { get; set; }
     }
 }

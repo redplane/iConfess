@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -15,9 +15,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with dependency injection.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryToken(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
         }
 

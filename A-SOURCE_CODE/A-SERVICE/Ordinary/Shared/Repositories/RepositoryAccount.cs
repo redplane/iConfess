@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Database.Interfaces;
 using Database.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Accounts;
 
@@ -13,9 +13,9 @@ namespace Shared.Repositories
         /// <summary>
         ///     Initiate repository with dependency injection.
         /// </summary>
-        /// <param name="dbContextWrapper"></param>
+        /// <param name="dbContext"></param>
         public RepositoryAccount(
-            IDbContextWrapper dbContextWrapper) : base(dbContextWrapper)
+            DbContext dbContext) : base(dbContext)
         {
         }
 
