@@ -1,8 +1,8 @@
-import {SearchCommentsDetailsViewModel} from "../../../viewmodels/comment/search-comments.view-model";
 import {SearchCommentsViewModel} from "../../../viewmodels/comment/search-comments.view-model";
 import {Response} from "@angular/http";
+import {SearchCommentsDetailsViewModel} from "../../../viewmodels/comment/search-comments-details.view-model";
 
-export interface IClientCommentService {
+export interface ICommentService {
 
     //#region Methods
 

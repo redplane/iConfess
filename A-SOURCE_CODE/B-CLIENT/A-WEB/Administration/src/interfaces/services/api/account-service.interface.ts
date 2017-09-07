@@ -7,7 +7,7 @@ import {Response} from "@angular/http";
 /*
  * Provides function to deal with accounts api.
  * */
-export interface IClientAccountService {
+export interface IAccountService {
 
     //#region Methods
 

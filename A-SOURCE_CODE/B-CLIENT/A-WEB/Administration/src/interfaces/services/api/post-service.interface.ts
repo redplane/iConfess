@@ -1,7 +1,7 @@
 import {SearchPostsViewModel} from "../../../viewmodels/post/search-posts.view-model";
 import {Response} from "@angular/http";
 
-export interface IClientPostService {
+export interface IPostService {
 
     //#region Methods
 

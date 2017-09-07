@@ -7,7 +7,7 @@ import {AccountStatus} from "../../../enumerations/account-status";
 import {IDictionary} from "../../../interfaces/dictionary.interface";
 import {KeyValuePair} from "../../../models/key-value-pair";
 import {Account} from "../../../models/entities/account";
-import {IClientAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
 
 @Component({
   selector: 'account-search-box',
@@ -51,7 +51,7 @@ export class AccountSearchBoxComponent implements OnInit {
   //#region Constructor
 
   // Initiate component with default dependency injection.
-  public constructor(@Inject("IClientAccountService") public clientAccountService: IClientAccountService,
+  public constructor(@Inject("IAccountService") public clientAccountService: IAccountService,
                      @Inject('IClientCommonService') public clientCommonService: IClientCommonService) {
 
     // Initiate event emitters.

@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Response} from "@angular/http";
-import {IClientAuthenticationService} from "../../../interfaces/services/api/IClientAuthenticationService";
-import {IClientAccountService} from "../../../interfaces/services/api/IClientAccountService";
+import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {IAuthenticationService} from "../../../interfaces/services/authentication-service.interface";
 
 @Component({
   selector: 'navigation-bar',
@@ -21,8 +21,8 @@ export class NavigationBarComponent implements OnInit {
   //#region Constructor
 
   // Initiate instance with IoC.
-  public constructor(@Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
-                     @Inject("IClientAccountService") public clientAccountService: IClientAccountService,
+  public constructor(@Inject("IAuthenticationService") public authenticationService: IAuthenticationService,
+                     @Inject("IAccountService") public clientAccountService: IAccountService,
                      public clientRoutingService: Router) {
   }
 
@@ -33,7 +33,7 @@ export class NavigationBarComponent implements OnInit {
   // Sign the user out.
   public clickSignOut(): void {
     // Clear the authentication service.
-    this.clientAuthenticationService.clearToken();
+    this.authenticationService.clearIdentity();
 
     // Re-direct to login page.
     this.clientRoutingService.navigate(['/']);
@@ -47,7 +47,6 @@ export class NavigationBarComponent implements OnInit {
         console.log(x);
       })
       .catch((x: Response) => {
-        console.log(x);
       });
   }
 

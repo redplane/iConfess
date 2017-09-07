@@ -1,7 +1,6 @@
 /*
  * Contains common business calculation.
  * */
-import {AccountStatuses} from "../enumerations/account-status";
 import {Pagination} from "../models/pagination";
 import {Injectable} from "@angular/core";
 import {IClientCommonService} from "../interfaces/services/client-common-service.interface";
@@ -10,6 +9,7 @@ import {IDictionary} from "../interfaces/dictionary.interface";
 import {KeyValuePair} from "../models/key-value-pair";
 import {Dictionary} from "../models/dictionary";
 import {SortDirection} from "../enumerations/sort-direction";
+import {AccountStatus} from "../enumerations/account-status";
 
 @Injectable()
 export class ClientCommonService implements IClientCommonService {
@@ -20,7 +20,7 @@ export class ClientCommonService implements IClientCommonService {
     private paginatorOption: NgxPaginatorOption;
 
     // List of account statuses.
-    private accountStatuses: IDictionary<AccountStatuses>;
+    private accountStatuses: IDictionary<AccountStatus>;
 
     // List of sorting modes.
     private sortDirections: IDictionary<SortDirection>;
@@ -64,13 +64,13 @@ export class ClientCommonService implements IClientCommonService {
     }
 
     // Find account display from enumeration.
-    public getAccountStatusDisplay(accountStatus: AccountStatuses): string {
+    public getAccountStatusDisplay(accountStatus: AccountStatus): string {
         switch (accountStatus) {
-            case AccountStatuses.Active:
+            case AccountStatus.Active:
                 return 'Active';
-            case AccountStatuses.Disabled:
+            case AccountStatus.Disabled:
                 return 'Disabled';
-            case AccountStatuses.Pending:
+            case AccountStatus.Pending:
                 return 'Pending';
             default:
                 return 'N/A';
@@ -103,12 +103,12 @@ export class ClientCommonService implements IClientCommonService {
     }
 
     // Search account statuses by using keyword.
-    public getAccountStatuses(keyword: string): Array<KeyValuePair<AccountStatuses>> {
+    public getAccountStatuses(keyword: string): Array<KeyValuePair<AccountStatus>> {
         if (this.accountStatuses == null) {
-            this.accountStatuses = new Dictionary<AccountStatuses>();
-            this.accountStatuses.add('Disabled', AccountStatuses.Disabled);
-            this.accountStatuses.add('Pending', AccountStatuses.Pending);
-            this.accountStatuses.add('Active', AccountStatuses.Active);
+            this.accountStatuses = new Dictionary<AccountStatus>();
+            this.accountStatuses.add('Disabled', AccountStatus.Disabled);
+            this.accountStatuses.add('Pending', AccountStatus.Pending);
+            this.accountStatuses.add('Active', AccountStatus.Active);
         }
 
         // Initiate result.
@@ -117,7 +117,7 @@ export class ClientCommonService implements IClientCommonService {
 
         // Keyword is specified. Filter statuses,
         if (keyword != null && keyword.length > 1) {
-            result = result.filter((x: KeyValuePair<AccountStatuses>) => {
+            result = result.filter((x: KeyValuePair<AccountStatus>) => {
                 return x.key.indexOf(keyword) != -1
             })
         }

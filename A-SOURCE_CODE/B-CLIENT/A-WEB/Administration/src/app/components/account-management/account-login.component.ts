@@ -3,10 +3,9 @@ import {Response} from "@angular/http";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, NgForm} from "@angular/forms";
 import {LoginViewModel} from "../../../viewmodels/accounts/login.view-model";
-import {IClientApiService} from "../../../interfaces/services/api/IClientApiService";
-import {IClientAuthenticationService} from "../../../interfaces/services/api/IClientAuthenticationService";
-import {AuthenticationToken} from "../../../models/authentication-token";
-import {IClientAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {IAuthenticationService} from "../../../interfaces/services/authentication-service.interface";
+import {AuthorizationToken} from "../../../models/authorization-token";
 
 @Component({
     selector: 'account-login',
@@ -32,9 +31,8 @@ export class AccountLoginComponent{
     //#region Constructor
 
     // Initiate component with default settings.
-    public constructor(@Inject("IClientApiService") public clientApiService: IClientApiService,
-                       @Inject("IClientAuthenticationService") public clientAuthenticationService: IClientAuthenticationService,
-                       @Inject("IClientAccountService") public clientAccountService: IClientAccountService,
+    public constructor(@Inject("IAuthenticationService") public authenticationService: IAuthenticationService,
+                       @Inject("IAccountService") public clientAccountService: IAccountService,
                        public clientRoutingService: Router){
 
         this.loginViewModel = new LoginViewModel();
@@ -57,10 +55,10 @@ export class AccountLoginComponent{
         this.clientAccountService.login(this.loginViewModel)
             .then((x: Response) => {
                 // Convert response from service to AuthenticationToken data type.
-                let clientAuthenticationDetail = <AuthenticationToken> x.json();
+                let clientAuthenticationDetail = <AuthorizationToken> x.json();
 
                 // Save the client authentication information.
-                this.clientAuthenticationService.setToken(clientAuthenticationDetail);
+                this.authenticationService.setAuthorization(clientAuthenticationDetail);
 
                 // Redirect user to account management page.
                 this.clientRoutingService.navigate(['/account-management']);
@@ -71,9 +69,6 @@ export class AccountLoginComponent{
             .catch((response: Response) =>{
                 // Unfreeze the UI.
                 this.isBusy = false;
-
-                // Proceed the common logic handling.
-                this.clientApiService.handleInvalidResponse(response);
             });
     }
 

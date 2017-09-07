@@ -10,10 +10,9 @@ import {Sorting} from "../../../models/sorting";
 import {Pagination} from "../../../models/pagination";
 import {IClientCommonService} from "../../../interfaces/services/client-common-service.interface";
 import {IClientTimeService} from "../../../interfaces/services/client-time-service.interface";
-import {IClientApiService} from "../../../interfaces/services/api/IClientApiService";
 import {Account} from "../../../models/entities/account";
 import {ModalDirective} from "ngx-bootstrap";
-import {IClientAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
 
 @Component({
   selector: 'account-management',
@@ -63,9 +62,8 @@ export class AccountManagementComponent implements OnInit {
   /*
   * Initiate component with injections.
   * */
-  public constructor(@Inject("IClientAccountService") public clientAccountService: IClientAccountService,
+  public constructor(@Inject("IAccountService") public clientAccountService: IAccountService,
                      @Inject('IClientCommonService') public clientCommonService: IClientCommonService,
-                     @Inject("IClientApiService") public clientApiService: IClientApiService,
                      @Inject("IClientTimeService") public clientTimeService: IClientTimeService) {
 
     // Initiate search conditions.
@@ -110,9 +108,6 @@ export class AccountManagementComponent implements OnInit {
 
         // Cancel loading.
         this.isBusy = false;
-
-        // Proceed non-solid response handling.
-        this.clientApiService.handleInvalidResponse(x);
       });
   }
 
@@ -164,9 +159,6 @@ export class AccountManagementComponent implements OnInit {
 
         // Close the dialog.
         this.profileBoxContainer.hide();
-
-        // Handle common error response.
-        this.clientApiService.handleInvalidResponse(response);
       });
   }
 

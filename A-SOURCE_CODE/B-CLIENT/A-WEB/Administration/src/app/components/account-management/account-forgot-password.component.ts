@@ -3,10 +3,9 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Response} from '@angular/http';
 import {Router} from '@angular/router';
 import {ClientDataConstraintService} from '../../../services/client-data-constraint.service';
-import {ClientApiService} from '../../../services/client-api.service';
-import {ClientToastrService} from '../../../services/client-toastr.service';
 import {Account} from '../../../models/entities/account';
-import {IClientAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'account-forgot-password-box',
@@ -34,9 +33,8 @@ export class AccountForgotPasswordComponent {
   // Initiate component with default settings.
   public constructor(private formBuilder: FormBuilder,
                      private clientDataConstraintService: ClientDataConstraintService,
-                     @Inject('IClientAccountService') private clientAccountService: IClientAccountService,
-                     private clientNotificationService: ClientToastrService,
-                     private clientApiService: ClientApiService,
+                     @Inject('IAccountService') private clientAccountService: IAccountService,
+                     private toastr: ToastrService,
                      private clientRoutingService: Router) {
 
     // Initiate form.
@@ -68,7 +66,7 @@ export class AccountForgotPasswordComponent {
       .then((response: Response) => {
 
         // Tell client that password request has been submitted.
-        this.clientNotificationService.success('CHANGE_PASSWORD_REQUEST_SUBMITTED');
+        this.toastr.success('CHANGE_PASSWORD_REQUEST_SUBMITTED');
 
         // Redirect user to submit password page.
         this.clientRoutingService.navigate(['/submit-password']);
@@ -77,9 +75,6 @@ export class AccountForgotPasswordComponent {
         this.isLoading = false;
       })
       .catch((response: Response) => {
-        // Proceed common response analyzation.
-        this.clientApiService.handleInvalidResponse(response);
-
         // Cancel component loading state.
         this.isLoading = false;
       });
