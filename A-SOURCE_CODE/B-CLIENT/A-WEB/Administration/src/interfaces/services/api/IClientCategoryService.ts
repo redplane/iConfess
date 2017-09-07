@@ -1,6 +1,6 @@
-import {SearchCategoriesViewModel} from "../../../viewmodels/category/SearchCategoriesViewModel";
+import {SearchCategoriesViewModel} from "../../../viewmodels/category/search-categories.view-model";
 import 'rxjs/add/operator/toPromise';
-import {Category} from "../../../models/entities/Category";
+import {Category} from "../../../models/entities/category";
 import {Response} from "@angular/http";
 
 export interface IClientCategoryService{

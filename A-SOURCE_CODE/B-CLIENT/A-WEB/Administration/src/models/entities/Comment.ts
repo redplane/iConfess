@@ -1,5 +1,5 @@
-import {Account} from "./Account";
-import {Post} from "./Post";
+import {Account} from "./account";
+import {Post} from "./post";
 
 /*
 * Comment and its Information

@@ -1,4 +1,4 @@
-import {AuthenticationToken} from "../../../models/AuthenticationToken";
+import {AuthenticationToken} from "../../../models/authentication-token";
 
 export interface IClientAuthenticationService{
 

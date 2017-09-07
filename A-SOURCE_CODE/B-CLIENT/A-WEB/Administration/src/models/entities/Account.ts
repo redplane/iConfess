@@ -1,28 +1,46 @@
-import {AccountStatuses} from "../../enumerations/AccountStatuses";
+import {AccountStatus} from "../../enumerations/account-status";
 
 /*
 * Account and its properties.
 * */
-export class Account{
+export class Account {
 
-    // Account index.
-    public id: number;
+  //#region Properties
 
-    // Email which is used for account registration.
-    public email: string;
+  /*
+  * Account index.
+  * */
+  public id: number;
 
-    // Nickname of account.
-    public nickname: string;
+  /*
+  * Email which is used for account registration.
+  * */
+  public email: string;
 
-    // Status of account.
-    public status: AccountStatuses;
+  /*
+  * Nickname of account.
+  * */
+  public nickname: string;
 
-    // Photo of account.
-    public photoRelativeUrl: string;
+  /*
+  * Status of account.
+  * */
+  public status: AccountStatus;
 
-    // Time when account was created on server.
-    public joined: number;
+  /*
+  * Photo of account.
+  * */
+  public photoRelativeUrl: string;
 
-    // Time when account was lastly modified.
-    public lastModified: number;
+  /*
+  * Time when account was created on server.
+  * */
+  public joined: number;
+
+  /*
+  * Time when account was lastly modified.
+  * */
+  public lastModified: number;
+
+  //#endregion
 }

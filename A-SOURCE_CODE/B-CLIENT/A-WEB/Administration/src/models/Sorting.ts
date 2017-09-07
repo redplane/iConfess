@@ -1,4 +1,4 @@
-import {SortDirection} from "../enumerations/SortDirection";
+import {SortDirection} from "../enumerations/sort-direction";
 
 export class Sorting<T>{
 

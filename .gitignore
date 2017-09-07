@@ -9,3 +9,4 @@ logs
 npm-debug.log.*
 dist
 *.map
+/A-SOURCE_CODE/A-SERVICE/Administration/packages
