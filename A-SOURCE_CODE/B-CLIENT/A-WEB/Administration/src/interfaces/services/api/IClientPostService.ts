@@ -1,4 +1,4 @@
-import {SearchPostsViewModel} from "../../../viewmodels/post/SearchPostsViewModel";
+import {SearchPostsViewModel} from "../../../viewmodels/post/search-posts.view-model";
 import {Response} from "@angular/http";
 
 export interface IClientPostService {

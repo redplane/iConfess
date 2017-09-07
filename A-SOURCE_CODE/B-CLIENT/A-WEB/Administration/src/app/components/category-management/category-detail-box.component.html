@@ -1,0 +1,26 @@
+<table class="table table-responsive table-condensed">
+    <tbody>
+    <tr>
+        <th>Creator</th>
+        <td *ngIf="details.creator != null">
+            <a href="javascript:void(0);">{{details.creator.nickname}}</a>
+        </td>
+        <td *ngIf="details.creator == null"></td>
+    </tr>
+    <tr>
+        <th>Created</th>
+        <td>
+            {{ clientTimeService.getUtc(details.created) | amDateFormat: 'YYYY-MM-DD'}}
+        </td>
+    </tr>
+    <tr>
+        <th>Last modified</th>
+        <td>
+            <span *ngIf="details.lastModified != null">
+                {{ clientTimeService.getUtc(details.lastModified) | amDateFormat: 'YYYY-MM-DD'}}
+            </span>
+            <span *ngIf="details.lastModified == null">---</span>
+        </td>
+    </tr>
+    </tbody>
+</table>

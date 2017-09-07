@@ -1,5 +1,5 @@
-import {IDictionary} from "../interfaces/IDictionary";
-import {KeyValuePair} from "./KeyValuePair";
+import {IDictionary} from "../interfaces/dictionary.interface";
+import {KeyValuePair} from "./key-value-pair";
 
 // Dictionary class.
 export class Dictionary<T> implements IDictionary<T> {

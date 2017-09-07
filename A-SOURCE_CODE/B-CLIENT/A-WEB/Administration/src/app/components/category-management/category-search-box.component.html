@@ -1,0 +1,135 @@
+<!--1st Column-->
+<div class="col-lg-6">
+    <!-- Creator -->
+    <div class="form-group">
+        <label>Creator</label>
+
+        <ng2-multi-selector [items]="accounts"
+                            [key]="'email'"
+                            [display-property]="'email'"
+                            [limit-item-selection]="1"
+                            [is-search-box-available]="true"
+                            [is-clear-button-available]="true"
+                            [separation-character]="' - '"
+                            (search-items)="loadAccounts($event)"
+                            (update-items)="updateAccounts($event)">
+        </ng2-multi-selector>
+
+    </div>
+
+    <!-- Category name -->
+    <div class="form-group">
+        <label>Name</label>
+        <input name="categoryName"
+               class="form-control"
+               placeholder="Category name"
+               [(ngModel)]="conditions.name.value"/>
+    </div>
+</div>
+
+<!--2nd Column-->
+<div class="col-lg-6">
+
+    <!-- Created -->
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <label>Created</label>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                    </span>
+                <input name="createdFrom"
+                       class="form-control"
+                       type="date"
+                       [(ngModel)]="conditions.created.from"/>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-hourglass-end"
+                           aria-hidden="true"></i>
+                    </span>
+                <input name="createdTo"
+                       class="form-control"
+                       type="date"
+                       [(ngModel)]="conditions.created.to"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Last modified -->
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <label>Last modified</label>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                    </span>
+                <input name="lastModifiedFrom"
+                       class="form-control"
+                       type="date"
+                       [(ngModel)]="conditions.lastModified.from"/>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                    </span>
+                <input name="lastModifiedTo"
+                       class="form-control"
+                       type="date"
+                       [(ngModel)]="conditions.lastModified.to"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sorting -->
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <label>Sorting</label>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-folder" aria-hidden="true"></i>
+                    </span>
+
+                <select class="form-control"
+                        [(ngModel)]="conditions.sorting.property">
+                    <option *ngFor="let item of categorySortProperties.getKeyValuePairs()"
+                            [value]="item.value">
+                        {{item.key}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-sort" aria-hidden="true"></i>
+                    </span>
+
+                <select class="form-control"
+                        [(ngModel)]="conditions.sorting.direction">
+                    <option *ngFor="let item of clientCommonService.getSortDirections()"
+                            [value]="item.value">
+                        {{item.key}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>

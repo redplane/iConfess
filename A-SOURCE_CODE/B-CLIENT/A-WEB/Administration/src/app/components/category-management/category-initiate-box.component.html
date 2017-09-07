@@ -1,0 +1,21 @@
+<form #categoryInitiatorComponent="ngForm"
+      novalidate>
+    <div class="form-group">
+        <label>Category name</label>
+        <input name="categoryName"
+               #categoryName="ngModel"
+               class="form-control"
+               [(ngModel)]="initiator.name"
+               placeholder="Please enter category name"
+               [class.disabled]="isBusy"
+               autofocus="autofocus"
+
+               required/>
+    </div>
+    <div>
+        <ul class="validation-summary">
+            <li *ngIf="!categoryName.pristine && categoryName.hasError('required')">Category name is required</li>
+        </ul>
+    </div>
+</form>
+

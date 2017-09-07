@@ -1,0 +1,199 @@
+<!-- Main row -->
+<div class="row">
+    <div class="col-lg-12">
+
+        <!-- Category information find box -->
+        <post-report-find-box #postReportFindBox
+                              [is-busy]="isLoading"
+                              [conditions]="findPostReportConditions"
+                              (search)="clickSearch($event)"></post-report-find-box>
+    </div>
+</div>
+
+<!-- Pagination section -->
+<div class="row"
+     *ngIf="(postReportsSearchResult != null && postReportsSearchResult.total > 0 && !isLoading)">
+    <div class="col-lg-12">
+        <div class="text-center">
+            <pagination [totalItems]="postReportsSearchResult.total"
+                        [itemsPerPage]="findPostReportConditions.pagination.records"
+                        [(ngModel)]="findPostReportConditions.pagination.page"
+                        [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
+                        [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
+                        [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
+                        [nextText]="clientConfigurationService.ngPaginationSettings.nextText"
+                        [lastText]="clientConfigurationService.ngPaginationSettings.lastText"
+                        (pageChanged)="clickPageChange($event)"></pagination>
+        </div>
+    </div>
+</div>
+
+<!-- List of post reports -->
+<div class="row"
+     *ngIf="(postReportsSearchResult != null && postReportsSearchResult.total > 0 && !isLoading)">
+    <div class="col-lg-12">
+        <div class="box box-default">
+            <!-- Loading overlay -->
+            <div class="overlay"
+                 *ngIf="isLoading">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+
+            <div class="box-body"
+                 style="overflow-x: auto">
+                <table class="table table-responsive table-condensed">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-center">Post</th>
+                        <th class="text-center">Owner</th>
+                        <th class="text-center">Reporter</th>
+                        <th class="text-center">Body</th>
+                        <th class="text-center">Reason</th>
+                        <th class="text-center">Created</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let postReport of postReportsSearchResult.records; let i = index">
+                        <td class="text-center">{{clientCommonService.findRecordStartIndexFromPagination(findPostReportConditions.pagination) + i + 1}}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);" (click)="clickOpenPostDetailBox(postReport.post.id, postDetailBox)">
+                                {{postReport.post.title}}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);"
+                               (click)="monitorAccountProfile(postReport.owner, accountProfileBox)">
+                                {{postReport.owner.nickname}}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);"
+                               (click)="monitorAccountProfile(postReport.reporter, accountProfileBox)">
+                                {{postReport.reporter.nickname}}
+                            </a>
+                        </td>
+                        <td class="text-center">{{postReport.body}}</td>
+                        <td class="text-center">{{postReport.reason}}</td>
+                        <td class="text-center">{{clientTimeService.getUtc(postReport.created).toUTCString()}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-flat"
+                                    (click)="clickDeletePostReport(postReport, deletePostReportModal)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Pagination section -->
+<div class="row"
+     *ngIf="(postReportsSearchResult != null && postReportsSearchResult.total > 0 && !isLoading)">
+    <div class="col-lg-12">
+        <div class="text-center">
+            <pagination [totalItems]="postReportsSearchResult.total"
+                        [itemsPerPage]="findPostReportConditions.pagination.records"
+                        [(ngModel)]="findPostReportConditions.pagination.page"
+                        [rotate]="clientConfigurationService.ngPaginationSettings.rotate"
+                        [firstText]="clientConfigurationService.ngPaginationSettings.firstText"
+                        [previousText]="clientConfigurationService.ngPaginationSettings.previousText"
+                        [nextText]="clientConfigurationService.ngPaginationSettings.nextText"
+                        [lastText]="clientConfigurationService.ngPaginationSettings.lastText"
+                        (pageChanged)="clickPageChange($event)"></pagination>
+        </div>
+    </div>
+</div>
+
+<!-- Delete post report confirm box -->
+<div bsModal
+     #deletePostReportModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+     (onHide)="selectPostReport = null">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <span *ngIf="selectPostReport != null">
+                        <b class="text-danger">Are you sure to delete this report ? </b>
+                    </span>
+
+                    <table class="table table-condensed table-responsive"
+                           *ngIf="selectPostReport != null">
+                        <tbody>
+                        <tr>
+                            <th>Title</th>
+                            <td>{{selectPostReport.post.title}}</td>
+                        </tr>
+                        <tr>
+                            <th>Reporter</th>
+                            <td>{{selectPostReport.reporter.nickname}}</td>
+                        </tr>
+                        <tr>
+                            <th>Owner</th>
+                            <td>{{selectPostReport.owner.nickname}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button class="btn btn-flat btn-danger"
+                            (click)="clickConfirmDeletePostReport(deletePostReportModal)">
+                        <b>OK</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Account profile box -->
+<div bsModal
+     #accountProfileBox="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+     (onHide)="monitoringAccountProfile = null;">
+
+    <div class="modal-dialog"
+         *ngIf="monitoringAccountProfile != null">
+        <div class="modal-content">
+            <account-profile-box [account]="monitoringAccountProfile"
+                                 (clickChangeAccountStatus)="clickChangeAccountStatus($event)"></account-profile-box>
+        </div>
+    </div>
+</div>
+
+<!-- Post detail box -->
+<div bsModal
+     #postDetailBox="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+
+     (onHide)="onPostDetailsBoxHidden()">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--<post-detail-box [postDetails]="monitoringPostDetail"-->
+                             <!--[searchCommentsDetailsResult]="getCommentDetailsResult"-->
+                             <!--[isSearchingComments]="isSearchingComments"-->
+                             <!--[isSearchingPost]="isSearchingPost"-->
+                             <!--(changeCommentsPage)="clickSearchComment($event)">-->
+            <!--</post-detail-box>-->
+        </div>
+    </div>
+</div>

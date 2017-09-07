@@ -1,8 +1,8 @@
 /*
 * Post and its properties.
 * */
-import {Account} from "./Account";
-import {Category} from "./Category";
+import {Account} from "./account";
+import {Category} from "./category";
 export class Post{
 
     // Post index.
