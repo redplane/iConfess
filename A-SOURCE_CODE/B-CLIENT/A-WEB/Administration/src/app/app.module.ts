@@ -13,6 +13,14 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import {Http} from "@angular/http";
 import {GlobalHttpInterceptor} from "../interceptors/global-http-interceptor";
+import {FormsModule} from "@angular/forms";
+import {AccountSearchBoxComponent} from "./components/account-management/account-search-box.component";
+import {MomentModule} from "angular2-moment";
+import {NgxOrdinaryPagerModule} from 'ngx-numeric-paginator';
+import {ModalModule} from "ngx-bootstrap";
+import {AccountProfileBoxComponent} from "./components/account-management/account-profile-box.component";
+import {NgxMultiSelectorModule} from 'ngx-multi-selector';
+import {AuthenticationService} from "../services/authentication.service";
 
 //#region Route configuration
 
@@ -20,7 +28,8 @@ import {GlobalHttpInterceptor} from "../interceptors/global-http-interceptor";
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'account-management'
+    redirectTo: 'account-management',
+    pathMatch: 'full'
   },
   {
     path: 'account-management',
@@ -40,21 +49,31 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
 
-    AccountManagementComponent
+    AccountLoginComponent,
+    AccountManagementComponent,
+    AccountSearchBoxComponent,
+    AccountProfileBoxComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
 
     // Import router configuration.
     RouterModule.forRoot(appRoutes),
+
+    MomentModule,
+    ModalModule,
+    NgxOrdinaryPagerModule,
+    NgxMultiSelectorModule
   ],
   providers: [
+    IsAuthorizedGuard,
     {provide: 'IApiService', useClass: ApiService},
     {provide: 'IAccountService', useClass: AccountService},
     {provide: 'ICategoryService', useClass: CategoryService},
-
+    {provide: 'IAuthenticationService', useClass: AuthenticationService},
     // Handle common behaviour of http request / response.
     {provide: Http, useClass: GlobalHttpInterceptor},
   ],

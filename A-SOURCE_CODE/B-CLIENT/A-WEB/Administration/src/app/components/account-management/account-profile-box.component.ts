@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Inject, Input} from "@angular/core";
 import * as _ from "lodash";
-import {IClientTimeService} from "../../../interfaces/services/client-time-service.interface";
-import {IClientCommonService} from "../../../interfaces/services/client-common-service.interface";
 import {Account} from "../../../models/entities/account";
 import {AccountStatus} from "../../../enumerations/account-status";
+import {ITimeService} from "../../../interfaces/services/time-service.interface";
 
 @Component({
     selector: 'account-profile-box',
@@ -31,8 +30,7 @@ export class AccountProfileBoxComponent{
 
     // Initiate component with injections.
     public constructor(
-        @Inject("IClientTimeService") public clientTimeService: IClientTimeService,
-        @Inject('IClientCommonService') public clientCommonService: IClientCommonService){
+        @Inject("ITimeService") public timeService: ITimeService){
 
         // Initialize account profile information.
         this.account = new Account();

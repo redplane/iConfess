@@ -8,11 +8,11 @@ import {AccountSortProperty} from "../../../enumerations/order/account-sort-prop
 import {SortDirection} from "../../../enumerations/sort-direction";
 import {Sorting} from "../../../models/sorting";
 import {Pagination} from "../../../models/pagination";
-import {IClientCommonService} from "../../../interfaces/services/client-common-service.interface";
-import {IClientTimeService} from "../../../interfaces/services/client-time-service.interface";
 import {Account} from "../../../models/entities/account";
 import {ModalDirective} from "ngx-bootstrap";
 import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {ITimeService} from "../../../interfaces/services/time-service.interface";
+import {IApplicationSettingService} from "../../../interfaces/services/application-setting-service.interface";
 
 @Component({
   selector: 'account-management',
@@ -62,9 +62,9 @@ export class AccountManagementComponent implements OnInit {
   /*
   * Initiate component with injections.
   * */
-  public constructor(@Inject("IAccountService") public clientAccountService: IAccountService,
-                     @Inject('IClientCommonService') public clientCommonService: IClientCommonService,
-                     @Inject("IClientTimeService") public clientTimeService: IClientTimeService) {
+  public constructor(@Inject("IAccountService") public accountService: IAccountService,
+                     @Inject('IApplicationSettingService') public applicationSettingService: IApplicationSettingService,
+                     @Inject("ITimeService") public timeService: ITimeService) {
 
     // Initiate search conditions.
     let sorting = new Sorting<AccountSortProperty>();
@@ -73,7 +73,7 @@ export class AccountManagementComponent implements OnInit {
 
     let pagination = new Pagination();
     pagination.page = 1;
-    pagination.records = clientCommonService.getMaxPageRecords();
+    pagination.records = applicationSettingService.getMaxPageRecords();
 
     this.conditions = new SearchAccountsViewModel();
     this.conditions.sorting = sorting;
@@ -95,7 +95,7 @@ export class AccountManagementComponent implements OnInit {
     // Make component be busy.
     this.isBusy = true;
 
-    this.clientAccountService.getAccounts(this.conditions)
+    this.accountService.getAccounts(this.conditions)
       .then((x: Response) => {
 
         // Find list of accounts which has been found from service.
@@ -140,7 +140,7 @@ export class AccountManagementComponent implements OnInit {
     this.isBusy = true;
 
     // Send request to service to change account information.
-    this.clientAccountService.editUserProfile(account.id, account)
+    this.accountService.editUserProfile(account.id, account)
       .then((response: Response) => {
 
         // Cancel loading.

@@ -112,11 +112,11 @@
             <div class="box-footer">
                 <div class="col-lg-12">
                     <div class="text-center">
-                        <ngx-numeric-paginator [options]="clientCommonService.getPaginationOptions()"
+                        <ngx-ordinary-pager [options]="applicationSettingService.getOrdinaryPagerOptions()"
                                                [page]="conditions.pagination.page"
                                                [total-items]="searchResult.total"
                                                (select-page)="selectPage($event)">
-                        </ngx-numeric-paginator>
+                        </ngx-ordinary-pager>
                     </div>
                 </div>
             </div>

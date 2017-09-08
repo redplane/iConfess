@@ -1,4 +1,4 @@
-export interface IClientTimeService{
+export interface ITimeService{
     //#region Methods
 
     // Convert number to unix time.

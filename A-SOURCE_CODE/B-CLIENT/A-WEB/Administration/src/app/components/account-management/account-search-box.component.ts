@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Inject, Output} from '@angular/core';
 import {SearchAccountsViewModel} from "../../../viewmodels/accounts/search-accounts.view-model";
-import {IClientCommonService} from "../../../interfaces/services/client-common-service.interface";
 import {Dictionary} from "../../../models/dictionary";
 import {AccountSortProperty} from "../../../enumerations/order/account-sort-property";
 import {AccountStatus} from "../../../enumerations/account-status";
@@ -8,6 +7,7 @@ import {IDictionary} from "../../../interfaces/dictionary.interface";
 import {KeyValuePair} from "../../../models/key-value-pair";
 import {Account} from "../../../models/entities/account";
 import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {IApplicationSettingService} from "../../../interfaces/services/application-setting-service.interface";
 
 @Component({
   selector: 'account-search-box',
@@ -51,8 +51,8 @@ export class AccountSearchBoxComponent implements OnInit {
   //#region Constructor
 
   // Initiate component with default dependency injection.
-  public constructor(@Inject("IAccountService") public clientAccountService: IAccountService,
-                     @Inject('IClientCommonService') public clientCommonService: IClientCommonService) {
+  public constructor(@Inject("IAccountService") public accountService: IAccountService,
+                     @Inject('IApplicationSettingService') public applicationSettingService: IApplicationSettingService) {
 
     // Initiate event emitters.
     this.search = new EventEmitter();

@@ -19,14 +19,14 @@
              role="group"
              aria-label="...">
 
-            <ng2-multi-selector [items]="clientCommonService.getAccountStatuses()"
+            <ngx-multi-selector [items]="clientCommonService.getAccountStatuses()"
                                 [key]="'key'"
                                 [display-property]="'key'"
                                 [is-search-box-available]="false"
                                 [is-clear-button-available]="true"
                                 [separation-character]="' - '"
                                 (update-items)="updateStatuses($event)">
-            </ng2-multi-selector>
+            </ngx-multi-selector>
         </div>
 
     </div>
