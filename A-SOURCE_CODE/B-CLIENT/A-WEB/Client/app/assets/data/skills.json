@@ -1,0 +1,95 @@
+{
+  "min": 0,
+  "max": 10,
+  "skills": [
+    {
+      "name": "Database",
+      "items": [
+        {
+          "name": "Microsoft SQL Server",
+          "value": 70
+        }
+      ]
+    },
+    {
+      "name": "Languages",
+      "items": [
+        {
+          "name": "C#",
+          "value": 85
+        },
+        {
+          "name": "XML",
+          "value": 50
+        },
+        {
+          "name": "Javascript",
+          "value": 78
+        },
+        {
+          "name": "SQL",
+          "value": 60
+        }
+      ]
+    },
+    {
+      "name": "Back-end frameworks & tools",
+      "items": [
+        {
+          "name": "Rabbit MQ",
+          "value": 60
+        },
+        {
+          "name": "Entity Framework",
+          "value": 80
+        },
+        {
+          "name": "Autofac",
+          "value": 75
+        },
+        {
+          "name": "NUnit",
+          "value": 50
+        },
+        {
+          "name": "SignalR",
+          "value": 70
+        }
+      ]
+    },
+    {
+      "name": "Front-end framework",
+      "items": [
+        {
+          "name": "AngularJS",
+          "value": 80
+        },
+        {
+          "name": "Angular 2",
+          "value": 70
+        },
+        {
+          "name": "Bootstrap",
+          "value": 75
+        }
+      ]
+    },
+    {
+      "name": "Source code management",
+      "items": [
+        {
+          "name": "TortoiseSVN",
+          "value": 80
+        },
+        {
+          "name": "TortoiseGit",
+          "value": 82
+        },
+        {
+          "name": "Team Foundation",
+          "value": 59
+        }
+      ]
+    }
+  ]
+}

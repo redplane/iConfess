@@ -1,0 +1,23 @@
+<div ng-init="init()" class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-pills">
+            <li><a href="#">Trending</a></li>
+            <li><a href="#">New</a></li>
+            <li class="pull-right"><a href="#"><i class="ion-android-apps"></i></a></li>
+            <li class="pull-right"><a href="#"><i class="ion-android-checkbox-blank" aria-hidden="true"></i></a></li>
+        </ul>
+    </div>
+
+    <!--col x3-->
+    <div class="col-md-4" ng-repeat="i in [1,2,3]">
+        <div class="p" ng-repeat="image in imgUrl">
+            <img ng-src="{{randomImg()}}" class="img-responsive i" alt="">
+            <div class="d">
+                <!--<span class="t">Title</span>-->
+                <a href="#" class="a">Tom Harking</a>
+                <a href="#" class="h text-center"><i class="ion-ios-heart-outline"></i></a>
+                <a href="#" class="s text-center"><i class="ion-ios-download"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

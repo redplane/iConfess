@@ -1,0 +1,32 @@
+{
+  "APPLICATION_NAME": "iResumé",
+  "PERSONAL_SUMMARY": "Thông tin cá nhân",
+  "TECHNICAL_SKILL": "Trình độ kỹ thuật",
+  "PROJECTS": "Các dự án tham gia",
+  "TIME": "Thời gian",
+  "COMPANY": "Công ty",
+  "DESCRIPTION": "Giới thiệu",
+  "ROLES": "Vai trò",
+  "RESPONSIBILITIES": "Chịu trách nhiệm",
+  "TECHNOLOGIES": "Các kỹ thuật sử dụng",
+  "MAIN_OBJECTIVES": "Các mục tiêu chính",
+  "PROFESSIONAL_SUMMARY": "Tổng quan trình độ kỹ thuật",
+  "CERTIFICATE_AND_EDUCATION": "Bằng cấp",
+  "DATABASE": "Cơ sở dữ liệu",
+  "LANGUAGES": "Các ngôn ngữ sử dụng",
+  "BACK_END": "Back end",
+  "FRONT_END": "Front end",
+  "SOURCE_CODE_MANAGEMENT": "Công cụ quản lý mã nguồn",
+  "FULL_STACK_DEVELOPER": "Full-stack developer",
+  "LANGUAGE_ENGLISH": "Tiếng anh",
+  "LANGUAGE_VIETNAMESE": "Tiếng việt",
+
+  "BECOME_GOOD_SOFTWARE_ARCHITECT": "Trở thành kỹ sư phần mềm giỏi",
+  "EXPERTIZE_NET_JAVASCRIPT": "Chuyên sâu về .Net và Javascript",
+  "DEVELOP_PERSONAL_SKILL_BETTER_APPLICATION": "Phát triển kỹ năng cá nhân phục vụ cho công việc",
+  "USING_NET_JAVASCRIPT_FLUENTLY": "Có thể sử dụng các công cụ .NET và Javascript nhuần nhuyễn",
+  "HAVING_GOOD_KNOWLEDGE_DESIGN_PATTERN": "Có hiểu biết tốt về các mô hình thiết kế: MVVM, MVC, Unit of work, ...",
+  "GOOD_AT_ENGLISH": "Trình độ tiếng anh tốt",
+
+  "STUDIED_IN_FPT_UNIVERSITY": "Học tại đại học FPT"
+}

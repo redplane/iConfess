@@ -1,0 +1,32 @@
+{
+  "APPLICATION_NAME": "iResumé",
+  "PERSONAL_SUMMARY": "Personal summary",
+  "TECHNICAL_SKILL": "Technical skill",
+  "PROJECTS": "Projects",
+  "TIME": "Time",
+  "COMPANY": "Company",
+  "DESCRIPTION": "Description",
+  "ROLES": "Roles",
+  "RESPONSIBILITIES": "Responsibilities",
+  "TECHNOLOGIES": "Technologies",
+  "MAIN_OBJECTIVES": "Main objectives",
+  "PROFESSIONAL_SUMMARY": "Professional summary",
+  "CERTIFICATE_AND_EDUCATION": "Certificates and educations",
+  "DATABASE": "Database",
+  "LANGUAGES": "Languages",
+  "BACK_END": "Back end",
+  "FRONT_END": "Front end",
+  "SOURCE_CODE_MANAGEMENT": "Source code management",
+  "FULL_STACK_DEVELOPER": "Full-stack developer",
+  "LANGUAGE_ENGLISH": "English",
+  "LANGUAGE_VIETNAMESE": "Vietnamese",
+
+  "BECOME_GOOD_SOFTWARE_ARCHITECT": "Become a good software architect",
+  "EXPERTIZE_NET_JAVASCRIPT": "Expertize in .NET, Javascript",
+  "DEVELOP_PERSONAL_SKILL_BETTER_APPLICATION": "Develop personal skill and make better and better application",
+  "USING_NET_JAVASCRIPT_FLUENTLY": "Using .NET, Javascript frameworks fluently",
+  "HAVING_GOOD_KNOWLEDGE_DESIGN_PATTERN": "Having good knowledge about design patterns : Inversion of controls, MVVM, MVC, Unit of work, ...",
+  "GOOD_AT_ENGLISH": "Good at English",
+
+  "STUDIED_IN_FPT_UNIVERSITY": "Studied in FPT University"
+}

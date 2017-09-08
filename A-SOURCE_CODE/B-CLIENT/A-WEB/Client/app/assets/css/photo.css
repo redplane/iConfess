@@ -1,0 +1,74 @@
+.p {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* image */
+.p .i {
+    width: 100%;
+}
+
+/* description */
+.p .d {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, .2) 0, transparent 40%, transparent 60%, rgba(0, 0, 0, .3));
+    opacity: 0;
+    transition: all .15s ease-in-out;
+}
+
+.p .d:hover {
+    opacity: 100;
+}
+
+.p .a,
+.p .h,
+.p .s {
+    padding: 5px;
+    font-size: 24px;
+    color: #fff;
+    position: absolute;
+
+}
+
+.p .s,
+.p .h {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: black;
+    bottom: 5px;
+}
+
+/* author */
+.p .a {
+    left: 10px;
+    bottom: 0;
+}
+
+/* save */
+.p .s {
+    right: 10px;
+}
+
+/* heart */
+.p .h {
+    right: 60px;
+}
+
+.nav-pills {
+    margin-bottom: 15px;
+    font-weight: bolder;
+}
+
+.nav-pills > li > a {
+    color: #555;
+}
+
+.nav-pills > li > a:hover,
+.nav-pills > li > a:active {
+    color: #222;
+}
