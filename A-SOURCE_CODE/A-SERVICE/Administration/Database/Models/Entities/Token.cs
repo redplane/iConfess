@@ -50,7 +50,7 @@ namespace Database.Models.Entities
         /// <summary>
         ///     Time when the token should be expired.
         /// </summary>
-        public double Expired { get; set; }
+        public double ExpirationTime { get; set; }
 
         #endregion
     }

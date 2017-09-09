@@ -56,12 +56,12 @@ namespace Database.Models.Entities
         /// <summary>
         ///     When was the account created.
         /// </summary>
-        public double Joined { get; set; }
+        public double JoinedTime { get; set; }
 
         /// <summary>
         ///     When the account was lastly modified.
         /// </summary>
-        public double? LastModified { get; set; }
+        public double? LastModifiedTime { get; set; }
 
         #endregion
     }

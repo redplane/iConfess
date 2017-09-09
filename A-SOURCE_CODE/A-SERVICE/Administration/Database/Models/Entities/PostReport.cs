@@ -35,7 +35,7 @@ namespace Database.Models.Entities
         /// <summary>
         ///     When the report was created.
         /// </summary>
-        public double Created { get; set; }
+        public double CreatedTime { get; set; }
 
         #endregion
 

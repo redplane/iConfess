@@ -28,12 +28,12 @@ namespace Database.Models.Entities
         /// <summary>
         ///     When the category was created.
         /// </summary>
-        public double Created { get; set; }
+        public double CreatedTime { get; set; }
 
         /// <summary>
         ///     When the category was lastly modified.
         /// </summary>
-        public double? LastModified { get; set; }
+        public double? LastModifiedTime { get; set; }
 
         #endregion
 

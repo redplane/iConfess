@@ -39,12 +39,12 @@ namespace Database.Models.Entities
         /// <summary>
         ///     When the post was created.
         /// </summary>
-        public double Created { get; set; }
+        public double CreatedTime { get; set; }
 
         /// <summary>
         ///     When the post was lastly modified.
         /// </summary>
-        public double? LastModified { get; set; }
+        public double? LastModifiedTime { get; set; }
 
         #endregion
 

@@ -57,11 +57,6 @@
     <Compile Include="Enumerations\Statuses.cs" />
     <Compile Include="Enumerations\NotificationType.cs" />
     <Compile Include="Enumerations\TokenType.cs" />
-    <Compile Include="Migrations\201704211914574_20170422001.cs" />
-    <Compile Include="Migrations\201704211914574_20170422001.Designer.cs">
-      <DependentUpon>201704211914574_20170422001.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entities\Account.cs" />
     <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="Models\Entities\Comment.cs" />
@@ -82,11 +77,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704211914574_20170422001.resx">
-      <DependentUpon>201704211914574_20170422001.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />

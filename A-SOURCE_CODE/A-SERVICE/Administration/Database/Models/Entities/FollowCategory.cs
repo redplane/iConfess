@@ -20,7 +20,7 @@ namespace Database.Models.Entities
         /// <summary>
         ///     When the relationship was lastly created.
         /// </summary>
-        public double Created { get; set; }
+        public double CreatedTime { get; set; }
 
         #endregion
 

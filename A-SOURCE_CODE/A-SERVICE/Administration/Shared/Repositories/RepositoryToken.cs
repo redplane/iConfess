@@ -89,14 +89,14 @@ namespace Shared.Repositories
                     tokens = tokens.Where(x => x.Issued <= issuedRange.To.Value);
             }
 
-            // Expired range is specified.
+            // ExpirationTime range is specified.
             if (conditions.Expired != null)
             {
                 var expiredRange = conditions.Expired;
                 if (expiredRange.From != null)
-                    tokens = tokens.Where(x => x.Expired >= expiredRange.From.Value);
+                    tokens = tokens.Where(x => x.ExpirationTime >= expiredRange.From.Value);
                 if (expiredRange.To != null)
-                    tokens = tokens.Where(x => x.Expired <= expiredRange.To.Value);
+                    tokens = tokens.Where(x => x.ExpirationTime <= expiredRange.To.Value);
             }
 
 

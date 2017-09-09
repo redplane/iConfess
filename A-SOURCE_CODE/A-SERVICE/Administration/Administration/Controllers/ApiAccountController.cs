@@ -269,7 +269,7 @@ namespace Administration.Controllers
                 token.OwnerIndex = account.Id;
                 token.Type = TokenType.Forgot;
                 token.Issued = _timeService.DateTimeUtcToUnix(DateTime.UtcNow);
-                token.Expired =
+                token.ExpirationTime =
                     _timeService.DateTimeUtcToUnix(
                         DateTime.UtcNow.AddSeconds(_configurationService.ForgotPasswordTokenExpiration));
 
