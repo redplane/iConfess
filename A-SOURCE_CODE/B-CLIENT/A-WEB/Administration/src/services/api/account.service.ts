@@ -16,96 +16,78 @@ import {ApiUrl} from "../../constants/api-url";
 @Injectable()
 export class AccountService implements IAccountService {
 
-    //#region Properties
+  //#region Constructor
 
-    // Url which is used for signing user into system.
-    public urlLogin: string = "api/account/login";
+  // Initiate instance of category service.
+  public constructor(@Inject("IApiService") public apiService: IApiService) {
+  }
 
-    // Url which is used for searching accounts in the system.
-    public urlSearchAccount: string = "api/account/find";
+  //#endregion
 
-    // Url which is used for changing account information.
-    public urlChangeAccountInfo: string = "api/account";
+  //#region Methods
 
-    // Url which is used for requesting password change.
-    public urlRequestChangePassword = "api/account/forgot-password";
+  // Find categories by using specific conditions.
+  public getAccounts(conditions: SearchAccountsViewModel): Promise<Response> {
+    // Request to api to obtain list of available categories in system.
+    return this.apiService.post(environment.baseUrl, ApiUrl.getAccounts,
+      null,
+      conditions).toPromise();
+  }
 
-    // Url which is used for submitting password change.
-    public urlSubmitPasswordReset = "api/account/forgot-password";
+  /*
+  * Sign an account into system.
+  * */
+  public login(loginViewModel: LoginViewModel): Promise<Response> {
+    return this.apiService
+      .post(environment.baseUrl, ApiUrl.login, null, loginViewModel)
+      .toPromise();
+  }
 
-    // Url which is for getting self profile.
-    public urlGetProfile = "api/account/profile";
+  /*
+  * Change account information in service.
+  * */
+  public editUserProfile(index: number, information: Account): Promise<Response> {
 
-    //#endregion
+    // Build a complete url of account information change.
+    let urlParameters = {
+      id: index
+    };
 
-    //#region Constructor
+    return this.apiService.put(environment.baseUrl, ApiUrl.editAccount, urlParameters, information);
+  }
 
-    // Initiate instance of category service.
-    public constructor(@Inject("IApiService") public clientApiService: IApiService){
-    }
+  // Request service to send an email which is for changing account password.
+  public sendPasswordChangeRequest(email: string): Promise<Response> {
+    // Parameter construction.
+    let urlParameters = {
+      email: email
+    };
 
-    //#endregion
+    return this.apiService.get(environment.baseUrl, ApiUrl.submitAccountPassword, urlParameters);
+  }
 
-    //#region Methods
+  /*
+  * Request service to change password by using specific token.
+  * */
+  public submitPasswordReset(submitPasswordViewModel: SubmitPasswordViewModel): Promise<Response> {
+    return this.apiService
+      .post(environment.baseUrl, ApiUrl.requestPasswordReset,
+        null,
+        submitPasswordViewModel)
+      .toPromise();
+  }
 
-    // Find categories by using specific conditions.
-    public getAccounts(conditions: SearchAccountsViewModel): Promise<Response> {
-        // Request to api to obtain list of available categories in system.
-        return this.clientApiService.post(environment.baseUrl, ApiUrl.getAccounts,
-            null,
-            conditions);
-    }
+  /*
+  * Request service to return account profile.
+  * */
+  public getClientProfile(): Promise<Response> {
+    return this.apiService
+      .post(
+        environment.baseUrl, ApiUrl.getAccountProfile,
+        null,
+        null)
+      .toPromise();
+  }
 
-    /*
-    * Sign an account into system.
-    * */
-    public login(loginViewModel: LoginViewModel): Promise<Response> {
-        return this.clientApiService.post(environment.baseUrl, ApiUrl.login , null, loginViewModel);
-    }
-
-    /*
-    * Change account information in service.
-    * */
-    public editUserProfile(index: number, information: Account): Promise<Response>{
-
-        // Build a complete url of account information change.
-        let urlParameters = {
-            id: index
-        };
-
-        return this.clientApiService.put(environment.baseUrl, ApiUrl.editAccount, urlParameters, information);
-    }
-
-    // Request service to send an email which is for changing account password.
-    public sendPasswordChangeRequest(email: string): Promise<Response>{
-        // Parameter construction.
-        let urlParameters = {
-            email: email
-        };
-
-        return this.clientApiService.get(environment.baseUrl, ApiUrl.submitAccountPassword, urlParameters);
-    }
-
-    /*
-    * Request service to change password by using specific token.
-    * */
-    public submitPasswordReset(submitPasswordViewModel: SubmitPasswordViewModel): Promise<Response>{
-        return this.clientApiService
-            .post(environment.baseUrl, ApiUrl.requestPasswordReset,
-                null,
-                submitPasswordViewModel);
-    }
-
-    /*
-    * Request service to return account profile.
-    * */
-    public getClientProfile(): Promise<Response>{
-        return this.clientApiService
-            .post(
-                environment.baseUrl, ApiUrl.getAccountProfile,
-                null,
-                null);
-    }
-
-    //#endregion
+  //#endregion
 }

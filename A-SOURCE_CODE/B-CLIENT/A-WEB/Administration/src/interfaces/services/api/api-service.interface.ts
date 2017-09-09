@@ -1,4 +1,5 @@
-import {Http, RequestOptions} from "@angular/http";
+import {Http, Response, RequestOptions} from "@angular/http";
+import {Observable} from "rxjs/Observable";
 
 // Interface provides function to access service api.
 export interface IApiService {
@@ -13,7 +14,7 @@ export interface IApiService {
   /*
   * Send 'POST' to service.
   * */
-  post(baseUrl: string, url: string, parameters: any, body: any): any;
+  post(baseUrl: string, url: string, parameters: any, body: any): Observable<Response>;
 
   /*
   * Send 'PUT' to service.

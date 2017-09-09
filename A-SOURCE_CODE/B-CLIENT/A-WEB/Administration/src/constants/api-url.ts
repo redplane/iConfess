@@ -5,7 +5,7 @@ export class ApiUrl {
   /*
   * Url which is for logging into system.
   * */
-  public static login: string = 'api/account/login';
+  public static login: string = 'api/account/internal-login';
 
   /*
   * Url which is for search accounts by using specific conditions.

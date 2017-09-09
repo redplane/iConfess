@@ -8,69 +8,71 @@ import {IAuthenticationService} from "../../../interfaces/services/authenticatio
 import {AuthorizationToken} from "../../../models/authorization-token";
 
 @Component({
-    selector: 'account-login',
-    templateUrl: 'account-login.component.html'
+  selector: 'account-login',
+  templateUrl: 'account-login.component.html'
 })
 
-export class AccountLoginComponent{
+export class AccountLoginComponent {
 
-    //#region Properties
+  //#region Properties
 
-    // Whether login function is being executed or not.
-    private isBusy: boolean;
+  // Whether login function is being executed or not.
+  private isBusy: boolean;
 
-    // Login view model.
-    private loginViewModel: LoginViewModel;
+  // Login view model.
+  private loginViewModel: LoginViewModel;
 
-    // Login form group.
-    @ViewChild("loginPanel")
-    public loginPanel: NgForm;
+  // Login form group.
+  @ViewChild("loginPanel")
+  public loginPanel: NgForm;
 
-    //#endregion
+  //#endregion
 
-    //#region Constructor
+  //#region Constructor
 
-    // Initiate component with default settings.
-    public constructor(@Inject("IAuthenticationService") public authenticationService: IAuthenticationService,
-                       @Inject("IAccountService") public clientAccountService: IAccountService,
-                       public clientRoutingService: Router){
+  /*
+  * Initiate component with default settings.
+  * */
+  public constructor(@Inject("IAuthenticationService") public authenticationService: IAuthenticationService,
+                     @Inject("IAccountService") public accountService: IAccountService,
+                     public router: Router) {
 
-        this.loginViewModel = new LoginViewModel();
-    }
+    this.loginViewModel = new LoginViewModel();
+  }
 
-    //#endregion
+  //#endregion
 
-    //#region Methods
+  //#region Methods
 
-    // Callback is fired when login button is clicked.
-    public clickLogin(event: Event){
+  // Callback is fired when login button is clicked.
+  public clickLogin(event: Event) {
 
-        // Prevent default behaviour.
-        event.preventDefault();
+    // Prevent default behaviour.
+    event.preventDefault();
 
-        // Make component be loaded.
-        this.isBusy = true;
+    // Make component be loaded.
+    this.isBusy = true;
 
-        // Call service api to authenticate do authentication.
-        this.clientAccountService.login(this.loginViewModel)
-            .then((x: Response) => {
-                // Convert response from service to AuthenticationToken data type.
-                let clientAuthenticationDetail = <AuthorizationToken> x.json();
+    // Call service api to authenticate do authentication.
+    this.accountService.login(this.loginViewModel)
+      .then((x: Response) => {
+        // Convert response from service to AuthenticationToken data type.
+        let clientAuthenticationDetail = <AuthorizationToken> x.json();
 
-                // Save the client authentication information.
-                this.authenticationService.setAuthorization(clientAuthenticationDetail);
+        // Save the client authentication information.
+        this.authenticationService.setAuthorization(clientAuthenticationDetail);
 
-                // Redirect user to account management page.
-                this.clientRoutingService.navigate(['/account-management']);
+        // Redirect user to account management page.
+        this.router.navigate(['/account/management']);
 
-                // Cancel loading process.
-                this.isBusy = false;
-            })
-            .catch((response: Response) =>{
-                // Unfreeze the UI.
-                this.isBusy = false;
-            });
-    }
+        // Cancel loading process.
+        this.isBusy = false;
+      })
+      .catch((response: Response) => {
+        // Unfreeze the UI.
+        this.isBusy = false;
+      });
+  }
 
-    //#endregion
+  //#endregion
 }

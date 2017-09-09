@@ -1,7 +1,8 @@
 import {Inject, Injectable} from "@angular/core";
-import {Headers, Http, RequestOptions} from "@angular/http";
+import {Headers, Http, Response, RequestOptions} from "@angular/http";
 import {Router} from "@angular/router";
 import {IApiService} from "../interfaces/services/api/api-service.interface";
+import {Observable} from "rxjs/Observable";
 
 /*
  * Service which handles hyperlink of api.
@@ -55,7 +56,7 @@ export class ApiService implements IApiService{
   /*
   * Send 'POST' to service.
   * */
-  public post(baseUrl: string, url: string, parameters: any, body: any): any {
+  public post(baseUrl: string, url: string, parameters: any, body: any): Observable<Response> {
 
     // Build full request url.
     let fullUrl = baseUrl;

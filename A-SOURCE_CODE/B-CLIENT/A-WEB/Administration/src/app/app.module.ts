@@ -6,7 +6,6 @@ import {RouterModule, Routes} from "@angular/router";
 import {AccountLoginComponent} from "./components/account-management/account-login.component";
 import {IsAuthorizedGuard} from "../guards/is-authorized-guard";
 import {AccountManagementComponent} from "./components/account-management/account-management.component";
-import {ApiService} from "../services/client-api.service";
 import {AccountService} from "../services/api/account.service";
 import {CategoryService} from "../services/api/category.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -24,6 +23,7 @@ import {AuthenticationService} from "../services/authentication.service";
 import {AuthorizeLayoutComponent} from "./components/shared/authorize-layout/authorize-layout.component";
 import {AccountForgotPasswordComponent} from "./components/account-management/account-forgot-password.component";
 import {AccountSubmitPasswordComponent} from "./components/account-management/account-submit-password.component";
+import {ApiService} from "../services/api.service";
 
 //#region Route configuration
 
