@@ -47,6 +47,11 @@ const appRoutes: Routes = [
     ]
   },
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'account/management'
+  },
+  {
     path: 'login',
     component: AccountLoginComponent,
     pathMatch: 'full'
