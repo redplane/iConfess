@@ -30,7 +30,8 @@ export class ClientCommentService implements ICommentService {
   * */
   public getComments(conditions: SearchCommentsViewModel): Promise<Response> {
     return this.apiService.post(environment.baseUrl, ApiUrl.getComments,
-      null, conditions);
+      null, conditions)
+      .toPromise();
   }
 
   /*
@@ -38,7 +39,8 @@ export class ClientCommentService implements ICommentService {
   * */
   public getCommentDetails(conditions: SearchCommentsDetailsViewModel): Promise<Response> {
     return this.apiService.post(environment.baseUrl, ApiUrl.getCommentsDetails,
-      null, conditions);
+      null, conditions)
+      .toPromise();
   }
 
   //#endregion

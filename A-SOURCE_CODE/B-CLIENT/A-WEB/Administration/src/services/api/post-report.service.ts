@@ -29,7 +29,8 @@ export class ClientPostReportService implements IPostReportService {
   * */
   public getPostReports(conditions: SearchPostReportsViewModel): Promise<Response> {
     return this.apiService.post(environment.baseUrl, ApiUrl.getPostReports,
-      null, conditions);
+      null, conditions)
+      .toPromise();
   }
 
   /*

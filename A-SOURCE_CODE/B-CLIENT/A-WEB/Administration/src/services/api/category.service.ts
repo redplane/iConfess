@@ -32,7 +32,8 @@ export class CategoryService implements ICategoryService {
     // Page page should be decrease by one.
     return this.clientApiService.post(environment.baseUrl, ApiUrl.getCategories,
       null,
-      conditions);
+      conditions)
+      .toPromise();
   }
 
   /*

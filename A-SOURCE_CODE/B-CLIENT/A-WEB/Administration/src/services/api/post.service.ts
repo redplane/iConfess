@@ -40,7 +40,8 @@ export class ClientPostService implements IPostService {
     // Request to api to obtain list of available categories in system.
     return this.apiService.post(environment.baseUrl, ApiUrl.getPosts,
       null,
-      localConditions);
+      localConditions)
+      .toPromise();
   }
 
   /*

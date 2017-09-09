@@ -4,7 +4,6 @@ import {Router} from "@angular/router";
 import {Response} from "@angular/http";
 import {SubmitPasswordViewModel} from "../../../viewmodels/accounts/submit-password.view-model";
 import {ClientDataConstraintService} from "../../../services/client-data-constraint.service";
-import {ApiService} from "../../../services/client-api.service";
 import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
 import {ToastrService} from "ngx-toastr";
 
@@ -21,10 +20,9 @@ export class AccountSubmitPasswordComponent {
     // Initiate change account password submit model.
     private accountPasswordSubmitModel: SubmitPasswordViewModel;
 
-    public constructor(@Inject("IAccountService") private clientAccountService: IAccountService,
+    public constructor(@Inject("IAccountService") private accountService: IAccountService,
                        private toastr: ToastrService,
                        private clientDataConstraintService: ClientDataConstraintService,
-                       private clientApiService: ApiService,
                        private clientRoutingService: Router,
                        private formBuilder: FormBuilder) {
 
@@ -43,7 +41,7 @@ export class AccountSubmitPasswordComponent {
     public clickSubmitPassword(): void {
 
         // Call service to change password.
-        this.clientAccountService.submitPasswordReset(this.accountPasswordSubmitModel)
+        this.accountService.submitPasswordReset(this.accountPasswordSubmitModel)
             .then((response: Response) => {
                 // Tell user password has been changed successfully.
                 this.toastr.success('SUBMIT_PASSWORD_SUCCESSFULLY');

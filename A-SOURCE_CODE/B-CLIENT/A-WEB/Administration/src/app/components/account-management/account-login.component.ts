@@ -6,6 +6,7 @@ import {LoginViewModel} from "../../../viewmodels/accounts/login.view-model";
 import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
 import {IAuthenticationService} from "../../../interfaces/services/authentication-service.interface";
 import {AuthorizationToken} from "../../../models/authorization-token";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'account-login',
@@ -35,6 +36,7 @@ export class AccountLoginComponent {
   * */
   public constructor(@Inject("IAuthenticationService") public authenticationService: IAuthenticationService,
                      @Inject("IAccountService") public accountService: IAccountService,
+                     public toastr: ToastrService,
                      public router: Router) {
 
     this.loginViewModel = new LoginViewModel();
@@ -44,7 +46,9 @@ export class AccountLoginComponent {
 
   //#region Methods
 
-  // Callback is fired when login button is clicked.
+  /*
+  * Callback is fired when login button is clicked.
+  * */
   public clickLogin(event: Event) {
 
     // Prevent default behaviour.
@@ -67,6 +71,9 @@ export class AccountLoginComponent {
 
         // Cancel loading process.
         this.isBusy = false;
+
+        // Display toastr message.
+        this.toastr.success('Signed into system successfully.');
       })
       .catch((response: Response) => {
         // Unfreeze the UI.
