@@ -22,24 +22,26 @@ import {AccountProfileBoxComponent} from "./components/account-management/accoun
 import {NgxMultiSelectorModule} from 'ngx-multi-selector';
 import {AuthenticationService} from "../services/authentication.service";
 import {AuthorizeLayoutComponent} from "./components/shared/authorize-layout/authorize-layout.component";
+import {AccountForgotPasswordComponent} from "./components/account-management/account-forgot-password.component";
+import {AccountSubmitPasswordComponent} from "./components/account-management/account-submit-password.component";
 
 //#region Route configuration
 
 // Config application routes.
 const appRoutes: Routes = [
   {
-    path: '',
+    path: 'account',
     component: AuthorizeLayoutComponent,
     canActivate: [IsAuthorizedGuard],
     children: [
       {
-        path: 'account-management',
+        path: 'management',
         component: AccountManagementComponent,
         pathMatch: 'full'
       },
       {
         path: '',
-        redirectTo: 'account-management',
+        redirectTo: 'management',
         pathMatch: 'full'
       }
     ]
@@ -49,6 +51,16 @@ const appRoutes: Routes = [
     component: AccountLoginComponent,
     pathMatch: 'full'
   }
+  // {
+  //   path: 'forgot-password',
+  //   component: AccountForgotPasswordComponent,
+  //   pathMatch: 'full'
+  // },
+  // {
+  //   path: 'submit-password',
+  //   component: AccountSubmitPasswordComponent,
+  //   pathMatch: 'full'
+  // }
 ];
 
 //#endregion
@@ -61,6 +73,8 @@ const appRoutes: Routes = [
     AuthorizeLayoutComponent,
 
     AccountLoginComponent,
+    // AccountForgotPasswordComponent,
+    // AccountSubmitPasswordComponent,
     AccountManagementComponent,
     AccountSearchBoxComponent,
     AccountProfileBoxComponent
@@ -86,6 +100,7 @@ const appRoutes: Routes = [
     {provide: 'IAccountService', useClass: AccountService},
     {provide: 'ICategoryService', useClass: CategoryService},
     {provide: 'IAuthenticationService', useClass: AuthenticationService},
+
     // Handle common behaviour of http request / response.
     {provide: Http, useClass: GlobalHttpInterceptor},
   ],
