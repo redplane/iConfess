@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'sidebar',
-    templateUrl: 'sidebar.component.html'
+    templateUrl: 'side-bar.component.html'
 })
 export class SidebarComponent {
 

@@ -11,7 +11,7 @@ import {AccountService} from "../services/api/account.service";
 import {CategoryService} from "../services/api/category.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
-import {Http} from "@angular/http";
+import {Http, HttpModule} from "@angular/http";
 import {GlobalHttpInterceptor} from "../interceptors/global-http-interceptor";
 import {FormsModule} from "@angular/forms";
 import {AccountSearchBoxComponent} from "./components/account-management/account-search-box.component";
@@ -21,6 +21,7 @@ import {ModalModule} from "ngx-bootstrap";
 import {AccountProfileBoxComponent} from "./components/account-management/account-profile-box.component";
 import {NgxMultiSelectorModule} from 'ngx-multi-selector';
 import {AuthenticationService} from "../services/authentication.service";
+import {AuthorizeLayoutComponent} from "./components/shared/authorize-layout/authorize-layout.component";
 
 //#region Route configuration
 
@@ -28,13 +29,20 @@ import {AuthenticationService} from "../services/authentication.service";
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'account-management',
-    pathMatch: 'full'
-  },
-  {
-    path: 'account-management',
-    component: AccountManagementComponent,
-    canActivate: [IsAuthorizedGuard]
+    component: AuthorizeLayoutComponent,
+    canActivate: [IsAuthorizedGuard],
+    children: [
+      {
+        path: 'account-management',
+        component: AccountManagementComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: '',
+        redirectTo: 'account-management',
+        pathMatch: 'full'
+      }
+    ]
   },
   {
     path: 'login',
@@ -49,6 +57,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
 
+    // Layout
+    AuthorizeLayoutComponent,
+
     AccountLoginComponent,
     AccountManagementComponent,
     AccountSearchBoxComponent,
@@ -57,6 +68,7 @@ const appRoutes: Routes = [
   imports: [
     FormsModule,
     BrowserModule,
+    HttpModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
 

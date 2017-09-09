@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Response} from "@angular/http";
-import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
-import {IAuthenticationService} from "../../../interfaces/services/authentication-service.interface";
+import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
+import {IAuthenticationService} from "../../../../interfaces/services/authentication-service.interface";
 
 @Component({
   selector: 'navigation-bar',
