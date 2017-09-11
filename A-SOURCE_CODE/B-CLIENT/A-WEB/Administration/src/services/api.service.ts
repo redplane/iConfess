@@ -132,7 +132,7 @@ export class ApiService implements IApiService{
   /*
   * Get http service.
   * */
-  public getHttp(): Http{
+  public getInstance(): Http{
     return this.http;
   }
 

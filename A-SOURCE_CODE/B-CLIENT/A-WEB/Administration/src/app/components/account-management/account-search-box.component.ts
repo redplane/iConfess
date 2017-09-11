@@ -8,10 +8,14 @@ import {KeyValuePair} from "../../../models/key-value-pair";
 import {Account} from "../../../models/entities/account";
 import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
 import {IApplicationSettingService} from "../../../interfaces/services/application-setting-service.interface";
+import {Response} from '@angular/http';
+import {SortDirection} from "../../../enumerations/sort-direction";
+import {IConfigurationService} from "../../../interfaces/services/configuration-service.interface";
 
 @Component({
   selector: 'account-search-box',
-  templateUrl: 'account-search-box.component.html'
+  templateUrl: 'account-search-box.component.html',
+  exportAs: 'account-search-box'
 })
 
 export class AccountSearchBoxComponent implements OnInit {
@@ -23,12 +27,6 @@ export class AccountSearchBoxComponent implements OnInit {
   * */
   @Input('is-loading')
   public isLoading: boolean;
-
-  /*
-  * Event which is emitted when search button is clicked.
-  * */
-  @Output('search')
-  private search: EventEmitter<any>;
 
   /*
   * Collection of conditions which are used for searching categories.
@@ -46,16 +44,26 @@ export class AccountSearchBoxComponent implements OnInit {
   * */
   private sortProperties: IDictionary<AccountSortProperty>;
 
+  /*
+  * List of account statuses.
+  * */
+  private accountStatuses: Array<KeyValuePair<AccountStatus>>;
+
+  /*
+  * List of sort directions.
+  * */
+  private sortDirections: Array<KeyValuePair<SortDirection>>;
+
   //#endregion
 
   //#region Constructor
 
   // Initiate component with default dependency injection.
   public constructor(@Inject("IAccountService") public accountService: IAccountService,
+                     @Inject('IConfigurationService') public configurationService: IConfigurationService,
                      @Inject('IApplicationSettingService') public applicationSettingService: IApplicationSettingService) {
 
     // Initiate event emitters.
-    this.search = new EventEmitter();
     this.accounts = new Array<Account>();
 
     // Initiate list of properties which can be used for sorting.
@@ -97,13 +105,6 @@ export class AccountSearchBoxComponent implements OnInit {
     this.conditions.statuses.splice(index, 1);
   }
 
-  /*
-  * Callback which is fired when search button is clicked.
-  * */
-  public clickSearch(): void {
-    this.search.emit();
-  }
-
   // Callback which is fired when statuses selection is updated.
   public updateStatuses(statuses: Array<KeyValuePair<AccountStatus>>): void {
     this.conditions.statuses = statuses.map((x: KeyValuePair<AccountStatus>) => {
@@ -115,7 +116,25 @@ export class AccountSearchBoxComponent implements OnInit {
   * Callback which is fired when component has been loaded successfully.
   * */
   public ngOnInit(): void {
+
+    // Load account statuses list.
+    this.configurationService.getAccountStatuses()
+      .then((x: Response) => {
+        this.accountStatuses = <Array<KeyValuePair<AccountStatus>>> x.json();
+      });
+
+    // Load sort directions.
+    this.configurationService.getSortDirections()
+      .then((x: Response) => {
+        this.sortDirections = <Array<KeyValuePair<SortDirection>>> x.json();
+      })
   }
 
+  /*
+  * Get account search conditions.
+  * */
+  public getConditions(): SearchAccountsViewModel{
+    return this.conditions;
+  }
   //#endregion
 }

@@ -3,10 +3,14 @@ export class KeyValuePair<T>{
 
   //#region Properties
 
-  // Key.
+  /*
+  * Key name
+  * */
   public key: string;
 
-  // Related value.
+  /*
+  * Related value.
+  * */
   public value: T;
 
   //#endregion

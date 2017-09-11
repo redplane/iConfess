@@ -36,6 +36,11 @@ export class AccountManagementComponent implements OnInit {
   private profileBoxContainer: ModalDirective;
 
   /*
+  * Modal which contains account search component.
+  * */
+  @ViewChild('accountSearchBoxContainer')
+  private accountSearchBoxContainer: ModalDirective;
+  /*
   * List of accounts.
   * */
   public searchResult: SearchResult<Account>;
@@ -90,7 +95,11 @@ export class AccountManagementComponent implements OnInit {
   /*
   * Callback which is fired when search button of category search box is clicked.
   * */
-  public clickSearch(): void {
+  public clickSearch(conditions: SearchAccountsViewModel): void {
+
+    // Condition is specified.
+    if (conditions)
+      this.conditions = conditions;
 
     // Make component be busy.
     this.isBusy = true;
@@ -103,6 +112,9 @@ export class AccountManagementComponent implements OnInit {
 
         // Cancel loading.
         this.isBusy = false;
+        
+        // Close account search modal dialog.
+        this.accountSearchBoxContainer.hide();
       })
       .catch((x: Response) => {
 
@@ -150,7 +162,7 @@ export class AccountManagementComponent implements OnInit {
         this.profileBoxContainer.hide();
 
         // Reload the page.
-        this.clickSearch();
+        this.clickSearch(null);
       })
       .catch((response: Response) => {
 
@@ -171,7 +183,7 @@ export class AccountManagementComponent implements OnInit {
     this.isBusy = false;
 
     // Load all accounts from service.
-    this.clickSearch();
+    this.clickSearch(null);
   }
 
   /*
@@ -185,8 +197,9 @@ export class AccountManagementComponent implements OnInit {
 
     // Update page.
     this.conditions.pagination.page = page;
+
     // Base on specific condition to load accounts list from database.
-    this.clickSearch();
+    this.clickSearch(null);
   }
 
   //#endregion

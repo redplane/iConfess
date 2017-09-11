@@ -24,6 +24,13 @@ import {AuthorizeLayoutComponent} from "./components/shared/authorize-layout/aut
 import {AccountForgotPasswordComponent} from "./components/account-management/account-forgot-password.component";
 import {AccountSubmitPasswordComponent} from "./components/account-management/account-submit-password.component";
 import {ApiService} from "../services/api.service";
+import {ApplicationSettingService} from "../services/application-setting.service";
+import {ITimeService} from "../interfaces/services/time-service.interface";
+import {TimeService} from "../services/time.service";
+import {NavigationBarComponent} from "./components/shared/navigation-bar/navigation-bar.component";
+import {SideBarComponent} from "./components/shared/side-bar/side-bar.component";
+import {ConfigurationService} from "../services/configuration.service";
+import {CalendarModule, DataTableModule,SharedModule} from "primeng/primeng";
 
 //#region Route configuration
 
@@ -77,6 +84,10 @@ const appRoutes: Routes = [
     // Layout
     AuthorizeLayoutComponent,
 
+    // Shared components
+    NavigationBarComponent,
+    SideBarComponent,
+
     AccountLoginComponent,
     // AccountForgotPasswordComponent,
     // AccountSubmitPasswordComponent,
@@ -95,7 +106,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
 
     MomentModule,
-    ModalModule,
+    ModalModule.forRoot(),
+    CalendarModule,
+    DataTableModule,
+    SharedModule,
     NgxOrdinaryPagerModule,
     NgxMultiSelectorModule
   ],
@@ -105,6 +119,9 @@ const appRoutes: Routes = [
     {provide: 'IAccountService', useClass: AccountService},
     {provide: 'ICategoryService', useClass: CategoryService},
     {provide: 'IAuthenticationService', useClass: AuthenticationService},
+    {provide: 'IApplicationSettingService', useClass: ApplicationSettingService},
+    {provide: 'ITimeService', useClass: TimeService},
+    {provide: 'IConfigurationService', useClass: ConfigurationService},
 
     // Handle common behaviour of http request / response.
     {provide: Http, useClass: GlobalHttpInterceptor},

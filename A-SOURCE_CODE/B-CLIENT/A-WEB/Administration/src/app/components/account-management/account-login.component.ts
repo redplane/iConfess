@@ -71,9 +71,6 @@ export class AccountLoginComponent {
 
         // Cancel loading process.
         this.isBusy = false;
-
-        // Display toastr message.
-        this.toastr.success('Signed into system successfully.');
       })
       .catch((response: Response) => {
         // Unfreeze the UI.

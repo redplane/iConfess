@@ -7,6 +7,11 @@ export class ApplicationSetting{
   * */
   public static identityStorage: string = 'iConfess';
 
+  /*
+  * Maximum records can be displayed on a page.
+  * */
+  public static maxPageRecords: number = 30;
+
   //#endregion
 
 }

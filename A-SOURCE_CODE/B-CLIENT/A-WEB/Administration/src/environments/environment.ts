@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:4010'
+  baseUrl: 'http://dxzxrjg36bzcbpete.stoplight-proxy.io'
 };

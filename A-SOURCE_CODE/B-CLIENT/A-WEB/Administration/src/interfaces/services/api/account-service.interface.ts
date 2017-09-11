@@ -9,25 +9,37 @@ import {Response} from "@angular/http";
  * */
 export interface IAccountService {
 
-    //#region Methods
+  //#region Methods
 
-    // Find accounts by using specific conditions.
-    getAccounts(conditions: SearchAccountsViewModel): Promise<Response>;
+  /*
+  * Find accounts by using specific conditions.
+  * */
+  getAccounts(conditions: SearchAccountsViewModel): Promise<Response>;
 
-    // Call login api to obtain client authentication token instance.
-    login(loginViewModel: LoginViewModel): Promise<Response>;
+  /*
+  * Call login api to obtain client authentication token instance.
+  * */
+  login(loginViewModel: LoginViewModel): Promise<Response>;
 
-    // Change account information.
-    editUserProfile(index: number, information: Account): Promise<Response>;
+  /*
+  * Change account information.
+  * */
+  editUserProfile(index: number, information: Account): Promise<Response>;
 
-    // Send request to service to request an instruction email to change password.
-    sendPasswordChangeRequest(email: string): Promise<Response>;
+  /*
+  * Send request to service to request an instruction email to change password.
+  * */
+  sendPasswordChangeRequest(email: string): Promise<Response>;
 
-    // Submit new password to service.
-    submitPasswordReset(submitPasswordViewModel: SubmitPasswordViewModel): Promise<Response>
+  /*
+  * Submit new password to service.
+  * */
+  submitPasswordReset(submitPasswordViewModel: SubmitPasswordViewModel): Promise<Response>
 
-    // Get requester profile.
-    getClientProfile(): Promise<Response>;
+  /*
+  * Get requester profile.
+  * */
+  getClientProfile(): Promise<Response>;
 
-    //#endregion
+  //#endregion
 }

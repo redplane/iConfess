@@ -39,7 +39,7 @@ export interface IApiService {
   /*
    * Get http service.
    * */
-  getHttp(): Http;
+  getInstance(): Http;
 
   /*
   * Initiate http request header.

@@ -27,12 +27,12 @@ export class SearchAccountsViewModel {
   /*
   * When account joined into system.
   * */
-  public joined: Range<number>;
+  public joinedTime: Range<number>;
 
   /*
   * When account was lastly modified.
   * */
-  public lastModified: Range<number>;
+  public lastModifiedTime: Range<number>;
 
   /*
   * Results pagination.
@@ -55,8 +55,8 @@ export class SearchAccountsViewModel {
     this.email = new TextSearch();
     this.nickname = new TextSearch();
     this.statuses = [];
-    this.joined = new Range<number>();
-    this.lastModified = new Range<number>();
+    this.joinedTime = new Range<number>();
+    this.lastModifiedTime = new Range<number>();
     this.pagination = new Pagination();
     this.sorting = new Sorting<AccountSortProperty>();
   }

@@ -34,7 +34,6 @@ export class GlobalHttpInterceptor extends Http {
   public request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     return super.request(url, options)
       .catch((x: Response) => {
-
       // Unauthorize response.
       if (x.status === 0 || x.status === 500)
         this.toastr.error('Có lỗi xảy ra trên máy chủ hệ thống. Xin hãy thử lại sau ít phút.', 'Thông tin hệ thống', null);
@@ -48,9 +47,25 @@ export class GlobalHttpInterceptor extends Http {
       }
       else{
 
-        let result = x.json();
-        if (result != null && result['message'] != null)
-          this.toastr.error(result['message'], 'Thông tin hệ thống', null);
+        // Find message responded from service api endpoint.
+        let szMessage = '';
+
+        // Find response json.
+        try{
+          // Find response json.
+          let result = x.json();
+
+          // Find response message.
+          szMessage = result['message'];
+
+        } catch (exception) {
+          szMessage = x['statusText'];
+        }
+
+        // If message has been found, it should be displayed.
+        if (szMessage) {
+            this.toastr.error(szMessage, 'Thông tin hệ thống');
+        }
       }
 
       return Observable.throw(x);

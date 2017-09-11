@@ -1,133 +1,122 @@
 <!--1st Column-->
 <div class="col-lg-6">
 
-    <!-- Email address -->
-    <div class="form-group">
-        <label>Email</label>
-        <input name="email"
-               class="form-control"
-               placeholder="Email"
-               [(ngModel)]="conditions.email.value">
+  <!-- Email address -->
+  <div class="form-group">
+    <label>Email</label>
+    <input name="email"
+           class="form-control"
+           placeholder="Email"
+           [(ngModel)]="conditions.email.value">
 
+  </div>
+
+  <!-- Account statuses -->
+  <div class="form-group">
+    <label>Statuses</label>
+
+    <div class="btn-group btn-group-justified"
+         role="group"
+         aria-label="...">
+
+      <ngx-multi-selector [items]="accountStatuses"
+                          [key]="'key'"
+                          [display-property]="'key'"
+                          [is-search-box-available]="false"
+                          [is-clear-button-available]="true"
+                          [separation-character]="' - '"
+                          (update-items)="updateStatuses($event)">
+      </ngx-multi-selector>
     </div>
 
-    <!-- Account statuses -->
-    <div class="form-group">
-        <label>Statuses</label>
+  </div>
 
-        <div class="btn-group btn-group-justified"
-             role="group"
-             aria-label="...">
+  <!-- Nickname -->
+  <div class="form-group">
+    <label>Name</label>
+    <input name="nickname"
+           class="form-control"
+           placeholder="Nickname"
+           [(ngModel)]="conditions.nickname.value"/>
+  </div>
 
-            <ngx-multi-selector [items]="clientCommonService.getAccountStatuses()"
-                                [key]="'key'"
-                                [display-property]="'key'"
-                                [is-search-box-available]="false"
-                                [is-clear-button-available]="true"
-                                [separation-character]="' - '"
-                                (update-items)="updateStatuses($event)">
-            </ngx-multi-selector>
-        </div>
-
+  <!-- Sorting -->
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <label>Sorting</label>
     </div>
 
-    <!-- Nickname -->
-    <div class="form-group">
-        <label>Name</label>
-        <input name="nickname"
-               class="form-control"
-               placeholder="Nickname"
-               [(ngModel)]="conditions.nickname.value"/>
+    <div class="col-lg-6">
+      <select class="form-control"
+              [(ngModel)]="conditions.sorting.property">
+        <option *ngFor="let item of sortProperties.getKeyValuePairs()"
+                [value]="item.value">{{item.key}}
+        </option>
+      </select>
     </div>
+
+    <div class="col-lg-6">
+      <select class="form-control"
+              [(ngModel)]="conditions.sorting.direction">
+        <option *ngFor="let item of sortDirections"
+                [value]="item.value">{{item.key}}
+        </option>
+      </select>
+    </div>
+  </div>
 </div>
 
 <!--2nd Column-->
 <div class="col-lg-6">
 
-    <!-- Joined -->
-    <div class="row form-group">
-        <div class="col-lg-12">
-            <label>Joined</label>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-hourglass-start" aria-hidden="true"></i>
-                    </span>
-                <input name="joinFrom"
-                       class="form-control"
-                       type="date"
-                       [(ngModel)]="conditions.joined.from"/>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-hourglass-end"
-                           aria-hidden="true"></i>
-                    </span>
-                <input name="joinTo"
-                       class="form-control"
-                       type="date"
-                       [(ngModel)]="conditions.joined.to"/>
-            </div>
-        </div>
+  <!-- Joined -->
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <label>Joined time (from)</label>
+      <p-calendar [(ngModel)]="conditions.joinedTime.from"
+                  [showTime]="true"
+                  [style]="{'display': 'block', 'border-radius': '0px'}"
+                  [monthNavigator]="true"
+                  inputStyleClass="form-control">
+      </p-calendar>
     </div>
+  </div>
 
-    <!-- Last modified -->
-    <div class="row form-group">
-        <div class="col-lg-12">
-            <label>Last modified</label>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-hourglass-start" aria-hidden="true"></i>
-                    </span>
-                <input name="lastModifiedFrom"
-                       class="form-control"
-                       type="date"
-                       [(ngModel)]="conditions.lastModified.from"/>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-hourglass-end" aria-hidden="true"></i>
-                    </span>
-                <input name="lastModifiedTo"
-                       class="form-control"
-                       type="date"
-                       [(ngModel)]="conditions.lastModified.to"/>
-            </div>
-        </div>
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <label>Joined time (to)</label>
+      <p-calendar [(ngModel)]="conditions.joinedTime.to"
+                  [showTime]="true"
+                  [style]="{'display': 'block', 'border-radius': '0px'}"
+                  [monthNavigator]="true"
+                  inputStyleClass="form-control">
+      </p-calendar>
     </div>
+  </div>
 
-    <!-- Sorting -->
-    <div class="row form-group">
-        <div class="col-lg-12">
-            <label>Sorting</label>
-        </div>
-
-        <div class="col-lg-6">
-            <select class="form-control"
-                    [(ngModel)]="conditions.sorting.property">
-                <option *ngFor="let item of sortProperties.getKeyValuePairs()"
-                        [value]="item.value">{{item.key}}</option>
-            </select>
-        </div>
-
-        <div class="col-lg-6">
-            <select class="form-control"
-                    [(ngModel)]="conditions.sorting.direction">
-                <option *ngFor="let item of clientCommonService.getSortDirections(null)"
-                        [value]="item.value">{{item.key}}</option>
-            </select>
-        </div>
+  <!-- Last modified -->
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <label>Last modified time (from)</label>
+      <p-calendar [(ngModel)]="conditions.lastModifiedTime.from"
+                  [showTime]="true"
+                  [style]="{'display': 'block', 'border-radius': '0px'}"
+                  [monthNavigator]="true"
+                  inputStyleClass="form-control">
+      </p-calendar>
     </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <label>Last modified time (to)</label>
+      <p-calendar [(ngModel)]="conditions.lastModifiedTime.to"
+                  [showTime]="true"
+                  [style]="{'display': 'block', 'border-radius': '0px'}"
+                  [monthNavigator]="true"
+                  inputStyleClass="form-control">
+      </p-calendar>
+    </div>
+  </div>
 </div>
 

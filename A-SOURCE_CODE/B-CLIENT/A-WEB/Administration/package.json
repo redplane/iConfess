@@ -27,6 +27,7 @@
     "ngx-multi-selector": "^1.0.4",
     "ngx-numeric-paginator": "^1.0.4",
     "ngx-toastr": "^6.1.4",
+    "primeng": "^4.2.0-rc.1",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"
   },
