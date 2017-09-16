@@ -21,16 +21,23 @@ import {AccountProfileBoxComponent} from "./components/account-management/accoun
 import {NgxMultiSelectorModule} from 'ngx-multi-selector';
 import {AuthenticationService} from "../services/authentication.service";
 import {AuthorizeLayoutComponent} from "./components/shared/authorize-layout/authorize-layout.component";
-import {AccountForgotPasswordComponent} from "./components/account-management/account-forgot-password.component";
-import {AccountSubmitPasswordComponent} from "./components/account-management/account-submit-password.component";
 import {ApiService} from "../services/api.service";
-import {ApplicationSettingService} from "../services/application-setting.service";
 import {ITimeService} from "../interfaces/services/time-service.interface";
 import {TimeService} from "../services/time.service";
 import {NavigationBarComponent} from "./components/shared/navigation-bar/navigation-bar.component";
 import {SideBarComponent} from "./components/shared/side-bar/side-bar.component";
 import {ConfigurationService} from "../services/configuration.service";
 import {CalendarModule, DataTableModule,SharedModule} from "primeng/primeng";
+import {CategorySearchBoxComponent} from "./components/category-management/category-search-box.component";
+import {CategoryManagementComponent} from "./components/category-management/category-management.component";
+import {CategoryDetailBoxComponent} from "./components/category-management/category-detail-box.component";
+import {CategoryInitiateBoxComponent} from "./components/category-management/category-initiate-box.component";
+import {Category} from "../models/entities/Category";
+import {CategoryDeleteBoxComponent} from "./components/category-management/category-delete-box.component";
+import {ProfileResolve} from "../resolvers/profile.resolve";
+import {AccountForgotPasswordComponent} from "./components/account-management/account-forgot-password.component";
+import {ConstraintService} from "../services/constraint.service";
+import {AccountSubmitPasswordComponent} from "./components/account-management/account-submit-password.component";
 
 //#region Route configuration
 
@@ -40,10 +47,33 @@ const appRoutes: Routes = [
     path: 'account',
     component: AuthorizeLayoutComponent,
     canActivate: [IsAuthorizedGuard],
+    resolve:{
+      profile: ProfileResolve
+    },
     children: [
       {
         path: 'management',
         component: AccountManagementComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: '',
+        redirectTo: 'management',
+        pathMatch: 'full'
+      }
+    ]
+  },
+  {
+    path: 'category',
+    component: AuthorizeLayoutComponent,
+    canActivate: [IsAuthorizedGuard],
+    resolve:{
+      profile: ProfileResolve
+    },
+    children: [
+      {
+        path: 'management',
+        component: CategoryManagementComponent,
         pathMatch: 'full'
       },
       {
@@ -62,17 +92,17 @@ const appRoutes: Routes = [
     path: 'login',
     component: AccountLoginComponent,
     pathMatch: 'full'
+  },
+  {
+    path: 'forgot-password',
+    component: AccountForgotPasswordComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'submit-password',
+    component: AccountSubmitPasswordComponent,
+    pathMatch: 'full'
   }
-  // {
-  //   path: 'forgot-password',
-  //   component: AccountForgotPasswordComponent,
-  //   pathMatch: 'full'
-  // },
-  // {
-  //   path: 'submit-password',
-  //   component: AccountSubmitPasswordComponent,
-  //   pathMatch: 'full'
-  // }
 ];
 
 //#endregion
@@ -89,11 +119,17 @@ const appRoutes: Routes = [
     SideBarComponent,
 
     AccountLoginComponent,
-    // AccountForgotPasswordComponent,
-    // AccountSubmitPasswordComponent,
+    AccountForgotPasswordComponent,
+    AccountSubmitPasswordComponent,
     AccountManagementComponent,
     AccountSearchBoxComponent,
-    AccountProfileBoxComponent
+    AccountProfileBoxComponent,
+
+    CategorySearchBoxComponent,
+    CategoryManagementComponent,
+    CategoryDetailBoxComponent,
+    CategoryInitiateBoxComponent,
+    CategoryDeleteBoxComponent
   ],
   imports: [
     FormsModule,
@@ -119,12 +155,15 @@ const appRoutes: Routes = [
     {provide: 'IAccountService', useClass: AccountService},
     {provide: 'ICategoryService', useClass: CategoryService},
     {provide: 'IAuthenticationService', useClass: AuthenticationService},
-    {provide: 'IApplicationSettingService', useClass: ApplicationSettingService},
     {provide: 'ITimeService', useClass: TimeService},
     {provide: 'IConfigurationService', useClass: ConfigurationService},
+    ConstraintService,
 
     // Handle common behaviour of http request / response.
     {provide: Http, useClass: GlobalHttpInterceptor},
+
+    // Resolvers.
+    ProfileResolve
   ],
   bootstrap: [AppComponent]
 })

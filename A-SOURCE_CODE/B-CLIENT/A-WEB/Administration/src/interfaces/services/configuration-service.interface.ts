@@ -1,5 +1,6 @@
 import {Response} from '@angular/http';
 import {KeyValuePair} from "../../models/key-value-pair";
+import {NgxOrdinaryPagerOption} from "ngx-numeric-paginator/ngx-ordinary-pager/ngx-ordinary-pager-option";
 
 export interface IConfigurationService {
 
@@ -19,6 +20,11 @@ export interface IConfigurationService {
  * Get key name from value.
  * */
   getKeyByValue(keyValuePairs: Array<KeyValuePair<any>>, value: any): string;
+
+  /*
+  * Get pagination option.
+  * */
+  getPagerOptions(): NgxOrdinaryPagerOption;
 
   //#endregion
 }

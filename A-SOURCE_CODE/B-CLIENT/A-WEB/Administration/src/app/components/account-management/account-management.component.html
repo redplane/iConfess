@@ -1,66 +1,76 @@
-<!-- Content container -->
-<div class="row">
-  <div class="col-lg-12">
-    <div class="box box-default">
-      <!-- Loading overlay -->
-      <div class="overlay"
-           *ngIf="isBusy">
-        <i class="fa fa-refresh fa-spin"></i>
-      </div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Account
+    <small>management</small>
+  </h1>
+</section>
 
-      <div class="box-header with-border">
+<section class="content">
+  <!-- Content container -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="box box-default">
+        <!-- Loading overlay -->
+        <div class="overlay"
+             *ngIf="isBusy">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+
+        <div class="box-header with-border">
         <span>
           <b class="fa fa-user-circle-o" aria-hidden="true"></b> Accounts list
         </span>
-        <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool"
-                  (click)="accountSearchBoxContainer.show()">
-            <i class="fa fa-search"></i>
-          </button>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool"
+                    (click)="accountSearchBoxContainer.show()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="box-body">
-        <p-dataTable [value]="searchResult.records"
-                     [paginator]="false"
-                     [responsive]="true">
-          <p-column field="email" header="Email">
-            <ng-template let-col let-data="rowData" pTemplate="body">
-              <a href="javascript:void(0)" (click)="clickChangeAccountInfo(data)">
-                {{data[col.field]}}
-              </a>
-            </ng-template>
-          </p-column>
-          <p-column field="nickname" header="Nickname"></p-column>
-          <p-column field="role" header="Role"></p-column>
-          <p-column field="joinedTime" header="Joined time">
-            <ng-template let-col let-data="rowData" pTemplate="body">
-              <span>{{data[col.field] | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm'}}</span>
-            </ng-template>
-          </p-column>
-          <p-column field="lastModifiedTime" header="Last modified time">
-            <ng-template let-col let-data="rowData" pTemplate="body">
+        <div class="box-body">
+          <p-dataTable [value]="searchResult.records"
+                       [paginator]="false"
+                       [responsive]="true">
+            <p-column field="email" header="Email">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                <a href="javascript:void(0)" (click)="clickChangeAccountInfo(data)">
+                  {{data[col.field]}}
+                </a>
+              </ng-template>
+            </p-column>
+            <p-column field="nickname" header="Nickname"></p-column>
+            <p-column field="role" header="Role"></p-column>
+            <p-column field="joinedTime" header="Joined time">
+              <ng-template let-col let-data="rowData" pTemplate="body">
+                <span>{{data[col.field] | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm'}}</span>
+              </ng-template>
+            </p-column>
+            <p-column field="lastModifiedTime" header="Last modified time">
+              <ng-template let-col let-data="rowData" pTemplate="body">
                 <span *ngIf="col.field && data[col.field]">{{data[col.field] | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm'}}</span>
                 <span *ngIf="!(col.field && data[col.field])">Not available</span>
-            </ng-template>
-          </p-column>
-        </p-dataTable>
-      </div>
+              </ng-template>
+            </p-column>
+          </p-dataTable>
+        </div>
 
-      <div class="box-footer">
-        <div class="col-lg-12">
-          <div class="text-center">
-            <ngx-ordinary-pager [options]="applicationSettingService.getOrdinaryPagerOptions()"
-                                [page]="conditions.pagination.page"
-                                [total-items]="searchResult.total"
-                                (select-page)="selectPage($event)">
-            </ngx-ordinary-pager>
+        <div class="box-footer">
+          <div class="col-lg-12">
+            <div class="text-center">
+              <ngx-ordinary-pager [options]="configurationService.getPagerOptions()"
+                                  [page]="conditions.pagination.page"
+                                  [total-items]="searchResult.total"
+                                  (select-page)="selectPage($event)">
+              </ngx-ordinary-pager>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!--Search accounts modal-->
 <div #accountSearchBoxContainer="bs-modal"
@@ -71,35 +81,13 @@
      aria-hidden="true"
      [config]="{backdrop: 'static', keyboard: false}">
 
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="box box-default">
-        <!-- Loading overlay -->
-        <div class="overlay"
-             *ngIf="isBusy">
-          <i class="fa fa-refresh fa-spin"></i>
-        </div>
-
-        <div class="box-header with-border">
-          <span><b class="glyphicon glyphicon-search" aria-hidden="true"></b> Search accounts</span>
-          <button type="button" class="close pull-right" aria-label="Close"
-                  (click)="accountSearchBoxContainer.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="box-body">
-          <account-search-box #getAccountsBox="account-search-box"
-                              [conditions]="conditions"
-                              [is-loading]="isBusy">
-          </account-search-box>
-        </div>
-        <div class="box-footer text-center">
-          <button class="btn btn-primary btn-flat"
-                  (click)="clickSearch(getAccountsBox.getConditions())">
-            <span>Confirm</span>
-          </button>
-        </div>
-      </div>
+      <account-search-box [conditions]="conditions"
+                          [is-loading]="isBusy"
+                          (search)="clickSearch($event)"
+                          (close)="accountSearchBoxContainer.hide()">
+      </account-search-box>
     </div>
   </div>
 </div>
@@ -115,32 +103,10 @@
 
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="box box-default">
-        <!-- Loading overlay -->
-        <div class="overlay"
-             *ngIf="isBusy">
-          <i class="fa fa-refresh fa-spin"></i>
-        </div>
-
-        <div class="box-header with-border">
-          <span><b class="glyphicon glyphicon-search" aria-hidden="true"></b> Profile information</span>
-        </div>
-        <div class="box-body">
-          <account-profile-box #profileBox="account-profile-box"></account-profile-box>
-        </div>
-        <div class="box-footer">
-          <div class="text-center">
-            <button class="btn btn-primary btn-flat"
-                    (click)="clickConfirmAccountInfo()">
-              <span class="glyphicon glyphicon-ok"></span>
-            </button>
-            <button class="btn btn-default btn-flat"
-                    (click)="profileBoxContainer.hide()">
-              <span class="glyphicon glyphicon-remove"></span>
-            </button>
-          </div>
-        </div>
-      </div>
+      <account-profile-box #profileBox="account-profile-box"
+                           (click-close)="profileBoxContainer.hide()"
+                           (click-confirm)="clickConfirmAccountInfo()">
+      </account-profile-box>
     </div>
   </div>
 </div>

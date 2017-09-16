@@ -20,7 +20,7 @@ export class ApiUrl {
   /*
   * Url which is for submitting account password.
   * */
-  public static submitAccountPassword: string = 'api/account/submit-password';
+  public static initPasswordSubmission: string = 'api/account/submit-password';
 
   /*
   * Url which is for requesting back-end service to reset password.
@@ -30,7 +30,7 @@ export class ApiUrl {
   /*
   * Url which is for getting account profile.
   * */
-  public static getAccountProfile: string = 'api/account/profile';
+  public static getAccountProfile: string = 'api/account/personal-profile';
   //#endregion
 
   //#region Categories
@@ -38,7 +38,7 @@ export class ApiUrl {
   /*
   * Url which is for searching for categories.
   * */
-  public static getCategories: string = "api/category/find";
+  public static getCategories: string = "api/category/search";
 
   /*
   * Url which is for deleting for categories.

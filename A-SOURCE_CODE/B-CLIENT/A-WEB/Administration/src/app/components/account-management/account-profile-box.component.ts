@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from "@angular/core";
 import * as _ from "lodash";
 import {Account} from "../../../models/entities/account";
 import {AccountStatus} from "../../../enumerations/account-status";
@@ -28,10 +28,26 @@ export class AccountProfileBoxComponent implements OnInit {
   @Input('account')
   private account: Account;
 
+  // Whether profile is read-only or not.
+  @Input('is-readonly')
+  private bIsReadOnly: boolean;
+
   /*
   * Account status (name - value)
   * */
   private accountStatuses: Array<KeyValuePair<AccountStatus>>;
+
+  /*
+  * Event which is raised when confirm button is clicked.
+  * */
+  @Output('click-confirm')
+  private eConfirm: EventEmitter<void>;
+
+  /*
+  * Event which is raised when close button is clicked.
+  * */
+  @Output('click-close')
+  private eClose: EventEmitter<void>;
 
   //#endregion
 
@@ -47,6 +63,8 @@ export class AccountProfileBoxComponent implements OnInit {
 
     // Initialize event emitters.
     this.clickChangeAccountStatus = new EventEmitter<Account>();
+    this.eConfirm = new EventEmitter<void>();
+    this.eClose = new EventEmitter<void>();
   }
 
   //#endregion

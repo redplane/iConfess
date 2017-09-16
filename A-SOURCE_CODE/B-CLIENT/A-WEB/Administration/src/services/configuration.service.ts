@@ -2,9 +2,7 @@ import {Inject, Injectable} from "@angular/core";
 import {SortDirection} from "../enumerations/sort-direction";
 import {CategorySortProperty} from "../enumerations/order/category-sort-property";
 import {AccountSortProperty} from "../enumerations/order/account-sort-property";
-import {Account} from "../models/entities/account";
 import {AccountStatus} from "../enumerations/account-status";
-import {SelectionItem} from "../models/selection-item";
 import {CommentReportSortProperty} from "../enumerations/order/comment-report-sort-property";
 import {TextSearchMode} from "../enumerations/text-search-mode";
 import {PostSortProperty} from "../enumerations/order/post-sort-property";
@@ -14,14 +12,23 @@ import {KeyValuePair} from "../models/key-value-pair";
 import {ResponseOptions, Response} from "@angular/http";
 import {IApiService} from "../interfaces/services/api/api-service.interface";
 import {IConfigurationService} from "../interfaces/services/configuration-service.interface";
+import {NgxOrdinaryPagerOption} from "ngx-numeric-paginator/ngx-ordinary-pager/ngx-ordinary-pager-option";
 
 @Injectable()
 export class ConfigurationService implements IConfigurationService{
 
+
   //#region Properties
 
-  // List of account statuses (key-value).
+  /*
+  * List of account statuses (key-value).
+  * */
   private accountStatuses: Array<KeyValuePair<AccountStatus>>;
+
+  /*
+  * Pager option.
+  * */
+  private pagerOptions: NgxOrdinaryPagerOption;
 
   /*
   * List of directions can be used for sorting.
@@ -216,4 +223,26 @@ export class ConfigurationService implements IConfigurationService{
 
     return pairs[0].key;
 }
+
+  /*
+    * Get ordinary pager settings.
+    * */
+  public getPagerOptions(): NgxOrdinaryPagerOption {
+    if (this.pagerOptions != null) {
+      return this.pagerOptions;
+    }
+
+    this.pagerOptions = new NgxOrdinaryPagerOption();
+    this.pagerOptions.class = 'pagination pagination-sm';
+    this.pagerOptions.bAutoHide = true;
+    this.pagerOptions.itemCount = this.getMaxPageRecords();
+    this.pagerOptions.back = 2;
+    this.pagerOptions.front = 2;
+    this.pagerOptions.bLastButton = true;
+    this.pagerOptions.bPreviousButton = true;
+    this.pagerOptions.bNextButton = true;
+    this.pagerOptions.bLastButton = true;
+
+    return this.pagerOptions;
+  }
 }

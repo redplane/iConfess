@@ -12,7 +12,8 @@ import {Account} from "../../../models/entities/account";
 import {ModalDirective} from "ngx-bootstrap";
 import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
 import {ITimeService} from "../../../interfaces/services/time-service.interface";
-import {IApplicationSettingService} from "../../../interfaces/services/application-setting-service.interface";
+import {IConfigurationService} from "../../../interfaces/services/configuration-service.interface";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'account-management',
@@ -68,8 +69,9 @@ export class AccountManagementComponent implements OnInit {
   * Initiate component with injections.
   * */
   public constructor(@Inject("IAccountService") public accountService: IAccountService,
-                     @Inject('IApplicationSettingService') public applicationSettingService: IApplicationSettingService,
-                     @Inject("ITimeService") public timeService: ITimeService) {
+                     @Inject("ITimeService") public timeService: ITimeService,
+                     @Inject('IConfigurationService') public configurationService: IConfigurationService,
+                     public activatedRoute: ActivatedRoute) {
 
     // Initiate search conditions.
     let sorting = new Sorting<AccountSortProperty>();
@@ -77,8 +79,6 @@ export class AccountManagementComponent implements OnInit {
     sorting.property = AccountSortProperty.index;
 
     let pagination = new Pagination();
-    pagination.page = 1;
-    pagination.records = applicationSettingService.getMaxPageRecords();
 
     this.conditions = new SearchAccountsViewModel();
     this.conditions.sorting = sorting;
@@ -112,7 +112,7 @@ export class AccountManagementComponent implements OnInit {
 
         // Cancel loading.
         this.isBusy = false;
-        
+
         // Close account search modal dialog.
         this.accountSearchBoxContainer.hide();
       })

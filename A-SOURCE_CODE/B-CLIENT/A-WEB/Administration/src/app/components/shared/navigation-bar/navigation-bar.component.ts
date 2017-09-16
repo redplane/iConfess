@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Response} from "@angular/http";
 import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
 import {IAuthenticationService} from "../../../../interfaces/services/authentication-service.interface";
@@ -22,32 +22,32 @@ export class NavigationBarComponent implements OnInit {
 
   // Initiate instance with IoC.
   public constructor(@Inject("IAuthenticationService") public authenticationService: IAuthenticationService,
-                     @Inject("IAccountService") public clientAccountService: IAccountService,
-                     public clientRoutingService: Router) {
+                     public router: Router,
+                     public activatedRoute: ActivatedRoute) {
   }
 
   //#endregion
 
   //#region Methods
 
-  // Sign the user out.
+  /*
+  * Sign the user out.
+  * */
   public clickSignOut(): void {
     // Clear the authentication service.
     this.authenticationService.clearIdentity();
 
     // Re-direct to login page.
-    this.clientRoutingService.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 
-  // This callback is fired when this component has been initialized.
+  /*
+  * This callback is fired when this component has been initialized.
+  * */
   public ngOnInit(): void {
-    // Find account information.
-    this.clientAccountService.getClientProfile()
-      .then((x: Response) => {
-        console.log(x);
-      })
-      .catch((x: Response) => {
-      });
+    this.activatedRoute.data.subscribe((x: any) => {
+      this.account = <Account> x.profile;
+    });
   }
 
   //#endregion

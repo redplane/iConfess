@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
 * Contains data constraint of application.
 * */
 @Injectable()
-export class ClientDataConstraintService{
+export class ConstraintService{
 
     /* Category section */
     public minLengthCategoryName: number; // Minimum length of category name.

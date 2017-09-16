@@ -3,6 +3,7 @@ import {LoginViewModel} from "../../../viewmodels/accounts/login.view-model";
 import {Account} from "../../../models/entities/account";
 import {SubmitPasswordViewModel} from "../../../viewmodels/accounts/submit-password.view-model";
 import {Response} from "@angular/http";
+import {Observable} from "rxjs/Observable";
 
 /*
  * Provides function to deal with accounts api.
@@ -29,7 +30,7 @@ export interface IAccountService {
   /*
   * Send request to service to request an instruction email to change password.
   * */
-  sendPasswordChangeRequest(email: string): Promise<Response>;
+  initChangePasswordRequest(email: string): Promise<Response>;
 
   /*
   * Submit new password to service.

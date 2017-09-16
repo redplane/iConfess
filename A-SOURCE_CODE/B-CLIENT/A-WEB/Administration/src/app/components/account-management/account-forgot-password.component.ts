@@ -1,82 +1,82 @@
 import {Inject, Component} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {Response} from '@angular/http';
 import {Router} from '@angular/router';
-import {ClientDataConstraintService} from '../../../services/client-data-constraint.service';
 import {Account} from '../../../models/entities/account';
 import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
 import {ToastrService} from "ngx-toastr";
+import {ConstraintService} from "../../../services/constraint.service";
 
 @Component({
   selector: 'account-forgot-password-box',
-  templateUrl: 'account-forgot-password.component.html',
-  inputs: ['isBusy'],
+  templateUrl: 'account-forgot-password.component.html'
 })
 
 export class AccountForgotPasswordComponent {
 
   //#region Properties
 
-  // Form of request password change.
-  private accountPasswordChangeBox: FormGroup;
-
-  // Account information.
+  /*
+  * Account information.
+  * */
   private account: Account;
 
-  // Whether component is busy or not.
-  private isLoading: boolean;
+  /*
+  * Whether component is busy or not.
+  * */
+  private bIsBusy: boolean;
 
   //#endregion
 
   //#region Constructor
 
-  // Initiate component with default settings.
-  public constructor(private formBuilder: FormBuilder,
-                     private clientDataConstraintService: ClientDataConstraintService,
-                     @Inject('IAccountService') private clientAccountService: IAccountService,
+  /*
+  * Initiate component with default settings.
+  * */
+  public constructor(@Inject('IAccountService') private accountService: IAccountService,
+                     public constraintService: ConstraintService,
                      private toastr: ToastrService,
-                     private clientRoutingService: Router) {
-
-    // Initiate form.
-    this.accountPasswordChangeBox = this.formBuilder.group({
-      email: [''],
-      token: [''],
-      password: [''],
-      passwordConfirmation: ['']
-    });
+                     private router: Router) {
 
     // Initiate account instance.
     this.account = new Account();
-    this.account.email = 'redplane_dt@yahoo.com.vn';
 
     // Set loading to be false.
-    this.isLoading = false;
+    this.bIsBusy = false;
   }
 
   //#endregion
 
-  // Callback which is fired when seach button is clicked for requesting a password reset.
-  public clickRequestPassword(): void {
+  //#region Methods
+
+  /*
+  * Callback which is fired when seach button is clicked for requesting a password reset.
+  * */
+  public clickRequestPassword(event: any): void {
 
     // Set component to loading state.
-    this.isLoading = true;
+    this.bIsBusy = true;
+
+    // Prevent default behaviour.
+    event.preventDefault();
 
     // Call api to request password change.
-    this.clientAccountService.sendPasswordChangeRequest(this.account.email)
+    this.accountService.initChangePasswordRequest(this.account.email)
       .then((response: Response) => {
 
         // Tell client that password request has been submitted.
-        this.toastr.success('CHANGE_PASSWORD_REQUEST_SUBMITTED');
+        this.toastr.success('CHANGE_PASSWORD_REQUEST_SUBMITTED', 'System message');
 
         // Redirect user to submit password page.
-        this.clientRoutingService.navigate(['/submit-password']);
+        this.router.navigate(['/submit-password']);
 
         // Cancel component loading state.
-        this.isLoading = false;
+        this.bIsBusy = false;
       })
       .catch((response: Response) => {
         // Cancel component loading state.
-        this.isLoading = false;
+        this.bIsBusy = false;
       });
   }
+
+  //#endregion
 }

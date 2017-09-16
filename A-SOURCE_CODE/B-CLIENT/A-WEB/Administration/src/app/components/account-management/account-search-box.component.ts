@@ -7,7 +7,6 @@ import {IDictionary} from "../../../interfaces/dictionary.interface";
 import {KeyValuePair} from "../../../models/key-value-pair";
 import {Account} from "../../../models/entities/account";
 import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
-import {IApplicationSettingService} from "../../../interfaces/services/application-setting-service.interface";
 import {Response} from '@angular/http';
 import {SortDirection} from "../../../enumerations/sort-direction";
 import {IConfigurationService} from "../../../interfaces/services/configuration-service.interface";
@@ -54,14 +53,25 @@ export class AccountSearchBoxComponent implements OnInit {
   * */
   private sortDirections: Array<KeyValuePair<SortDirection>>;
 
+  /*
+  * Event emitter which should be raised when search button is clicked.
+  * */
+  @Output('search')
+  private eSearch: EventEmitter<SearchAccountsViewModel>;
+
+  /*
+  * Event emitter which should be raised when close button is clicked.
+  * */
+  @Output('close')
+  private eCloseModal: EventEmitter<void>;
+
   //#endregion
 
   //#region Constructor
 
   // Initiate component with default dependency injection.
   public constructor(@Inject("IAccountService") public accountService: IAccountService,
-                     @Inject('IConfigurationService') public configurationService: IConfigurationService,
-                     @Inject('IApplicationSettingService') public applicationSettingService: IApplicationSettingService) {
+                     @Inject('IConfigurationService') public configurationService: IConfigurationService) {
 
     // Initiate event emitters.
     this.accounts = new Array<Account>();
@@ -77,6 +87,8 @@ export class AccountSearchBoxComponent implements OnInit {
 
     this.sortProperties = sortProperties;
 
+    this.eSearch = new EventEmitter<SearchAccountsViewModel>();
+    this.eCloseModal = new EventEmitter<void>();
   }
 
   //#endregion
@@ -130,11 +142,5 @@ export class AccountSearchBoxComponent implements OnInit {
       })
   }
 
-  /*
-  * Get account search conditions.
-  * */
-  public getConditions(): SearchAccountsViewModel{
-    return this.conditions;
-  }
   //#endregion
 }

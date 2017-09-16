@@ -75,7 +75,7 @@ export class ApiService implements IApiService{
   /*
   * Send 'PUT' to service.
   * */
-  public put(baseUrl: string, url: string, parameters: any, body: any): any {
+  public put(baseUrl: string, url: string, parameters: any, body: any): Observable<Response> {
 
     // Build full request url.
     let fullUrl = baseUrl;
@@ -94,7 +94,7 @@ export class ApiService implements IApiService{
   /*
   * Send information to service using 'PUT' method.
   * */
-  public delete(baseUrl: string, url: string, parameters: any, body: any): any {
+  public delete(baseUrl: string, url: string, parameters: any, body: any): Observable<Response> {
 
     // Build full request url.
     let fullUrl = baseUrl;

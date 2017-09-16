@@ -12,6 +12,7 @@ import {ApiUrl} from "../../constants/api-url";
 import {IDictionary} from "../../interfaces/dictionary.interface";
 import {KeyValuePair} from "../../models/key-value-pair";
 import {AccountStatus} from "../../enumerations/account-status";
+import {Observable} from "rxjs/Observable";
 
 /*
  * Service which handles category business.
@@ -60,19 +61,21 @@ export class AccountService implements IAccountService {
       id: index
     };
 
-    return this.apiService.put(environment.baseUrl, ApiUrl.editAccount, urlParameters, information);
+    return this.apiService.put(environment.baseUrl, ApiUrl.editAccount, urlParameters, information)
+      .toPromise();
   }
 
   /*
   * Request service to send an email which is for changing account password.
   * */
-  public sendPasswordChangeRequest(email: string): Promise<Response> {
+  public initChangePasswordRequest(email: string): Promise<Response> {
     // Parameter construction.
     let urlParameters = {
       email: email
     };
 
-    return this.apiService.get(environment.baseUrl, ApiUrl.submitAccountPassword, urlParameters);
+    return this.apiService.get(environment.baseUrl, ApiUrl.requestPasswordReset, urlParameters)
+      .toPromise();
   }
 
   /*
@@ -80,7 +83,7 @@ export class AccountService implements IAccountService {
   * */
   public submitPasswordReset(submitPasswordViewModel: SubmitPasswordViewModel): Promise<Response> {
     return this.apiService
-      .post(environment.baseUrl, ApiUrl.requestPasswordReset,
+      .post(environment.baseUrl, ApiUrl.initPasswordSubmission,
         null,
         submitPasswordViewModel)
       .toPromise();
@@ -91,11 +94,9 @@ export class AccountService implements IAccountService {
   * */
   public getClientProfile(): Promise<Response> {
     return this.apiService
-      .post(
+      .get(
         environment.baseUrl, ApiUrl.getAccountProfile,
-        null,
-        null)
-      .toPromise();
+        null).toPromise();
   }
 
 

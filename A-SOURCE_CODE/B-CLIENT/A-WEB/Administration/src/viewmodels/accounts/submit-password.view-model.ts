@@ -1,14 +1,26 @@
-export class SubmitPasswordViewModel{
+export class SubmitPasswordViewModel {
 
-    // Address of account.
-    public email: string;
+  //#region Properties
 
-    // Token which is used for changing account password.
-    public token: string;
+  /*
+  * Address of account.
+  * */
+  public email: string;
 
-    // New password of account.
-    public newPassword: string;
+  /*
+  * Token which is used for changing account password.
+  * */
+  public token: string;
 
-    // Password confirmation.
-    public passwordConfirmation: string;
+  /*
+  * New password of account.
+  * */
+  public password: string;
+
+  /*
+  * Password confirmation.
+  * */
+  public passwordConfirmation: string;
+
+  //#endregion
 }

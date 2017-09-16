@@ -19,12 +19,12 @@ export interface IApiService {
   /*
   * Send 'PUT' to service.
   * */
-  put(baseUrl: string, url: string, parameters: any, body: any): any;
+  put(baseUrl: string, url: string, parameters: any, body: any): Observable<Response>;
 
   /*
   * Send 'PUT' to service.
   * */
-  delete(baseUrl: string, url: string, parameters: any, body: any): any;
+  delete(baseUrl: string, url: string, parameters: any, body: any): Observable<Response>;
 
   /*
   * Encrypt url parameters to prevent dangerous parameters are passed to service.
