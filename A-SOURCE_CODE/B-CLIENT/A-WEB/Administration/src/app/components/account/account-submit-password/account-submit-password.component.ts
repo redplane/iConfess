@@ -1,10 +1,10 @@
 import {Component, Inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {Response} from "@angular/http";
-import {SubmitPasswordViewModel} from "../../../viewmodels/accounts/submit-password.view-model";
-import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {SubmitPasswordViewModel} from "../../../../viewmodels/accounts/submit-password.view-model";
+import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
 import {ToastrService} from "ngx-toastr";
-import {ConstraintService} from "../../../services/constraint.service";
+import {ConstraintService} from "../../../../services/constraint.service";
 
 @Component({
   selector: 'account-submit-password',

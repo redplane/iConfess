@@ -1,15 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Inject, Output} from '@angular/core';
-import {SearchAccountsViewModel} from "../../../viewmodels/accounts/search-accounts.view-model";
-import {Dictionary} from "../../../models/dictionary";
-import {AccountSortProperty} from "../../../enumerations/order/account-sort-property";
-import {AccountStatus} from "../../../enumerations/account-status";
-import {IDictionary} from "../../../interfaces/dictionary.interface";
-import {KeyValuePair} from "../../../models/key-value-pair";
-import {Account} from "../../../models/entities/account";
-import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {SearchAccountsViewModel} from "../../../../viewmodels/accounts/search-accounts.view-model";
+import {AccountSortProperty} from "../../../../enumerations/order/account-sort-property";
+import {AccountStatus} from "../../../../enumerations/account-status";
+import {KeyValuePair} from "../../../../models/key-value-pair";
+import {Account} from "../../../../models/entities/account";
+import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
 import {Response} from '@angular/http';
-import {SortDirection} from "../../../enumerations/sort-direction";
-import {IConfigurationService} from "../../../interfaces/services/configuration-service.interface";
+import {SortDirection} from "../../../../enumerations/sort-direction";
+import {IConfigurationService} from "../../../../interfaces/services/configuration-service.interface";
+import {IDictionary} from "../../../../interfaces/dictionary.interface";
+import {Dictionary} from '../../../../models/dictionary';
 
 @Component({
   selector: 'account-search-box',

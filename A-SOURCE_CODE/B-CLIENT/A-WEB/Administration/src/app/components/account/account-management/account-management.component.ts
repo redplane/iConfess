@@ -1,19 +1,19 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Response} from "@angular/http";
-import {AccountProfileBoxComponent} from "./account-profile-box.component";
-import {SearchResult} from "../../../models/search-result";
-import {SearchAccountsViewModel} from "../../../viewmodels/accounts/search-accounts.view-model";
-import {AccountStatus} from "../../../enumerations/account-status";
-import {AccountSortProperty} from "../../../enumerations/order/account-sort-property";
-import {SortDirection} from "../../../enumerations/sort-direction";
-import {Sorting} from "../../../models/sorting";
-import {Pagination} from "../../../models/pagination";
-import {Account} from "../../../models/entities/account";
+import {AccountProfileBoxComponent} from "../account-profile-box/account-profile-box.component";
+import {SearchResult} from "../../../../models/search-result";
+import {SearchAccountsViewModel} from "../../../../viewmodels/accounts/search-accounts.view-model";
+import {AccountStatus} from "../../../../enumerations/account-status";
+import {AccountSortProperty} from "../../../../enumerations/order/account-sort-property";
+import {SortDirection} from "../../../../enumerations/sort-direction";
+import {Pagination} from "../../../../models/pagination";
+import {Account} from "../../../../models/entities/account";
 import {ModalDirective} from "ngx-bootstrap";
-import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
-import {ITimeService} from "../../../interfaces/services/time-service.interface";
-import {IConfigurationService} from "../../../interfaces/services/configuration-service.interface";
+import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
+import {ITimeService} from "../../../../interfaces/services/time-service.interface";
+import {IConfigurationService} from "../../../../interfaces/services/configuration-service.interface";
 import {ActivatedRoute} from "@angular/router";
+import {Sorting} from "../../../../models/sorting";
 
 @Component({
   selector: 'account-management',

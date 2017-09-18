@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core'
 import {Response} from "@angular/http";
-import {CategoryInitiateBoxComponent} from "./category-initiate-box.component";
-import {CategoryDetailBoxComponent} from "./category-detail-box.component";
-import {CategoryDeleteBoxComponent} from "./category-delete-box.component";
+import {CategoryInitiateBoxComponent} from "./category-initiator-box/category-initiate-box.component";
+import {CategoryDetailBoxComponent} from "./category-detail-box/category-detail-box.component";
+import {CategoryDeleteBoxComponent} from "./category-delete-box/category-delete-box.component";
 import {SearchCategoriesViewModel} from "../../../viewmodels/category/search-categories.view-model";
 import {Sorting} from "../../../models/sorting";
 import {SortDirection} from "../../../enumerations/sort-direction";

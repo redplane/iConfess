@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import * as _ from "lodash";
-import {CategoryDetailsViewModel} from "../../../viewmodels/category/category-details.view-model";
-import {CategoryViewModel} from "../../../viewmodels/category/category.view-model";
+import {CategoryDetailsViewModel} from "../../../../viewmodels/category/category-details.view-model";
+import {CategoryViewModel} from "../../../../viewmodels/category/category.view-model";
 
 @Component({
     selector: 'category-delete-box',

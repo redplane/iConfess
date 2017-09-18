@@ -1,10 +1,18 @@
 import {SortDirection} from "../enumerations/sort-direction";
 
-export class Sorting<T>{
+export class Sorting<T> {
 
-    // Whether record should be sorted ascending or descending.
-    public direction: SortDirection;
+  //#region Properties
 
-    // Property which should be sorted.
-    public property: T;
+  /*
+  * Whether record should be sorted ascending or descending.
+  * */
+  public direction: SortDirection;
+
+  /*
+  * Property which should be sorted.
+  * */
+  public property: T;
+
+  //#endregion
 }

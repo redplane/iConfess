@@ -25,7 +25,9 @@ export class Dictionary<T> implements IDictionary<T> {
 
   //#region Methods
 
-  // Insert a new key-value pair into dictionary.
+  /*
+  * Insert a new key-value pair into dictionary.
+  * */
   public add(key: string, value: T): void {
     // Key exists.
     if (this.containsKey(key)) {
@@ -38,7 +40,9 @@ export class Dictionary<T> implements IDictionary<T> {
     this.keyValuePairs.push(keyValuePair);
   }
 
-  // Remove a record by using specific key.
+  /*
+  * Remove a record by using specific key.
+  * */
   public remove(key: string) {
     // Find the key in key-value pairs.
     let results = this.keyValuePairs
@@ -53,21 +57,27 @@ export class Dictionary<T> implements IDictionary<T> {
       this.keyValuePairs.splice(index, 1);
   }
 
-  // Get all keys in dictionary.
+  /*
+  * Get all keys in dictionary.
+  * */
   public keys(): Array<string> {
     return this.keyValuePairs.map((x: KeyValuePair<T>) => {
       return x.key;
     });
   }
 
-  // Get all values in dictionary.
+  /*
+  * Get all values in dictionary.
+  * */
   public values(): Array<T> {
     return this.keyValuePairs.map((x: KeyValuePair<T>) => {
       return x.value;
     });
   }
 
-  // Check whether the designated key has been registered or not.
+  /*
+  * Check whether the designated key has been registered or not.
+  * */
   public containsKey(key: string) {
     // Find item using key.
     let item = this.getKeyItem(key);
@@ -77,7 +87,9 @@ export class Dictionary<T> implements IDictionary<T> {
     return true;
   }
 
-  // Find key item.
+  /*
+  * Find key item.
+  * */
   public getKeyItem(key: string): T {
     // Array doesn't contain key value pair before.
     if (this.keyValuePairs == null || this.keyValuePairs.length < 1)
@@ -95,7 +107,9 @@ export class Dictionary<T> implements IDictionary<T> {
     return results[0].value;
   }
 
-  // Get list of key-value pairs in dictionary.
+  /*
+  * Get list of key-value pairs in dictionary.
+  * */
   public getKeyValuePairs(): Array<KeyValuePair<T>>{
     return this.keyValuePairs;
   }

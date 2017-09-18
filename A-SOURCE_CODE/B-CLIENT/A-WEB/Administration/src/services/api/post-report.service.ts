@@ -38,7 +38,7 @@ export class ClientPostReportService implements IPostReportService {
   * */
   public deletePostReports(conditions: SearchPostReportsViewModel): Promise<Response> {
     return this.apiService.delete(environment.baseUrl, ApiUrl.deletePostReport,
-      null, conditions);
+      null, conditions).toPromise();
   }
 
   //#endregion

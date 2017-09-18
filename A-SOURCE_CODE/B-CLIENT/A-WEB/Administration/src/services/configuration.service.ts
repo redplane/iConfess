@@ -7,12 +7,12 @@ import {CommentReportSortProperty} from "../enumerations/order/comment-report-so
 import {TextSearchMode} from "../enumerations/text-search-mode";
 import {PostSortProperty} from "../enumerations/order/post-sort-property";
 import {PostReportSortProperty} from "../enumerations/order/post-report-sort-property";
-import {Dictionary} from "../models/dictionary";
 import {KeyValuePair} from "../models/key-value-pair";
 import {ResponseOptions, Response} from "@angular/http";
 import {IApiService} from "../interfaces/services/api/api-service.interface";
 import {IConfigurationService} from "../interfaces/services/configuration-service.interface";
 import {NgxOrdinaryPagerOption} from "ngx-numeric-paginator/ngx-ordinary-pager/ngx-ordinary-pager-option";
+import {Dictionary} from '../models/dictionary';
 
 @Injectable()
 export class ConfigurationService implements IConfigurationService{

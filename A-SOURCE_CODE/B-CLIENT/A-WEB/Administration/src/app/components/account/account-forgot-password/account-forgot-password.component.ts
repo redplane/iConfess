@@ -1,10 +1,10 @@
 import {Inject, Component} from '@angular/core';
 import {Response} from '@angular/http';
 import {Router} from '@angular/router';
-import {Account} from '../../../models/entities/account';
-import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {Account} from '../../../../models/entities/account';
+import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
 import {ToastrService} from "ngx-toastr";
-import {ConstraintService} from "../../../services/constraint.service";
+import {ConstraintService} from "../../../../services/constraint.service";
 
 @Component({
   selector: 'account-forgot-password-box',

@@ -3,9 +3,9 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
-import {AccountLoginComponent} from "./components/account-management/account-login.component";
+import {AccountLoginComponent} from "./components/account/account-login/account-login.component";
 import {IsAuthorizedGuard} from "../guards/is-authorized-guard";
-import {AccountManagementComponent} from "./components/account-management/account-management.component";
+import {AccountManagementComponent} from "./components/account/account-management/account-management.component";
 import {AccountService} from "../services/api/account.service";
 import {CategoryService} from "../services/api/category.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -13,12 +13,7 @@ import {ToastrModule} from "ngx-toastr";
 import {Http, HttpModule} from "@angular/http";
 import {GlobalHttpInterceptor} from "../interceptors/global-http-interceptor";
 import {FormsModule} from "@angular/forms";
-import {AccountSearchBoxComponent} from "./components/account-management/account-search-box.component";
-import {MomentModule} from "angular2-moment";
-import {NgxOrdinaryPagerModule} from 'ngx-numeric-paginator';
-import {ModalModule} from "ngx-bootstrap";
-import {AccountProfileBoxComponent} from "./components/account-management/account-profile-box.component";
-import {NgxMultiSelectorModule} from 'ngx-multi-selector';
+import {AccountProfileBoxComponent} from "./components/account/account-profile-box/account-profile-box.component";
 import {AuthenticationService} from "../services/authentication.service";
 import {AuthorizeLayoutComponent} from "./components/shared/authorize-layout/authorize-layout.component";
 import {ApiService} from "../services/api.service";
@@ -27,17 +22,14 @@ import {TimeService} from "../services/time.service";
 import {NavigationBarComponent} from "./components/shared/navigation-bar/navigation-bar.component";
 import {SideBarComponent} from "./components/shared/side-bar/side-bar.component";
 import {ConfigurationService} from "../services/configuration.service";
-import {CalendarModule, DataTableModule,SharedModule} from "primeng/primeng";
-import {CategorySearchBoxComponent} from "./components/category-management/category-search-box.component";
-import {CategoryManagementComponent} from "./components/category-management/category-management.component";
-import {CategoryDetailBoxComponent} from "./components/category-management/category-detail-box.component";
-import {CategoryInitiateBoxComponent} from "./components/category-management/category-initiate-box.component";
-import {Category} from "../models/entities/Category";
-import {CategoryDeleteBoxComponent} from "./components/category-management/category-delete-box.component";
+import {CategoryManagementComponent} from "./components/category/category-management.component";
 import {ProfileResolve} from "../resolvers/profile.resolve";
-import {AccountForgotPasswordComponent} from "./components/account-management/account-forgot-password.component";
+import {AccountForgotPasswordComponent} from "./components/account/account-forgot-password/account-forgot-password.component";
 import {ConstraintService} from "../services/constraint.service";
-import {AccountSubmitPasswordComponent} from "./components/account-management/account-submit-password.component";
+import {AccountSubmitPasswordComponent} from "./components/account/account-submit-password/account-submit-password.component";
+import {AccountManagementModule} from "./components/account/account-management.module";
+import {CategoryManagementModule} from "./components/category/category-management.module";
+import {MomentModule} from "angular2-moment";
 
 //#region Route configuration
 
@@ -109,8 +101,6 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent,
-
     // Layout
     AuthorizeLayoutComponent,
 
@@ -118,18 +108,7 @@ const appRoutes: Routes = [
     NavigationBarComponent,
     SideBarComponent,
 
-    AccountLoginComponent,
-    AccountForgotPasswordComponent,
-    AccountSubmitPasswordComponent,
-    AccountManagementComponent,
-    AccountSearchBoxComponent,
-    AccountProfileBoxComponent,
-
-    CategorySearchBoxComponent,
-    CategoryManagementComponent,
-    CategoryDetailBoxComponent,
-    CategoryInitiateBoxComponent,
-    CategoryDeleteBoxComponent
+    AppComponent
   ],
   imports: [
     FormsModule,
@@ -137,17 +116,14 @@ const appRoutes: Routes = [
     HttpModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
+    MomentModule,
+
+    // Application modules.
+    AccountManagementModule,
+    CategoryManagementModule,
 
     // Import router configuration.
-    RouterModule.forRoot(appRoutes),
-
-    MomentModule,
-    ModalModule.forRoot(),
-    CalendarModule,
-    DataTableModule,
-    SharedModule,
-    NgxOrdinaryPagerModule,
-    NgxMultiSelectorModule
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
     IsAuthorizedGuard,

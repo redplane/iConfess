@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from "@angular/core";
 import * as _ from "lodash";
-import {Account} from "../../../models/entities/account";
-import {AccountStatus} from "../../../enumerations/account-status";
-import {ITimeService} from "../../../interfaces/services/time-service.interface";
-import {KeyValuePair} from "../../../models/key-value-pair";
-import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
+import {Account} from "../../../../models/entities/account";
+import {AccountStatus} from "../../../../enumerations/account-status";
+import {ITimeService} from "../../../../interfaces/services/time-service.interface";
+import {KeyValuePair} from "../../../../models/key-value-pair";
+import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
 import {Response} from '@angular/http';
-import {IConfigurationService} from "../../../interfaces/services/configuration-service.interface";
+import {IConfigurationService} from "../../../../interfaces/services/configuration-service.interface";
 
 @Component({
   selector: 'account-profile-box',

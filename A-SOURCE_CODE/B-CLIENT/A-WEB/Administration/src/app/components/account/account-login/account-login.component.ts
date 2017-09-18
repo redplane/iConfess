@@ -2,10 +2,10 @@ import {Component, Inject, ViewChild} from "@angular/core";
 import {Response} from "@angular/http";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, NgForm} from "@angular/forms";
-import {LoginViewModel} from "../../../viewmodels/accounts/login.view-model";
-import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
-import {IAuthenticationService} from "../../../interfaces/services/authentication-service.interface";
-import {AuthorizationToken} from "../../../models/authorization-token";
+import {LoginViewModel} from "../../../../viewmodels/accounts/login.view-model";
+import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
+import {IAuthenticationService} from "../../../../interfaces/services/authentication-service.interface";
+import {AuthorizationToken} from "../../../../models/authorization-token";
 import {ToastrService} from "ngx-toastr";
 
 @Component({

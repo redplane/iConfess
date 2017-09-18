@@ -1,19 +1,19 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {Response} from "@angular/http";
-import {SearchCategoriesViewModel} from "../../../viewmodels/category/search-categories.view-model";
-import {IDictionary} from "../../../interfaces/dictionary.interface";
-import {CategorySortProperty} from "../../../enumerations/order/category-sort-property";
-import {Dictionary} from "../../../models/dictionary";
-import {SearchAccountsViewModel} from "../../../viewmodels/accounts/search-accounts.view-model";
-import {TextSearch} from "../../../models/text-search";
-import {TextSearchMode} from "../../../enumerations/text-search-mode";
-import {Pagination} from "../../../models/pagination";
-import {SearchResult} from "../../../models/search-result";
-import {Account} from '../../../models/entities/account';
-import {IAccountService} from "../../../interfaces/services/api/account-service.interface";
-import {KeyValuePair} from "../../../models/key-value-pair";
-import {SortDirection} from "../../../enumerations/sort-direction";
-import {IConfigurationService} from "../../../interfaces/services/configuration-service.interface";
+import {SearchCategoriesViewModel} from "../../../../viewmodels/category/search-categories.view-model";
+import {CategorySortProperty} from "../../../../enumerations/order/category-sort-property";
+import {SearchAccountsViewModel} from "../../../../viewmodels/accounts/search-accounts.view-model";
+import {TextSearch} from "../../../../models/text-search";
+import {TextSearchMode} from "../../../../enumerations/text-search-mode";
+import {Pagination} from "../../../../models/pagination";
+import {SearchResult} from "../../../../models/search-result";
+import {Account} from '../../../../models/entities/account';
+import {IAccountService} from "../../../../interfaces/services/api/account-service.interface";
+import {KeyValuePair} from "../../../../models/key-value-pair";
+import {SortDirection} from "../../../../enumerations/sort-direction";
+import {IConfigurationService} from "../../../../interfaces/services/configuration-service.interface";
+import {IDictionary} from "../../../../interfaces/dictionary.interface";
+import {Dictionary} from '../../../../models/dictionary';
 
 @Component({
   selector: 'category-search-box',

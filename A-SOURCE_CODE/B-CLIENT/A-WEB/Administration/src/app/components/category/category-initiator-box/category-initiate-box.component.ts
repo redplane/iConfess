@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {InitiateCategoryViewModel} from "../../../viewmodels/category/initiate-category.view-model";
+import {InitiateCategoryViewModel} from "../../../../viewmodels/category/initiate-category.view-model";
 
 @Component({
   selector: 'category-initiate-box',

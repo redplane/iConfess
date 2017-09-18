@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import * as _ from "lodash";
-import {CategoryDetailsViewModel} from "../../../viewmodels/category/category-details.view-model";
-import {ITimeService} from "../../../interfaces/services/time-service.interface";
-import {CategoryViewModel} from "../../../viewmodels/category/category.view-model";
+import {CategoryDetailsViewModel} from "../../../../viewmodels/category/category-details.view-model";
+import {ITimeService} from "../../../../interfaces/services/time-service.interface";
+import {CategoryViewModel} from "../../../../viewmodels/category/category.view-model";
 
 
 @Component({
