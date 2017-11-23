@@ -3,7 +3,7 @@ using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Posts;
 using Shared.Enumerations;
 using System;
-using Database.Models.Entities;
+using Entities.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Shared.Repositories

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Database.Models.Entities;
+using Entities.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Accounts;

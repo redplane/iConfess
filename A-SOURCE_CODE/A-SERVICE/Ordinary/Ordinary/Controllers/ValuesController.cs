@@ -10,9 +10,9 @@ namespace Ordinary.Controllers
         // GET api/values
         [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new[] {"value1", "value2"};
+            return Ok();
         }
 
         // GET api/values/5

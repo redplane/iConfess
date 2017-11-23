@@ -1,4 +1,4 @@
-﻿namespace Database.Enumerations
+﻿namespace Entities.Enumerations
 {
     public enum Statuses
     {

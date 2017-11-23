@@ -1,4 +1,4 @@
-﻿using Database.Models.Entities;
+﻿using Entities.Models.Entities;
 
 namespace Shared.ViewModels.CommentReports
 {

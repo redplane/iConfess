@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Database.Models.Entities
+namespace Entities.Models.Entities
 {
     public class Comment
     {

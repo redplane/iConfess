@@ -1,6 +1,5 @@
 ﻿using System;
-using Database.Enumerations;
-using Database.Models.Contextes;
+using Entities.Models.Contextes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -89,7 +88,7 @@ namespace Ordinary
             // Add cors configuration to service configuration.
             services.AddCors(options => { options.AddPolicy("AllowAll", corsBuilder.Build()); });
             services.AddOptions();
-            
+
             // Add framework services.
             services
                 .AddMvc(x =>
@@ -151,12 +150,7 @@ namespace Ordinary
             };
 
             // Use JWT Bearer authentication in the system.
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = false,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
-            });
+            app.UseAuthentication();
 
 
             // Enable cors.

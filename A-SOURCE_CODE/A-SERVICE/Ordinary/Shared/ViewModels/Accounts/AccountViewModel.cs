@@ -1,4 +1,4 @@
-﻿using Database.Enumerations;
+﻿using Entities.Enumerations;
 using Newtonsoft.Json;
 
 namespace Shared.ViewModels.Accounts

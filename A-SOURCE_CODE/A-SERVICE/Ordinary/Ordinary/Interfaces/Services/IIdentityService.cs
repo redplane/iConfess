@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
-using Database.Models.Entities;
+using Entities.Models.Entities;
 using Ordinary.Models;
 
 namespace Ordinary.Interfaces.Services

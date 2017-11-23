@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Database.Models.Entities;
+using Entities.Models.Entities;
 
 namespace Ordinary.ViewModels.Accounts
 {

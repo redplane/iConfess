@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Database.Models.Entities;
+using Entities.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Database.Models.Contextes
+namespace Entities.Models.Contextes
 {
     public class RelationalDatabaseContext : DbContext
     {
