@@ -45,19 +45,12 @@ namespace Main.Authentications.TokenValidators
         public ClaimsPrincipal ValidateToken(string securityToken, TokenValidationParameters validationParameters,
             out SecurityToken validatedToken)
         {
-            try
-            {
-                var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-                var jwtSecurityToken = jwtSecurityTokenHandler.ReadJwtToken(securityToken);
+            // Handler which is for handling security token.
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
-                // Validate jwt.
-                var claimsPrincipal = jwtSecurityTokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
-                return claimsPrincipal;
-            }
-            catch (Exception exception)
-            {
-                throw new UnauthorizedAccessException();
-            }
+            // Validate jwt.
+            var claimsPrincipal = jwtSecurityTokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
+            return claimsPrincipal;
         }
 
         #endregion

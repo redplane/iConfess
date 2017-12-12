@@ -1,31 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Entities.Models.Contextes;
+using Main.Attributes;
 using Main.Authentications.Handlers;
 using Main.Authentications.Requirements;
 using Main.Authentications.TokenValidators;
 using Main.Interfaces.Services;
+using Main.Middlewares;
 using Main.Models;
 using Main.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Shared.Interfaces.Services;
@@ -101,7 +95,7 @@ namespace Main
             // Add cors configuration to service configuration.
             services.AddCors(options => { options.AddPolicy("AllowAll", corsBuilder.Build()); });
             services.AddOptions();
-
+            
             // This can be removed after https://github.com/aspnet/IISIntegration/issues/371
             var authenticationBuilder = services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
@@ -110,49 +104,36 @@ namespace Main
                 // You also need to update /wwwroot/app/scripts/app.js
                 o.SecurityTokenValidators.Clear();
                 o.SecurityTokenValidators.Add(new JwtBearerValidator());
-                o.TokenValidationParameters = new TokenValidationParameters()
+                o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidAudience = jwtBearerSettings.Audience,
                     ValidIssuer = jwtBearerSettings.Issuer,
-                    IssuerSigningKey = jwtBearerSettings.SigningKey,
-                    //TokenDecryptionKey = jwtBearerSettings.SigningKey
+                    IssuerSigningKey = jwtBearerSettings.SigningKey
                 };
-                //o.Events = new JwtBearerEvents()
-                //{
-                //    OnAuthenticationFailed = c =>
-                //    {
-                //        c.NoResult();
-
-                //        c.Response.StatusCode = 500;
-                //        c.Response.ContentType = "text/plain";
-                //        if ("dev".Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")))
-                //        {
-                //            // Debug only, in production do not share exceptions with the remote host.
-                //            return c.Response.WriteAsync(c.Exception.ToString());
-                //        }
-                //        return c.Response.WriteAsync("An error occurred processing your authentication.");
-                //    }
-                //};
+                
             });
+
 
             #region Mvc builder
 
             // Construct mvc options.
-            var mvcBuilder =
-                services.AddMvc(mvcOptions =>
-                {
-                    ////only allow authenticated users
-                    var policy = new AuthorizationPolicyBuilder()
-                        .RequireAuthenticatedUser()
-                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                        .AddRequirements(new SolidAccountRequirement())
-                        .Build();
+            services.AddMvc(mvcOptions =>
+            {
+                mvcOptions.Filters.Add(new ApiExceptionFilter());
+                ////only allow authenticated users
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
 
-                    mvcOptions.Filters.Add(new AuthorizeFilter(policy));
-                });
+#if !ALLOW_ANONYMOUS
+                    .AddRequirements(new SolidAccountRequirement())
+#endif
+                    .Build();
 
-            // Add json configuration/
-            mvcBuilder.AddJsonOptions(options =>
+                mvcOptions.Filters.Add(new AuthorizeFilter(policy));
+
+            })
+            .AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
@@ -174,6 +155,8 @@ namespace Main
             // Enable logging.
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            //app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             // Use JWT Bearer authentication in the system.
             app.UseAuthentication();

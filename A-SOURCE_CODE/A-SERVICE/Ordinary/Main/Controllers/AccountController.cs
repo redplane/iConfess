@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -97,7 +98,7 @@ namespace Main.Controllers
             condition.Password.Value = _encryptionService.Md5Hash(parameters.Password);
             condition.Password.Mode = TextSearchMode.EqualIgnoreCase;
 
-            condition.Statuses = new[] {Statuses.Active};
+            condition.Statuses = new[] { Statuses.Active };
 
             // Find accounts with defined condition above.
             var accounts = _unitOfWork.RepositoryAccounts.Search();
@@ -109,33 +110,34 @@ namespace Main.Controllers
                 return NotFound(new HttpResponse(HttpMessages.AccountIsNotFound));
 
             #endregion
-
-            #region Identity initialization
+#else
+            var account = new Account();
+            account.Email = "redplane_dt@yahoo.com.vn";
+            account.Nickname = "Linh Nguyen";
+#endif
 
             // Find current time on the system.
             var systemTime = DateTime.Now;
             var jwtExpiration = systemTime.AddSeconds(_jwtConfiguration.LifeTime);
 
-            // Initialize identity.
-            var identity = (ClaimsIdentity) _identityService.InitiateIdentity(account);
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.AuthTime,
-                $"{_systemTimeService.DateTimeUtcToUnix(jwtExpiration)}", ClaimValueTypes.Double));
+            // Claims initalization.
+            var claims = new List<Claim>();
+            claims.Add(new Claim(JwtRegisteredClaimNames.Aud, _jwtConfiguration.Audience));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Iss, _jwtConfiguration.Issuer));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Email, account.Email));
+            claims.Add(new Claim(nameof(account.Nickname), account.Nickname));
 
-            #endregion
-#else
+            // Write a security token.
+            var jwtSecurityToken = new JwtSecurityToken(_jwtConfiguration.Issuer, _jwtConfiguration.Audience, claims, null, jwtExpiration, _jwtConfiguration.SigningCredentials);
 
-            var claimsIdentity = new ClaimsIdentity();
-            claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Aud, _jwtConfiguration.Audience));
-            claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Iss, _jwtConfiguration.Issuer));
-            claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Email, "redplane_dt@yahoo.com.vn"));
-            claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Exp, DateTime.Now.AddDays(1).ToString("O")));
-            var identity = new ClaimsPrincipal(claimsIdentity);
-            var jwtExpiration = DateTime.Now.AddDays(1);
-#endif
+            // Initiate token handler which is for generating token code.
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+            jwtSecurityTokenHandler.WriteToken(jwtSecurityToken);
+
             #region Jwt initialization
 
             var jwt = new JwtResponse();
-            jwt.Code = _identityService.InitiateToken(identity.Claims.ToArray(), _jwtConfiguration);
+            jwt.Code = jwtSecurityTokenHandler.WriteToken(jwtSecurityToken);
             jwt.LifeTime = _jwtConfiguration.LifeTime;
             jwt.Expiration = _systemTimeService.DateTimeUtcToUnix(jwtExpiration);
 
@@ -151,7 +153,7 @@ namespace Main.Controllers
         [HttpGet("personal-profile")]
         public IActionResult FindProfile()
         {
-            var identity = (ClaimsIdentity) Request.HttpContext.User.Identity;
+            var identity = (ClaimsIdentity)Request.HttpContext.User.Identity;
             var claims = identity.Claims.ToDictionary(x => x.Type, x => x.Value);
             return Ok(claims);
         }
@@ -195,7 +197,7 @@ namespace Main.Controllers
             // Account exists in system.
             if (account != null)
             {
-                Response.StatusCode = (int) HttpStatusCode.Conflict;
+                Response.StatusCode = (int)HttpStatusCode.Conflict;
                 return Json(new HttpResponse(HttpMessages.AccountIsInUse));
             }
 
@@ -246,7 +248,7 @@ namespace Main.Controllers
             // Initiate search conditions.
             var conditions = new SearchAccountViewModel();
             conditions.Email = new TextSearch(TextSearchMode.EndsWithIgnoreCase, parameter.Email);
-            conditions.Statuses = new[] {Statuses.Active};
+            conditions.Statuses = new[] { Statuses.Active };
 
             // Search user in database.
             var accounts = _unitOfWork.RepositoryAccounts.Search();
@@ -322,13 +324,13 @@ namespace Main.Controllers
 
             // Find token.
             var result = from account in accounts
-                from token in tokens
-                where account.Id == token.OwnerIndex && token.Expired < epochSystemTime
-                select new SearchAccountTokenResult
-                {
-                    Token = token,
-                    Account = account
-                };
+                         from token in tokens
+                         where account.Id == token.OwnerIndex && token.Expired < epochSystemTime
+                         select new SearchAccountTokenResult
+                         {
+                             Token = token,
+                             Account = account
+                         };
 
             // No active token is found.
             if (!await result.AnyAsync())
