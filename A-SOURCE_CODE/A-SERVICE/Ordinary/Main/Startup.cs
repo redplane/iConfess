@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Entities.Models.Contextes;
 using Main.Attributes;
 using Main.Authentications.Handlers;
@@ -22,6 +23,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using Serilog;
+using Serilog.Events;
 using Shared.Interfaces.Services;
 using Shared.Services;
 
@@ -95,7 +98,7 @@ namespace Main
             // Add cors configuration to service configuration.
             services.AddCors(options => { options.AddPolicy("AllowAll", corsBuilder.Build()); });
             services.AddOptions();
-            
+
             // This can be removed after https://github.com/aspnet/IISIntegration/issues/371
             var authenticationBuilder = services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
@@ -110,7 +113,7 @@ namespace Main
                     ValidIssuer = jwtBearerSettings.Issuer,
                     IssuerSigningKey = jwtBearerSettings.SigningKey
                 };
-                
+
             });
 
 
@@ -155,8 +158,10 @@ namespace Main
             // Enable logging.
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
-            //app.UseMiddleware<ExceptionHandlingMiddleware>();
+            var contentRootPath = Path.Combine(env.ContentRootPath);
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
 
             // Use JWT Bearer authentication in the system.
             app.UseAuthentication();

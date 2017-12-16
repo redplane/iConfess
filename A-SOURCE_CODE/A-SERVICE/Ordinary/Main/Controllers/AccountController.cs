@@ -21,6 +21,7 @@ using Shared.Models;
 using Shared.Resources;
 using Shared.ViewModels.Accounts;
 using System.Security.Principal;
+using Microsoft.Extensions.Logging;
 
 namespace Main.Controllers
 {
@@ -38,13 +39,15 @@ namespace Main.Controllers
         /// <param name="systemTimeService"></param>
         /// <param name="jwtConfigurationOptions"></param>
         /// <param name="applicationSettings"></param>
+        /// <param name="logger"></param>
         public AccountController(
             IUnitOfWork unitOfWork,
             IEncryptionService encryptionService,
             IIdentityService identityService,
             ITimeService systemTimeService,
             IOptions<JwtConfiguration> jwtConfigurationOptions,
-            IOptions<ApplicationSetting> applicationSettings)
+            IOptions<ApplicationSetting> applicationSettings,
+            ILogger<AccountController> logger)
         {
             _unitOfWork = unitOfWork;
             _encryptionService = encryptionService;
@@ -52,6 +55,7 @@ namespace Main.Controllers
             _systemTimeService = systemTimeService;
             _jwtConfiguration = jwtConfigurationOptions.Value;
             _applicationSettings = applicationSettings.Value;
+            _logger = logger;
         }
 
         #endregion
@@ -69,7 +73,7 @@ namespace Main.Controllers
         public async Task<IActionResult> Login([FromBody] LoginViewModel parameters)
         {
             #region Parameters validation
-
+            _logger.LogError("Error occured");
             // Parameter hasn't been initialized.
             if (parameters == null)
             {
@@ -388,6 +392,8 @@ namespace Main.Controllers
         ///     Collection of settings in application.
         /// </summary>
         private readonly ApplicationSetting _applicationSettings;
+
+        private readonly ILogger _logger;
 
         #endregion
     }
