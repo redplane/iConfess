@@ -73,7 +73,7 @@ namespace Main.Controllers
         public async Task<IActionResult> Login([FromBody] LoginViewModel parameters)
         {
             #region Parameters validation
-            _logger.LogError("Error occured");
+
             // Parameter hasn't been initialized.
             if (parameters == null)
             {

@@ -1,31 +1,15 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Main.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Main.Authentications.TokenValidators
 {
     public class JwtBearerValidator : ISecurityTokenValidator
     {
-        #region Constructors
-
-        /// <summary>
-        /// Initiate validator with setings.
-        /// </summary>
-        public JwtBearerValidator()
-        {
-
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
-        /// Whether validator can read token or not.
+        ///     Whether validator can read token or not.
         /// </summary>
         /// <param name="securityToken"></param>
         /// <returns></returns>
@@ -35,8 +19,8 @@ namespace Main.Authentications.TokenValidators
         }
 
         /// <summary>
-        /// Callback which is called when token is being validated.
-        /// Claims will be generated in this function.
+        ///     Callback which is called when token is being validated.
+        ///     Claims will be generated in this function.
         /// </summary>
         /// <param name="securityToken"></param>
         /// <param name="validationParameters"></param>
@@ -49,7 +33,8 @@ namespace Main.Authentications.TokenValidators
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
             // Validate jwt.
-            var claimsPrincipal = jwtSecurityTokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
+            var claimsPrincipal =
+                jwtSecurityTokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
             return claimsPrincipal;
         }
 
@@ -58,15 +43,12 @@ namespace Main.Authentications.TokenValidators
         #region Properties
 
         /// <summary>
-        /// Whether this validator can validate token or not.
+        ///     Whether this validator can validate token or not.
         /// </summary>
-        public bool CanValidateToken
-        {
-            get { return true; }
-        }
+        public bool CanValidateToken => true;
 
         /// <summary>
-        /// Maximum token size.
+        ///     Maximum token size.
         /// </summary>
         public int MaximumTokenSizeInBytes { get; set; }
 

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.IO;
+using System.Threading.Tasks;
 using Entities.Models.Contextes;
 using Main.Attributes;
 using Main.Authentications.Handlers;
-using Main.Authentications.Requirements;
 using Main.Authentications.TokenValidators;
 using Main.Interfaces.Services;
-using Main.Middlewares;
 using Main.Models;
 using Main.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +15,8 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Serilog;
-using Serilog.Events;
 using Shared.Interfaces.Services;
 using Shared.Services;
 
@@ -85,8 +85,8 @@ namespace Main
             services.Configure<ApplicationSetting>(Configuration.GetSection(nameof(ApplicationSetting)));
 
             // Build a service provider.
-            var serviceProvider = services.BuildServiceProvider();
-            var jwtBearerSettings = serviceProvider.GetService<IOptions<JwtConfiguration>>().Value;
+            var servicesProvider = services.BuildServiceProvider();
+            var jwtBearerSettings = servicesProvider.GetService<IOptions<JwtConfiguration>>().Value;
 
             // Cors configuration.
             var corsBuilder = new CorsPolicyBuilder();
@@ -113,7 +113,30 @@ namespace Main
                     ValidIssuer = jwtBearerSettings.Issuer,
                     IssuerSigningKey = jwtBearerSettings.SigningKey
                 };
+                //o.Events = new JwtBearerEvents()
+                //{
+                //    OnMessageReceived = context =>
+                //    {
+                //        var httpRequest = context.Request;
+                //        if (httpRequest == null)
+                //            return Task.CompletedTask;
 
+                //        var headers = httpRequest.Headers;
+                //        if (headers == null)
+                //            return Task.CompletedTask;
+
+                //        // Find authorization header from request.
+                //        var authorization = headers.FirstOrDefault(x =>
+                //            x.Key.Equals("authorization", StringComparison.InvariantCultureIgnoreCase));
+
+                //        // No header is found.
+                //        if (authorization == null)
+                //        {
+                //            AuthenticateResult.
+                //        }
+                //        return Task.CompletedTask;
+                //    }
+                //};  
             });
 
 
@@ -121,25 +144,25 @@ namespace Main
 
             // Construct mvc options.
             services.AddMvc(mvcOptions =>
-            {
-                mvcOptions.Filters.Add(new ApiExceptionFilter());
-                ////only allow authenticated users
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                {
+                    // Added filter.
+                    mvcOptions.Filters.Add(typeof(ApiExceptionFilter));
 
+                    ////only allow authenticated users
+                    var policy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
 #if !ALLOW_ANONYMOUS
                     .AddRequirements(new SolidAccountRequirement())
 #endif
-                    .Build();
+                        .Build();
 
-                mvcOptions.Filters.Add(new AuthorizeFilter(policy));
-
-            })
-            .AddJsonOptions(options =>
-            {
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
+                    mvcOptions.Filters.Add(new AuthorizeFilter(policy));
+                })
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
 
             #endregion
         }
@@ -158,10 +181,18 @@ namespace Main
             // Enable logging.
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            var contentRootPath = Path.Combine(env.ContentRootPath);
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
+
+            var exceptionHandlerOptions = new ExceptionHandlerOptions();
+            exceptionHandlerOptions.ExceptionHandler = new RequestDelegate(context =>
+            {
+                var a = 1;
+                return Task.CompletedTask;
+            });
+            
+            app.UseExceptionHandler(exceptionHandlerOptions);
 
             // Use JWT Bearer authentication in the system.
             app.UseAuthentication();
