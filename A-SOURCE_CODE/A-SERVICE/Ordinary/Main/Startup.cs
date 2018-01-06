@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Entities.Models.Contextes;
-using Main.Attributes;
 using Main.Authentications.Handlers;
 using Main.Authentications.TokenValidators;
 using Main.Interfaces.Services;
 using Main.Models;
 using Main.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -15,8 +12,6 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -113,30 +108,6 @@ namespace Main
                     ValidIssuer = jwtBearerSettings.Issuer,
                     IssuerSigningKey = jwtBearerSettings.SigningKey
                 };
-                //o.Events = new JwtBearerEvents()
-                //{
-                //    OnMessageReceived = context =>
-                //    {
-                //        var httpRequest = context.Request;
-                //        if (httpRequest == null)
-                //            return Task.CompletedTask;
-
-                //        var headers = httpRequest.Headers;
-                //        if (headers == null)
-                //            return Task.CompletedTask;
-
-                //        // Find authorization header from request.
-                //        var authorization = headers.FirstOrDefault(x =>
-                //            x.Key.Equals("authorization", StringComparison.InvariantCultureIgnoreCase));
-
-                //        // No header is found.
-                //        if (authorization == null)
-                //        {
-                //            AuthenticateResult.
-                //        }
-                //        return Task.CompletedTask;
-                //    }
-                //};  
             });
 
 
@@ -145,9 +116,6 @@ namespace Main
             // Construct mvc options.
             services.AddMvc(mvcOptions =>
                 {
-                    // Added filter.
-                    mvcOptions.Filters.Add(typeof(ApiExceptionFilter));
-
                     ////only allow authenticated users
                     var policy = new AuthorizationPolicyBuilder()
                         .RequireAuthenticatedUser()
@@ -185,14 +153,7 @@ namespace Main
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
 
-            var exceptionHandlerOptions = new ExceptionHandlerOptions();
-            exceptionHandlerOptions.ExceptionHandler = new RequestDelegate(context =>
-            {
-                var a = 1;
-                return Task.CompletedTask;
-            });
-            
-            app.UseExceptionHandler(exceptionHandlerOptions);
+            app.UseExceptionHandler();
 
             // Use JWT Bearer authentication in the system.
             app.UseAuthentication();
