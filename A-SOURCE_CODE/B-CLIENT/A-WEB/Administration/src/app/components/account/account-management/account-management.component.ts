@@ -14,6 +14,7 @@ import {ITimeService} from "../../../../interfaces/services/time-service.interfa
 import {IConfigurationService} from "../../../../interfaces/services/configuration-service.interface";
 import {ActivatedRoute} from "@angular/router";
 import {Sorting} from "../../../../models/sorting";
+import {ApplicationSetting} from "../../../../constants/application-setting";
 
 @Component({
   selector: 'account-management',
@@ -41,6 +42,7 @@ export class AccountManagementComponent implements OnInit {
   * */
   @ViewChild('accountSearchBoxContainer')
   private accountSearchBoxContainer: ModalDirective;
+
   /*
   * List of accounts.
   * */
@@ -100,6 +102,18 @@ export class AccountManagementComponent implements OnInit {
     // Condition is specified.
     if (conditions)
       this.conditions = conditions;
+
+    debugger;
+    // Reset pagination information.
+    let pagination: Pagination = this.conditions.pagination;
+    if (!pagination) {
+      // Reset to page 1.
+      pagination = new Pagination();
+      pagination.page = 1;
+      pagination.records = ApplicationSetting.maxPageRecords;
+    }
+
+    this.conditions.pagination = pagination;
 
     // Make component be busy.
     this.isBusy = true;
@@ -189,14 +203,23 @@ export class AccountManagementComponent implements OnInit {
   /*
   * Callback which is called when page is clicked on.
   * */
-  public selectPage(page: number): void {
+  public clickChangePage($event: any): void {
+
+    // Event is invalid.
+    if (!$event)
+      return;
+
+    // Find page from event.
+    let iPage = $event.page;
+    if (!iPage)
+      iPage = 1;
 
     let pagination = this.conditions.pagination;
-    pagination.page = page;
+    pagination.page = iPage;
     this.conditions.pagination = pagination;
 
     // Update page.
-    this.conditions.pagination.page = page;
+    this.conditions.pagination.page = iPage;
 
     // Base on specific condition to load accounts list from database.
     this.clickSearch(null);

@@ -30,6 +30,8 @@ import {AccountSubmitPasswordComponent} from "./components/account/account-submi
 import {AccountManagementModule} from "./components/account/account-management.module";
 import {CategoryManagementModule} from "./components/category/category-management.module";
 import {MomentModule} from "angular2-moment";
+import {PaginationConfig, PaginationModule} from "ngx-bootstrap";
+import {ApplicationSetting} from "../constants/application-setting";
 
 //#region Route configuration
 
@@ -133,6 +135,7 @@ const appRoutes: Routes = [
     {provide: 'IAuthenticationService', useClass: AuthenticationService},
     {provide: 'ITimeService', useClass: TimeService},
     {provide: 'IConfigurationService', useClass: ConfigurationService},
+    {provide: PaginationConfig, useValue: {main: {boundaryLinks: true, directionLinks: true,  firstText: '&lt;&lt;', previousText: '&lt;', nextText: '&gt;', lastText: '&gt;&gt;', itemsPerPage: ApplicationSetting.maxPageRecords, maxSize: 5}}},
     ConstraintService,
 
     // Handle common behaviour of http request / response.

@@ -9,7 +9,7 @@ import {AccountSubmitPasswordComponent} from "./account-submit-password/account-
 import {CalendarModule, DataTableModule, SharedModule} from "primeng/primeng";
 import {MomentModule} from "angular2-moment";
 import {NgxOrdinaryPagerModule} from "ngx-numeric-paginator";
-import {ModalModule} from "ngx-bootstrap";
+import {ModalModule, PaginationModule} from "ngx-bootstrap";
 import {NgxMultiSelectorModule} from "ngx-multi-selector";
 import {AccountProfileBoxComponent} from "./account-profile-box/account-profile-box.component";
 
@@ -29,6 +29,9 @@ import {AccountProfileBoxComponent} from "./account-profile-box/account-profile-
     // redplane plugins.
     NgxOrdinaryPagerModule,
     NgxMultiSelectorModule,
+
+    // ngx-bootstrap modules
+    PaginationModule.forRoot(),
 
     // Modal module
     ModalModule.forRoot()
