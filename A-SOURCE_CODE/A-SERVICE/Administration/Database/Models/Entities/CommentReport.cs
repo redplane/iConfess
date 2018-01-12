@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Database.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class CommentReport
     {
@@ -10,22 +10,22 @@ namespace Database.Models.Entities
         /// <summary>
         ///     Comment which is reported.
         /// </summary>
-        public int CommentIndex { get; set; }
+        public int CommentId { get; set; }
 
         /// <summary>
         ///     The post comment belongs to.
         /// </summary>
-        public int PostIndex { get; set; }
+        public int PostId { get; set; }
 
         /// <summary>
         ///     Owner of comment.
         /// </summary>
-        public int CommentOwnerIndex { get; set; }
+        public int OwnerId { get; set; }
 
         /// <summary>
         ///     Who created the report.
         /// </summary>
-        public int CommentReporterIndex { get; set; }
+        public int ReporterId { get; set; }
 
         /// <summary>
         ///     Content of report.
@@ -50,28 +50,28 @@ namespace Database.Models.Entities
         ///     One report can only belongs to one comment.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(CommentIndex))]
+        [ForeignKey(nameof(CommentId))]
         public Comment Comment { get; set; }
 
         /// <summary>
         ///     One report can only belongs to one post.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostIndex))]
+        [ForeignKey(nameof(PostId))]
         public Post Post { get; set; }
 
         /// <summary>
         ///     Account which owns the comment
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(CommentOwnerIndex))]
+        [ForeignKey(nameof(OwnerId))]
         public Account CommentOwner { get; set; }
 
         /// <summary>
         ///     One report belongs to one specific account.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(CommentReporterIndex))]
+        [ForeignKey(nameof(ReporterId))]
         public Account CommentReporter { get; set; }
 
         #endregion

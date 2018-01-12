@@ -1,15 +1,19 @@
 ﻿namespace Shared.Models
 {
-    public class DoubleRange
+    public class Range<TFrom, TTo>
     {
+        #region Properties
+
         /// <summary>
         ///     When the date starts.
         /// </summary>
-        public double? From { get; set; }
+        public TFrom From { get; set; }
 
         /// <summary>
         ///     When the date ends.
         /// </summary>
-        public double? To { get; set; }
+        public TTo To { get; set; }
+
+        #endregion
     }
 }

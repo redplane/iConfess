@@ -1,4 +1,4 @@
-﻿namespace Database.Enumerations
+﻿namespace SystemDatabase.Enumerations
 {
     public enum TokenType
     {

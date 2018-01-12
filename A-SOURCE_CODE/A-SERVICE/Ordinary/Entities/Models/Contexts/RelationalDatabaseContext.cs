@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Entities.Models.Contextes
+namespace SystemDatabase.Models.Contexts
 {
     public class RelationalDatabaseContext : DbContext
     {
@@ -32,6 +31,11 @@ namespace Entities.Models.Contextes
         ///     List of categories in database.
         /// </summary>
         public virtual DbSet<Category> Categories { get; set; }
+
+        /// <summary>
+        /// List of categorizations.
+        /// </summary>
+        public virtual DbSet<Categorization> Categorizations { get; set; }
 
         /// <summary>
         ///     List of comments in database.
@@ -108,11 +112,12 @@ namespace Entities.Models.Contextes
         {
             // Use model builder to specify composite primary keys.
             // Composite primary keys configuration
-            modelBuilder.Entity<FollowCategory>().HasKey(x => new {x.OwnerIndex, x.CategoryIndex});
-            modelBuilder.Entity<FollowPost>().HasKey(x => new {x.FollowerIndex, x.PostIndex});
+            modelBuilder.Entity<Categorization>().HasKey(x => new {x.CategoryId, x.PostId});
+            modelBuilder.Entity<FollowCategory>().HasKey(x => new {x.OwnerId, x.CategoryId});
+            modelBuilder.Entity<FollowPost>().HasKey(x => new {x.FollowerId, x.PostId});
             modelBuilder.Entity<CommentReport>()
-                .HasKey(x => new {x.CommentIndex, x.PostIndex, x.CommentReporterIndex, x.CommentOwnerIndex});
-            modelBuilder.Entity<PostReport>().HasKey(x => new {x.PostIndex, x.PostReporterIndex, x.PostOwnerIndex});
+                .HasKey(x => new {CommentIndex = x.CommentId, PostIndex = x.PostId, CommentReporterIndex = x.ReporterId, CommentOwnerIndex = x.OwnerId});
+            modelBuilder.Entity<PostReport>().HasKey(x => new {PostIndex = x.PostId, PostReporterIndex = x.ReporterId, PostOwnerIndex = x.OwnerId});
 
             // This is for remove pluralization naming convention in database defined by Entity Framework.
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

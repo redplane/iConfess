@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -38,8 +38,8 @@ namespace Shared.Repositories
                 categories = categories.Where(x => x.Id == conditions.Id.Value);
 
             // Creator has been defined.
-            if (conditions.CreatorIndex != null)
-                categories = categories.Where(x => x.CreatorIndex == conditions.CreatorIndex.Value);
+            if (conditions.CreatorId != null)
+                categories = categories.Where(x => x.CreatorId == conditions.CreatorId.Value);
 
             // Name search condition has been defined.
             if (conditions.Name != null && !string.IsNullOrWhiteSpace(conditions.Name.Value))
@@ -79,28 +79,28 @@ namespace Shared.Repositories
                 }
             }
 
-            // Created time range has been defined.
-            if (conditions.Created != null)
+            // CreatedTime time range has been defined.
+            if (conditions.CreatedTime != null)
             {
                 // Start time is defined.
-                if (conditions.Created.From != null)
-                    categories = categories.Where(x => x.Created >= conditions.Created.From.Value);
+                if (conditions.CreatedTime.From != null)
+                    categories = categories.Where(x => x.CreatedTime >= conditions.CreatedTime.From.Value);
 
                 // End time is defined.
-                if (conditions.Created.To != null)
-                    categories = categories.Where(x => x.Created <= conditions.Created.To.Value);
+                if (conditions.CreatedTime.To != null)
+                    categories = categories.Where(x => x.CreatedTime <= conditions.CreatedTime.To.Value);
             }
 
             // Last modified time range has been defined.
-            if (conditions.LastModified != null)
+            if (conditions.LastModifiedTime != null)
             {
                 // Start time is defined.
-                if (conditions.LastModified.From != null)
-                    categories = categories.Where(x => x.LastModified >= conditions.LastModified.From.Value);
+                if (conditions.LastModifiedTime.From != null)
+                    categories = categories.Where(x => x.LastModifiedTime >= conditions.LastModifiedTime.From.Value);
 
                 // End time is defined.
-                if (conditions.LastModified.To != null)
-                    categories = categories.Where(x => x.LastModified <= conditions.LastModified.To.Value);
+                if (conditions.LastModifiedTime.To != null)
+                    categories = categories.Where(x => x.LastModifiedTime <= conditions.LastModifiedTime.To.Value);
             }
 
             return categories;

@@ -7,9 +7,9 @@ namespace Shared.ViewModels.SignalrConnections
         #region Properties
 
         /// <summary>
-        /// Index of connection.
+        /// Id of connection.
         /// </summary>
-        public TextSearch Index { get; set; }
+        public TextSearch Id { get; set; }
 
         /// <summary>
         /// Owner of connection.
@@ -19,7 +19,7 @@ namespace Shared.ViewModels.SignalrConnections
         /// <summary>
         /// Range of created time.
         /// </summary>
-        public DoubleRange Created { get; set; }
+        public Range<double?,double?> CreatedTime { get; set; }
 
         #endregion
     }

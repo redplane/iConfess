@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class FollowCategory
     {
@@ -10,17 +10,22 @@ namespace Entities.Models.Entities
         /// <summary>
         ///     Owner of following relationship.
         /// </summary>
-        public int OwnerIndex { get; set; }
+        public int OwnerId { get; set; }
 
         /// <summary>
         ///     Category index.
         /// </summary>
-        public int CategoryIndex { get; set; }
+        public int CategoryId { get; set; }
 
         /// <summary>
         ///     When the relationship was lastly created.
         /// </summary>
-        public double Created { get; set; }
+        public double CreatedTime { get; set; }
+
+        /// <summary>
+        /// When the category was lastly modified.
+        /// </summary>
+        public double? LastModifiedTime { get; set; }
 
         #endregion
 
@@ -30,14 +35,14 @@ namespace Entities.Models.Entities
         ///     Who starts watching.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(OwnerIndex))]
+        [ForeignKey(nameof(OwnerId))]
         public virtual Account Owner { get; set; }
 
         /// <summary>
         ///     Which is being watched.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(CategoryIndex))]
+        [ForeignKey(nameof(CategoryId))]
         public virtual Category Category { get; set; }
 
         #endregion

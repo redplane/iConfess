@@ -2,14 +2,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class Comment
     {
         #region Properties
 
         /// <summary>
-        ///     Index of comment (Auto incremented)
+        ///     Id of comment (Auto incremented)
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,12 +18,12 @@ namespace Entities.Models.Entities
         /// <summary>
         ///     Who wrote the comment.
         /// </summary>
-        public int OwnerIndex { get; set; }
+        public int OwnerId { get; set; }
 
         /// <summary>
         ///     Which post this comment belongs to.
         /// </summary>
-        public int PostIndex { get; set; }
+        public int PostId { get; set; }
 
         /// <summary>
         ///     Comment content.
@@ -48,14 +48,14 @@ namespace Entities.Models.Entities
         ///     One comment can only be initiated by one account.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(OwnerIndex))]
+        [ForeignKey(nameof(OwnerId))]
         public Account Owner { get; set; }
 
         /// <summary>
         ///     One comment can only belong to one post.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostIndex))]
+        [ForeignKey(nameof(PostId))]
         public Post Post { get; set; }
 
         #endregion

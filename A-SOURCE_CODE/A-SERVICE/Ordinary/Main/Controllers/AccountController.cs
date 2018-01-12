@@ -6,8 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Entities.Enumerations;
-using Entities.Models.Entities;
 using Main.Interfaces.Services;
 using Main.Models;
 using Main.ViewModels.Accounts;
@@ -21,6 +19,8 @@ using Shared.Models;
 using Shared.Resources;
 using Shared.ViewModels.Accounts;
 using System.Security.Principal;
+using SystemDatabase.Enumerations;
+using SystemDatabase.Models.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace Main.Controllers
@@ -252,7 +252,7 @@ namespace Main.Controllers
             // Initiate search conditions.
             var conditions = new SearchAccountViewModel();
             conditions.Email = new TextSearch(TextSearchMode.EndsWithIgnoreCase, parameter.Email);
-            conditions.Statuses = new[] { Statuses.Active };
+            conditions.Statuses = new[] { AccountStatus.Active };
 
             // Search user in database.
             var accounts = _unitOfWork.RepositoryAccounts.Search();
@@ -273,7 +273,7 @@ namespace Main.Controllers
             // Initiate token.
             var token = new Token();
             token.OwnerIndex = account.Id;
-            token.Type = TokenKinds.Forgot;
+            token.Type = TokenType.AccountReactiveCode;
             token.Code = Guid.NewGuid().ToString("D");
             token.Issued = _systemTimeService.DateTimeUtcToUnix(systemTime);
             token.Expired = _systemTimeService.DateTimeUtcToUnix(expiration);
@@ -320,7 +320,7 @@ namespace Main.Controllers
 
             // Find active accounts.
             var accounts = _unitOfWork.RepositoryAccounts.Search();
-            accounts = accounts.Where(x => x.Status == Statuses.Active);
+            accounts = accounts.Where(x => x.Status == AccountStatus.Active);
 
             // Find active token.
             var epochSystemTime = _systemTimeService.DateTimeUtcToUnix(DateTime.UtcNow);

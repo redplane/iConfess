@@ -13,14 +13,14 @@ namespace Shared.ViewModels.Posts
         public int? Id { get; set; }
 
         /// <summary>
-        ///     Index of post owner.
+        ///     Id of post owner.
         /// </summary>
-        public int? OwnerIndex { get; set; }
+        public int? OwnerId { get; set; }
 
         /// <summary>
-        ///     Index of category which post belongs to.
+        ///     Id of category which post belongs to.
         /// </summary>
-        public int? CategoryIndex { get; set; }
+        public int? CategoryId { get; set; }
 
         /// <summary>
         ///     Title search option.
@@ -35,23 +35,18 @@ namespace Shared.ViewModels.Posts
         /// <summary>
         ///     When the post was created.
         /// </summary>
-        public DoubleRange Created { get; set; }
-
-        /// <summary>
-        /// Record sort direction.
-        /// </summary>
-        public SortDirection Direction { get; set; }
-
-        /// <summary>
-        /// Which property should be used for sorting.
-        /// </summary>
-        public PostSort Sort { get; set; }
+        public Range<double?, double?> CreatedTime { get; set; }
 
         /// <summary>
         ///     When the post was lastly modified.
         /// </summary>
-        public DoubleRange LastModified { get; set; }
+        public Range<double?, double?> LastModifiedTime { get; set; }
 
+        /// <summary>
+        /// Sort property & direction.
+        /// </summary>
+        public Sort<PostSort> Sort { get; set; }
+        
         /// <summary>
         ///     Pagination information.
         /// </summary>

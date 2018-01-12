@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.PostReports;
@@ -37,11 +37,11 @@ namespace Shared.Repositories
         {
             // Owner index is specified.
             if (conditions.PostOwnerIndex != null)
-                postReports = postReports.Where(x => x.PostOwnerIndex == conditions.PostOwnerIndex.Value);
+                postReports = postReports.Where(x => x.OwnerId == conditions.PostOwnerIndex.Value);
 
             // Reporter index is specified.
             if (conditions.PostReporterIndex != null)
-                postReports = postReports.Where(x => x.PostReporterIndex == conditions.PostReporterIndex.Value);
+                postReports = postReports.Where(x => x.ReporterId == conditions.PostReporterIndex.Value);
 
             // Body of post.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
@@ -127,11 +127,11 @@ namespace Shared.Repositories
 
                 // From is defined.
                 if (created.From != null)
-                    postReports = postReports.Where(x => x.Created >= created.From.Value);
+                    postReports = postReports.Where(x => x.CreatedTime >= created.From.Value);
 
                 // To is defined.
                 if (created.To != null)
-                    postReports = postReports.Where(x => x.Created <= created.To.Value);
+                    postReports = postReports.Where(x => x.CreatedTime <= created.To.Value);
             }
 
             return postReports;

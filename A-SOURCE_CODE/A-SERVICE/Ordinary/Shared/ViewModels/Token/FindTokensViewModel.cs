@@ -1,4 +1,4 @@
-﻿using Entities.Enumerations;
+﻿using SystemDatabase.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Models;
 
@@ -14,7 +14,7 @@ namespace Shared.ViewModels.Token
         /// <summary>
         /// Types of token.
         /// </summary>
-        public TokenKinds [] Types { get; set; }
+        public TokenType [] Types { get; set; }
 
         /// <summary>
         /// Token code.
@@ -24,23 +24,18 @@ namespace Shared.ViewModels.Token
         /// <summary>
         /// When the token was issued.
         /// </summary>
-        public DoubleRange Issued { get; set; }
+        public Range<double?, double?> Issued { get; set; }
 
         /// <summary>
         /// When the token should be expired.
         /// </summary>
-        public DoubleRange Expired { get; set; }
+        public Range<double?, double?> Expired { get; set; }
 
         /// <summary>
-        /// Which property should be used for sorting.
+        /// Sort property & direction.
         /// </summary>
-        public TokenSort Sort { get; set; }
-
-        /// <summary>
-        /// Whether records are sorted ascendingly or decendingly.
-        /// </summary>
-        public SortDirection Direction { get; set; }
-
+        public Sort<TokenSort> Sort { get; set; }
+        
         /// <summary>
         /// Token search pagination.
         /// </summary>

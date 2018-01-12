@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Shared.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
@@ -178,9 +178,9 @@ namespace Shared.Repositories
                 var to = conditions.Joined.To;
 
                 if (from != null)
-                    accounts = accounts.Where(x => x.Joined >= from);
+                    accounts = accounts.Where(x => x.JoinedTime >= from);
                 if (to != null)
-                    accounts = accounts.Where(x => x.Joined <= to);
+                    accounts = accounts.Where(x => x.JoinedTime <= to);
             }
 
             // Last modified has been defined.
@@ -190,9 +190,9 @@ namespace Shared.Repositories
                 var to = conditions.LastModified.To;
 
                 if (from != null)
-                    accounts = accounts.Where(x => x.LastModified >= from);
+                    accounts = accounts.Where(x => x.LastModifiedTime >= from);
                 if (to != null)
-                    accounts = accounts.Where(x => x.LastModified <= to);
+                    accounts = accounts.Where(x => x.LastModifiedTime <= to);
             }
 
             return accounts;

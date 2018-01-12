@@ -4,7 +4,7 @@ using Shared.ViewModels.Posts;
 using Shared.Enumerations;
 using System;
 using System.Data.Entity;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 
 namespace Shared.Repositories
 {
@@ -38,12 +38,8 @@ namespace Shared.Repositories
 
             // Owner index is specified.
             if (conditions.OwnerIndex != null)
-                posts = posts.Where(x => x.OwnerIndex == conditions.OwnerIndex.Value);
-
-            // Category index is specified.
-            if (conditions.CategoryIndex != null)
-                posts = posts.Where(x => x.CategoryIndex == conditions.CategoryIndex.Value);
-
+                posts = posts.Where(x => x.OwnerId == conditions.OwnerIndex.Value);
+            
             // Title is specified.
             if (conditions.Title != null && !string.IsNullOrEmpty(conditions.Title.Value))
             {
@@ -127,11 +123,11 @@ namespace Shared.Repositories
 
                 // From is defined.
                 if (created.From != null)
-                    posts = posts.Where(x => x.Created >= created.From.Value);
+                    posts = posts.Where(x => x.CreatedTime >= created.From.Value);
 
                 // To is defined.
                 if (created.To != null)
-                    posts = posts.Where(x => x.Created <= created.To.Value);
+                    posts = posts.Where(x => x.CreatedTime <= created.To.Value);
             }
 
             // Last modified is specified.
@@ -141,11 +137,11 @@ namespace Shared.Repositories
 
                 // From is defined.
                 if (lastModified.From != null)
-                    posts = posts.Where(x => x.LastModified >= lastModified.From.Value);
+                    posts = posts.Where(x => x.LastModifiedTime >= lastModified.From.Value);
 
                 // To is defined.
                 if (lastModified.To != null)
-                    posts = posts.Where(x => x.LastModified <= lastModified.To.Value);
+                    posts = posts.Where(x => x.LastModifiedTime <= lastModified.To.Value);
             }
 
             return posts;

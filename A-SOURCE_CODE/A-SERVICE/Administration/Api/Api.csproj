@@ -48,10 +48,6 @@
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Autofac.Integration.SignalR, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.SignalR2.4.0.0\lib\net45\Autofac.Integration.SignalR.dll</HintPath>
       <Private>True</Private>
@@ -64,6 +60,9 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="jose-jwt, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jose-jwt.2.4.0\lib\net461\jose-jwt.dll</HintPath>
     </Reference>
     <Reference Include="JWT, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\JWT.3.1.1\lib\net46\JWT.dll</HintPath>
@@ -254,6 +253,7 @@
     <Compile Include="Middlewares\BearerAuthenticationMiddleware.cs" />
     <Compile Include="Models\Constants\Basics.cs" />
     <Compile Include="Models\JwtResponse.cs" />
+    <Compile Include="Models\JwtSetting.cs" />
     <Compile Include="Models\Messages\CommentMessage.cs" />
     <Compile Include="Models\Messages\CommentReportMessage.cs" />
     <Compile Include="Models\Messages\PostMessage.cs" />
@@ -304,9 +304,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj">
+    <ProjectReference Include="..\Database\SystemDatabase.csproj">
       <Project>{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}</Project>
-      <Name>Database</Name>
+      <Name>SystemDatabase</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{5227a0f6-c8cd-4a8b-b8bb-870bde42f88b}</Project>

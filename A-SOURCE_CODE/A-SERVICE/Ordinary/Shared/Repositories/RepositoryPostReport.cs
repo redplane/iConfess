@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -37,11 +37,11 @@ namespace Shared.Repositories
         {
             // Owner index is specified.
             if (conditions.PostOwnerIndex != null)
-                postReports = postReports.Where(x => x.PostOwnerIndex == conditions.PostOwnerIndex.Value);
+                postReports = postReports.Where(x => x.OwnerId == conditions.PostOwnerIndex.Value);
 
             // Reporter index is specified.
             if (conditions.PostReporterIndex != null)
-                postReports = postReports.Where(x => x.PostReporterIndex == conditions.PostReporterIndex.Value);
+                postReports = postReports.Where(x => x.ReporterId == conditions.PostReporterIndex.Value);
 
             // Body of post.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
@@ -120,19 +120,19 @@ namespace Shared.Repositories
                 }
             }
 
-            // Created is specified.
-            if (conditions.Created != null)
-            {
-                var created = conditions.Created;
+            //// CreatedTime is specified.
+            //if (conditions.CreatedTime != null)
+            //{
+            //    var created = conditions.CreatedTime;
 
-                // From is defined.
-                if (created.From != null)
-                    postReports = postReports.Where(x => x.Created >= created.From.Value);
+            //    // From is defined.
+            //    if (created.From != null)
+            //        postReports = postReports.Where(x => x.Created >= created.From.Value);
 
-                // To is defined.
-                if (created.To != null)
-                    postReports = postReports.Where(x => x.Created <= created.To.Value);
-            }
+            //    // To is defined.
+            //    if (created.To != null)
+            //        postReports = postReports.Where(x => x.Created <= created.To.Value);
+            //}
 
             return postReports;
         }

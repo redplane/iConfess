@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class FollowPost
     {
@@ -10,17 +10,17 @@ namespace Entities.Models.Entities
         /// <summary>
         ///     Who is the follower of post.
         /// </summary>
-        public int FollowerIndex { get; set; }
+        public int FollowerId { get; set; }
 
         /// <summary>
         ///     Which post is being followed by the follower.
         /// </summary>
-        public int PostIndex { get; set; }
+        public int PostId { get; set; }
 
         /// <summary>
         ///     When the following action was created.
         /// </summary>
-        public double Created { get; set; }
+        public double CreatedTime { get; set; }
 
         #endregion
 
@@ -30,14 +30,14 @@ namespace Entities.Models.Entities
         ///     Who is following the post.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(FollowerIndex))]
+        [ForeignKey(nameof(FollowerId))]
         public Account Follower { get; set; }
 
         /// <summary>
         ///     Post which is being monitored by this relationship.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostIndex))]
+        [ForeignKey(nameof(PostId))]
         public Post Post { get; set; }
 
         #endregion

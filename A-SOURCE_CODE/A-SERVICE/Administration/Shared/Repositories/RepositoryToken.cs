@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Token;

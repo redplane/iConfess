@@ -6,8 +6,8 @@ using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using Database.Enumerations;
-using Database.Models.Entities;
+using SystemDatabase.Enumerations;
+using SystemDatabase.Models.Entities;
 using Shared.Resources;
 
 namespace Administration.Attributes

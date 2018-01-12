@@ -3,7 +3,7 @@ using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Posts;
 using Shared.Enumerations;
 using System;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Shared.Repositories
@@ -37,12 +37,12 @@ namespace Shared.Repositories
                 posts = posts.Where(x => x.Id == conditions.Id.Value);
 
             // Owner index is specified.
-            if (conditions.OwnerIndex != null)
-                posts = posts.Where(x => x.OwnerIndex == conditions.OwnerIndex.Value);
+            if (conditions.OwnerId != null)
+                posts = posts.Where(x => x.OwnerIndex == conditions.OwnerId.Value);
 
             // Category index is specified.
-            if (conditions.CategoryIndex != null)
-                posts = posts.Where(x => x.CategoryIndex == conditions.CategoryIndex.Value);
+            if (conditions.CategoryId != null)
+                posts = posts.Where(x => x.CategoryIndex == conditions.CategoryId.Value);
 
             // Title is specified.
             if (conditions.Title != null && !string.IsNullOrEmpty(conditions.Title.Value))
@@ -120,32 +120,32 @@ namespace Shared.Repositories
                 }
             }
 
-            // Created is specified.
-            if (conditions.Created != null)
+            // CreatedTime is specified.
+            if (conditions.CreatedTime != null)
             {
-                var created = conditions.Created;
+                var created = conditions.CreatedTime;
 
                 // From is defined.
                 if (created.From != null)
-                    posts = posts.Where(x => x.Created >= created.From.Value);
+                    posts = posts.Where(x => x.CreatedTime >= created.From.Value);
 
                 // To is defined.
                 if (created.To != null)
-                    posts = posts.Where(x => x.Created <= created.To.Value);
+                    posts = posts.Where(x => x.CreatedTime <= created.To.Value);
             }
 
             // Last modified is specified.
-            if (conditions.Created != null)
+            if (conditions.LastModifiedTime != null)
             {
-                var lastModified = conditions.LastModified;
+                var lastModifiedTime = conditions.LastModifiedTime;
 
                 // From is defined.
-                if (lastModified.From != null)
-                    posts = posts.Where(x => x.LastModified >= lastModified.From.Value);
+                if (lastModifiedTime.From != null)
+                    posts = posts.Where(x => x.LastModifiedTime >= lastModifiedTime.From.Value);
 
                 // To is defined.
-                if (lastModified.To != null)
-                    posts = posts.Where(x => x.LastModified <= lastModified.To.Value);
+                if (lastModifiedTime.To != null)
+                    posts = posts.Where(x => x.LastModifiedTime <= lastModifiedTime.To.Value);
             }
 
             return posts;

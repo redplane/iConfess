@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
+using JWT;
 using Shared.Interfaces.Services;
 
 namespace Administration.Services
 {
     public class IdentityService : IIdentityService
     {
+        #region Methods
+
         /// <summary>
         ///     Search account information from identity which is attached to request.
         /// </summary>
@@ -38,5 +41,18 @@ namespace Administration.Services
 
             return (Account) items[ClaimTypes.Actor];
         }
+
+        /// <summary>
+        /// Encode claims into an access token.
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string EncodeJwt(IDictionary<string, string> claims, string key)
+        {
+            var jwtEncoder = new JwtEncoder();
+        }
+
+        #endregion
     }
 }

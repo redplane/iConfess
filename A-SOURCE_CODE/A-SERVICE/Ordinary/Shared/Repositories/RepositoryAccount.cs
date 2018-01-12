@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Accounts;
@@ -31,7 +31,7 @@ namespace Shared.Repositories
         /// <returns></returns>
         public IQueryable<Account> Search(IQueryable<Account> accounts, SearchAccountViewModel conditions)
         {
-            // Index has been identified.
+            // Id has been identified.
             if (conditions.Id != null)
                 accounts = accounts.Where(x => x.Id == conditions.Id.Value);
 
@@ -47,9 +47,9 @@ namespace Shared.Repositories
                 accounts = accounts.Where(x => statuses.Contains(x.Status));
             }
 
-            // Joined has been defined.
-            accounts = SearchPropertyNumeric(accounts, x => x.Joined, conditions.Joined);
-            accounts = SearchPropertyNumeric(accounts, x => x.LastModified, conditions.LastModified);
+            // JoinedTime has been defined.
+            //accounts = SearchPropertyNumeric(accounts, x => x.JoinedTime, conditions.JoinedTime);
+            //accounts = SearchPropertyNumeric(accounts, x => x.LastModifiedTime, conditions.LastModifiedTime);
             
             return accounts;
         }

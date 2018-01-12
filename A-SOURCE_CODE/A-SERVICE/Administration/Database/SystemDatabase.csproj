@@ -7,8 +7,8 @@
     <ProjectGuid>{0C4B39BE-CF91-47D4-BE5B-31E6AFE16667}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Database</RootNamespace>
-    <AssemblyName>Database</AssemblyName>
+    <RootNamespace>SystemDatabase</RootNamespace>
+    <AssemblyName>SystemDatabase</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -50,11 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enumerations\CategoryStatus.cs" />
+    <Compile Include="Enumerations\CommentNotificationType.cs" />
+    <Compile Include="Enumerations\PostNotificationType.cs" />
+    <Compile Include="Enumerations\PostStatus.cs" />
+    <Compile Include="Enumerations\PostType.cs" />
     <Compile Include="Enumerations\Roles.cs" />
     <Compile Include="Enumerations\Statuses.cs" />
-    <Compile Include="Enumerations\NotificationType.cs" />
     <Compile Include="Enumerations\TokenType.cs" />
     <Compile Include="Models\Entities\Account.cs" />
+    <Compile Include="Models\Entities\Categorization.cs" />
     <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Contexts\RelationalDataContext.cs" />

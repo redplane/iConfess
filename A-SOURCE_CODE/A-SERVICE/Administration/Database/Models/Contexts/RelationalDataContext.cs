@@ -1,9 +1,9 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 
-namespace Database.Models.Contexts
+namespace SystemDatabase.Models.Contexts
 {
     public class RelationalDataContext : DbContext
     {
@@ -29,6 +29,11 @@ namespace Database.Models.Contexts
         ///     List of categories in the database.
         /// </summary>
         public DbSet<Category> Categories { get; set; }
+
+        /// <summary>
+        /// Post categorizations.
+        /// </summary>
+        public DbSet<Categorization> Categorizations { get; set; }
 
         /// <summary>
         ///     List of comments in the database.
@@ -97,16 +102,17 @@ namespace Database.Models.Contexts
             dbModelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // Composite primary keys configuration.
-            dbModelBuilder.Entity<FollowCategory>().HasKey(x => new {x.OwnerIndex, x.CategoryIndex});
-            dbModelBuilder.Entity<FollowPost>().HasKey(x => new {x.FollowerIndex, x.PostIndex});
+            dbModelBuilder.Entity<Categorization>().HasKey(x => new { x.CategoryId, x.PostId });
+            dbModelBuilder.Entity<FollowCategory>().HasKey(x => new { x.OwnerIndex, x.CategoryIndex });
+            dbModelBuilder.Entity<FollowPost>().HasKey(x => new { x.FollowerIndex, x.PostIndex });
             dbModelBuilder.Entity<CommentReport>()
-                .HasKey(x => new {x.CommentIndex, x.PostIndex, x.CommentReporterIndex, x.CommentOwnerIndex});
-            dbModelBuilder.Entity<PostReport>().HasKey(x => new {x.PostIndex, x.PostReporterIndex, x.PostOwnerIndex});
+                .HasKey(x => new { x.CommentId, x.ReporterId });
+            dbModelBuilder.Entity<PostReport>().HasKey(x => new { x.PostId, x.ReporterId });
 
             // Initiate follow 
             base.OnModelCreating(dbModelBuilder);
         }
-        
+
         /// <summary>
         ///     Commit changes to database.
         /// </summary>

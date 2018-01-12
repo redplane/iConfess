@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;

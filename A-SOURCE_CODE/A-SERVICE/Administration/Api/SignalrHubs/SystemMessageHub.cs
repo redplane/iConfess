@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using SystemDatabase.Enumerations;
 using Administration.Attributes;
-using Database.Enumerations;
 using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Administration.SignalrHubs

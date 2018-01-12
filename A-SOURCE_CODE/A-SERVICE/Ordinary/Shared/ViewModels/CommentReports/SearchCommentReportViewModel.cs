@@ -8,17 +8,17 @@ namespace Shared.ViewModels.CommentReports
         #region Properties
 
         /// <summary>
-        ///     Index of comment which should be reported.
+        ///     Id of comment which should be reported.
         /// </summary>
         public int? CommentIndex { get; set; }
 
         /// <summary>
-        ///     Index of comment owner.
+        ///     Id of comment owner.
         /// </summary>
         public int? CommentOwnerIndex { get; set; }
 
         /// <summary>
-        ///     Index of person who created comment report.
+        ///     Id of person who created comment report.
         /// </summary>
         public int? CommentReporterIndex { get; set; }
 
@@ -45,7 +45,7 @@ namespace Shared.ViewModels.CommentReports
         /// <summary>
         ///     When the comment should be created.
         /// </summary>
-        public DoubleRange Created { get; set; }
+        public Range<double?, double?> CreatedTime { get; set; }
 
         /// <summary>
         ///     Pagination information.

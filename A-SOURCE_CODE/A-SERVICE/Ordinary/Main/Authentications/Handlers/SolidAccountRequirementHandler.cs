@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Entities.Enumerations;
+using SystemDatabase.Enumerations;
 using Main.Authentications.Requirements;
 using Main.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -106,8 +106,8 @@ namespace Main.Authentications.Handlers
 
             // Initiate claim identity with newer information from database.
             var identity = (ClaimsIdentity)_identityService.InitiateIdentity(account);
-            identity.AddClaim(new Claim(ClaimTypes.Role, Enum.GetName(typeof(Roles), account.Role)));
-            identity.AddClaim(new Claim(ClaimTypes.Authentication, Enum.GetName(typeof(Statuses), account.Status)));
+            identity.AddClaim(new Claim(ClaimTypes.Role, Enum.GetName(typeof(AccountRole), account.Role)));
+            identity.AddClaim(new Claim(ClaimTypes.Authentication, Enum.GetName(typeof(AccountStatus), account.Status)));
 
             // Update claim identity.
             httpContext.User = httpContext.Authentication.HttpContext.User = new ClaimsPrincipal(identity);

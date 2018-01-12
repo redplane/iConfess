@@ -6,14 +6,14 @@ namespace Shared.ViewModels.Categories
     public class SearchCategoryViewModel
     {
         /// <summary>
-        ///     Index of category.
+        ///     Id of category.
         /// </summary>
         public int? Id { get; set; }
 
         /// <summary>
-        ///     Index of creator.
+        ///     Id of creator.
         /// </summary>
-        public int? CreatorIndex { get; set; }
+        public int? CreatorId { get; set; }
 
         /// <summary>
         ///     Name of category.
@@ -23,12 +23,12 @@ namespace Shared.ViewModels.Categories
         /// <summary>
         ///     When the category was created.
         /// </summary>
-        public DoubleRange Created { get; set; }
+        public Range<double?, double?> CreatedTime { get; set; }
 
         /// <summary>
         ///     When the category was lastly modified.
         /// </summary>
-        public DoubleRange LastModified { get; set; }
+        public Range<double?, double?> LastModifiedTime { get; set; }
 
         /// <summary>
         ///     Which property should be used for sorting categories.

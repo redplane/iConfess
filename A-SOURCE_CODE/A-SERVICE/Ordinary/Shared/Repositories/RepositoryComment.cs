@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -38,12 +38,12 @@ namespace Shared.Repositories
                 comments = comments.Where(x => x.Id == conditions.Id.Value);
 
             // Owner index is specified.
-            if (conditions.OwnerIndex != null)
-                comments = comments.Where(x => x.OwnerIndex == conditions.OwnerIndex.Value);
+            if (conditions.OwnerId != null)
+                comments = comments.Where(x => x.OwnerId == conditions.OwnerId.Value);
 
             // Post index is specified.
-            if (conditions.PostIndex != null)
-                comments = comments.Where(x => x.PostIndex == conditions.PostIndex.Value);
+            if (conditions.OwnerId != null)
+                comments = comments.Where(x => x.PostId == conditions.PostId.Value);
 
 
             // Content is specified.
@@ -85,35 +85,35 @@ namespace Shared.Repositories
                 }
             }
 
-            // Created is specified.
-            if (conditions.Created != null)
-            {
-                // Search created time.
-                var created = conditions.Created;
+            //// CreatedTime is specified.
+            //if (conditions.CreatedTime != null)
+            //{
+            //    // Search created time.
+            //    var created = conditions.Created;
 
-                // From is specified.
-                if (created.From != null)
-                    comments = comments.Where(x => x.Created >= created.From.Value);
+            //    // From is specified.
+            //    if (created.From != null)
+            //        comments = comments.Where(x => x.Created >= created.From.Value);
 
-                // To is specified.
-                if (created.To != null)
-                    comments = comments.Where(x => x.Created <= created.To.Value);
-            }
+            //    // To is specified.
+            //    if (created.To != null)
+            //        comments = comments.Where(x => x.Created <= created.To.Value);
+            //}
 
-            // Last modified is specified.
-            if (conditions.LastModified != null)
-            {
-                // Search created time.
-                var lastModified = conditions.LastModified;
+            //// Last modified is specified.
+            //if (conditions.LastModifiedTime != null)
+            //{
+            //    // Search created time.
+            //    var lastModified = conditions.LastModified;
 
-                // From is specified.
-                if (lastModified.From != null)
-                    comments = comments.Where(x => x.LastModified >= lastModified.From.Value);
+            //    // From is specified.
+            //    if (lastModified.From != null)
+            //        comments = comments.Where(x => x.LastModified >= lastModified.From.Value);
 
-                // To is specified.
-                if (lastModified.To != null)
-                    comments = comments.Where(x => x.LastModified <= lastModified.To.Value);
-            }
+            //    // To is specified.
+            //    if (lastModified.To != null)
+            //        comments = comments.Where(x => x.LastModified <= lastModified.To.Value);
+            //}
 
             return comments;
         }

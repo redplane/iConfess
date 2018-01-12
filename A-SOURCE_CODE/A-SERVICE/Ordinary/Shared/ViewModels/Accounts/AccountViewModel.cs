@@ -1,4 +1,4 @@
-﻿using Entities.Enumerations;
+﻿using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
 namespace Shared.ViewModels.Accounts
@@ -33,7 +33,7 @@ namespace Shared.ViewModels.Accounts
         ///     Account status.
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public Statuses? Status { get; set; }
+        public AccountStatus? Status { get; set; }
 
         /// <summary>
         ///     When the account was created.

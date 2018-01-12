@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 
 namespace Shared.Interfaces.Services
 {
     public interface IIdentityService
     {
+        #region Methods
+
         /// <summary>
         ///     Search account information from identity attached to request.
         /// </summary>
@@ -20,5 +22,15 @@ namespace Shared.Interfaces.Services
         /// <param name="items"></param>
         /// <returns></returns>
         Account FindAccount(IDictionary<string, object> items);
+
+        /// <summary>
+        /// Encode claims into an access token.
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        string EncodeJwt(IDictionary<string, string> claims, string key);
+
+        #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.SignalrConnections;
@@ -94,9 +94,9 @@ namespace Shared.Repositories
                 var from = timeSearchCreated.From;
                 var to = timeSearchCreated.To;
                 if (from != null)
-                    connections = connections.Where(x => x.Created >= from.Value);
+                    connections = connections.Where(x => x.CreatedTime >= from.Value);
                 if (to != null)
-                    connections = connections.Where(x => x.Created <= to.Value);
+                    connections = connections.Where(x => x.CreatedTime <= to.Value);
             }
 
             return connections;

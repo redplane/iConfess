@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class PostNotification
     {

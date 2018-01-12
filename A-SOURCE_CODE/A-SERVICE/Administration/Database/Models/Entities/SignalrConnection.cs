@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Database.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class SignalrConnection
     {

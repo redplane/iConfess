@@ -172,9 +172,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj">
+    <ProjectReference Include="..\Database\SystemDatabase.csproj">
       <Project>{0c4b39be-cf91-47d4-be5b-31e6afe16667}</Project>
-      <Name>Database</Name>
+      <Name>SystemDatabase</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

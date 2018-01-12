@@ -1,4 +1,4 @@
-﻿using Database.Enumerations;
+﻿using SystemDatabase.Enumerations;
 
 namespace Administration.Models.Statistics
 {

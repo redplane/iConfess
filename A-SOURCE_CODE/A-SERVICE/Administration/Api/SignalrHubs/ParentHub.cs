@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using SystemDatabase.Models.Entities;
 using Autofac;
-using Database.Models.Entities;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Shared.Enumerations;

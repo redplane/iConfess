@@ -1,9 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Repositories;
+using Shared.Models;
 
 namespace Shared.Interfaces.Services
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork 
     {
         #region Properties
 
@@ -16,6 +20,11 @@ namespace Shared.Interfaces.Services
         ///     Provides functions to access category database.
         /// </summary>
         IRepositoryCategory RepositoryCategories { get; }
+
+        /// <summary>
+        /// Provides function to access categorization database.
+        /// </summary>
+        IRepositoryCategorization RepositoryCategorizations { get; }
 
         /// <summary>
         ///     Provides functions to access comment database.
@@ -46,10 +55,40 @@ namespace Shared.Interfaces.Services
         ///     Provides functions to access token database.
         /// </summary>
         IRepositoryToken RepositoryTokens { get; }
-        
+
         #endregion
 
         #region Methods
+
+        
+            /// <summary>
+        ///     Do pagination on a specific list.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        IQueryable<T> Paginate<T>(IQueryable<T> list, Pagination pagination);
+
+        /// <summary>
+        ///     Sort a list by using specific property enumeration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortProperty"></param>
+        /// <returns></returns>
+        IQueryable<T> Sort<T>(IQueryable<T> list, SortDirection sortDirection, Enum sortProperty);
+
+        /// <summary>
+        ///     Search property base on searching mode.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="records"></param>
+        /// <param name="property"></param>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        IQueryable<T> SearchPropertyText<T>(IQueryable<T> records, Func<T, string> property, TextSearch search);
 
         /// <summary>
         ///     Save changes into database.

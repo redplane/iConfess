@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -36,16 +36,16 @@ namespace Shared.Repositories
         {
             // Comment index is specified.
             if (conditions.CommentIndex != null)
-                commentReports = commentReports.Where(x => x.CommentIndex == conditions.CommentIndex.Value);
+                commentReports = commentReports.Where(x => x.CommentId == conditions.CommentIndex.Value);
 
             // Comment owner is specified.
             if (conditions.CommentOwnerIndex != null)
-                commentReports = commentReports.Where(x => x.CommentOwnerIndex == conditions.CommentOwnerIndex.Value);
+                commentReports = commentReports.Where(x => x.OwnerId == conditions.CommentOwnerIndex.Value);
 
             // Reporter index is specified.
             if (conditions.CommentReporterIndex != null)
                 commentReports =
-                    commentReports.Where(x => x.CommentReporterIndex == conditions.CommentReporterIndex.Value);
+                    commentReports.Where(x => x.ReporterId == conditions.CommentReporterIndex.Value);
 
             // Comment body is specified.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
@@ -126,20 +126,20 @@ namespace Shared.Repositories
                 }
             }
 
-            // Created is specified.
-            if (conditions.Created != null)
-            {
-                // Comment created time.
-                var created = conditions.Created;
+            //// CreatedTime is specified.
+            //if (conditions.Created != null)
+            //{
+            //    // Comment created time.
+            //    var created = conditions.Created;
 
-                // From is defined.
-                if (created.From != null)
-                    commentReports = commentReports.Where(x => x.Created >= created.From.Value);
+            //    // From is defined.
+            //    if (created.From != null)
+            //        commentReports = commentReports.Where(x => x.Created >= created.From.Value);
 
-                // To is defined.
-                if (created.To != null)
-                    commentReports = commentReports.Where(x => x.Created <= created.To.Value);
-            }
+            //    // To is defined.
+            //    if (created.To != null)
+            //        commentReports = commentReports.Where(x => x.Created <= created.To.Value);
+            //}
 
             return commentReports;
         }

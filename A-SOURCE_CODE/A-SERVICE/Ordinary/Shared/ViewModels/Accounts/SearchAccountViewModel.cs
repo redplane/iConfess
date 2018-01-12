@@ -1,4 +1,4 @@
-﻿using Entities.Enumerations;
+﻿using SystemDatabase.Enumerations;
 using Shared.Enumerations.Order;
 using Shared.Models;
 
@@ -7,7 +7,7 @@ namespace Shared.ViewModels.Accounts
     public class SearchAccountViewModel
     {
         /// <summary>
-        ///     Index of account.
+        ///     Id of account.
         /// </summary>
         public int? Id { get; set; }
 
@@ -29,28 +29,23 @@ namespace Shared.ViewModels.Accounts
         /// <summary>
         ///     Account status.
         /// </summary>
-        public Statuses[] Statuses { get; set; }
+        public AccountStatus[] Statuses { get; set; }
 
         /// <summary>
         ///     Time when account joined.
         /// </summary>
-        public DoubleRange Joined { get; set; }
+        public Range<double?, double?> JoinedTime { get; set; }
 
         /// <summary>
         ///     Time when account was lastly modified.
         /// </summary>
-        public DoubleRange LastModified { get; set; }
+        public Range<double?, double?> LastModifiedTime { get; set; }
 
         /// <summary>
-        ///     Which property should be used for sorting.
+        /// Sorted property & direction.
         /// </summary>
-        public AccountsSort Sort { get; set; }
-
-        /// <summary>
-        ///     Whether accounts should be sorted asc or desc.
-        /// </summary>
-        public SortDirection Direction { get; set; }
-
+        public Sort<AccountSort> Sort { get; set; }
+        
         /// <summary>
         ///     Pagination of records filter.
         /// </summary>

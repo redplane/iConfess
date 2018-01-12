@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Entities.Enumerations;
+using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class Token
     {
@@ -35,7 +35,7 @@ namespace Entities.Models.Entities
         /// <summary>
         ///     Type of Token.
         /// </summary>
-        public TokenKinds Type { get; set; }
+        public TokenType Type { get; set; }
 
         /// <summary>
         ///     Code of token

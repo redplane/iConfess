@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Comments;
@@ -49,11 +49,11 @@ namespace Shared.Repositories
 
             // Owner index is specified.
             if (conditions.OwnerIndex != null)
-                comments = comments.Where(x => x.OwnerIndex == conditions.OwnerIndex.Value);
+                comments = comments.Where(x => x.OwnerId == conditions.OwnerIndex.Value);
 
             // Post index is specified.
             if (conditions.PostIndex != null)
-                comments = comments.Where(x => x.PostIndex == conditions.PostIndex.Value);
+                comments = comments.Where(x => x.PostId == conditions.PostIndex.Value);
 
 
             // Content is specified.
@@ -103,11 +103,11 @@ namespace Shared.Repositories
 
                 // From is specified.
                 if (created.From != null)
-                    comments = comments.Where(x => x.Created >= created.From.Value);
+                    comments = comments.Where(x => x.CreatedTime >= created.From.Value);
 
                 // To is specified.
                 if (created.To != null)
-                    comments = comments.Where(x => x.Created <= created.To.Value);
+                    comments = comments.Where(x => x.CreatedTime <= created.To.Value);
             }
 
             // Last modified is specified.
@@ -118,11 +118,11 @@ namespace Shared.Repositories
 
                 // From is specified.
                 if (lastModified.From != null)
-                    comments = comments.Where(x => x.LastModified >= lastModified.From.Value);
+                    comments = comments.Where(x => x.LastModifiedTime >= lastModified.From.Value);
 
                 // To is specified.
                 if (lastModified.To != null)
-                    comments = comments.Where(x => x.LastModified <= lastModified.To.Value);
+                    comments = comments.Where(x => x.LastModifiedTime <= lastModified.To.Value);
             }
 
             return comments;

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
-namespace Database.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class PostNotification
     {
@@ -18,22 +19,22 @@ namespace Database.Models.Entities
         /// <summary>
         ///     Post which is notified.
         /// </summary>
-        public int PostIndex { get; set; }
+        public int PostId { get; set; }
 
         /// <summary>
         ///     Who should receive the notification.
         /// </summary>
-        public int RecipientIndex { get; set; }
+        public int RecipientId { get; set; }
 
         /// <summary>
         ///     Who caused the notification broadcasted.
         /// </summary>
-        public int BroadcasterIndex { get; set; }
+        public int BroadcasterId { get; set; }
 
         /// <summary>
         ///     Type of notification (CRUD)
         /// </summary>
-        public int Type { get; set; }
+        public PostNotificationType Type { get; set; }
 
         /// <summary>
         ///     Whether the owner seen the post or not.
@@ -53,21 +54,21 @@ namespace Database.Models.Entities
         ///     Post which is notified.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostIndex))]
+        [ForeignKey(nameof(PostId))]
         public Post Post { get; set; }
 
         /// <summary>
         ///     Who broadcasted the notification.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(RecipientIndex))]
+        [ForeignKey(nameof(RecipientId))]
         public Account Recipient { get; set; }
 
         /// <summary>
         ///     Who should receive the notification.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(BroadcasterIndex))]
+        [ForeignKey(nameof(BroadcasterId))]
         public Account Broadcaster { get; set; }
 
         #endregion

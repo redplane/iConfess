@@ -7,7 +7,7 @@ namespace Shared.ViewModels.Token
         /// <summary>
         /// List of searched tokens.
         /// </summary>
-        public IQueryable<Database.Models.Entities.Token> Tokens { get; set; }
+        public IQueryable<SystemDatabase.Models.Entities.Token> Tokens { get; set; }
 
         /// <summary>
         /// Total tokens which have been searched.

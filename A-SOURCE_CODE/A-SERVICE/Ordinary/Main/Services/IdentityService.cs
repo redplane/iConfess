@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Main.Interfaces.Services;
 using Main.Models;
 

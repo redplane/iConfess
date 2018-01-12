@@ -2,12 +2,20 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces.Repositories;
-using Shared.Services;
 
 namespace Shared.Repositories
 {
-    public class ParentRepository<T> : ParentRepositoryService, IParentRepository<T> where T : class
+    public class ParentRepository<T> : DatabaseFunction<T>, IParentRepository<T> where T : class
     {
+        #region Properties
+
+        /// <summary>
+        ///     Database set.
+        /// </summary>
+        private readonly DbSet<T> _dbSet;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -18,15 +26,6 @@ namespace Shared.Repositories
         {
             _dbSet = dbContext.Set<T>();
         }
-
-        #endregion
-
-        #region Properties
-        
-        /// <summary>
-        ///     Database set.
-        /// </summary>
-        private readonly DbSet<T> _dbSet;
 
         #endregion
 
@@ -49,7 +48,7 @@ namespace Shared.Repositories
         {
             return _dbSet.Add(entity).Entity;
         }
-        
+
         /// <summary>
         ///     Remove a list of entities from database.
         /// </summary>

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Database.Enumerations;
+using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
-namespace Database.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class Account
     {

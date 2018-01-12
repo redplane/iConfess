@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Database.Enumerations;
+using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
-namespace Database.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class CommentNotification
     {
@@ -19,27 +19,27 @@ namespace Database.Models.Entities
         /// <summary>
         ///     Comment which causes notification broadcasted.
         /// </summary>
-        public int CommentIndex { get; set; }
+        public int CommentId { get; set; }
 
         /// <summary>
         ///     Post which comment belongs to.
         /// </summary>
-        public int PostIndex { get; set; }
+        public int PostId { get; set; }
 
         /// <summary>
         ///     Owner of notification.
         /// </summary>
-        public int RecipientIndex { get; set; }
+        public int RecipientId { get; set; }
 
         /// <summary>
         ///     Who causes the notification broadcasted.
         /// </summary>
-        public int BroadcasterIndex { get; set; }
+        public int BroadcasterId { get; set; }
 
         /// <summary>
         ///     Notification type.
         /// </summary>
-        public NotificationType Type { get; set; }
+        public CommentNotificationType Type { get; set; }
 
         /// <summary>
         ///     Whether notification owner has seen the notification or not.
@@ -59,28 +59,28 @@ namespace Database.Models.Entities
         ///     Who should receive the notification.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(RecipientIndex))]
+        [ForeignKey(nameof(RecipientId))]
         public Account Recipient { get; set; }
 
         /// <summary>
         ///     Who broadcasted the notification.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(BroadcasterIndex))]
+        [ForeignKey(nameof(BroadcasterId))]
         public Account Broadcaster { get; set; }
 
         /// <summary>
         ///     Comment which is notified.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(CommentIndex))]
+        [ForeignKey(nameof(Comment))]
         public Comment Comment { get; set; }
 
         /// <summary>
         ///     Which post comment belongs to.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostIndex))]
+        [ForeignKey(nameof(PostId))]
         public Post Post { get; set; }
 
         #endregion

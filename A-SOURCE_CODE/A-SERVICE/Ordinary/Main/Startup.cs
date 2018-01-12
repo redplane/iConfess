@@ -1,5 +1,5 @@
 ﻿using System;
-using Entities.Models.Contextes;
+using SystemDatabase.Models.Contexts;
 using Main.Authentications.Handlers;
 using Main.Authentications.TokenValidators;
 using Main.Interfaces.Services;
@@ -20,7 +20,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Serilog;
+using Shared.Interfaces.Repositories;
 using Shared.Interfaces.Services;
+using Shared.Repositories;
 using Shared.Services;
 
 namespace Main
@@ -65,12 +67,13 @@ namespace Main
 
             // Injections configuration.
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped(typeof(IDatabaseFunction<>), typeof(DatabaseFunction<>));
             services.AddScoped<DbContext, RelationalDatabaseContext>();
             services.AddScoped<IEncryptionService, EncryptionService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<ITimeService, TimeService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+           
             // Requirement handler.
             services.AddScoped<IAuthorizationHandler, SolidAccountRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, RoleRequirementHandler>();

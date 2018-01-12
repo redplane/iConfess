@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.Categories;
@@ -39,7 +39,7 @@ namespace Shared.Repositories
 
             // Creator has been defined.
             if (conditions.CreatorIndex != null)
-                categories = categories.Where(x => x.CreatorIndex == conditions.CreatorIndex.Value);
+                categories = categories.Where(x => x.CreatorId == conditions.CreatorIndex.Value);
 
             // Name search condition has been defined.
             if (conditions.Name != null && !string.IsNullOrWhiteSpace(conditions.Name.Value))
@@ -85,11 +85,11 @@ namespace Shared.Repositories
             {
                 // Start time is defined.
                 if (conditions.Created.From != null)
-                    categories = categories.Where(x => x.Created >= conditions.Created.From.Value);
+                    categories = categories.Where(x => x.CreatedTime >= conditions.Created.From.Value);
 
                 // End time is defined.
                 if (conditions.Created.To != null)
-                    categories = categories.Where(x => x.Created <= conditions.Created.To.Value);
+                    categories = categories.Where(x => x.CreatedTime <= conditions.Created.To.Value);
             }
 
             // Last modified time range has been defined.
@@ -97,11 +97,11 @@ namespace Shared.Repositories
             {
                 // Start time is defined.
                 if (conditions.LastModified.From != null)
-                    categories = categories.Where(x => x.LastModified >= conditions.LastModified.From.Value);
+                    categories = categories.Where(x => x.LastModifiedTime >= conditions.LastModified.From.Value);
 
                 // End time is defined.
                 if (conditions.LastModified.To != null)
-                    categories = categories.Where(x => x.LastModified <= conditions.LastModified.To.Value);
+                    categories = categories.Where(x => x.LastModifiedTime <= conditions.LastModified.To.Value);
             }
 
             return categories;

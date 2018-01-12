@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Entities.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
@@ -33,55 +33,55 @@ namespace Shared.Repositories
             if (conditions == null)
                 return connections;
 
-            if (conditions.Index != null && !string.IsNullOrEmpty(conditions.Index.Value))
+            if (conditions.Id != null && !string.IsNullOrEmpty(conditions.Id.Value))
             {
-                var szIndex = conditions.Index;
+                var szIndex = conditions.Id;
                 switch (szIndex.Mode)
                 {
                     case TextSearchMode.Contain:
-                        connections = connections.Where(x => x.Index.Contains(szIndex.Value));
+                        connections = connections.Where(x => x.Id.Contains(szIndex.Value));
                         break;
                     case TextSearchMode.Equal:
-                        connections = connections.Where(x => x.Index.Equals(szIndex.Value));
+                        connections = connections.Where(x => x.Id.Equals(szIndex.Value));
                         break;
                     case TextSearchMode.EqualIgnoreCase:
                         connections =
-                            connections.Where(x => x.Index.Equals(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));
+                            connections.Where(x => x.Id.Equals(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
                     case TextSearchMode.StartsWith:
-                        connections = connections.Where(x => x.Index.StartsWith(szIndex.Value));
+                        connections = connections.Where(x => x.Id.StartsWith(szIndex.Value));
                         break;
                     case TextSearchMode.StartsWithIgnoreCase:
                         connections =
                             connections.Where(
-                                x => x.Index.StartsWith(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));
+                                x => x.Id.StartsWith(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
                     case TextSearchMode.EndsWith:
-                        connections = connections.Where(x => x.Index.EndsWith(szIndex.Value));
+                        connections = connections.Where(x => x.Id.EndsWith(szIndex.Value));
                         break;
                     case TextSearchMode.EndsWithIgnoreCase:
                         connections =
                             connections.Where(
-                                x => x.Index.EndsWith(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));
+                                x => x.Id.EndsWith(szIndex.Value, StringComparison.CurrentCultureIgnoreCase));
                         break;
                     default:
-                        connections = connections.Where(x => x.Index.ToLower().Contains(szIndex.Value.ToLower()));
+                        connections = connections.Where(x => x.Id.ToLower().Contains(szIndex.Value.ToLower()));
                         break;
                 }
             }
 
             if (conditions.Owner != null)
-                connections = connections.Where(x => x.OwnerIndex == conditions.Owner.Value);
+                connections = connections.Where(x => x.OwnerId == conditions.Owner.Value);
 
-            var timeSearchCreated = conditions.Created;
+            var timeSearchCreated = conditions.CreatedTime;
             if (timeSearchCreated != null)
             {
                 var from = timeSearchCreated.From;
                 var to = timeSearchCreated.To;
                 if (from != null)
-                    connections = connections.Where(x => x.Created >= from.Value);
+                    connections = connections.Where(x => x.CreatedTime >= from.Value);
                 if (to != null)
-                    connections = connections.Where(x => x.Created <= to.Value);
+                    connections = connections.Where(x => x.CreatedTime <= to.Value);
             }
 
             return connections;

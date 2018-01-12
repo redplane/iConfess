@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Shared.Enumerations;
+using Shared.Enumerations.Order;
 using Shared.Interfaces.Services;
+using Shared.Models;
 
 namespace Shared.Interfaces.Repositories
 {
-    public interface IParentRepository<T> : IParentRepositoryService
+    public interface IParentRepository<T> : IDatabaseFunction<T>
     {
         #region Methods
-
-        /// <summary>
+        
+            /// <summary>
         ///     Search all data from the specific table.
         /// </summary>
         /// <returns></returns>
@@ -33,7 +37,7 @@ namespace Shared.Interfaces.Repositories
         /// <param name="entity"></param>
         /// <returns></returns>
         void Remove(T entity);
-
+        
         #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Shared.ViewModels.PostReports;
 
 namespace Shared.Interfaces.Repositories

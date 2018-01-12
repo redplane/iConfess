@@ -3,7 +3,7 @@
     public class InitiateCommentViewModel
     {
         /// <summary>
-        ///     Index of post which comment should belong to.
+        ///     Id of post which comment should belong to.
         /// </summary>
         public int PostIndex { get; set; }
 

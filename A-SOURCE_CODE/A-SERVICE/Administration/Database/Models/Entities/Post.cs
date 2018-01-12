@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
-namespace Database.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class Post
     {
@@ -19,13 +20,8 @@ namespace Database.Models.Entities
         /// <summary>
         ///     Who owns the post.
         /// </summary>
-        public int OwnerIndex { get; set; }
-
-        /// <summary>
-        ///     Which category the post belongs to.
-        /// </summary>
-        public int CategoryIndex { get; set; }
-
+        public int OwnerId { get; set; }
+        
         /// <summary>
         ///     Title of post.
         /// </summary>
@@ -35,6 +31,16 @@ namespace Database.Models.Entities
         ///     Post body.
         /// </summary>
         public string Body { get; set; }
+
+        /// <summary>
+        /// Type of post.
+        /// </summary>
+        public PostType Type { get; set; }
+
+        /// <summary>
+        /// Post status.
+        /// </summary>
+        public PostStatus Status { get; set; }
 
         /// <summary>
         ///     When the post was created.
@@ -54,16 +60,9 @@ namespace Database.Models.Entities
         ///     Who create the post.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(OwnerIndex))]
+        [ForeignKey(nameof(OwnerId))]
         public Account Owner { get; set; }
-
-        /// <summary>
-        ///     Category which post belongs to.
-        /// </summary>
-        [JsonIgnore]
-        [ForeignKey(nameof(CategoryIndex))]
-        public Category Category { get; set; }
-
+        
         /// <summary>
         ///     List of comment belongs to the post.
         /// </summary>

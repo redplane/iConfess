@@ -6,22 +6,22 @@ namespace Shared.ViewModels.PostReports
     public class SearchPostReportViewModel
     {
         /// <summary>
-        ///     Index of post report.
+        ///     Id of post report.
         /// </summary>
         public int? Id { get; set; }
 
         /// <summary>
-        ///     Index of post which is reported.
+        ///     Id of post which is reported.
         /// </summary>
         public int? PostIndex { get; set; }
 
         /// <summary>
-        ///     Index of post owner.
+        ///     Id of post owner.
         /// </summary>
         public int? PostOwnerIndex { get; set; }
 
         /// <summary>
-        ///     Index of report.
+        ///     Id of report.
         /// </summary>
         public int? PostReporterIndex { get; set; }
 
@@ -38,18 +38,13 @@ namespace Shared.ViewModels.PostReports
         /// <summary>
         ///     When the report was created.
         /// </summary>
-        public DoubleRange Created { get; set; }
+        public Range<double?, double?> CreatedTime { get; set; }
 
         /// <summary>
-        /// Direction of result sorting.
+        /// Sort property & direction.
         /// </summary>
-        public SortDirection Direction { get; set; }
-
-        /// <summary>
-        /// Which property should be used for sorting.
-        /// </summary>
-        public PostReportSort Sort { get; set; }
-
+        public Sort<PostReportSort> Sort { get; set; }
+        
         /// <summary>
         ///     Result pagination.
         /// </summary>

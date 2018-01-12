@@ -14,12 +14,7 @@ namespace Shared.ViewModels.Posts
         ///     Page of post owner.
         /// </summary>
         public int? OwnerIndex { get; set; }
-
-        /// <summary>
-        ///     Page of category which post belongs to.
-        /// </summary>
-        public int? CategoryIndex { get; set; }
-
+        
         /// <summary>
         ///     Title search option.
         /// </summary>

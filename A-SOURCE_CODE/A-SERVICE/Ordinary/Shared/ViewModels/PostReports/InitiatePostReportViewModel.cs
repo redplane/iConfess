@@ -3,7 +3,7 @@
     public class InitiatePostReportViewModel
     {
         /// <summary>
-        ///     Index of post which should be reported.
+        ///     Id of post which should be reported.
         /// </summary>
         public int PostIndex { get; set; }
 

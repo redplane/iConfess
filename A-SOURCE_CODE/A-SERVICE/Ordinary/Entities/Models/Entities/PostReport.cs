@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class PostReport
     {
@@ -10,17 +10,17 @@ namespace Entities.Models.Entities
         /// <summary>
         ///     Which post is reported.
         /// </summary>
-        public int PostIndex { get; set; }
+        public int PostId { get; set; }
 
         /// <summary>
         ///     Who owns the post.
         /// </summary>
-        public int PostOwnerIndex { get; set; }
+        public int OwnerId { get; set; }
 
         /// <summary>
         ///     Who report the post.
         /// </summary>
-        public int PostReporterIndex { get; set; }
+        public int ReporterId { get; set; }
 
         /// <summary>
         ///     Original content of post.
@@ -45,21 +45,21 @@ namespace Entities.Models.Entities
         ///     One report is about one post, just one.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostIndex))]
+        [ForeignKey(nameof(PostId))]
         public Post Post { get; set; }
 
         /// <summary>
         ///     Report can only be about one account.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostOwnerIndex))]
+        [ForeignKey(nameof(OwnerId))]
         public Account PostOwner { get; set; }
 
         /// <summary>
         ///     Report can only belong to one account.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(PostReporterIndex))]
+        [ForeignKey(nameof(ReporterId))]
         public Account PostReporter { get; set; }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿using Entities.Enumerations;
+﻿using SystemDatabase.Enumerations;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Main.Authentications.Requirements
@@ -11,7 +11,7 @@ namespace Main.Authentications.Requirements
         ///     Initiate requirement with roles.
         /// </summary>
         /// <param name="roles"></param>
-        public RoleRequirement(Roles[] roles)
+        public RoleRequirement(AccountRole[] roles)
         {
             _roles = roles;
         }
@@ -23,12 +23,12 @@ namespace Main.Authentications.Requirements
         /// <summary>
         ///     Client valid roles.
         /// </summary>
-        private readonly Roles[] _roles;
+        private readonly AccountRole[] _roles;
 
         /// <summary>
         ///     List of accessible role.
         /// </summary>
-        public Roles[] Roles => _roles;
+        public AccountRole[] Roles => _roles;
 
         #endregion
     }

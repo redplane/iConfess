@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Entities.Enumerations;
+using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class CommentNotification
     {
@@ -39,7 +39,7 @@ namespace Entities.Models.Entities
         /// <summary>
         ///     Notification type.
         /// </summary>
-        public NotificationKinds Type { get; set; }
+        public NotificationType Type { get; set; }
 
         /// <summary>
         ///     Whether notification owner has seen the notification or not.

@@ -5,7 +5,7 @@ namespace Shared.Models
     public class Pagination
     {
         /// <summary>
-        ///     Index of result page.
+        ///     Id of result page.
         ///     Min: 0
         ///     Max: (infinite)
         /// </summary>

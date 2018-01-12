@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class Post
     {
@@ -37,14 +38,24 @@ namespace Entities.Models.Entities
         public string Body { get; set; }
 
         /// <summary>
+        /// Type of post.
+        /// </summary>
+        public PostType Type { get; set; }
+
+        /// <summary>
+        /// Status of post.
+        /// </summary>
+        public PostStatus Status { get; set; }
+
+        /// <summary>
         ///     When the post was created.
         /// </summary>
-        public double Created { get; set; }
+        public double CreatedTime { get; set; }
 
         /// <summary>
         ///     When the post was lastly modified.
         /// </summary>
-        public double? LastModified { get; set; }
+        public double? LastModifiedTime { get; set; }
 
         #endregion
 

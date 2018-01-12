@@ -1,12 +1,12 @@
 ﻿namespace Shared.Enumerations.Order
 {
-    public enum AccountsSort
+    public enum AccountSort
     {
         Id,
         Email,
         Nickname,
         Status,
-        Joined,
-        LastModified
+        JoinedTime,
+        LastModifiedTime
     }
 }

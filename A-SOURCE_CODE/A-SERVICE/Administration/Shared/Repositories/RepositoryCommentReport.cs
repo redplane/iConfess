@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Database.Models.Entities;
+using SystemDatabase.Models.Entities;
 using Shared.Enumerations;
 using Shared.Interfaces.Repositories;
 using Shared.ViewModels.CommentReports;
@@ -36,16 +36,16 @@ namespace Shared.Repositories
         {
             // Comment index is specified.
             if (conditions.CommentIndex != null)
-                commentReports = commentReports.Where(x => x.CommentIndex == conditions.CommentIndex.Value);
+                commentReports = commentReports.Where(x => x.CommentId == conditions.CommentIndex.Value);
 
             // Comment owner is specified.
             if (conditions.CommentOwnerIndex != null)
-                commentReports = commentReports.Where(x => x.CommentOwnerIndex == conditions.CommentOwnerIndex.Value);
+                commentReports = commentReports.Where(x => x.CommentId == conditions.CommentOwnerIndex.Value);
 
             // Reporter index is specified.
             if (conditions.CommentReporterIndex != null)
                 commentReports =
-                    commentReports.Where(x => x.CommentReporterIndex == conditions.CommentReporterIndex.Value);
+                    commentReports.Where(x => x.ReporterId == conditions.CommentReporterIndex.Value);
 
             // Comment body is specified.
             if (conditions.Body != null && !string.IsNullOrEmpty(conditions.Body.Value))
@@ -134,11 +134,11 @@ namespace Shared.Repositories
 
                 // From is defined.
                 if (created.From != null)
-                    commentReports = commentReports.Where(x => x.Created >= created.From.Value);
+                    commentReports = commentReports.Where(x => x.CreatedTime >= created.From.Value);
 
                 // To is defined.
                 if (created.To != null)
-                    commentReports = commentReports.Where(x => x.Created <= created.To.Value);
+                    commentReports = commentReports.Where(x => x.CreatedTime <= created.To.Value);
             }
 
             return commentReports;

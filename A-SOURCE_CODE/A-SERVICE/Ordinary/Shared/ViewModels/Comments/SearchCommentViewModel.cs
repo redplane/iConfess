@@ -11,14 +11,14 @@ namespace Shared.ViewModels.Comments
         public int? Id { get; set; }
 
         /// <summary>
-        ///     Index of comment owner.
+        ///     Id of comment owner.
         /// </summary>
-        public int? OwnerIndex { get; set; }
+        public int? OwnerId { get; set; }
 
         /// <summary>
-        ///     Index of post which comment belongs to.
+        ///     Id of post which comment belongs to.
         /// </summary>
-        public int? PostIndex { get; set; }
+        public int? PostId { get; set; }
 
         /// <summary>
         ///     Content of comment.
@@ -28,22 +28,17 @@ namespace Shared.ViewModels.Comments
         /// <summary>
         ///     Time range when comment was created.
         /// </summary>
-        public DoubleRange Created { get; set; }
-
-        /// <summary>
-        /// Which property should be used for sorting.
-        /// </summary>
-        public CommentSort Sort { get; set; }
-
-        /// <summary>
-        /// Whether results are sorted ascending or descending.
-        /// </summary>
-        public SortDirection Direction { get; set; }
-
+        public Range<double?,double?> CreatedTime { get; set; }
+        
         /// <summary>
         ///     Time range when comment was lastly modified.
         /// </summary>
-        public DoubleRange LastModified { get; set; }
+        public Range<double?, double?> LastModifiedTime { get; set; }
+        
+        /// <summary>
+        /// Sort property & direction.
+        /// </summary>
+        public Sort<CommentSort> Sort { get; set; }
 
         /// <summary>
         ///     Records pagination.

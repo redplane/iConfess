@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SystemDatabase.Enumerations;
 using Newtonsoft.Json;
 
-namespace Entities.Models.Entities
+namespace SystemDatabase.Models.Entities
 {
     public class Category
     {
@@ -12,7 +13,7 @@ namespace Entities.Models.Entities
         ///     One category can only be created by one account.
         /// </summary>
         [JsonIgnore]
-        [ForeignKey(nameof(CreatorIndex))]
+        [ForeignKey(nameof(CreatorId))]
         public Account Creator { get; set; }
 
         #endregion
@@ -29,7 +30,17 @@ namespace Entities.Models.Entities
         /// <summary>
         ///     Who created the current category.
         /// </summary>
-        public int CreatorIndex { get; set; }
+        public int CreatorId { get; set; }
+
+        /// <summary>
+        /// Category photo.
+        /// </summary>
+        public string Photo { get; set; }
+
+        /// <summary>
+        /// Status of category.
+        /// </summary>
+        public CategoryStatus Status { get; set; }
 
         /// <summary>
         ///     Name of category.
@@ -39,12 +50,12 @@ namespace Entities.Models.Entities
         /// <summary>
         ///     When the category was created.
         /// </summary>
-        public double Created { get; set; }
+        public double CreatedTime { get; set; }
 
         /// <summary>
         ///     When the category was lastly modified.
         /// </summary>
-        public double? LastModified { get; set; }
+        public double? LastModifiedTime { get; set; }
 
         #endregion
     }
